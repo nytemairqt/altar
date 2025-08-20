@@ -1,0 +1,10 @@
+/Binaries/
+/AudioFiles/
+/DspNetworks/Binaries/
+/DspNetworks/ThirdParty/src/rubberband
+
+/*/Samples
+*.lwz
+*.ch1
+*.hip
+*.zip

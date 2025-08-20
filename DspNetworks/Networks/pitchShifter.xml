@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="pitchShifter" Version="0.0.0" AllowCompilation="1">
+  <Node FactoryPath="container.chain" ID="pitchShifter" Bypassed="0"
+        Name="pitchShifter" ShowParameters="1">
+    <Nodes>
+      <Node ID="faust" FactoryPath="core.faust" Bypassed="0" Name="faust">
+        <Properties>
+          <Property ID="ClassId" Value="pitch_shifter_faust"/>
+          <Property ID="NumParameters" Value="0"/>
+        </Properties>
+        <Parameters>
+          <Parameter MinValue="-12.0" MaxValue="12.0" StepSize="1" ID="shift (semitones)"
+                     Automated="1"/>
+          <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                     Value="2048.0" DefaultValue="1000.0"/>
+          <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                     Value="128.0" DefaultValue="10.0"/>
+        </Parameters>
+        <SwitchTargets/>
+      </Node>
+    </Nodes>
+    <Parameters>
+      <Parameter ID="FreqRatio" MinValue="0.5" MaxValue="2.0" StepSize="0.01"
+                 ExternalModulation="Disabled" Value="0.5" DefaultValue="1.0">
+        <Connections/>
+      </Parameter>
+      <Parameter ID="ShiftSemitones" MinValue="-12.0" MaxValue="12.0" StepSize="1"
+                 ExternalModulation="Disabled" DefaultValue="" Value="-12.0">
+        <Connections>
+          <Connection NodeId="faust" ParameterId="shift (semitones)"/>
+        </Connections>
+      </Parameter>
+    </Parameters>
+  </Node>
+</Network>

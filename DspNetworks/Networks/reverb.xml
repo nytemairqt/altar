@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="reverb" AllowCompilation="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="reverb" Bypassed="0" Name="reverb"
+        ShowParameters="1">
+    <Nodes>
+      <Node ID="xfader" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
+        <Properties>
+          <Property ID="NumParameters" Value="2"/>
+          <Property ID="Mode" Value="Linear"/>
+        </Properties>
+        <SwitchTargets>
+          <SwitchTarget>
+            <Connections>
+              <Connection NodeId="gain" ParameterId="Gain"/>
+            </Connections>
+          </SwitchTarget>
+          <SwitchTarget>
+            <Connections>
+              <Connection NodeId="gain1" ParameterId="Gain"/>
+            </Connections>
+          </SwitchTarget>
+        </SwitchTargets>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+        </Parameters>
+      </Node>
+      <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
+        <Nodes>
+          <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="dry">
+            <Nodes>
+              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                <Parameters>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="wet">
+            <Nodes>
+              <Node ID="faust" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="reverb_faust"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.001000000047497451" MaxValue="1.450000047683716"
+                             StepSize="0.00009999999747378752" ID="delayTime" Value="0.09569999765517423"
+                             DefaultValue="0.2000000029802322"/>
+                  <Parameter MinValue="0.0" MaxValue="0.9900000095367432" StepSize="0.001000000047497451"
+                             ID="damping" Value="0.4360000207088888" DefaultValue="0.0"/>
+                  <Parameter MinValue="0.5" MaxValue="3.0" StepSize="0.00009999999747378752"
+                             ID="size" Value="1.0"/>
+                  <Parameter MinValue="0.0" MaxValue="0.9900000095367432" StepSize="0.00009999999747378752"
+                             ID="diffusion" Value="0.5"/>
+                  <Parameter MinValue="0.0" MaxValue="0.9500000000000001" StepSize="0.009999999776482582"
+                             ID="feedback" DefaultValue="0.8999999798834324" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
+                             ID="modDepth" Value="0.1000000014901161"/>
+                  <Parameter MinValue="0.0" MaxValue="10.0" StepSize="0.009999999776482582"
+                             ID="modFreq" Value="2.0"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="svf_eq" FactoryPath="filters.svf_eq" Bypassed="0" Name="svf_eq">
+                <ComplexData>
+                  <Filters>
+                    <Filter Index="-1"/>
+                  </Filters>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                             ID="Frequency" TextToValueConverter="Frequency" Value="3129.14559999548"
+                             DefaultValue="1000.0"/>
+                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                             ID="Q" Value="0.4178652656787664" DefaultValue="1.0"/>
+                  <Parameter MinValue="-12.0" MaxValue="12.0" ID="Gain" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                             ID="Smoothing" Value="0.009999999776482582"/>
+                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
+                             DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="jchorus" FactoryPath="jdsp.jchorus" Bypassed="0" Name="jchorus">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="100.0" ID="CentreDelay" Value="7.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Depth" Value="0.05799999999999998"
+                             DefaultValue="0.25"/>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="100.0" SkewFactor="0.3010300099849701"
+                             ID="Rate" Value="2.318102297272724" DefaultValue="1.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Mix" Value="0.112" DefaultValue="0.5"/>
+                </Parameters>
+              </Node>
+              <Node ID="gain1" FactoryPath="core.gain" Bypassed="0" Name="gain1">
+                <Parameters>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters>
+      <Parameter ID="Mix" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
+                 Value="0.5">
+        <Connections>
+          <Connection NodeId="xfader" ParameterId="Value"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="Brightness" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
+                 DefaultValue="" Value="0.8924000244140625">
+        <Connections>
+          <Connection NodeId="svf_eq" ParameterId="Gain"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="Feedback" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
+                 DefaultValue="" Value="0.9631999816894531">
+        <Connections>
+          <Connection NodeId="faust" ParameterId="feedback"/>
+        </Connections>
+      </Parameter>
+    </Parameters>
+  </Node>
+</Network>

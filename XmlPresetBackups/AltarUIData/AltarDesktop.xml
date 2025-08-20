@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentProperties DeviceType="Desktop">
+  <Component type="ScriptSlider" id="knbAmpMode" x="60.0" y="10.0" stepSize="1.0"
+             processorId="amp-fixed" parameterId="channel" defaultValue="1.0"/>
+  <Component type="ScriptSlider" id="knbCleanInput" x="70.0" y="70.0" stepSize="0.1000000014901161"
+             processorId="amp-fixed" parameterId="inputGainClean" min="-72.0"
+             max="72.0" middlePosition="0.0"/>
+  <Component type="ScriptSlider" id="knbCleanOutput" x="70.0" y="140.0" stepSize="0.1000000014901161"
+             processorId="amp-fixed" parameterId="outputGainClean" min="-72.0"
+             max="72.0" middlePosition="0.0"/>
+  <Component type="ScriptSlider" id="knbDirtyInput" x="310.0" y="70.0" stepSize="0.1000000014901161"
+             processorId="amp-fixed" parameterId="inputGainDirty" min="-72.0"
+             max="72.0" middlePosition="0.0"/>
+  <Component type="ScriptSlider" id="knbDirtyOutput" x="310.0" y="130.0" stepSize="0.1000000014901161"
+             processorId="amp-fixed" parameterId="outputGainDirty" min="-72.0"
+             max="72.0" middlePosition="0.0"/>
+  <Component type="ScriptSlider" id="knbPitch" x="430.0" y="10.0" middlePosition="0.0"
+             stepSize="1.0" min="-12.0" max="12.0"/>
+  <Component type="ScriptSlider" id="knbReverbMix" x="50.0" y="210.0" processorId="reverb-fixed"
+             parameterId="Mix"/>
+  <Component type="ScriptSlider" id="knbReverbBrightness" x="200.0" y="210.0"
+             processorId="reverb-fixed" parameterId="Brightness"/>
+  <Component type="ScriptSlider" id="knbReverbFeedback" x="350.0" y="210.0"
+             processorId="reverb-fixed" parameterId="Feedback"/>
+  <Component type="ScriptSlider" id="knbGateThreshold" x="240.0" y="10.0"
+             min="-100.0" max="0.0" processorId="dynamics" parameterId="GateThreshold"
+             middlePosition="-40.0"/>
+  <Component type="ScriptButton" id="btnCabGenerate" x="150.0" y="300.0" isMomentary="1"/>
+  <Component type="ScriptSlider" id="knbCabAxis" x="50.0" y="350.0" defaultValue="0.5"/>
+  <Component type="ScriptSlider" id="knbCabPresence" x="210.0" y="350.0" defaultValue="0.5"/>
+  <Component type="ScriptSlider" id="knbEQWhistle" x="370.0" y="350.0" defaultValue="1.0"/>
+  <Component type="ScriptFloatingTile" id="FloatingTile1" x="0.0" y="530.0"
+             ContentType="Keyboard" bgColour="4284769380" itemColour="452984831"
+             itemColour2="4294967295" textColour="0" Data="{&#10;  &quot;KeyWidth&quot;: 14.0,&#10;  &quot;DisplayOctaveNumber&quot;: false,&#10;  &quot;LowKey&quot;: 9,&#10;  &quot;HiKey&quot;: 127,&#10;  &quot;CustomGraphics&quot;: false,&#10;  &quot;DefaultAppearance&quot;: true,&#10;  &quot;BlackKeyRatio&quot;: 0.699999988079071,&#10;  &quot;ToggleMode&quot;: false,&#10;  &quot;MidiChannel&quot;: 1,&#10;  &quot;UseVectorGraphics&quot;: true,&#10;  &quot;UseFlatStyle&quot;: false,&#10;  &quot;MPEKeyboard&quot;: false,&#10;  &quot;MPEStartChannel&quot;: 2,&#10;  &quot;MPEEndChannel&quot;: 16&#10;}"
+             width="640.0" height="70.0"/>
+  <Component type="ScriptButton" id="btnCabSave" x="140.0" y="440.0" isMomentary="1"/>
+</ContentProperties>
