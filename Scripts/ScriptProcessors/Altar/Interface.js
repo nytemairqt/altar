@@ -141,6 +141,7 @@ Content.getComponent("knbEQWhistle").setControlCallback(onknbEQWhistleControl);
 var eventList = [];
 cabMIDIPlayer.create(4, 4, 1);
 const impulseSize = 1024;
+const moduleBypassedStates = [];
 
 const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);
 Engine.loadAudioFilesIntoPool();
@@ -176,7 +177,8 @@ inline function onbtnCabSaveControl(component, value)
 	if (!value)
 		return;
 		
-	// bypass unwanted DSP 
+	// bypass unwanted DSP
+	/* 
 	gate.setBypassed(1);
 	pitchShifterFixed.setBypassed(1);
 	preSculpt.setBypassed(1);
@@ -186,20 +188,20 @@ inline function onbtnCabSaveControl(component, value)
 	cabAxis.setBypassed(1);
 	eqWhistle.setBypassed(1);
 	reverbFixed.setBypassed(1);
-	
-	// enable filters
+	*/
+
+	saveModuleBypassedState();
+
+	for (m in modules)
+		m.setBypassed(1);
+
+	testAudio.setBypassed(1); // force disable
+
+	// force enable filters
 	
 	cabEQMain.setBypassed(0);
 	cabEQDetails.setBypassed(0);
-
-	/*
-	
-	need to implement dynamic fx Bypass, then re-enable when the renderer finishes
-	also possibly freeze the interface while rendering (although it's basically instant) 
-
-
-
-	*/
+	cabFileSave.setBypassed(0);
 		
 	cabFileSave.setFile(""); // clears audio buffer
 
@@ -223,10 +225,23 @@ inline function onbtnCabSaveControl(component, value)
 		
 	// Check sequencer is loaded
 	if (cabMIDIPlayer.isEmpty() != true) 
-		Engine.renderAudio(cabMIDIPlayer.getEventList(), COMPOSER_RenderAudioCallback);	
+		Engine.renderAudio(cabMIDIPlayer.getEventList(), renderAudioCallback);	
 };
 
-inline function COMPOSER_RenderAudioCallback (obj) 
+inline function saveModuleBypassedState()
+{
+	moduleBypassedStates.clear();
+	for (m in modules)
+		moduleBypassedStates.push(m.isBypassed());
+}
+
+inline function restoreModuleBypassedState()
+{
+	for (i=0; i<moduleBypassedStates.length; i++)
+		modules[i].setBypassed(moduleBypassedStates[i]);
+}
+
+inline function renderAudioCallback (obj) 
 {
 	if (obj.finished) 
 	{	
@@ -236,25 +251,14 @@ inline function COMPOSER_RenderAudioCallback (obj)
 
 		// Force Stereo (HISE Convolution is stereo for some reason)
 		file.writeAudioFile([buffer[0], buffer[0]], Engine.getSampleRate(), 24);
-		
-		// bypass unwanted DSP 
-		gate.setBypassed(0);
-		pitchShifterFixed.setBypassed(0);
-		preSculpt.setBypassed(0);
-		ampFixed.setBypassed(0);
-		postSculpt.setBypassed(0);
-		cabConvolution.setBypassed(0);
-		cabAxis.setBypassed(0);
-		eqWhistle.setBypassed(0);
-		reverbFixed.setBypassed(0);
-		
-		// enable filters
-		
+
+		restoreModuleBypassedState();
 		cabEQMain.setBypassed(1);
 		cabEQDetails.setBypassed(1);
-		
+		cabFileSave.setBypassed(1);
+		testAudio.setBypassed(0); // force enable audio player	
 		cabConvolution.setFile(file.toString(0));
-		
+				
 		// Remove this line later but it will point you to the temp file that has been created.
 		file.show();
 

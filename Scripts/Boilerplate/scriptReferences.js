@@ -39,3 +39,15 @@ const reverbFixed = Synth.getEffect("reverbFixed");
 // Synths (Debug) 
 const cabMIDIPlayer = Synth.getMidiPlayer("cabMIDIPlayer");
 const cabFileSave = Synth.getAudioSampleProcessor("cabFileSave");
+const testAudio = Synth.getAudioSampleProcessor("testAudio");
+
+const modules = [Synth.getEffect("gate"),
+    Synth.getEffect("pitchShifterFixed"),
+    Synth.getEffect("preSculpt"),
+    Synth.getEffect("ampFixed"),
+    Synth.getEffect("postSculpt"),
+    Synth.getEffect("cabEQMain"),
+    Synth.getEffect("cabEQDetails"),
+    Synth.getEffect("cabAxis"),
+    Synth.getEffect("eqWhistle"),
+    Synth.getEffect("reverbFixed")];
