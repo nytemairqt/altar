@@ -87,12 +87,18 @@ const btnAmpMode = Content.getComponent("btnAmpMode");
 const btnAmpOversampling = Content.getComponent("btnAmpOversampling");
 const btnCabGenerate = Content.getComponent("btnCabGenerate");
 const btnCabSave = Content.getComponent("btnCabSave");
+const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
 const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
 
 // Comboboxes
 
+// Labels
+
+const lblCabSaveName = Content.getComponent("lblCabSaveName");
+
 
 // Panels
+
 const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
 
 // ===============================
@@ -101,6 +107,7 @@ var eventList = [];
 const impulseSize = 1024;
 const moduleBypassedStates = [];
 const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);
+reg cabSaveName = "myCab.wav";
 
 // INITIAL SETUP
 Engine.loadAudioFilesIntoPool();

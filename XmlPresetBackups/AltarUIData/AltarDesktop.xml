@@ -37,8 +37,12 @@
                parentComponent="pnlCabDesigner"/>
     <Component type="ScriptButton" id="btnCabSave" x="210.0" y="110.0" isMomentary="1"
                parentComponent="pnlCabDesigner"/>
-    <Component type="ScriptComboBox" id="cmbCabMicrophone" x="280.0" y="60.0"
+    <Component type="ScriptComboBox" id="cmbCabMicrophone" x="330.0" y="10.0"
                max="10" parentComponent="pnlCabDesigner" items="AD-57&#10;AD-7B&#10;AD-421&#10;AD-e906&#10;AC-87&#10;AC-414&#10;AC-184&#10;AR-121&#10;AR-4038&#10;AR-R84&#10;"/>
+    <Component type="ScriptButton" id="btnOpenCabFolder" x="360.0" y="110.0"
+               parentComponent="pnlCabDesigner" isMomentary="1"/>
+    <Component type="ScriptLabel" id="lblCabSaveName" x="210.0" y="80.0" parentComponent="pnlCabDesigner"
+               text="myCab.wav"/>
   </Component>
   <Component type="ScriptButton" id="btnShowCabDesigner" x="460.0" y="490.0"/>
   <Component type="ScriptSlider" id="knbInputGain" x="20.0" y="10.0" min="-36.0"

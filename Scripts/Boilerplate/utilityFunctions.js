@@ -60,7 +60,7 @@ inline function renderAudioCallback (obj)
     {   
         // get the buffer                               
         local buffer = normalizeBuffer(obj.channels);                       
-        local file = audioFiles.getChildFile("myCoolImpulse.wav");
+        local file = audioFiles.getChildFile(cabSaveName);
 
         // Force Stereo (HISE Convolution is stereo for some reason)
         file.writeAudioFile([buffer[0], buffer[0]], Engine.getSampleRate(), 24);
@@ -73,17 +73,7 @@ inline function renderAudioCallback (obj)
         cabEQCustom.restoreState(cabEQCustomBlankState); // reset the custom EQ 
         cabConvolution.setFile("");     
         cabConvolution.setFile(file.toString(0));
-        cabConvolution.setBypassed(0);      
-        
-                
-        // Remove this line later but it will point you to the temp file that has been created.
-        //file.show();
-
-        //cabFileSave.setFile(file.toString(0));                // this will be replaced with our main convolution later
-
-        // need to refresh audio files so it shows up under cab or whatever
-        // need a checkbox to open explorer @ rendered file
-        
+        cabConvolution.setBypassed(0);              
     } 
 }
 
@@ -109,4 +99,36 @@ inline function normalizeBuffer(buffer)
     }   
 
     return bufferNormalized;
+}
+
+inline function sanitizeFileName(fileName)
+{
+    local strings = ["/", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "|", ",", ";", ":", "{", "}", "[", "]", "<", ">", "?", "~", "`", "?", " "];
+    
+    for (s in strings)
+        if (fileName.contains(s))
+            return "INVALID_FILENAME";
+
+    local sanitized = fileName;
+
+    if (sanitized.contains(".") && !sanitized.contains(".wav"))
+        return "INVALID_FILENAME";
+
+    local stops = fileName.split(".").length > 2;
+
+    if (stops)
+        return "INVALID_FILENAME";
+
+    if (!sanitized.contains(".wav"))
+    {
+        Console.print("appending .wav");
+        sanitized = sanitized + ".wav";
+    }
+    else
+    {
+        if (sanitized.indexOf(".wav") != sanitized.length - 4)
+            return "INVALID_FILENAME";
+    }
+
+    return sanitized;
 }

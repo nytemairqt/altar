@@ -139,6 +139,11 @@ inline function onbtnAmpOversamplingControl(component, value)
     ampFixed.setAttribute(ampFixed.oversampling, value);
 }
 
+inline function onbtnShowCabDesignerControl(component, value)
+{
+    pnlCabDesigner.set("visible", value);
+};
+
 inline function onbtnCabGenerateControl(component, value)
 {
     if (!value)
@@ -247,13 +252,37 @@ inline function onbtnCabSaveControl(component, value)
         Engine.renderAudio(cabMIDIPlayer.getEventList(), renderAudioCallback);  
 };
 
-inline function onbtnShowCabDesignerControl(component, value)
+inline function onbtnOpenCabFolderControl(component, value)
 {
-    pnlCabDesigner.set("visible", value);
-};
+    if (!value)
+        return;
+
+    audioFiles.show();
+}
+
+
 
 btnAmpMode.setControlCallback(onbtnAmpModeControl);
 btnAmpOversampling.setControlCallback(onbtnAmpOversamplingControl);
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
 btnCabSave.setControlCallback(onbtnCabSaveControl);
+btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
 btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);
+
+
+// Labels
+
+inline function onlblCabSaveNameControl(component, value)
+{
+    cabSaveName = sanitizeFileName(value);
+
+    if (cabSaveName == "INVALID_FILENAME")
+    {
+        Engine.showMessage("Invalid character in filename. File name must not include special characters, and end in .wav"); // only in compiled plugin
+        Console.print("Invalid character in filename. File name must not include special characters, and end in .wav"); // debug
+        lblCabSaveName.set("text", "myCab.wav");
+        cabSaveName = "myCab.wav";
+    }
+}
+
+lblCabSaveName.setControlCallback(onlblCabSaveNameControl);
