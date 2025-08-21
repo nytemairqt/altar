@@ -15,7 +15,7 @@
 
 // Include compiled network files ------------------
 
-#include "Deathrattle_network.h"
+#include "amp.h"
 #include "pitchShifter.h"
 #include "reverb.h"
 

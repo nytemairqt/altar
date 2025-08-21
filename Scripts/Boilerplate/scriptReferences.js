@@ -15,9 +15,13 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+// ===============================
 // DSP MODULES
 
-// Pre FX
+// Master FX
+const inputGain = Synth.getEffect("inputGain");
+const outputGain = Synth.getEffect("outputGain");
 const gate = Synth.getEffect("gate");
 
 // Amp
@@ -27,11 +31,13 @@ const ampFixed = Synth.getEffect("ampFixed");
 const postSculpt = Synth.getEffect("postSculpt");
 
 // Cab
-const var cabConvolution = Synth.getAudioSampleProcessor("cabConvolution");
+const cabConvolution = Synth.getAudioSampleProcessor("cabConvolution");
 const cabEQMain = Synth.getEffect("cabEQMain");
 const cabEQDetails = Synth.getEffect("cabEQDetails");
+const cabEQCustom = Synth.getEffect("cabEQCustom");
 const cabAxis = Synth.getEffect("cabAxis");
 const eqWhistle = Synth.getEffect("eqWhistle");
+const cabEQCustomBlankState = "186.3ocMNsrCBBCDbqDN3A+WjeAPHwCZTKw6U5FoI0tZenxWutfxdZlLyrybvScXHPdPj2NbGAwx7pj+IV+.1tADqx6TWpOVkBQ5FTNbWEBnFDhr8oaMFaD8ANp.3qoos1otX+oKxp0lH4kQUDYOYkjdP1SubLNu.NaBF16OhjrzHZM.U8Fq9v7rB7eOQonwccmJ5Mu4x3lkTx2gU8JmCsSCXALFchuddPRzomHe36uXwHW7WrXVD9hSykzK";
 
 // Pedals
 const reverbFixed = Synth.getEffect("reverbFixed");
@@ -51,3 +57,50 @@ const modules = [Synth.getEffect("gate"),
     Synth.getEffect("cabAxis"),
     Synth.getEffect("eqWhistle"),
     Synth.getEffect("reverbFixed")];
+    
+// ===============================
+// UI ELEMENTS
+
+// Knobs
+const knbInputGain = Content.getComponent("knbInputGain");
+const knbOutputGain = Content.getComponent("knbOutputGain");
+const knbGateThreshold = Content.getComponent("knbGateThreshold");
+
+const knbAmpMode = Content.getComponent("knbAmpMode");
+const knbCleanInput = Content.getComponent("knbCleanInput");
+const knbCleanOutput = Content.getComponent("knbCleanOutput");
+const knbDirtyInput = Content.getComponent("knbDirtyInput");
+const knbDirtyOutput = Content.getComponent("knbDirtyOutput");
+
+const knbPitch = Content.getComponent("knbPitch");
+
+const knbCabAxis = Content.getComponent("knbCabAxis");
+const knbCabPresence = Content.getComponent("knbCabPresence");
+const knbEQWhistle = Content.getComponent("knbEQWhistle");
+
+const var knbReverbMix = Content.getComponent("knbReverbMix");
+const var knbReverbBrightness = Content.getComponent("knbReverbBrightness");
+const var knbReverbFeedback = Content.getComponent("knbReverbFeedback");
+
+// Buttons
+
+const btnCabGenerate = Content.getComponent("btnCabGenerate");
+const btnCabSave = Content.getComponent("btnCabSave");
+const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
+
+// Comboboxes
+
+
+// Panels
+const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
+
+// ===============================
+// MISC VARIABLES
+var eventList = [];
+const impulseSize = 1024;
+const moduleBypassedStates = [];
+const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);
+
+// INITIAL SETUP
+Engine.loadAudioFilesIntoPool();
+cabMIDIPlayer.create(4, 4, 1);

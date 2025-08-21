@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Network ID="amp" AllowCompilation="1" Version="0.0.0">
-  <Node FactoryPath="container.chain" ID="amp" Bypassed="0"
-        Name="amp" ShowParameters="1">
+  <Node FactoryPath="container.chain" ID="amp" Bypassed="0" Name="amp"
+        ShowParameters="1">
     <Nodes>
       <Node ID="xfader" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
         <Properties>

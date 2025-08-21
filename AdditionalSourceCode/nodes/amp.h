@@ -11,7 +11,7 @@ using namespace scriptnode;
 using namespace snex;
 using namespace snex::Types;
 
-namespace Deathrattle_network_impl
+namespace amp_impl
 {
 // ==============================| Node & Parameter type declarations |==============================
 
@@ -210,9 +210,9 @@ using split1_t = container::split<parameter::empty,
                                   wrap::fix<2, soft_bypass_t<NV>>, 
                                   soft_bypass1_t<NV>>;
 
-namespace Deathrattle_network_t_parameters
+namespace amp_t_parameters
 {
-// Parameter list for Deathrattle_network_impl::Deathrattle_network_t ------------------------------
+// Parameter list for amp_impl::amp_t --------------------------------------------------------------
 
 DECLARE_PARAMETER_RANGE(inputGainClean_InputRange, 
                         -72., 
@@ -259,24 +259,23 @@ using outputGainDirty = parameter::chain<outputGainDirty_InputRange,
                                          outputGainDirty_0<NV>>;
 
 template <int NV>
-using channel = parameter::plain<Deathrattle_network_impl::xfader_t<NV>, 
-                                 0>;
+using channel = parameter::plain<amp_impl::xfader_t<NV>, 0>;
 template <int NV>
-using Deathrattle_network_t_plist = parameter::list<channel<NV>, 
-                                                    inputGainClean<NV>, 
-                                                    inputGainDirty<NV>, 
-                                                    outputGainClean<NV>, 
-                                                    outputGainDirty<NV>>;
+using amp_t_plist = parameter::list<channel<NV>, 
+                                    inputGainClean<NV>, 
+                                    inputGainDirty<NV>, 
+                                    outputGainClean<NV>, 
+                                    outputGainDirty<NV>>;
 }
 
 template <int NV>
-using Deathrattle_network_t_ = container::chain<Deathrattle_network_t_parameters::Deathrattle_network_t_plist<NV>, 
-                                                wrap::fix<2, xfader_t<NV>>, 
-                                                split1_t<NV>>;
+using amp_t_ = container::chain<amp_t_parameters::amp_t_plist<NV>, 
+                                wrap::fix<2, xfader_t<NV>>, 
+                                split1_t<NV>>;
 
 // =================================| Root node initialiser class |=================================
 
-template <int NV> struct instance: public Deathrattle_network_impl::Deathrattle_network_t_<NV>
+template <int NV> struct instance: public amp_impl::amp_t_<NV>
 {
 	
 	struct metadata
@@ -287,7 +286,7 @@ template <int NV> struct instance: public Deathrattle_network_impl::Deathrattle_
 		static const int NumFilters = 0;
 		static const int NumDisplayBuffers = 0;
 		
-		SNEX_METADATA_ID(Deathrattle_network);
+		SNEX_METADATA_ID(amp);
 		SNEX_METADATA_NUM_CHANNELS(2);
 		SNEX_METADATA_ENCODED_PARAMETERS(102)
 		{
@@ -317,18 +316,18 @@ template <int NV> struct instance: public Deathrattle_network_impl::Deathrattle_
 	{
 		// Node References -------------------------------------------------------------------------
 		
-		auto& xfader = this->getT(0);                               // Deathrattle_network_impl::xfader_t<NV>
-		auto& split1 = this->getT(1);                               // Deathrattle_network_impl::split1_t<NV>
-		auto& soft_bypass = this->getT(1).getT(0);                  // Deathrattle_network_impl::soft_bypass_t<NV>
+		auto& xfader = this->getT(0);                               // amp_impl::xfader_t<NV>
+		auto& split1 = this->getT(1);                               // amp_impl::split1_t<NV>
+		auto& soft_bypass = this->getT(1).getT(0);                  // amp_impl::soft_bypass_t<NV>
 		auto& gain2 = this->getT(1).getT(0).getT(0);                // core::gain<NV>
-		auto& oversample4x1 = this->getT(1).getT(0).getT(1);        // Deathrattle_network_impl::oversample4x1_t<NV>
-		auto& snex_shaper1 = this->getT(1).getT(0).getT(1).getT(0); // Deathrattle_network_impl::snex_shaper1_t<NV>
+		auto& oversample4x1 = this->getT(1).getT(0).getT(1);        // amp_impl::oversample4x1_t<NV>
+		auto& snex_shaper1 = this->getT(1).getT(0).getT(1).getT(0); // amp_impl::snex_shaper1_t<NV>
 		auto& gain3 = this->getT(1).getT(0).getT(2);                // core::gain<NV>
 		auto& gain = this->getT(1).getT(0).getT(3);                 // core::gain<NV>
-		auto& soft_bypass1 = this->getT(1).getT(1);                 // Deathrattle_network_impl::soft_bypass1_t<NV>
+		auto& soft_bypass1 = this->getT(1).getT(1);                 // amp_impl::soft_bypass1_t<NV>
 		auto& gain4 = this->getT(1).getT(1).getT(0);                // core::gain<NV>
-		auto& oversample4x2 = this->getT(1).getT(1).getT(1);        // Deathrattle_network_impl::oversample4x2_t<NV>
-		auto& snex_shaper3 = this->getT(1).getT(1).getT(1).getT(0); // Deathrattle_network_impl::snex_shaper3_t<NV>
+		auto& oversample4x2 = this->getT(1).getT(1).getT(1);        // amp_impl::oversample4x2_t<NV>
+		auto& snex_shaper3 = this->getT(1).getT(1).getT(1).getT(0); // amp_impl::snex_shaper3_t<NV>
 		auto& gain5 = this->getT(1).getT(1).getT(2);                // core::gain<NV>
 		auto& gain1 = this->getT(1).getT(1).getT(3);                // core::gain<NV>
 		
@@ -406,8 +405,8 @@ template <int NV> struct instance: public Deathrattle_network_impl::Deathrattle_
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(1).getT(0).getT(1).getT(0).setExternalData(b, index); // Deathrattle_network_impl::snex_shaper1_t<NV>
-		this->getT(1).getT(1).getT(1).getT(0).setExternalData(b, index); // Deathrattle_network_impl::snex_shaper3_t<NV>
+		this->getT(1).getT(0).getT(1).getT(0).setExternalData(b, index); // amp_impl::snex_shaper1_t<NV>
+		this->getT(1).getT(1).getT(1).getT(0).setExternalData(b, index); // amp_impl::snex_shaper3_t<NV>
 	}
 };
 }
@@ -424,7 +423,7 @@ namespace project
 // polyphonic template declaration
 
 template <int NV>
-using Deathrattle_network = wrap::node<Deathrattle_network_impl::instance<NV>>;
+using amp = wrap::node<amp_impl::instance<NV>>;
 }
 
 

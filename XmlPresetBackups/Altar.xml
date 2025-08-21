@@ -6,7 +6,7 @@
   <ChildProcessors>
     <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
       <ChildProcessors>
-        <Processor Type="MidiPlayer" ID="cabMIDIPlayer" Bypassed="0" CurrentSequence="131.0"
+        <Processor Type="MidiPlayer" ID="cabMIDIPlayer" Bypassed="0" CurrentSequence="188.0"
                    CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
           <ChildProcessors/>
           <MidiFiles>
@@ -587,26 +587,265 @@
               <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                              LoopEnd="1.0" Tempo="120.0"/>
             </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="44.nT6K8CxHYD..MQEZjA...X..A.P.miRSTI2Z....M..j.8Gh..HP..v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="44.nT6K8CxHYD..MQEZjA...X..A.P.miRSTI2Z....M..j.8Gh..HP..v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="44.nT6K8CxHYD..MQEZjA...X..A.P.miRSTI2Z....M..j.8Gh..HP..v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="44.nT6K8CxHYD..MQEZjA...X..A.P.miRSTI2Z....M..j.8Gh..HP..v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="44.nT6K8CxHYD..MQEZjA...X..A.P.miRSTI2Z....M..j.8Gh..HP..v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
           </MidiFiles>
         </Processor>
         <Processor Type="ScriptProcessor" ID="Interface" Bypassed="0">
           <ChildProcessors/>
           <Content>
             <Control type="ScriptSlider" id="knbAmpMode" value="1.0"/>
-            <Control type="ScriptSlider" id="knbCleanInput" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCleanOutput" value="0.0"/>
+            <Control type="ScriptSlider" id="knbCleanInput" value="1.072883605957031e-6"/>
+            <Control type="ScriptSlider" id="knbCleanOutput" value="1.072883605957031e-6"/>
             <Control type="ScriptSlider" id="knbDirtyInput" value="72.0"/>
-            <Control type="ScriptSlider" id="knbDirtyOutput" value="-12.09999942779541"/>
+            <Control type="ScriptSlider" id="knbDirtyOutput" value="-13.19999885559082"/>
             <Control type="ScriptSlider" id="knbPitch" value="0.0"/>
             <Control type="ScriptSlider" id="knbReverbMix" value="0.0"/>
-            <Control type="ScriptSlider" id="knbReverbBrightness" value="0.0"/>
-            <Control type="ScriptSlider" id="knbReverbFeedback" value="0.0"/>
+            <Control type="ScriptSlider" id="knbReverbBrightness" value="0.800000011920929"/>
+            <Control type="ScriptSlider" id="knbReverbFeedback" value="0.800000011920929"/>
             <Control type="ScriptSlider" id="knbGateThreshold" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabGenerate" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAxis" value="0.5"/>
             <Control type="ScriptSlider" id="knbCabPresence" value="0.5"/>
             <Control type="ScriptSlider" id="knbEQWhistle" value="1.0"/>
+            <Control type="ScriptButton" id="btnCabGenerate" value="0.0"/>
             <Control type="ScriptButton" id="btnCabSave" value="0.0"/>
+            <Control type="ScriptComboBox" id="cmbCabMicrophone" value="1.0"/>
+            <Control type="ScriptButton" id="btnShowCabDesigner" value="0.0"/>
+            <Control type="ScriptSlider" id="knbInputGain" value="0.0"/>
+            <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
           </Content>
           <UIData Source="AltarUIData"/>
         </Processor>
@@ -620,6 +859,24 @@
     </Processor>
     <Processor Type="EffectChain" ID="FX" Bypassed="0">
       <ChildProcessors>
+        <Processor Type="SimpleGain" ID="inputGain" Bypassed="0" Gain="0.0" Delay="0.0"
+                   Width="100.0" Balance="0.0" InvertPolarity="0.0">
+          <ChildProcessors>
+            <Processor Type="ModulatorChain" ID="Gain Modulation" Bypassed="0" Intensity="1.0">
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Delay Modulation" Bypassed="0" Intensity="1.0">
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Width Modulation" Bypassed="0" Intensity="1.0">
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Pan Modulation" Bypassed="0" Intensity="1.0">
+              <ChildProcessors/>
+            </Processor>
+          </ChildProcessors>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
         <Processor Type="Dynamics" ID="gate" Bypassed="1" GateEnabled="1.0" GateThreshold="0.0"
                    GateAttack="1.0" GateRelease="32.40999984741211" CompressorEnabled="0.0"
                    CompressorThreshold="0.0" CompressorRatio="1.0" CompressorAttack="10.0"
@@ -629,7 +886,7 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="pitchShifterFixed" Bypassed="0"
+        <Processor Type="Hardcoded Master FX" ID="pitchShifterFixed" Bypassed="1"
                    Network="rubberband" FreqRatio="1.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
@@ -644,9 +901,9 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="ampFixed" Bypassed="0" Network="Deathrattle_network"
-                   channel="0.0" inputGainClean="-2.303999900817871" inputGainDirty="72.0"
-                   outputGainClean="5.760000228881836" outputGainDirty="-26.49600028991699">
+        <Processor Type="Hardcoded Master FX" ID="ampFixed" Bypassed="0" Network="amp"
+                   channel="1.0" inputGainClean="1.072883605957031e-6" inputGainDirty="72.0"
+                   outputGainClean="1.072883605957031e-6" outputGainDirty="-13.19999885559082">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -668,129 +925,133 @@
         <Processor Type="Convolution" ID="cabConvolution" Bypassed="0" DryGain="-100.0"
                    WetGain="0.0" Latency="0.0" ImpulseLength="1.0" ProcessInput="1.0"
                    UseBackgroundThread="0.0" Predelay="0.0" HiCut="20000.0" Damping="0.0"
-                   FFTType="5.0" FileName="{PROJECT_FOLDER}TSE IMPULSE.wav" min="0"
-                   max="5512" loopStart="0" loopEnd="5512">
+                   FFTType="5.0" FileName="{PROJECT_FOLDER}myCoolImpulse.wav" min="0"
+                   max="23520" loopStart="0" loopEnd="23520">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="CurveEq" ID="cabEQMain" Bypassed="1" NumFilters="21" Band0="0.3310355246067047"
                    Band1="60.0" Band2="0.6859084367752075" Band3="1.0" Band4="1.0"
-                   Band5="0.7177164554595947" Band6="141.0" Band7="1.215331554412842"
-                   Band8="1.0" Band9="4.0" Band10="0.1274312138557434" Band11="115.0"
-                   Band12="1.930690169334412" Band13="1.0" Band14="4.0" Band15="-2.869985103607178"
-                   Band16="361.0" Band17="3.997370958328247" Band18="1.0" Band19="4.0"
-                   Band20="-2.572454929351807" Band21="420.0" Band22="3.880730152130127"
-                   Band23="1.0" Band24="4.0" Band25="-3.234218120574951" Band26="459.0"
-                   Band27="3.005006551742554" Band28="1.0" Band29="4.0" Band30="-1.276391863822937"
-                   Band31="1120.0" Band32="3.054582595825195" Band33="1.0" Band34="4.0"
-                   Band35="-2.458130359649658" Band36="1608.0" Band37="3.683591365814209"
-                   Band38="1.0" Band39="4.0" Band40="-2.219165802001953" Band41="1084.0"
-                   Band42="3.375195264816284" Band43="1.0" Band44="4.0" Band45="-2.730822563171387"
-                   Band46="1568.0" Band47="3.362053871154785" Band48="1.0" Band49="4.0"
-                   Band50="-1.018587708473206" Band51="1044.0" Band52="3.840266942977905"
-                   Band53="1.0" Band54="4.0" Band55="-3.764004468917847" Band56="4296.0"
-                   Band57="2.384922027587891" Band58="1.0" Band59="4.0" Band60="-3.600245714187622"
-                   Band61="3233.0" Band62="2.722757577896118" Band63="1.0" Band64="4.0"
-                   Band65="-3.978093862533569" Band66="2801.0" Band67="3.383249998092651"
-                   Band68="1.0" Band69="4.0" Band70="-3.202893972396851" Band71="3579.0"
-                   Band72="3.814475774765015" Band73="1.0" Band74="4.0" Band75="-4.367793083190918"
-                   Band76="6679.0" Band77="2.509716987609863" Band78="1.0" Band79="4.0"
-                   Band80="-2.36278247833252" Band81="8466.0" Band82="2.319440364837646"
-                   Band83="1.0" Band84="4.0" Band85="-5.889360427856445" Band86="7504.0"
-                   Band87="1.317787170410156" Band88="1.0" Band89="4.0" Band90="-5.620382308959961"
-                   Band91="6836.0" Band92="2.330254793167114" Band93="1.0" Band94="4.0"
-                   Band95="-1.710094332695007" Band96="7413.0" Band97="2.783308982849121"
-                   Band98="1.0" Band99="4.0" Band100="-3.590763807296753" Band101="6077.0"
-                   Band102="1.598126888275146" Band103="1.0" Band104="4.0" FFTEnabled="0">
+                   Band5="-0.5186029672622681" Band6="105.0" Band7="1.472813606262207"
+                   Band8="1.0" Band9="4.0" Band10="-0.5334089994430542" Band11="76.0"
+                   Band12="1.746832728385925" Band13="1.0" Band14="4.0" Band15="-1.14397394657135"
+                   Band16="217.0" Band17="3.448813915252686" Band18="1.0" Band19="4.0"
+                   Band20="-2.223200559616089" Band21="321.0" Band22="3.41641640663147"
+                   Band23="1.0" Band24="4.0" Band25="-1.637041807174683" Band26="282.0"
+                   Band27="3.487525701522827" Band28="1.0" Band29="4.0" Band30="-2.489661455154419"
+                   Band31="1121.0" Band32="3.282166242599487" Band33="1.0" Band34="4.0"
+                   Band35="-2.106866836547852" Band36="1292.0" Band37="3.015763998031616"
+                   Band38="1.0" Band39="4.0" Band40="-1.229386329650879" Band41="825.0"
+                   Band42="3.024245262145996" Band43="1.0" Band44="4.0" Band45="-1.98032021522522"
+                   Band46="963.0" Band47="3.047905206680298" Band48="1.0" Band49="4.0"
+                   Band50="-1.202449560165405" Band51="1314.0" Band52="3.472787141799927"
+                   Band53="1.0" Band54="4.0" Band55="-3.986677885055542" Band56="5751.0"
+                   Band57="2.168150901794434" Band58="1.0" Band59="4.0" Band60="-3.1127610206604"
+                   Band61="2008.0" Band62="3.978078365325928" Band63="1.0" Band64="4.0"
+                   Band65="-3.518758773803711" Band66="4712.0" Band67="2.544631719589233"
+                   Band68="1.0" Band69="4.0" Band70="-3.534559965133667" Band71="4213.0"
+                   Band72="3.625459671020508" Band73="1.0" Band74="4.0" Band75="-5.744842529296875"
+                   Band76="7961.0" Band77="1.325633764266968" Band78="1.0" Band79="4.0"
+                   Band80="-1.88532817363739" Band81="6758.0" Band82="2.43464732170105"
+                   Band83="1.0" Band84="4.0" Band85="-1.968501925468445" Band86="8651.0"
+                   Band87="2.580295324325562" Band88="1.0" Band89="4.0" Band90="-1.355445504188538"
+                   Band91="6361.0" Band92="2.023293256759644" Band93="1.0" Band94="4.0"
+                   Band95="-5.868403911590576" Band96="8661.0" Band97="1.704939603805542"
+                   Band98="1.0" Band99="4.0" Band100="-4.105780601501465" Band101="6884.0"
+                   Band102="2.201816558837891" Band103="1.0" Band104="4.0" FFTEnabled="0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="CurveEq" ID="cabEQDetails" Bypassed="1" NumFilters="60"
-                   Band0="0.0574863888323307" Band1="3272.0" Band2="7.19892406463623"
-                   Band3="1.0" Band4="4.0" Band5="0.354465663433075" Band6="3751.0"
-                   Band7="7.946837425231934" Band8="1.0" Band9="4.0" Band10="-2.403336524963379"
-                   Band11="5896.0" Band12="6.462040424346924" Band13="1.0" Band14="4.0"
-                   Band15="-1.26347017288208" Band16="3662.0" Band17="6.880168437957764"
-                   Band18="1.0" Band19="4.0" Band20="2.926836013793945" Band21="4478.0"
-                   Band22="7.57985782623291" Band23="1.0" Band24="4.0" Band25="2.715092897415161"
-                   Band26="5028.0" Band27="7.617759227752686" Band28="1.0" Band29="4.0"
-                   Band30="1.516549348831177" Band31="6139.0" Band32="6.356623649597168"
-                   Band33="1.0" Band34="4.0" Band35="3.373586893081665" Band36="3826.0"
-                   Band37="6.49804162979126" Band38="1.0" Band39="4.0" Band40="0.7966358661651611"
-                   Band41="2855.0" Band42="7.831593990325928" Band43="1.0" Band44="4.0"
-                   Band45="-0.1634966135025024" Band46="6139.0" Band47="6.873521327972412"
-                   Band48="1.0" Band49="4.0" Band50="-1.122313022613525" Band51="4272.0"
-                   Band52="6.994347095489502" Band53="1.0" Band54="4.0" Band55="0.4105208516120911"
-                   Band56="5257.0" Band57="7.145504951477051" Band58="1.0" Band59="4.0"
-                   Band60="0.4402698874473572" Band61="6666.0" Band62="7.529842376708984"
-                   Band63="1.0" Band64="4.0" Band65="0.3976631462574005" Band66="2890.0"
-                   Band67="7.346748828887939" Band68="1.0" Band69="4.0" Band70="1.892423629760742"
-                   Band71="4008.0" Band72="7.297214508056641" Band73="1.0" Band74="4.0"
-                   Band75="2.718572854995728" Band76="787.0" Band77="6.749760150909424"
-                   Band78="1.0" Band79="4.0" Band80="1.367750644683838" Band81="4714.0"
-                   Band82="7.76726770401001" Band83="1.0" Band84="4.0" Band85="-2.047490835189819"
-                   Band86="6026.0" Band87="7.792554378509521" Band88="1.0" Band89="4.0"
-                   Band90="0.7859759926795959" Band91="5489.0" Band92="6.43140172958374"
-                   Band93="1.0" Band94="4.0" Band95="1.178165793418884" Band96="3060.0"
-                   Band97="6.575413703918457" Band98="1.0" Band99="4.0" Band100="2.714921951293945"
-                   Band101="2164.0" Band102="7.246500968933105" Band103="1.0" Band104="4.0"
-                   Band105="0.06503823399543762" Band106="5687.0" Band107="7.85804271697998"
-                   Band108="1.0" Band109="4.0" Band110="-2.188588380813599" Band111="2046.0"
-                   Band112="6.845077991485596" Band113="1.0" Band114="4.0" Band115="-0.9113398790359497"
-                   Band116="210.0" Band117="6.767373561859131" Band118="1.0" Band119="4.0"
-                   Band120="-0.2694741189479828" Band121="2540.0" Band122="7.036019802093506"
-                   Band123="1.0" Band124="4.0" Band125="-2.706973791122437" Band126="1314.0"
-                   Band127="6.421488285064697" Band128="1.0" Band129="4.0" Band130="-0.8705001473426819"
-                   Band131="3462.0" Band132="6.262237071990967" Band133="1.0" Band134="4.0"
-                   Band135="-0.6634925603866577" Band136="7788.0" Band137="6.764803409576416"
-                   Band138="1.0" Band139="4.0" Band140="-2.369704008102417" Band141="352.0"
-                   Band142="6.281326293945312" Band143="1.0" Band144="4.0" Band145="-2.080825090408325"
-                   Band146="7275.0" Band147="7.288300514221191" Band148="1.0" Band149="4.0"
-                   Band150="3.188471555709839" Band151="4948.0" Band152="6.548563480377197"
-                   Band153="1.0" Band154="4.0" Band155="3.38426685333252" Band156="4723.0"
-                   Band157="6.506936073303223" Band158="1.0" Band159="4.0" Band160="2.404667377471924"
-                   Band161="7558.0" Band162="7.661865711212158" Band163="1.0" Band164="4.0"
-                   Band165="-0.3697158396244049" Band166="3888.0" Band167="7.347609996795654"
-                   Band168="1.0" Band169="4.0" Band170="2.336506605148315" Band171="240.0"
-                   Band172="6.873437404632568" Band173="1.0" Band174="4.0" Band175="-1.956740021705627"
-                   Band176="4061.0" Band177="7.780748844146729" Band178="1.0" Band179="4.0"
-                   Band180="3.27547812461853" Band181="2540.0" Band182="6.252083301544189"
-                   Band183="1.0" Band184="4.0" Band185="-2.582570552825928" Band186="7480.0"
-                   Band187="7.176033496856689" Band188="1.0" Band189="4.0" Band190="2.502195835113525"
-                   Band191="1882.0" Band192="7.624934196472168" Band193="1.0" Band194="4.0"
-                   Band195="-3.820288419723511" Band196="773.0" Band197="7.497554779052734"
-                   Band198="1.0" Band199="4.0" Band200="3.093414068222046" Band201="4794.0"
-                   Band202="7.793259620666504" Band203="1.0" Band204="4.0" Band205="3.786698818206787"
-                   Band206="3478.0" Band207="6.255295276641846" Band208="1.0" Band209="4.0"
-                   Band210="0.2769880890846252" Band211="1938.0" Band212="6.710362434387207"
-                   Band213="1.0" Band214="4.0" Band215="0.8655869960784912" Band216="6400.0"
-                   Band217="7.838510990142822" Band218="1.0" Band219="4.0" Band220="-3.798666954040527"
-                   Band221="2252.0" Band222="7.399765968322754" Band223="1.0" Band224="4.0"
-                   Band225="-2.954911708831787" Band226="4078.0" Band227="7.945018291473389"
-                   Band228="1.0" Band229="4.0" Band230="1.59841775894165" Band231="3354.0"
-                   Band232="7.514701843261719" Band233="1.0" Band234="4.0" Band235="0.1744920313358307"
-                   Band236="4405.0" Band237="6.676504135131836" Band238="1.0" Band239="4.0"
-                   Band240="-2.488399028778076" Band241="6959.0" Band242="6.925741195678711"
-                   Band243="1.0" Band244="4.0" Band245="-0.535480260848999" Band246="2121.0"
-                   Band247="6.633817672729492" Band248="1.0" Band249="4.0" Band250="1.261541724205017"
-                   Band251="405.0" Band252="7.167737483978271" Band253="1.0" Band254="4.0"
-                   Band255="0.5087001323699951" Band256="1503.0" Band257="7.203099250793457"
-                   Band258="1.0" Band259="4.0" Band260="-0.4362722933292389" Band261="4777.0"
-                   Band262="6.700664043426514" Band263="1.0" Band264="4.0" Band265="2.674192190170288"
-                   Band266="1098.0" Band267="7.859148979187012" Band268="1.0" Band269="4.0"
-                   Band270="-0.445415735244751" Band271="3114.0" Band272="7.365222454071045"
-                   Band273="1.0" Band274="4.0" Band275="-3.539619207382202" Band276="2153.0"
-                   Band277="7.394114017486572" Band278="1.0" Band279="4.0" Band280="-0.3491649031639099"
-                   Band281="1209.0" Band282="6.027668476104736" Band283="1.0" Band284="4.0"
-                   Band285="3.723679542541504" Band286="5245.0" Band287="6.933165550231934"
-                   Band288="1.0" Band289="4.0" Band290="3.627186059951782" Band291="3321.0"
-                   Band292="7.73075008392334" Band293="1.0" Band294="4.0" Band295="-0.7915627956390381"
-                   Band296="2317.0" Band297="6.60645055770874" Band298="1.0" Band299="4.0"
+                   Band0="3.737100601196289" Band1="6864.0" Band2="7.132934093475342"
+                   Band3="1.0" Band4="4.0" Band5="1.087024331092834" Band6="7051.0"
+                   Band7="7.405541896820068" Band8="1.0" Band9="4.0" Band10="-2.460834980010986"
+                   Band11="6056.0" Band12="6.582396030426025" Band13="1.0" Band14="4.0"
+                   Band15="0.5600953698158264" Band16="7612.0" Band17="7.685642719268799"
+                   Band18="1.0" Band19="4.0" Band20="-3.701738834381104" Band21="2594.0"
+                   Band22="6.465390205383301" Band23="1.0" Band24="4.0" Band25="1.46812379360199"
+                   Band26="2841.0" Band27="6.150062561035156" Band28="1.0" Band29="4.0"
+                   Band30="-0.9060153365135193" Band31="2523.0" Band32="6.092312812805176"
+                   Band33="1.0" Band34="4.0" Band35="-3.51415491104126" Band36="6952.0"
+                   Band37="7.612906455993652" Band38="1.0" Band39="4.0" Band40="1.806456804275513"
+                   Band41="2105.0" Band42="6.744539737701416" Band43="1.0" Band44="4.0"
+                   Band45="3.248139381408691" Band46="2751.0" Band47="6.524461269378662"
+                   Band48="1.0" Band49="4.0" Band50="-1.892629265785217" Band51="996.0"
+                   Band52="6.962970733642578" Band53="1.0" Band54="4.0" Band55="-1.65283739566803"
+                   Band56="2410.0" Band57="7.563612937927246" Band58="1.0" Band59="4.0"
+                   Band60="-0.157236784696579" Band61="7148.0" Band62="7.642362117767334"
+                   Band63="1.0" Band64="4.0" Band65="-0.04829329997301102" Band66="1850.0"
+                   Band67="7.84201192855835" Band68="1.0" Band69="4.0" Band70="0.03085195273160934"
+                   Band71="7192.0" Band72="7.203503608703613" Band73="1.0" Band74="4.0"
+                   Band75="0.2422208935022354" Band76="3823.0" Band77="7.838793277740479"
+                   Band78="1.0" Band79="4.0" Band80="-0.4895167350769043" Band81="4476.0"
+                   Band82="7.570083141326904" Band83="1.0" Band84="4.0" Band85="-1.331187963485718"
+                   Band86="3769.0" Band87="7.180868625640869" Band88="1.0" Band89="4.0"
+                   Band90="2.406469821929932" Band91="7625.0" Band92="7.860205173492432"
+                   Band93="1.0" Band94="4.0" Band95="3.666731357574463" Band96="6707.0"
+                   Band97="6.796316623687744" Band98="1.0" Band99="4.0" Band100="0.5576680898666382"
+                   Band101="3277.0" Band102="7.68335485458374" Band103="1.0" Band104="4.0"
+                   Band105="-2.954437971115112" Band106="5761.0" Band107="7.703957557678223"
+                   Band108="1.0" Band109="4.0" Band110="0.09561231732368469" Band111="2782.0"
+                   Band112="6.009938716888428" Band113="1.0" Band114="4.0" Band115="-1.99290931224823"
+                   Band116="6221.0" Band117="6.973218441009521" Band118="1.0" Band119="4.0"
+                   Band120="3.31537938117981" Band121="6951.0" Band122="7.567439079284668"
+                   Band123="1.0" Band124="4.0" Band125="-0.9931356906890869" Band126="7912.0"
+                   Band127="6.334512710571289" Band128="1.0" Band129="4.0" Band130="-0.5887254476547241"
+                   Band131="2939.0" Band132="6.867223739624023" Band133="1.0" Band134="4.0"
+                   Band135="-0.1454828977584839" Band136="6650.0" Band137="6.742293357849121"
+                   Band138="1.0" Band139="4.0" Band140="2.1282639503479" Band141="2473.0"
+                   Band142="7.133949756622314" Band143="1.0" Band144="4.0" Band145="2.633480548858643"
+                   Band146="4299.0" Band147="6.208800315856934" Band148="1.0" Band149="4.0"
+                   Band150="1.218281030654907" Band151="2395.0" Band152="7.48160982131958"
+                   Band153="1.0" Band154="4.0" Band155="-2.052302122116089" Band156="3208.0"
+                   Band157="6.041630744934082" Band158="1.0" Band159="4.0" Band160="-1.327184915542603"
+                   Band161="883.0" Band162="6.942965030670166" Band163="1.0" Band164="4.0"
+                   Band165="0.6520923972129822" Band166="1514.0" Band167="6.631711959838867"
+                   Band168="1.0" Band169="4.0" Band170="3.707840919494629" Band171="5219.0"
+                   Band172="7.990261077880859" Band173="1.0" Band174="4.0" Band175="3.390853643417358"
+                   Band176="3840.0" Band177="6.689564228057861" Band178="1.0" Band179="4.0"
+                   Band180="1.698999881744385" Band181="2328.0" Band182="6.00481653213501"
+                   Band183="1.0" Band184="4.0" Band185="2.741445064544678" Band186="6606.0"
+                   Band187="7.219106674194336" Band188="1.0" Band189="4.0" Band190="-3.598278522491455"
+                   Band191="3148.0" Band192="7.779915809631348" Band193="1.0" Band194="4.0"
+                   Band195="3.266152381896973" Band196="2489.0" Band197="7.728672027587891"
+                   Band198="1.0" Band199="4.0" Band200="2.461588144302368" Band201="7868.0"
+                   Band202="7.353888034820557" Band203="1.0" Band204="4.0" Band205="0.6160528659820557"
+                   Band206="1316.0" Band207="6.117869853973389" Band208="1.0" Band209="4.0"
+                   Band210="-3.35713529586792" Band211="3482.0" Band212="6.480875968933105"
+                   Band213="1.0" Band214="4.0" Band215="2.240023374557495" Band216="5139.0"
+                   Band217="7.108503341674805" Band218="1.0" Band219="4.0" Band220="2.363156795501709"
+                   Band221="1193.0" Band222="6.95218563079834" Band223="1.0" Band224="4.0"
+                   Band225="0.6301844120025635" Band226="5475.0" Band227="6.073400020599365"
+                   Band228="1.0" Band229="4.0" Band230="2.919517517089844" Band231="7440.0"
+                   Band232="7.257397174835205" Band233="1.0" Band234="4.0" Band235="1.956255316734314"
+                   Band236="540.0" Band237="6.248265266418457" Band238="1.0" Band239="4.0"
+                   Band240="2.061527729034424" Band241="3096.0" Band242="7.043793678283691"
+                   Band243="1.0" Band244="4.0" Band245="-3.589334487915039" Band246="1419.0"
+                   Band247="6.165661811828613" Band248="1.0" Band249="4.0" Band250="-3.47428560256958"
+                   Band251="277.0" Band252="7.933329582214355" Band253="1.0" Band254="4.0"
+                   Band255="0.1970369517803192" Band256="1918.0" Band257="7.751609325408936"
+                   Band258="1.0" Band259="4.0" Band260="-2.283810377120972" Band261="2640.0"
+                   Band262="7.103705406188965" Band263="1.0" Band264="4.0" Band265="1.942665576934814"
+                   Band266="5929.0" Band267="6.088151931762695" Band268="1.0" Band269="4.0"
+                   Band270="1.349559783935547" Band271="4540.0" Band272="6.674308776855469"
+                   Band273="1.0" Band274="4.0" Band275="-3.913360118865967" Band276="4524.0"
+                   Band277="7.862806797027588" Band278="1.0" Band279="4.0" Band280="-2.107568264007568"
+                   Band281="3344.0" Band282="6.307719230651855" Band283="1.0" Band284="4.0"
+                   Band285="-1.783901214599609" Band286="1092.0" Band287="6.306297302246094"
+                   Band288="1.0" Band289="4.0" Band290="-0.2897338271141052" Band291="5978.0"
+                   Band292="7.079045295715332" Band293="1.0" Band294="4.0" Band295="-0.8002309799194336"
+                   Band296="7293.0" Band297="6.447010517120361" Band298="1.0" Band299="4.0"
                    FFTEnabled="0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="CurveEq" ID="cabAxis" Bypassed="0" NumFilters="6" Band0="1.0"
+        <Processor Type="CurveEq" ID="cabEQCustom" Bypassed="0" NumFilters="0" FFTEnabled="0">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="CurveEq" ID="cabAxis" Bypassed="1" NumFilters="6" Band0="1.0"
                    Band1="150.0" Band2="0.300000011920929" Band3="1.0" Band4="2.0"
                    Band5="0.0" Band6="2300.0" Band7="0.300000011920929" Band8="1.0"
                    Band9="3.0" Band10="0.9931027889251709" Band11="60.0" Band12="0.6692273020744324"
@@ -801,17 +1062,43 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="CurveEq" ID="eqWhistle" Bypassed="0" NumFilters="2" Band0="-5.0"
+        <Processor Type="CurveEq" ID="eqWhistle" Bypassed="1" NumFilters="2" Band0="-5.0"
                    Band1="2600.0" Band2="4.539204120635986" Band3="1.0" Band4="4.0"
                    Band5="-8.0" Band6="4000.0" Band7="4.406803607940674" Band8="1.0"
                    Band9="4.0" FFTEnabled="0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="reverbFixed" Bypassed="0" Network="reverb"
-                   Mix="0.0" Brightness="0.0" Feedback="0.0">
+        <Processor Type="Hardcoded Master FX" ID="reverbFixed" Bypassed="1" Network="reverb"
+                   Mix="0.0" Brightness="0.800000011920929" Feedback="0.800000011920929">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="SimpleGain" ID="outputGain" Bypassed="0" Gain="0.0" Delay="0.0"
+                   Width="100.0" Balance="0.0" InvertPolarity="0.0">
+          <ChildProcessors>
+            <Processor Type="ModulatorChain" ID="Gain Modulation" Bypassed="0" Intensity="1.0">
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Delay Modulation" Bypassed="0" Intensity="1.0">
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Width Modulation" Bypassed="0" Intensity="1.0">
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Pan Modulation" Bypassed="0" Intensity="1.0">
+              <ChildProcessors/>
+            </Processor>
+          </ChildProcessors>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="ScriptFX" ID="testingScriptFX" Bypassed="1">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+          <Content/>
+          <UIData>
+            <ContentProperties DeviceType="Desktop"/>
+          </UIData>
         </Processor>
       </ChildProcessors>
     </Processor>
