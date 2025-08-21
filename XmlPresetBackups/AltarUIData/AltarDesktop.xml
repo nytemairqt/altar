@@ -50,7 +50,7 @@
   <Component type="ScriptSlider" id="knbOutputGain" x="460.0" y="10.0" min="-36.0"
              max="36.0" middlePosition="0.0"/>
   <Component type="ScriptButton" id="btnAmpMode" x="50.0" y="80.0" width="160.0"
-             height="30.0"/>
+             height="30.0" defaultValue="1.0"/>
   <Component type="ScriptButton" id="btnAmpOversampling" x="50.0" y="110.0"
-             width="160.0" height="30.0"/>
+             width="160.0" height="30.0" defaultValue="1.0"/>
 </ContentProperties>

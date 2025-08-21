@@ -6,7 +6,7 @@
   <ChildProcessors>
     <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
       <ChildProcessors>
-        <Processor Type="MidiPlayer" ID="cabMIDIPlayer" Bypassed="0" CurrentSequence="207.0"
+        <Processor Type="MidiPlayer" ID="cabMIDIPlayer" Bypassed="0" CurrentSequence="217.0"
                    CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
           <ChildProcessors/>
           <MidiFiles>
@@ -884,8 +884,47 @@
               <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                              LoopEnd="1.0" Tempo="120.0"/>
             </MidiFile>
-            <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
-                      FileName="">
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
               <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                              LoopEnd="1.0" Tempo="120.0"/>
             </MidiFile>
@@ -924,7 +963,7 @@
             <Control type="ScriptSlider" id="knbInputGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
             <Control type="ScriptButton" id="btnAmpMode" value="1.0"/>
-            <Control type="ScriptButton" id="btnAmpOversampling" value="1.0"/>
+            <Control type="ScriptButton" id="btnAmpOversampling" value="0.0"/>
           </Content>
           <UIData Source="AltarUIData"/>
         </Processor>
@@ -983,7 +1022,7 @@
         <Processor Type="Hardcoded Master FX" ID="ampFixed" Bypassed="0" Network="amp"
                    channel="1.0" inputGainClean="1.072883605957031e-6" inputGainDirty="1.072883605957031e-6"
                    outputGainClean="1.072883605957031e-6" outputGainDirty="1.072883605957031e-6"
-                   oversampling="1.0">
+                   oversampling="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -1002,7 +1041,7 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Convolution" ID="cabConvolution" Bypassed="1" DryGain="-100.0"
+        <Processor Type="Convolution" ID="cabConvolution" Bypassed="0" DryGain="-100.0"
                    WetGain="0.0" Latency="0.0" ImpulseLength="1.0" ProcessInput="1.0"
                    UseBackgroundThread="0.0" Predelay="0.0" HiCut="20000.0" Damping="0.0"
                    FFTType="5.0" FileName="{PROJECT_FOLDER}TSE IMPULSE.wav" min="0"

@@ -12,12 +12,12 @@
         <SwitchTargets>
           <SwitchTarget>
             <Connections>
-              <Connection NodeId="soft_bypass" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass7" ParameterId="Bypassed"/>
             </Connections>
           </SwitchTarget>
           <SwitchTarget>
             <Connections>
-              <Connection NodeId="soft_bypass1" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass3" ParameterId="Bypassed"/>
             </Connections>
           </SwitchTarget>
         </SwitchTargets>
@@ -33,14 +33,14 @@
         <SwitchTargets>
           <SwitchTarget>
             <Connections>
-              <Connection NodeId="soft_bypass3" ParameterId="Bypassed"/>
-              <Connection NodeId="soft_bypass5" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass11" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass16" ParameterId="Bypassed"/>
             </Connections>
           </SwitchTarget>
           <SwitchTarget>
             <Connections>
-              <Connection NodeId="soft_bypass2" ParameterId="Bypassed"/>
-              <Connection NodeId="soft_bypass4" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass10" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass9" ParameterId="Bypassed"/>
             </Connections>
           </SwitchTarget>
         </SwitchTargets>
@@ -48,15 +48,15 @@
           <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1" ID="Value" Automated="1"/>
         </Parameters>
       </Node>
-      <Node ID="split1" FactoryPath="container.split" Bypassed="0" Name="split">
+      <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain2">
         <Nodes>
-          <Node ID="soft_bypass" FactoryPath="container.soft_bypass" Bypassed="0"
-                Name="soft_bypass_clean">
+          <Node ID="soft_bypass7" FactoryPath="container.soft_bypass" Bypassed="1"
+                Name="soft_bypass_clean_os">
             <Properties>
               <Property ID="SmoothingTime" Value="20"/>
             </Properties>
             <Nodes>
-              <Node ID="gain2" FactoryPath="core.gain" Bypassed="0" Name="gain">
+              <Node ID="gain8" FactoryPath="core.gain" Bypassed="0" Name="gain">
                 <Parameters>
                   <Parameter MinValue="-72.0" MaxValue="72.0" StepSize="0.1000000014901161"
                              SkewFactor="1" ID="Gain" Automated="1"/>
@@ -66,16 +66,16 @@
                              SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                 </Parameters>
               </Node>
-              <Node ID="soft_bypass2" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="soft_bypass2">
+              <Node ID="soft_bypass9" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="soft_bypass9">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
                 <Nodes>
-                  <Node ID="oversample4x1" FactoryPath="container.oversample4x" Bypassed="0"
+                  <Node ID="oversample4x4" FactoryPath="container.oversample4x" Bypassed="0"
                         Name="oversample4x">
                     <Nodes>
-                      <Node ID="snex_shaper1" FactoryPath="core.snex_shaper" Bypassed="0"
+                      <Node ID="snex_shaper2" FactoryPath="core.snex_shaper" Bypassed="0"
                             Name="snex_shaper1">
                         <Properties>
                           <Property ID="ClassId" Value="clean_channel"/>
@@ -100,13 +100,13 @@
                 </Nodes>
                 <Parameters/>
               </Node>
-              <Node ID="soft_bypass3" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="soft_bypass3">
+              <Node ID="soft_bypass16" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="soft_bypass9">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
                 <Nodes>
-                  <Node ID="snex_shaper2" FactoryPath="core.snex_shaper" Bypassed="0"
+                  <Node ID="snex_shaper6" FactoryPath="core.snex_shaper" Bypassed="0"
                         Name="snex_shaper1">
                     <Properties>
                       <Property ID="ClassId" Value="clean_channel"/>
@@ -125,7 +125,7 @@
                 </Nodes>
                 <Parameters/>
               </Node>
-              <Node ID="gain3" FactoryPath="core.gain" Bypassed="0" Name="gain1">
+              <Node ID="gain9" FactoryPath="core.gain" Bypassed="0" Name="gain1">
                 <Parameters>
                   <Parameter MinValue="-72.0" MaxValue="72.0" StepSize="0.1000000014901161"
                              SkewFactor="1" ID="Gain" Automated="1"/>
@@ -138,13 +138,13 @@
             </Nodes>
             <Parameters/>
           </Node>
-          <Node ID="soft_bypass1" FactoryPath="container.soft_bypass" Bypassed="0"
-                Name="soft_bypass_dirty">
+          <Node ID="soft_bypass3" FactoryPath="container.soft_bypass" Bypassed="0"
+                Name="soft_bypass_dirty_os">
             <Properties>
               <Property ID="SmoothingTime" Value="20"/>
             </Properties>
             <Nodes>
-              <Node ID="gain4" FactoryPath="core.gain" Bypassed="0" Name="gain">
+              <Node ID="gain6" FactoryPath="core.gain" Bypassed="0" Name="gain">
                 <Parameters>
                   <Parameter MinValue="-72.0" MaxValue="72.0" StepSize="0.1000000014901161"
                              SkewFactor="1" ID="Gain" Automated="1"/>
@@ -154,16 +154,16 @@
                              SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                 </Parameters>
               </Node>
-              <Node ID="soft_bypass4" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="soft_bypass4">
+              <Node ID="soft_bypass10" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="soft_bypass10">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
                 <Nodes>
-                  <Node ID="oversample4x2" FactoryPath="container.oversample4x" Bypassed="0"
+                  <Node ID="oversample4x3" FactoryPath="container.oversample4x" Bypassed="0"
                         Name="oversample4x">
                     <Nodes>
-                      <Node ID="snex_shaper3" FactoryPath="core.snex_shaper" Bypassed="0"
+                      <Node ID="snex_shaper4" FactoryPath="core.snex_shaper" Bypassed="0"
                             Name="snex_shaper">
                         <Properties>
                           <Property ID="ClassId" Value="dirty_channel"/>
@@ -188,13 +188,13 @@
                 </Nodes>
                 <Parameters/>
               </Node>
-              <Node ID="soft_bypass5" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="soft_bypass5">
+              <Node ID="soft_bypass11" FactoryPath="container.soft_bypass" Bypassed="1"
+                    Name="soft_bypass10">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
                 <Nodes>
-                  <Node ID="snex_shaper4" FactoryPath="core.snex_shaper" Bypassed="0"
+                  <Node ID="snex_shaper5" FactoryPath="core.snex_shaper" Bypassed="0"
                         Name="snex_shaper">
                     <Properties>
                       <Property ID="ClassId" Value="dirty_channel"/>
@@ -213,7 +213,7 @@
                 </Nodes>
                 <Parameters/>
               </Node>
-              <Node ID="gain5" FactoryPath="core.gain" Bypassed="0" Name="gain1">
+              <Node ID="gain7" FactoryPath="core.gain" Bypassed="0" Name="gain1">
                 <Parameters>
                   <Parameter MinValue="-72.0" MaxValue="72.0" StepSize="0.1000000014901161"
                              SkewFactor="1" ID="Gain" Automated="1"/>
@@ -232,7 +232,7 @@
     </Nodes>
     <Parameters>
       <Parameter ID="channel" MinValue="0.0" MaxValue="1.0" StepSize="1" ExternalModulation="Disabled"
-                 DefaultValue="" Value="1.0">
+                 DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="xfader1" ParameterId="Value"/>
         </Connections>
@@ -240,29 +240,29 @@
       <Parameter ID="inputGainClean" MinValue="-72.0" MaxValue="72.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="gain2" ParameterId="Gain"/>
+          <Connection NodeId="gain8" ParameterId="Gain"/>
         </Connections>
       </Parameter>
       <Parameter ID="inputGainDirty" MinValue="-72.0" MaxValue="72.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="gain4" ParameterId="Gain"/>
+          <Connection NodeId="gain6" ParameterId="Gain"/>
         </Connections>
       </Parameter>
       <Parameter ID="outputGainClean" MinValue="-72.0" MaxValue="72.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="gain3" ParameterId="Gain"/>
+          <Connection NodeId="gain9" ParameterId="Gain"/>
         </Connections>
       </Parameter>
       <Parameter ID="outputGainDirty" MinValue="-72.0" MaxValue="72.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="gain5" ParameterId="Gain"/>
+          <Connection NodeId="gain7" ParameterId="Gain"/>
         </Connections>
       </Parameter>
       <Parameter ID="oversampling" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
-                 DefaultValue="" Value="1.0" StepSize="1">
+                 DefaultValue="" Value="0.0" StepSize="1">
         <Connections>
           <Connection NodeId="xfader2" ParameterId="Value"/>
         </Connections>
