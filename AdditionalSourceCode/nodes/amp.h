@@ -15,23 +15,6 @@ namespace amp_impl
 {
 // ==============================| Node & Parameter type declarations |==============================
 
-DECLARE_PARAMETER_RANGE_SKEW(xfader_c0Range, 
-                             -100., 
-                             0., 
-                             5.42227);
-
-template <int NV>
-using xfader_c0 = parameter::from0To1<core::gain<NV>, 
-                                      0, 
-                                      xfader_c0Range>;
-
-template <int NV> using xfader_c1 = xfader_c0<NV>;
-
-template <int NV>
-using xfader_multimod = parameter::list<xfader_c0<NV>, xfader_c1<NV>>;
-
-template <int NV>
-using xfader_t = control::xfader<xfader_multimod<NV>, faders::linear>;
 template <int NumVoices> struct clean_channel
 {
 	SNEX_NODE(clean_channel);
@@ -113,14 +96,32 @@ template <int NV>
 using oversample4x1_t = wrap::oversample<4, oversample4x1_t_<NV>>;
 
 template <int NV>
+using soft_bypass2_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, oversample4x1_t<NV>>>;
+
+template <int NV>
+using soft_bypass2_t = bypass::smoothed<20, soft_bypass2_t_<NV>>;
+template <int NV> using snex_shaper2_t = snex_shaper1_t<NV>;
+
+template <int NV>
+using soft_bypass3_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, snex_shaper2_t<NV>>>;
+
+template <int NV>
+using soft_bypass3_t = bypass::smoothed<20, soft_bypass3_t_<NV>>;
+
+template <int NV>
 using soft_bypass_t_ = container::chain<parameter::empty, 
                                         wrap::fix<2, core::gain<NV>>, 
-                                        oversample4x1_t<NV>, 
-                                        core::gain<NV>, 
+                                        soft_bypass2_t<NV>, 
+                                        soft_bypass3_t<NV>, 
                                         core::gain<NV>>;
 
 template <int NV>
 using soft_bypass_t = bypass::smoothed<20, soft_bypass_t_<NV>>;
+template <int NV>
+using xfader1_c0 = parameter::bypass<soft_bypass_t<NV>>;
+
 template <int NumVoices> struct dirty_channel
 {
 	SNEX_NODE(dirty_channel);
@@ -196,14 +197,65 @@ template <int NV>
 using oversample4x2_t = wrap::oversample<4, oversample4x2_t_<NV>>;
 
 template <int NV>
+using soft_bypass4_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, oversample4x2_t<NV>>>;
+
+template <int NV>
+using soft_bypass4_t = bypass::smoothed<20, soft_bypass4_t_<NV>>;
+template <int NV> using snex_shaper4_t = snex_shaper3_t<NV>;
+
+template <int NV>
+using soft_bypass5_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, snex_shaper4_t<NV>>>;
+
+template <int NV>
+using soft_bypass5_t = bypass::smoothed<20, soft_bypass5_t_<NV>>;
+
+template <int NV>
 using soft_bypass1_t_ = container::chain<parameter::empty, 
                                          wrap::fix<2, core::gain<NV>>, 
-                                         oversample4x2_t<NV>, 
-                                         core::gain<NV>, 
+                                         soft_bypass4_t<NV>, 
+                                         soft_bypass5_t<NV>, 
                                          core::gain<NV>>;
 
 template <int NV>
 using soft_bypass1_t = bypass::smoothed<20, soft_bypass1_t_<NV>>;
+template <int NV>
+using xfader1_c1 = parameter::bypass<soft_bypass1_t<NV>>;
+
+template <int NV>
+using xfader1_multimod = parameter::list<xfader1_c0<NV>, xfader1_c1<NV>>;
+
+template <int NV>
+using xfader1_t = control::xfader<xfader1_multimod<NV>, faders::switcher>;
+
+template <int NV>
+using xfader2_c0_0 = parameter::bypass<soft_bypass3_t<NV>>;
+
+template <int NV>
+using xfader2_c0_1 = parameter::bypass<soft_bypass5_t<NV>>;
+
+template <int NV>
+using xfader2_c0 = parameter::chain<ranges::Identity, 
+                                    xfader2_c0_0<NV>, 
+                                    xfader2_c0_1<NV>>;
+
+template <int NV>
+using xfader2_c1_0 = parameter::bypass<soft_bypass2_t<NV>>;
+
+template <int NV>
+using xfader2_c1_1 = parameter::bypass<soft_bypass4_t<NV>>;
+
+template <int NV>
+using xfader2_c1 = parameter::chain<ranges::Identity, 
+                                    xfader2_c1_0<NV>, 
+                                    xfader2_c1_1<NV>>;
+
+template <int NV>
+using xfader2_multimod = parameter::list<xfader2_c0<NV>, xfader2_c1<NV>>;
+
+template <int NV>
+using xfader2_t = control::xfader<xfader2_multimod<NV>, faders::switcher>;
 
 template <int NV>
 using split1_t = container::split<parameter::empty, 
@@ -259,18 +311,24 @@ using outputGainDirty = parameter::chain<outputGainDirty_InputRange,
                                          outputGainDirty_0<NV>>;
 
 template <int NV>
-using channel = parameter::plain<amp_impl::xfader_t<NV>, 0>;
+using channel = parameter::plain<amp_impl::xfader1_t<NV>, 
+                                 0>;
+template <int NV>
+using oversampling = parameter::plain<amp_impl::xfader2_t<NV>, 
+                                      0>;
 template <int NV>
 using amp_t_plist = parameter::list<channel<NV>, 
                                     inputGainClean<NV>, 
                                     inputGainDirty<NV>, 
                                     outputGainClean<NV>, 
-                                    outputGainDirty<NV>>;
+                                    outputGainDirty<NV>, 
+                                    oversampling<NV>>;
 }
 
 template <int NV>
 using amp_t_ = container::chain<amp_t_parameters::amp_t_plist<NV>, 
-                                wrap::fix<2, xfader_t<NV>>, 
+                                wrap::fix<2, xfader1_t<NV>>, 
+                                xfader2_t<NV>, 
                                 split1_t<NV>>;
 
 // =================================| Root node initialiser class |=================================
@@ -288,21 +346,23 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		
 		SNEX_METADATA_ID(amp);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(102)
+		SNEX_METADATA_ENCODED_PARAMETERS(120)
 		{
 			0x005C, 0x0000, 0x0000, 0x6863, 0x6E61, 0x656E, 0x006C, 0x0000, 
-            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
+            0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x005C, 0x0001, 0x0000, 0x6E69, 0x7570, 0x4774, 0x6961, 
-            0x436E, 0x656C, 0x6E61, 0x0000, 0x9000, 0x00C2, 0x9000, 0xBC42, 
-            0x1374, 0x00C0, 0x8000, 0x003F, 0x0000, 0x5C00, 0x0200, 0x0000, 
+            0x436E, 0x656C, 0x6E61, 0x0000, 0x9000, 0x00C2, 0x9000, 0x0042, 
+            0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5C00, 0x0200, 0x0000, 
             0x6900, 0x706E, 0x7475, 0x6147, 0x6E69, 0x6944, 0x7472, 0x0079, 
-            0x0000, 0xC290, 0x0000, 0x4290, 0x0000, 0x4290, 0x0000, 0x3F80, 
+            0x0000, 0xC290, 0x0000, 0x4290, 0x0000, 0x0000, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x005C, 0x0003, 0x0000, 0x756F, 0x7074, 0x7475, 
             0x6147, 0x6E69, 0x6C43, 0x6165, 0x006E, 0x0000, 0xC290, 0x0000, 
-            0x4290, 0x51EC, 0x40B8, 0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 
+            0x4290, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 
             0x0004, 0x0000, 0x756F, 0x7074, 0x7475, 0x6147, 0x6E69, 0x6944, 
-            0x7472, 0x0079, 0x0000, 0xC290, 0x0000, 0x4290, 0xF7CF, 0xC1D3, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x0000
+            0x7472, 0x0079, 0x0000, 0xC290, 0x0000, 0x4290, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 0x0005, 0x0000, 0x766F, 
+            0x7265, 0x6173, 0x706D, 0x696C, 0x676E, 0x0000, 0x0000, 0x0000, 
+            0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x003F
 		};
 		SNEX_METADATA_ENCODED_MOD_INFO(17)
 		{
@@ -316,24 +376,29 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 	{
 		// Node References -------------------------------------------------------------------------
 		
-		auto& xfader = this->getT(0);                               // amp_impl::xfader_t<NV>
-		auto& split1 = this->getT(1);                               // amp_impl::split1_t<NV>
-		auto& soft_bypass = this->getT(1).getT(0);                  // amp_impl::soft_bypass_t<NV>
-		auto& gain2 = this->getT(1).getT(0).getT(0);                // core::gain<NV>
-		auto& oversample4x1 = this->getT(1).getT(0).getT(1);        // amp_impl::oversample4x1_t<NV>
-		auto& snex_shaper1 = this->getT(1).getT(0).getT(1).getT(0); // amp_impl::snex_shaper1_t<NV>
-		auto& gain3 = this->getT(1).getT(0).getT(2);                // core::gain<NV>
-		auto& gain = this->getT(1).getT(0).getT(3);                 // core::gain<NV>
-		auto& soft_bypass1 = this->getT(1).getT(1);                 // amp_impl::soft_bypass1_t<NV>
-		auto& gain4 = this->getT(1).getT(1).getT(0);                // core::gain<NV>
-		auto& oversample4x2 = this->getT(1).getT(1).getT(1);        // amp_impl::oversample4x2_t<NV>
-		auto& snex_shaper3 = this->getT(1).getT(1).getT(1).getT(0); // amp_impl::snex_shaper3_t<NV>
-		auto& gain5 = this->getT(1).getT(1).getT(2);                // core::gain<NV>
-		auto& gain1 = this->getT(1).getT(1).getT(3);                // core::gain<NV>
+		auto& xfader1 = this->getT(0);                                      // amp_impl::xfader1_t<NV>
+		auto& xfader2 = this->getT(1);                                      // amp_impl::xfader2_t<NV>
+		auto& split1 = this->getT(2);                                       // amp_impl::split1_t<NV>
+		auto& soft_bypass = this->getT(2).getT(0);                          // amp_impl::soft_bypass_t<NV>
+		auto& gain2 = this->getT(2).getT(0).getT(0);                        // core::gain<NV>
+		auto& soft_bypass2 = this->getT(2).getT(0).getT(1);                 // amp_impl::soft_bypass2_t<NV>
+		auto& oversample4x1 = this->getT(2).getT(0).getT(1).getT(0);        // amp_impl::oversample4x1_t<NV>
+		auto& snex_shaper1 = this->getT(2).getT(0).getT(1).getT(0).getT(0); // amp_impl::snex_shaper1_t<NV>
+		auto& soft_bypass3 = this->getT(2).getT(0).getT(2);                 // amp_impl::soft_bypass3_t<NV>
+		auto& snex_shaper2 = this->getT(2).getT(0).getT(2).getT(0);         // amp_impl::snex_shaper2_t<NV>
+		auto& gain3 = this->getT(2).getT(0).getT(3);                        // core::gain<NV>
+		auto& soft_bypass1 = this->getT(2).getT(1);                         // amp_impl::soft_bypass1_t<NV>
+		auto& gain4 = this->getT(2).getT(1).getT(0);                        // core::gain<NV>
+		auto& soft_bypass4 = this->getT(2).getT(1).getT(1);                 // amp_impl::soft_bypass4_t<NV>
+		auto& oversample4x2 = this->getT(2).getT(1).getT(1).getT(0);        // amp_impl::oversample4x2_t<NV>
+		auto& snex_shaper3 = this->getT(2).getT(1).getT(1).getT(0).getT(0); // amp_impl::snex_shaper3_t<NV>
+		auto& soft_bypass5 = this->getT(2).getT(1).getT(2);                 // amp_impl::soft_bypass5_t<NV>
+		auto& snex_shaper4 = this->getT(2).getT(1).getT(2).getT(0);         // amp_impl::snex_shaper4_t<NV>
+		auto& gain5 = this->getT(2).getT(1).getT(3);                        // core::gain<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
-		this->getParameterT(0).connectT(0, xfader); // channel -> xfader::Value
+		this->getParameterT(0).connectT(0, xfader1); // channel -> xfader1::Value
 		
 		this->getParameterT(1).connectT(0, gain2); // inputGainClean -> gain2::Gain
 		
@@ -343,15 +408,24 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		
 		this->getParameterT(4).connectT(0, gain5); // outputGainDirty -> gain5::Gain
 		
+		this->getParameterT(5).connectT(0, xfader2); // oversampling -> xfader2::Value
+		
 		// Modulation Connections ------------------------------------------------------------------
 		
-		auto& xfader_p = xfader.getWrappedObject().getParameter();
-		xfader_p.getParameterT(0).connectT(0, gain);  // xfader -> gain::Gain
-		xfader_p.getParameterT(1).connectT(0, gain1); // xfader -> gain1::Gain
+		auto& xfader1_p = xfader1.getWrappedObject().getParameter();
+		xfader1_p.getParameterT(0).connectT(0, soft_bypass);  // xfader1 -> soft_bypass::Bypassed
+		xfader1_p.getParameterT(1).connectT(0, soft_bypass1); // xfader1 -> soft_bypass1::Bypassed
+		auto& xfader2_p = xfader2.getWrappedObject().getParameter();
+		xfader2_p.getParameterT(0).connectT(0, soft_bypass3); // xfader2 -> soft_bypass3::Bypassed
+		xfader2_p.getParameterT(0).connectT(1, soft_bypass5); // xfader2 -> soft_bypass5::Bypassed
+		xfader2_p.getParameterT(1).connectT(0, soft_bypass2); // xfader2 -> soft_bypass2::Bypassed
+		xfader2_p.getParameterT(1).connectT(1, soft_bypass4); // xfader2 -> soft_bypass4::Bypassed
 		
 		// Default Values --------------------------------------------------------------------------
 		
-		; // xfader::Value is automated
+		; // xfader1::Value is automated
+		
+		; // xfader2::Value is automated
 		
 		;                            // gain2::Gain is automated
 		gain2.setParameterT(1, 20.); // core::gain::Smoothing
@@ -363,10 +437,6 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		gain3.setParameterT(1, 20.); // core::gain::Smoothing
 		gain3.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		;                           // gain::Gain is automated
-		gain.setParameterT(1, 20.); // core::gain::Smoothing
-		gain.setParameterT(2, 0.);  // core::gain::ResetValue
-		
 		;                            // gain4::Gain is automated
 		gain4.setParameterT(1, 20.); // core::gain::Smoothing
 		gain4.setParameterT(2, 0.);  // core::gain::ResetValue
@@ -377,15 +447,12 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		gain5.setParameterT(1, 20.); // core::gain::Smoothing
 		gain5.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		;                            // gain1::Gain is automated
-		gain1.setParameterT(1, 20.); // core::gain::Smoothing
-		gain1.setParameterT(2, 0.);  // core::gain::ResetValue
-		
-		this->setParameterT(0, 0.);
-		this->setParameterT(1, -2.304);
-		this->setParameterT(2, 72.);
-		this->setParameterT(3, 5.76);
-		this->setParameterT(4, -26.);
+		this->setParameterT(0, 1.);
+		this->setParameterT(1, 0.);
+		this->setParameterT(2, 0.);
+		this->setParameterT(3, 0.);
+		this->setParameterT(4, 0.);
+		this->setParameterT(5, 1.);
 		this->setExternalData({}, -1);
 	}
 	~instance() override
@@ -405,8 +472,10 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(1).getT(0).getT(1).getT(0).setExternalData(b, index); // amp_impl::snex_shaper1_t<NV>
-		this->getT(1).getT(1).getT(1).getT(0).setExternalData(b, index); // amp_impl::snex_shaper3_t<NV>
+		this->getT(2).getT(0).getT(1).getT(0).getT(0).setExternalData(b, index); // amp_impl::snex_shaper1_t<NV>
+		this->getT(2).getT(0).getT(2).getT(0).setExternalData(b, index);         // amp_impl::snex_shaper2_t<NV>
+		this->getT(2).getT(1).getT(1).getT(0).getT(0).setExternalData(b, index); // amp_impl::snex_shaper3_t<NV>
+		this->getT(2).getT(1).getT(2).getT(0).setExternalData(b, index);         // amp_impl::snex_shaper4_t<NV>
 	}
 };
 }

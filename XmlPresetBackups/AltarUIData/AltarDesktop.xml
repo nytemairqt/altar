@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ContentProperties DeviceType="Desktop">
-  <Component type="ScriptSlider" id="knbAmpMode" x="90.0" y="110.0" stepSize="1.0"
-             defaultValue="1.0"/>
   <Component type="ScriptSlider" id="knbCleanInput" x="100.0" y="170.0" stepSize="0.1000000014901161"
              min="-72.0" max="72.0" middlePosition="0.0"/>
   <Component type="ScriptSlider" id="knbCleanOutput" x="100.0" y="240.0" stepSize="0.1000000014901161"
@@ -47,4 +45,8 @@
              max="36.0" middlePosition="0.0"/>
   <Component type="ScriptSlider" id="knbOutputGain" x="460.0" y="10.0" min="-36.0"
              max="36.0" middlePosition="0.0"/>
+  <Component type="ScriptButton" id="btnAmpMode" x="50.0" y="80.0" width="160.0"
+             height="30.0"/>
+  <Component type="ScriptButton" id="btnAmpOversampling" x="50.0" y="110.0"
+             width="160.0" height="30.0"/>
 </ContentProperties>

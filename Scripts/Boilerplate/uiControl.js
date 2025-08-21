@@ -34,11 +34,6 @@ inline function onknbGateThresholdControl(component, value)
     gate.setAttribute(gate.GateThreshold, value);
 }
 
-inline function onknbAmpModeControl(component, value)
-{
-    ampFixed.setAttribute(ampFixed.channel, value);
-}
-
 inline function onknbCleanInputControl(component, value)
 {
     ampFixed.setAttribute(ampFixed.inputGainClean, value);
@@ -118,7 +113,6 @@ knbInputGain.setControlCallback(onknbInputGainControl);
 knbOutputGain.setControlCallback(onknbOutputGainControl);
 knbGateThreshold.setControlCallback(onknbGateThresholdControl);
 
-knbAmpMode.setControlCallback(onknbAmpModeControl);
 knbCleanInput.setControlCallback(onknbCleanInputControl);
 knbCleanOutput.setControlCallback(onknbCleanOutputControl);
 knbDirtyInput.setControlCallback(onknbDirtyInputControl);
@@ -134,6 +128,16 @@ knbReverbBrightness.setControlCallback(onknbReverbBrightnessControl);
 knbReverbFeedback.setControlCallback(onknbReverbFeedbackControl);
 
 // Buttons
+
+inline function onbtnAmpModeControl(component, value)
+{
+    ampFixed.setAttribute(ampFixed.channel, value);
+}
+
+inline function onbtnAmpOversamplingControl(component, value)
+{
+    ampFixed.setAttribute(ampFixed.oversampling, value);
+}
 
 inline function onbtnCabGenerateControl(component, value)
 {
@@ -248,6 +252,8 @@ inline function onbtnShowCabDesignerControl(component, value)
     pnlCabDesigner.set("visible", value);
 };
 
+btnAmpMode.setControlCallback(onbtnAmpModeControl);
+btnAmpOversampling.setControlCallback(onbtnAmpOversamplingControl);
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
 btnCabSave.setControlCallback(onbtnCabSaveControl);
 btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);

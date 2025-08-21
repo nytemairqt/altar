@@ -66,7 +66,6 @@ const knbInputGain = Content.getComponent("knbInputGain");
 const knbOutputGain = Content.getComponent("knbOutputGain");
 const knbGateThreshold = Content.getComponent("knbGateThreshold");
 
-const knbAmpMode = Content.getComponent("knbAmpMode");
 const knbCleanInput = Content.getComponent("knbCleanInput");
 const knbCleanOutput = Content.getComponent("knbCleanOutput");
 const knbDirtyInput = Content.getComponent("knbDirtyInput");
@@ -84,6 +83,8 @@ const var knbReverbFeedback = Content.getComponent("knbReverbFeedback");
 
 // Buttons
 
+const btnAmpMode = Content.getComponent("btnAmpMode");
+const btnAmpOversampling = Content.getComponent("btnAmpOversampling");
 const btnCabGenerate = Content.getComponent("btnCabGenerate");
 const btnCabSave = Content.getComponent("btnCabSave");
 const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
