@@ -1,4 +1,4 @@
-Content.makeFrontInterface(1154, 756);
+Content.makeFrontInterface(1150, 850);
 
 include("Boilerplate/uiControl.js");
 

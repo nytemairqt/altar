@@ -134,15 +134,43 @@ inline function onbtnAmpModeControl(component, value)
     ampFixed.setAttribute(ampFixed.channel, value);
 }
 
-inline function onbtnAmpOversamplingControl(component, value)
+inline function onbtnOversamplingControl(component, value)
 {
     ampFixed.setAttribute(ampFixed.oversampling, value);
 }
 
-inline function onbtnShowCabDesignerControl(component, value)
+inline function showPanelControl(component, value)
 {
-    pnlCabDesigner.set("visible", value);
-};
+	switch (component)
+	{
+		case btnShowOverdrive:
+			pnlOverdrive.set("visible", value);
+			break;
+		case btnShowAmp:
+			pnlAmp.set("visible", value);
+			break;
+		case btnShowCab:
+			pnlCab.set("visible", value);
+			break;
+		case btnShowReverb:
+			pnlReverb.set("visible", value);
+			break;
+		case btnShowDelay:
+			pnlDelay.set("visible", value);
+			break;
+		case btnShowChorus:
+			pnlChorus.set("visible", value);
+			break;
+		case btnShowRingMod:
+			pnlRingMod.set("visible", value);
+			break;	
+		case btnShowTuner:
+			pnlTuner.set("visible", value);				
+			break;
+	}
+}
+
+
 
 inline function onbtnCabGenerateControl(component, value)
 {
@@ -260,14 +288,21 @@ inline function onbtnOpenCabFolderControl(component, value)
     audioFiles.show();
 }
 
-
-
-btnAmpMode.setControlCallback(onbtnAmpModeControl);
-btnAmpOversampling.setControlCallback(onbtnAmpOversamplingControl);
+btnOversampling.setControlCallback(onbtnOversamplingControl);
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
+btnAmpMode.setControlCallback(onbtnAmpModeControl);
 btnCabSave.setControlCallback(onbtnCabSaveControl);
 btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
-btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);
+
+
+btnShowOverdrive.setControlCallback(showPanelControl);
+btnShowAmp.setControlCallback(showPanelControl);
+btnShowCab.setControlCallback(showPanelControl);
+btnShowReverb.setControlCallback(showPanelControl);
+btnShowDelay.setControlCallback(showPanelControl);
+btnShowChorus.setControlCallback(showPanelControl);
+btnShowRingMod.setControlCallback(showPanelControl);
+btnShowTuner.setControlCallback(showPanelControl);
 
 
 // Labels

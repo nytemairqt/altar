@@ -84,11 +84,18 @@ const var knbReverbFeedback = Content.getComponent("knbReverbFeedback");
 // Buttons
 
 const btnAmpMode = Content.getComponent("btnAmpMode");
-const btnAmpOversampling = Content.getComponent("btnAmpOversampling");
+const btnOversampling = Content.getComponent("btnOversampling");
 const btnCabGenerate = Content.getComponent("btnCabGenerate");
 const btnCabSave = Content.getComponent("btnCabSave");
 const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
-const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
+const btnShowOverdrive = Content.getComponent("btnShowOverdrive");
+const btnShowAmp = Content.getComponent("btnShowAmp");
+const btnShowCab = Content.getComponent("btnShowCab");
+const btnShowReverb = Content.getComponent("btnShowReverb");
+const btnShowDelay = Content.getComponent("btnShowDelay");
+const btnShowChorus = Content.getComponent("btnShowChorus");
+const btnShowRingMod = Content.getComponent("btnShowRingMod");
+const btnShowTuner = Content.getComponent("btnShowTuner");
 
 // Comboboxes
 
@@ -101,7 +108,14 @@ const lblTuner = Content.getComponent("lblTuner");
 
 // Panels
 
-const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
+const pnlOverdrive = Content.getComponent("pnlOverdrive");
+const pnlAmp = Content.getComponent("pnlAmp");
+const pnlCab = Content.getComponent("pnlCab");
+const pnlTuner = Content.getComponent("pnlTuner");
+const pnlReverb = Content.getComponent("pnlReverb");
+const pnlDelay = Content.getComponent("pnlDelay");
+const pnlChorus = Content.getComponent("pnlChorus");
+const pnlRingMod = Content.getComponent("pnlRingMod");
 
 // ===============================
 // MISC VARIABLES
