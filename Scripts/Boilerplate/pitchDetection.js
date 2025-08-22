@@ -22,7 +22,7 @@ const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 var referenceTuning = 440; // will be a slider at some point 
 var tuningMode = 'cents'; // 'cents' or 'hz'
 
-const MIN_FREQ = 30.0;   // Minimum frequency to consider, we go LOW TUNE
+const MIN_FREQ = 20.0;   // Minimum frequency to consider, we go LOW TUNE
 const MAX_FREQ = 2000.0; // Maximum frequency for fundamental detection
 const HARMONIC_THRESHOLD = 0.3; // Minimum relative amplitude for harmonic detection
 
@@ -81,12 +81,15 @@ inline function analyzePitch(freq)
 }
 
 // Setup display buffer & Instantiate FFT
-const var dp0 = Synth.getDisplayBufferSource("tuner");
-const var dp = dp0.getDisplayBuffer(0);
-const var FFT_SIZE = 16384;
-const var MAX_LENGTH = 65536;
-const var fft = Engine.createFFT();
-fft.setWindowType(fft.BlackmanHarris);
+const dp0 = Synth.getDisplayBufferSource("tuner");
+const dp = dp0.getDisplayBuffer(0);
+//const var FFT_SIZE = 16384;
+//const FFT_SIZE = 32768;
+const FFT_SIZE = 65536;
+const MAX_LENGTH = 65536;
+const fft = Engine.createFFT();
+//fft.setWindowType(fft.BlackmanHarris);
+fft.setWindowType(fft.Hann);
 fft.setOverlap(0.0);
 var pitch = [];
 
@@ -106,7 +109,7 @@ inline function binIndexToFreq(idx)
 // Multiplies downsampled versions of the spectrum to enhance fundamental / avoid stupid overtones
 inline function findPitchHPS(magBuffer, numHarmonics)
 {
-    if (!numHarmonics) numHarmonics = 4;
+    if (!numHarmonics) numHarmonics = 8;
     
     local spectrum = magBuffer[0];
     local spectrumLength = spectrum.length;
