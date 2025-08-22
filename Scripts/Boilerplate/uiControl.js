@@ -129,14 +129,26 @@ knbReverbFeedback.setControlCallback(onknbReverbFeedbackControl);
 
 // Buttons
 
-inline function onbtnAmpModeControl(component, value)
+inline function onbtnBypass(component, value)
 {
-    ampFixed.setAttribute(ampFixed.channel, value);
-}
-
-inline function onbtnOversamplingControl(component, value)
-{
-    ampFixed.setAttribute(ampFixed.oversampling, value);
+	switch (component)
+	{
+		case btnAmpMode:
+			ampFixed.setAttribute(ampFixed.channel, value);
+			break;
+		case btnOversampling:
+			ampFixed.setAttribute(ampFixed.oversampling, value);
+			break;
+		case btnLimiter:
+			limiter.setBypassed(1-value);
+			break;
+		case btnPitch:
+			pitchShifterFixed.setBypassed(1-value);
+			break;	
+		case btnGate:
+			gate.setBypassed(1-value);
+			break;
+	}
 }
 
 inline function showPanelControl(component, value)
@@ -288,13 +300,20 @@ inline function onbtnOpenCabFolderControl(component, value)
     audioFiles.show();
 }
 
-btnOversampling.setControlCallback(onbtnOversamplingControl);
+
+// Basic Toggles
+btnLimiter.setControlCallback(onbtnBypass);
+btnOversampling.setControlCallback(onbtnBypass);
+btnAmpMode.setControlCallback(onbtnBypass);
+btnPitch.setControlCallback(onbtnBypass);
+btnGate.setControlCallback(onbtnBypass);
+
+// More Complex Functions
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
-btnAmpMode.setControlCallback(onbtnAmpModeControl);
 btnCabSave.setControlCallback(onbtnCabSaveControl);
 btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
 
-
+// Show / Hide Panels
 btnShowOverdrive.setControlCallback(showPanelControl);
 btnShowAmp.setControlCallback(showPanelControl);
 btnShowCab.setControlCallback(showPanelControl);

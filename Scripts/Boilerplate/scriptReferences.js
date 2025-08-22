@@ -23,6 +23,7 @@
 const inputGain = Synth.getEffect("inputGain");
 const outputGain = Synth.getEffect("outputGain");
 const gate = Synth.getEffect("gate");
+const limiter = Synth.getEffect("limiter");
 
 // Amp
 const pitchShifterFixed = Synth.getEffect("pitchShifterFixed");
@@ -96,6 +97,9 @@ const btnShowDelay = Content.getComponent("btnShowDelay");
 const btnShowChorus = Content.getComponent("btnShowChorus");
 const btnShowRingMod = Content.getComponent("btnShowRingMod");
 const btnShowTuner = Content.getComponent("btnShowTuner");
+const btnLimiter = Content.getComponent("btnLimiter");
+const btnPitch = Content.getComponent("btnPitch");
+const btnGate = Content.getComponent("btnGate");
 
 // Comboboxes
 
