@@ -53,4 +53,5 @@
              height="30.0" defaultValue="1.0"/>
   <Component type="ScriptButton" id="btnAmpOversampling" x="50.0" y="110.0"
              width="160.0" height="30.0" defaultValue="1.0"/>
+  <Component type="ScriptLabel" id="lblTuner" x="250.0" y="30.0" text="TUNE"/>
 </ContentProperties>

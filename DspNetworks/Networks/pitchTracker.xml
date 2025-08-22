@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="pitchTracker" AllowCompilation="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="pitchTracker" Bypassed="0"
+        Name="pitchTracker">
+    <Nodes>
+      <Node ID="faust" FactoryPath="core.faust" Bypassed="1" Name="faust">
+        <Properties>
+          <Property ID="ClassId" Value="pitchTracker_faust"/>
+          <Property ID="NumParameters" Value="0"/>
+        </Properties>
+        <Parameters/>
+        <SwitchTargets/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

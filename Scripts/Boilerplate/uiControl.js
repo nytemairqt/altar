@@ -15,7 +15,7 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
-include("Boilerplate/utilityFunctions.js");
+include("Boilerplate/pitchDetection.js");
 
 // Knobs
 

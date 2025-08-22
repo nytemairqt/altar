@@ -12,16 +12,16 @@ using UI = ::faust::UI;
 #define FAUST_ADDVERTICALBARGRAPH(...)
 #define FAUST_ADDHORIZONTALBARGRAPH(...)
 #define FAUST_ADDSOUNDFILE(...)
-#include "src/pitch_shifter_faust.cpp"
+#include "src/pitchTracker_faust.cpp"
 #if (FAUST_INPUTS - FAUST_OUTPUTS) > 0
 #error Number of inputs and outputs in faust code must match!
 #endif
 namespace project {
-struct pitch_shifter_faustMetaData {
-		SN_NODE_ID("pitch_shifter_faust");
+struct pitchTracker_faustMetaData {
+		SN_NODE_ID("pitchTracker_faust");
 };
 template <int NV, class ModParameterClass=scriptnode::parameter::empty_list>
-using pitch_shifter_faust = scriptnode::faust::faust_static_wrapper<NV, ModParameterClass, _pitch_shifter_faust, pitch_shifter_faustMetaData, FAUST_OUTPUTS>;
+using pitchTracker_faust = scriptnode::faust::faust_static_wrapper<NV, ModParameterClass, _pitchTracker_faust, pitchTracker_faustMetaData, FAUST_OUTPUTS>;
 } // namespace project
  // undef dummy macros
 #undef FAUST_UIMACROS

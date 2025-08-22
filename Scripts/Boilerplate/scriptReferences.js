@@ -95,6 +95,8 @@ const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
 // Labels
 
 const lblCabSaveName = Content.getComponent("lblCabSaveName");
+const lblTuner = Content.getComponent("lblTuner");
+
 
 
 // Panels

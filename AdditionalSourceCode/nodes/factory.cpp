@@ -30,8 +30,11 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerPolyNode<project::rubberband<1>, scriptnode::wrap::illegal_poly<project::rubberband<1>>>();
 		registerPolyNode<project::reverb_faust<1>, scriptnode::wrap::illegal_poly<project::reverb_faust<1>>>();
 		registerPolyNode<project::pitch_shifter_faust<1>, scriptnode::wrap::illegal_poly<project::pitch_shifter_faust<1>>>();
+		registerPolyNode<project::pitchTracker_faust<1>, scriptnode::wrap::illegal_poly<project::pitchTracker_faust<1>>>();
+		registerPolyNode<project::aubio<1>, scriptnode::wrap::illegal_poly<project::aubio<1>>>();
 		registerPolyNode<project::amp<1>, wrap::illegal_poly<project::amp<1>>>();
 		registerPolyNode<project::pitchShifter<1>, wrap::illegal_poly<project::pitchShifter<1>>>();
+		registerPolyNode<project::pitchTracker<1>, wrap::illegal_poly<project::pitchTracker<1>>>();
 		registerPolyNode<project::reverb<1>, wrap::illegal_poly<project::reverb<1>>>();
 	}
 };

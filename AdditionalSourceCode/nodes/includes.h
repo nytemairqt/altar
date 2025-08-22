@@ -9,6 +9,8 @@
 
 // Include third party header files ----------------
 
+#include "aubio.h"
+#include "pitchTracker_faust.h"
 #include "pitch_shifter_faust.h"
 #include "reverb_faust.h"
 #include "rubberband.h"
@@ -17,6 +19,7 @@
 
 #include "amp.h"
 #include "pitchShifter.h"
+#include "pitchTracker.h"
 #include "reverb.h"
 
 #if (defined (_WIN32) || defined (_WIN64))
