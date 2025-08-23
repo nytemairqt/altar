@@ -125,10 +125,10 @@
              height="180.0"/>
   <Component type="ScriptButton" id="btnInputProcessing" x="370.0" y="120.0"/>
   <Component type="ScriptButton" id="btnOutputProcessing" x="660.0" y="120.0"/>
-  <Component type="ScriptButton" id="btnLofi" x="800.0" y="160.0" width="80"
-             height="30"/>
-  <Component type="ScriptSlider" id="knbLofiLow" x="880.0" y="140.0" width="120"
-             height="50" min="20.0" max="20000.0" stepSize="1.0" defaultValue="600.0"/>
-  <Component type="ScriptSlider" id="knbLofiHigh" x="1000" y="140.0" width="120"
-             height="50" min="20.0" max="20000.0" stepSize="1.0" defaultValue="2400.0"/>
+  <Component type="ScriptButton" id="btnLofi" x="800.0" y="160.0" width="80.0"
+             height="30.0"/>
+  <Component type="ScriptSlider" id="knbLofiLow" x="880.0" y="140.0" width="120.0"
+             height="50.0" min="20.0" max="20000.0" stepSize="1.0" defaultValue="600.0"/>
+  <Component type="ScriptSlider" id="knbLofiHigh" x="1000.0" y="140.0" width="120.0"
+             height="50.0" min="20.0" max="20000.0" stepSize="1.0" defaultValue="2400.0"/>
 </ContentProperties>
