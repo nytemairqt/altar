@@ -13,9 +13,9 @@
              max="36.0" middlePosition="0.0"/>
   <Component type="ScriptButton" id="btnPreferences" x="180.0" y="11.0" width="108.0"/>
   <Component type="ScriptButton" id="btnShowTuner" x="320.0" y="11.0" width="108.0"/>
-  <Component type="ScriptButton" id="btnOversampling" x="930.0" y="130.0"
+  <Component type="ScriptButton" id="btnOversampling" x="930.0" y="100.0"
              width="160.0" height="30.0" defaultValue="1.0"/>
-  <Component type="ScriptButton" id="btnLimiter" x="960.0" y="90.0" defaultValue="1.0"/>
+  <Component type="ScriptButton" id="btnLimiter" x="960.0" y="70.0" defaultValue="1.0"/>
   <Component type="ScriptButton" id="btnShowOverdrive" x="370.0" y="150.0"
              radioGroup="1.0" text="OD" width="60.0" height="40.0"/>
   <Component type="ScriptButton" id="btnShowAmp" x="430.0" y="150.0" radioGroup="1.0"
@@ -95,8 +95,8 @@
              visible="0.0">
     <Component type="ScriptLabel" id="lblTuner" x="30.0" y="20.0" text="TUNE"
                parentComponent="pnlTuner"/>
-    <Component type="ScriptButton" id="btnTunerMonitor" x="200" y="30" parentComponent="pnlTuner"
-               defaultValue="1"/>
+    <Component type="ScriptButton" id="btnTunerMonitor" x="200.0" y="30.0" parentComponent="pnlTuner"
+               defaultValue="1.0"/>
     <Component type="ScriptPanel" id="Panel1" x="30.0" y="70.0" width="330.0"
                height="50.0" itemColour="4287269514" itemColour2="4287269514"
                parentComponent="pnlTuner"/>
@@ -125,4 +125,10 @@
              height="180.0"/>
   <Component type="ScriptButton" id="btnInputProcessing" x="370.0" y="120.0"/>
   <Component type="ScriptButton" id="btnOutputProcessing" x="660.0" y="120.0"/>
+  <Component type="ScriptButton" id="btnLofi" x="800.0" y="160.0" width="80"
+             height="30"/>
+  <Component type="ScriptSlider" id="knbLofiLow" x="880.0" y="140.0" width="120"
+             height="50" min="20.0" max="20000.0" stepSize="1.0" defaultValue="600.0"/>
+  <Component type="ScriptSlider" id="knbLofiHigh" x="1000" y="140.0" width="120"
+             height="50" min="20.0" max="20000.0" stepSize="1.0" defaultValue="2400.0"/>
 </ContentProperties>

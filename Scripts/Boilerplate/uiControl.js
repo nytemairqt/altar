@@ -109,6 +109,21 @@ inline function onknbReverbFeedbackControl(component, value)
     reverbFixed.setAttribute(reverbFixed.Feedback, value);
 }
 
+inline function onknbLofiControl(component, value)
+{
+	switch (component)
+	{
+		case knbLofiLow:
+			local low = 0 * lofi.BandOffset + lofi.Freq;
+			lofi.setAttribute(low, value);
+			break;
+		case knbLofiHigh:
+			local high = 1 * lofi.BandOffset + lofi.Freq;
+			lofi.setAttribute(high, value);
+			break;
+	}
+}
+
 knbInputGain.setControlCallback(onknbInputGainControl);
 knbOutputGain.setControlCallback(onknbOutputGainControl);
 knbGateThreshold.setControlCallback(onknbGateThresholdControl);
@@ -126,6 +141,9 @@ knbEQWhistle.setControlCallback(onknbEQWhistleControl);
 knbReverbMix.setControlCallback(onknbReverbMixControl);
 knbReverbBrightness.setControlCallback(onknbReverbBrightnessControl);
 knbReverbFeedback.setControlCallback(onknbReverbFeedbackControl);
+
+knbLofiLow.setControlCallback(onknbLofiControl);
+knbLofiHigh.setControlCallback(onknbLofiControl);
 
 // Buttons
 
@@ -150,6 +168,9 @@ inline function onbtnBypass(component, value)
 			break;
 		case btnTunerMonitor:
 			tuner.setAttribute(tuner.Monitor, 1-value);
+			break;
+		case btnLofi:
+			lofi.setBypassed(1-value);
 			break;
 	}
 }
@@ -312,6 +333,7 @@ btnAmpMode.setControlCallback(onbtnBypass);
 btnPitch.setControlCallback(onbtnBypass);
 btnGate.setControlCallback(onbtnBypass);
 btnTunerMonitor.setControlCallback(onbtnBypass);
+btnLofi.setControlCallback(onbtnBypass);
 
 // More Complex Functions
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);

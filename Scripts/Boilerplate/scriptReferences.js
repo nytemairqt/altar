@@ -25,6 +25,7 @@ const outputGain = Synth.getEffect("outputGain");
 const gate = Synth.getEffect("gate");
 const limiter = Synth.getEffect("limiter");
 const tuner = Synth.getEffect("tuner");
+const lofi = Synth.getEffect("lofi");
 
 // Amp
 const pitchShifterFixed = Synth.getEffect("pitchShifterFixed");
@@ -67,6 +68,8 @@ const modules = [Synth.getEffect("gate"),
 const knbInputGain = Content.getComponent("knbInputGain");
 const knbOutputGain = Content.getComponent("knbOutputGain");
 const knbGateThreshold = Content.getComponent("knbGateThreshold");
+const knbLofiLow = Content.getComponent("knbLofiLow");
+const knbLofiHigh = Content.getComponent("knbLofiHigh");
 
 const knbCleanInput = Content.getComponent("knbCleanInput");
 const knbCleanOutput = Content.getComponent("knbCleanOutput");
@@ -102,6 +105,7 @@ const btnTunerMonitor = Content.getComponent("btnTunerMonitor");
 const btnLimiter = Content.getComponent("btnLimiter");
 const btnPitch = Content.getComponent("btnPitch");
 const btnGate = Content.getComponent("btnGate");
+const btnLofi = Content.getComponent("btnLofi");
 
 // Comboboxes
 
@@ -109,8 +113,6 @@ const btnGate = Content.getComponent("btnGate");
 
 const lblCabSaveName = Content.getComponent("lblCabSaveName");
 const lblTuner = Content.getComponent("lblTuner");
-
-
 
 // Panels
 
