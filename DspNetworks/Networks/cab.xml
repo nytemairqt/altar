@@ -210,18 +210,17 @@
                 </Nodes>
                 <Parameters/>
               </Node>
-              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="mix" Folded="1">
+              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="mix">
                 <Parameters>
                   <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                             SkewFactor="11.2023" ID="Gain" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
                   <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                              SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                 </Parameters>
               </Node>
-              <Node ID="gain2" FactoryPath="core.gain" Bypassed="0" Name="gain2"
-                    Folded="1">
+              <Node ID="gain2" FactoryPath="core.gain" Bypassed="0" Name="gain2">
                 <Parameters>
                   <Parameter MinValue="-100.0" MaxValue="12.0" StepSize="0.1000000014901161"
                              SkewFactor="5.422270774841309" ID="Gain" DefaultValue="1.490116119384766e-6"
@@ -418,10 +417,10 @@
                 </Nodes>
                 <Parameters/>
               </Node>
-              <Node ID="gain1" FactoryPath="core.gain" Bypassed="0" Name="mix" Folded="1">
+              <Node ID="gain1" FactoryPath="core.gain" Bypassed="0" Name="mix">
                 <Parameters>
                   <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                             SkewFactor="11.2023" ID="Gain" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
                   <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
@@ -467,7 +466,7 @@
         </Connections>
       </Parameter>
       <Parameter ID="CabAAxis" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
-                 Value="1.0">
+                 Value="0.3100000023841858" DefaultValue="1.0">
         <Connections>
           <Connection NodeId="svf_eq" ParameterId="Gain"/>
           <Connection NodeId="svf_eq1" ParameterId="Gain"/>

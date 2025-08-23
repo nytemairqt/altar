@@ -6,7 +6,7 @@
   <ChildProcessors>
     <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
       <ChildProcessors>
-        <Processor Type="MidiPlayer" ID="cabMIDIPlayer" Bypassed="0" CurrentSequence="399.0"
+        <Processor Type="MidiPlayer" ID="cabMIDIPlayer" Bypassed="0" CurrentSequence="402.0"
                    CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
           <ChildProcessors/>
           <MidiFiles>
@@ -1707,14 +1707,29 @@
               <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                              LoopEnd="1.0" Tempo="120.0"/>
             </MidiFile>
+            <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
+            <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                      FileName="">
+              <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                             LoopEnd="1.0" Tempo="120.0"/>
+            </MidiFile>
           </MidiFiles>
         </Processor>
         <Processor Type="ScriptProcessor" ID="Interface" Bypassed="0">
           <ChildProcessors/>
           <Content>
             <Control type="ScriptSlider" id="knbInputGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbGateThreshold" value="0.0"/>
-            <Control type="ScriptButton" id="btnGate" value="0.0"/>
+            <Control type="ScriptSlider" id="knbGateThreshold" value="-40.0"/>
+            <Control type="ScriptButton" id="btnGate" value="1.0"/>
             <Control type="ScriptSlider" id="knbPitch" value="0.0"/>
             <Control type="ScriptButton" id="btnPitch" value="1.0"/>
             <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
@@ -1732,7 +1747,7 @@
             <Control type="ScriptButton" id="btnAmpMode" value="1.0"/>
             <Control type="ScriptSlider" id="knbCleanInput" value="1.072883605957031e-6"/>
             <Control type="ScriptSlider" id="knbCleanOutput" value="1.072883605957031e-6"/>
-            <Control type="ScriptSlider" id="knbDirtyInput" value="58.80000305175781"/>
+            <Control type="ScriptSlider" id="knbDirtyInput" value="72.0"/>
             <Control type="ScriptSlider" id="knbDirtyOutput" value="-27.69999885559082"/>
             <Control type="ScriptButton" id="btnOpenCabFolder" value="0.0"/>
             <Control type="ScriptComboBox" id="cmbCabMicrophone" value="1.0"/>
@@ -1743,7 +1758,7 @@
             <Control type="ScriptSlider" id="knbCabADelay" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAAngle" value="0.5"/>
             <Control type="ScriptSlider" id="knbCabADistance" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabAAxis" value="1.0"/>
+            <Control type="ScriptSlider" id="knbCabAAxis" value="0.3100000023841858"/>
             <Control type="ScriptSlider" id="knbCabAPan" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAGain" value="0.0"/>
             <Control type="ScriptButton" id="btnCabAPhase" value="0.0"/>
@@ -1768,7 +1783,7 @@
             <Control type="ScriptSlider" id="knbReverbMix" value="0.0"/>
             <Control type="ScriptSlider" id="knbReverbBrightness" value="0.800000011920929"/>
             <Control type="ScriptSlider" id="knbReverbFeedback" value="0.800000011920929"/>
-            <Control type="ScriptButton" id="btnTunerMonitor" value="1.0"/>
+            <Control type="ScriptButton" id="btnTunerMonitor" value="0.0"/>
             <Control type="ScriptButton" id="btnShowInputProcessing" value="0.0"/>
             <Control type="ScriptButton" id="btnShowOutputProcessing" value="0.0"/>
             <Control type="ScriptButton" id="btnLofi" value="0.0"/>
@@ -1805,7 +1820,7 @@
           </ChildProcessors>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Dynamics" ID="gate" Bypassed="1" GateEnabled="1.0" GateThreshold="0.0"
+        <Processor Type="Dynamics" ID="gate" Bypassed="0" GateEnabled="1.0" GateThreshold="-40.0"
                    GateAttack="1.0" GateRelease="32.40999984741211" CompressorEnabled="0.0"
                    CompressorThreshold="0.0" CompressorRatio="1.0" CompressorAttack="10.0"
                    CompressorRelease="100.0" LimiterEnabled="0.0" LimiterThreshold="0.0"
@@ -1841,7 +1856,7 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="ampFixed" Bypassed="0" Network="amp"
-                   channel="1.0" inputGainClean="1.072883605957031e-6" inputGainDirty="58.80000305175781"
+                   channel="1.0" inputGainClean="1.072883605957031e-6" inputGainDirty="72.0"
                    outputGainClean="1.072883605957031e-6" outputGainDirty="-27.69999885559082"
                    oversampling="1.0">
           <ChildProcessors/>
@@ -2061,8 +2076,8 @@
     <Processor Type="AudioLooper" ID="testAudio" Bypassed="0" Gain="1.0" Balance="0.0"
                VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0" SyncMode="1.0"
                PitchTracking="0.0" LoopEnabled="1.0" RootNote="64.0" SampleStartMod="0.0"
-               Reversed="0.0" FileName="{PROJECT_FOLDER}single-notes 46 69 93 124 165 208 277.wav"
-               min="0" max="1576366" loopStart="0" loopEnd="1576366">
+               Reversed="0.0" FileName="{PROJECT_FOLDER}jaded.wav" min="4146"
+               max="627020" loopStart="4146" loopEnd="627020">
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors/>

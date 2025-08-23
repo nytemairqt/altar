@@ -5,9 +5,9 @@
              max="36.0" middlePosition="0.0" processorId="inputGain" parameterId="Gain"/>
   <Component type="ScriptSlider" id="knbGateThreshold" x="40.0" y="60.0" min="-100.0"
              max="0.0" middlePosition="-40.0" width="170.0" height="50.0"
-             processorId="gate" parameterId="GateThreshold"/>
+             processorId="gate" parameterId="GateThreshold" defaultValue="-40.0"/>
   <Component type="ScriptButton" id="btnGate" x="60.0" y="130.0" width="78.0"
-             processorId="gate" parameterId="Enabled"/>
+             processorId="gate" parameterId="Enabled" defaultValue="1"/>
   <Component type="ScriptSlider" id="knbPitch" x="210.0" y="90.0" middlePosition="0.0"
              stepSize="1.0" min="-12.0" max="12.0"/>
   <Component type="ScriptButton" id="btnPitch" x="220.0" y="140.0" width="78.0"
@@ -162,8 +162,7 @@
              visible="0.0">
     <Component type="ScriptLabel" id="lblTuner" x="30.0" y="20.0" text="TUNE"
                parentComponent="pnlTuner"/>
-    <Component type="ScriptButton" id="btnTunerMonitor" x="200.0" y="30.0" parentComponent="pnlTuner"
-               defaultValue="1.0"/>
+    <Component type="ScriptButton" id="btnTunerMonitor" x="200.0" y="30.0" parentComponent="pnlTuner"/>
     <Component type="ScriptPanel" id="Panel1" x="30.0" y="70.0" width="330.0"
                height="50.0" itemColour="4287269514" itemColour2="4287269514"
                parentComponent="pnlTuner"/>
