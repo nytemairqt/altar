@@ -148,6 +148,9 @@ inline function onbtnBypass(component, value)
 		case btnGate:
 			gate.setBypassed(1-value);
 			break;
+		case btnTunerMonitor:
+			tuner.setAttribute(tuner.Monitor, 1-value);
+			break;
 	}
 }
 
@@ -177,8 +180,9 @@ inline function showPanelControl(component, value)
 			pnlRingMod.set("visible", value);
 			break;	
 		case btnShowTuner:
-			pnlTuner.set("visible", value);				
-			break;
+			pnlTuner.set("visible", value);		
+			tuner.setBypassed(1-value);		
+			break;	
 	}
 }
 
@@ -307,6 +311,7 @@ btnOversampling.setControlCallback(onbtnBypass);
 btnAmpMode.setControlCallback(onbtnBypass);
 btnPitch.setControlCallback(onbtnBypass);
 btnGate.setControlCallback(onbtnBypass);
+btnTunerMonitor.setControlCallback(onbtnBypass);
 
 // More Complex Functions
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
