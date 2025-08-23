@@ -4,8 +4,7 @@
   <Node FactoryPath="container.chain" ID="cab" Bypassed="0" Name="cab"
         ShowParameters="1">
     <Nodes>
-      <Node ID="xfader" FactoryPath="control.xfader" Bypassed="0" Name="xfader"
-            Folded="1">
+      <Node ID="xfader" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
         <Properties>
           <Property ID="NumParameters" Value="2"/>
           <Property ID="Mode" Value="Linear"/>
@@ -48,7 +47,7 @@
                     Name="convolution" Folded="1">
                 <ComplexData>
                   <AudioFiles>
-                    <AudioFile Index="0" MinValue="0" MaxValue="5512"/>
+                    <AudioFile Index="0" MinValue="0" MaxValue="0"/>
                   </AudioFiles>
                 </ComplexData>
                 <Parameters>
@@ -256,7 +255,7 @@
                     Name="convolution" Folded="1">
                 <ComplexData>
                   <AudioFiles>
-                    <AudioFile Index="1" MinValue="0" MaxValue="0"/>
+                    <AudioFile Index="1" MinValue="0" MaxValue="5512"/>
                   </AudioFiles>
                 </ComplexData>
                 <Parameters>

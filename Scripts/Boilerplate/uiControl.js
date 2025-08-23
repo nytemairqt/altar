@@ -19,41 +19,6 @@ include("Boilerplate/pitchDetection.js");
 
 // Knobs
 
-inline function onknbInputGainControl(component, value)
-{
-    inputGain.setAttribute(inputGain.Gain, value);
-}
-
-inline function onknbOutputGainControl(component, value)
-{
-    outputGain.setAttribute(outputGain.Gain, value);
-}
-
-inline function onknbGateThresholdControl(component, value)
-{
-    gate.setAttribute(gate.GateThreshold, value);
-}
-
-inline function onknbCleanInputControl(component, value)
-{
-    ampFixed.setAttribute(ampFixed.inputGainClean, value);
-}
-
-inline function onknbCleanOutputControl(component, value)
-{
-    ampFixed.setAttribute(ampFixed.outputGainClean, value);
-}
-
-inline function onknbDirtyInputControl(component, value)
-{
-    ampFixed.setAttribute(ampFixed.inputGainDirty, value);
-}
-
-inline function onknbDirtyOutputControl(component, value)
-{
-    ampFixed.setAttribute(ampFixed.outputGainDirty, value);
-}
-
 inline function onknbPitchControl(component, value)
 {
     if (value == 0)
@@ -64,26 +29,6 @@ inline function onknbPitchControl(component, value)
     pitchShifterFixed.setAttribute(pitchShifterFixed.FreqRatio, newPitch);
 }
 
-inline function onknbCabAxisControl(component, value)
-{
-    local low = 0 * cabAxis.BandOffset + cabAxis.Gain;  
-    local high = 1 * cabAxis.BandOffset + cabAxis.Gain; 
-    local scaledValue = -4.0 + (8.0 * value);                
-    cabAxis.setAttribute(low, 1-scaledValue); 
-    cabAxis.setAttribute(high, scaledValue); 
-}
-
-inline function onknbCabPresenceControl(component, value)
-{
-    local fizz = 0;
-    local scaledValue = 5500.0 + (6500.0 * value);
-    for (i=3; i<6; i++)
-    {
-        fizz = i * cabAxis.BandOffset + cabAxis.Freq;                   
-        cabAxis.setAttribute(fizz, scaledValue);
-    }       
-};
-
 inline function onknbEQWhistleControl(component, value)
 {
     local A = 0 * eqWhistle.BandOffset + eqWhistle.Gain;    
@@ -93,21 +38,6 @@ inline function onknbEQWhistleControl(component, value)
     eqWhistle.setAttribute(A, scaledA); 
     eqWhistle.setAttribute(B, scaledB); 
 };
-
-inline function onknbReverbMixControl(component, value)
-{
-    reverbFixed.setAttribute(reverbFixed.Mix, value);
-}
-
-inline function onknbReverbBrightnessControl(component, value)
-{
-    reverbFixed.setAttribute(reverbFixed.Brightness, value);
-}
-
-inline function onknbReverbFeedbackControl(component, value)
-{
-    reverbFixed.setAttribute(reverbFixed.Feedback, value);
-}
 
 inline function onknbLofiControl(component, value)
 {
@@ -124,23 +54,8 @@ inline function onknbLofiControl(component, value)
 	}
 }
 
-knbInputGain.setControlCallback(onknbInputGainControl);
-knbOutputGain.setControlCallback(onknbOutputGainControl);
-knbGateThreshold.setControlCallback(onknbGateThresholdControl);
-
-knbCleanInput.setControlCallback(onknbCleanInputControl);
-knbCleanOutput.setControlCallback(onknbCleanOutputControl);
-knbDirtyInput.setControlCallback(onknbDirtyInputControl);
-knbDirtyOutput.setControlCallback(onknbDirtyOutputControl);
-
 knbPitch.setControlCallback(onknbPitchControl);
-knbCabAxis.setControlCallback(onknbCabAxisControl);
-knbCabPresence.setControlCallback(onknbCabPresenceControl);
 knbEQWhistle.setControlCallback(onknbEQWhistleControl);
-
-knbReverbMix.setControlCallback(onknbReverbMixControl);
-knbReverbBrightness.setControlCallback(onknbReverbBrightnessControl);
-knbReverbFeedback.setControlCallback(onknbReverbFeedbackControl);
 
 knbLofiLow.setControlCallback(onknbLofiControl);
 knbLofiHigh.setControlCallback(onknbLofiControl);
@@ -151,26 +66,8 @@ inline function onbtnBypass(component, value)
 {
 	switch (component)
 	{
-		case btnAmpMode:
-			ampFixed.setAttribute(ampFixed.channel, value);
-			break;
-		case btnOversampling:
-			ampFixed.setAttribute(ampFixed.oversampling, value);
-			break;
-		case btnLimiter:
-			limiter.setBypassed(1-value);
-			break;
-		case btnPitch:
-			pitchShifterFixed.setBypassed(1-value);
-			break;	
-		case btnGate:
-			gate.setBypassed(1-value);
-			break;
 		case btnTunerMonitor:
 			tuner.setAttribute(tuner.Monitor, 1-value);
-			break;
-		case btnLofi:
-			lofi.setBypassed(1-value);
 			break;
 	}
 }
@@ -187,6 +84,9 @@ inline function showPanelControl(component, value)
 			break;
 		case btnShowCab:
 			pnlCab.set("visible", value);
+			break;
+		case btnShowCabDesigner:
+			pnlCabDesigner.set("visible", value);
 			break;
 		case btnShowReverb:
 			pnlReverb.set("visible", value);
@@ -207,7 +107,21 @@ inline function showPanelControl(component, value)
 	}
 }
 
+inline function onbtnCabSelectControl(component, value)
+{
+	if (!value)
+		return;
 
+	switch (component)
+	{
+		case btnCabALoadPrev:
+			// get current loaded file as index within audioFiles
+			// load the prev/next file
+			break;
+		case btnCabALoadNext:
+			break;
+	}
+}
 
 inline function onbtnCabGenerateControl(component, value)
 {
@@ -321,19 +235,18 @@ inline function onbtnOpenCabFolderControl(component, value)
 {
     if (!value)
         return;
-
     audioFiles.show();
 }
 
 
 // Basic Toggles
-btnLimiter.setControlCallback(onbtnBypass);
-btnOversampling.setControlCallback(onbtnBypass);
-btnAmpMode.setControlCallback(onbtnBypass);
-btnPitch.setControlCallback(onbtnBypass);
-btnGate.setControlCallback(onbtnBypass);
 btnTunerMonitor.setControlCallback(onbtnBypass);
-btnLofi.setControlCallback(onbtnBypass);
+
+// Cab Select Stuff
+btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);
+btnCabALoadNext.setControlCallback(onbtnCabSelectControl);
+//btnCabBLoadPrev.setControlCallback(onbtnCabSelectControl);
+//btnCabBLoadNext.setControlCallback(onbtnCabSelectControl);
 
 // More Complex Functions
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
@@ -344,6 +257,7 @@ btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
 btnShowOverdrive.setControlCallback(showPanelControl);
 btnShowAmp.setControlCallback(showPanelControl);
 btnShowCab.setControlCallback(showPanelControl);
+btnShowCabDesigner.setControlCallback(showPanelControl);
 btnShowReverb.setControlCallback(showPanelControl);
 btnShowDelay.setControlCallback(showPanelControl);
 btnShowChorus.setControlCallback(showPanelControl);
