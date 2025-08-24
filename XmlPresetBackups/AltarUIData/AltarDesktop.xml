@@ -9,7 +9,7 @@
   <Component type="ScriptButton" id="btnGate" x="60.0" y="130.0" width="78.0"
              processorId="gate" parameterId="Enabled" defaultValue="1.0"/>
   <Component type="ScriptSlider" id="knbPitch" x="210.0" y="90.0" middlePosition="0.0"
-             min="-12.0" max="12.0"/>
+             min="-12.0" max="12.0" stepSize="1.0"/>
   <Component type="ScriptButton" id="btnPitch" x="220.0" y="140.0" width="78.0"
              processorId="pitchShifterFixed" parameterId="Enabled"/>
   <Component type="ScriptSlider" id="knbOutputGain" x="960.0" y="20.0" min="-36.0"
@@ -168,11 +168,11 @@
                parentComponent="pnlTuner"/>
     <Component type="ScriptLabel" id="Label1" x="40.0" y="170.0" text="tuner value inside the panel paint routine"
                width="315.0" parentComponent="pnlTuner"/>
-    <Component type="ScriptButton" id="btnTuner" x="50" y="30" processorId="tuner"
+    <Component type="ScriptButton" id="btnTuner" x="50.0" y="30.0" processorId="tuner"
                parameterId="Enabled" parentComponent="pnlTuner"/>
-    <Component type="ScriptButton" id="btnClick" x="20" y="230" processorId="click"
+    <Component type="ScriptButton" id="btnClick" x="20.0" y="230.0" processorId="click"
                parameterId="clickEnable" parentComponent="pnlTuner"/>
-    <Component type="ScriptSlider" id="knbClickGain" x="180" y="220" middlePosition="0.5"
+    <Component type="ScriptSlider" id="knbClickGain" x="180.0" y="220.0" middlePosition="0.5"
                min="-100.0" max="24.0" mode="Decibel" processorId="click" parameterId="Gain"
                parentComponent="pnlTuner"/>
   </Component>
