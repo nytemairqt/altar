@@ -2,6 +2,7 @@ Content.makeFrontInterface(1150, 850);
 
 include("Boilerplate/uiControl.js");
 
+
 function onNoteOn()
 {
 	

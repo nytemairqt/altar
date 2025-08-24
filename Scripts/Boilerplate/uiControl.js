@@ -65,6 +65,15 @@ inline function onbtnBypass(component, value)
 		case btnTunerMonitor:
 			tuner.setAttribute(tuner.Monitor, 1-value);
 			break;
+		case btnClick:
+			if (value)
+			{
+                setupClick();
+				clickMIDI.play(0);
+			}
+			else
+				clickMIDI.stop(0);
+			break;
 	}
 }
 
@@ -214,7 +223,8 @@ inline function onbtnCabSaveControl(component, value)
     cabConvolution.setFile(tempFile.toString(0)); // make sure the cab doesn't have the previous saved impulse so we can safely overwrite
     cabFileSave.setFile(tempFile.toString(0));  
 
-    addNote(eventList, 64, 0, 1.0);
+    eventList.clear();
+    addNoteForCabSave(eventList, 64, 0, 1.0);
     
     // Swap workaround bullshit
     cabMIDIPlayer.setUseTimestampInTicks(true); 
@@ -236,12 +246,11 @@ inline function onbtnOpenCabFolderControl(component, value)
 
 // Basic Toggles
 btnTunerMonitor.setControlCallback(onbtnBypass);
+btnClick.setControlCallback(onbtnBypass);
 
 // Cab Select Stuff
 btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);
 btnCabALoadNext.setControlCallback(onbtnCabSelectControl);
-//btnCabBLoadPrev.setControlCallback(onbtnCabSelectControl);
-//btnCabBLoadNext.setControlCallback(onbtnCabSelectControl);
 
 // More Complex Functions
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);

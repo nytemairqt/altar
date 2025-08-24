@@ -58,7 +58,7 @@
                   <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
                              ID="HiCut" Value="20000.0"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
-                             Value="0.0"/>
+                             Value="1.0" DefaultValue="0.0"/>
                 </Parameters>
               </Node>
               <Node ID="svf_eq" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisLow"
@@ -262,7 +262,7 @@
                   <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
                              ID="HiCut" Value="20000.0"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
-                             Value="0.0"/>
+                             Value="1.0" DefaultValue="0.0"/>
                 </Parameters>
               </Node>
               <Node ID="svf_eq7" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisLow"

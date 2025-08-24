@@ -17,12 +17,41 @@
 
 include("Boilerplate/scriptReferences.js");
 
-inline function addNote(eventListToUse, noteNumber, startQuarter, durationQuarter)
+inline function setupClick()
+{
+    if (!clickMIDI.isEmpty())
+        return;
+
+    clickMIDI.create(4, 4, 1);
+    
+    local list = [];
+    
+    addNote(list, 1, 1, 84, 127, 0);
+    addNote(list, 2, 1, 84, 127, 2756);
+    addNote(list, 1, 1, 84, 127, 22050);
+    addNote(list, 2, 1, 84, 127, 24806);
+    addNote(list, 1, 1, 84, 127, 44100);
+    addNote(list, 2, 1, 84, 127, 46856);
+    addNote(list, 1, 1, 84, 127, 66150);
+    addNote(list, 2, 1, 84, 127, 68906); // these might vary based on sampleRate...
+    
+	clickMIDI.flushMessageList(list);
+}
+
+inline function addNote(eventListToUse, type, channel, noteNumber, vel, timestamp)
+{
+	local message = Engine.createMessageHolder();
+	message.setType(type);
+	message.setChannel(channel);
+	message.setNoteNumber(noteNumber);
+	message.setVelocity(vel);
+	message.setTimestamp(timestamp);
+	eventListToUse.push(message);
+}
+
+inline function addNoteForCabSave(eventListToUse, noteNumber, startQuarter, durationQuarter)
 {
     // needs both a noteOn and noteOff
-    // clear list first
-    eventListToUse.clear();
-    
     // noteOn
     local on = Engine.createMessageHolder();
     on.setType(1);             

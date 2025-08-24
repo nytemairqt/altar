@@ -160,8 +160,7 @@
              height="550.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0"/>
   <Component type="ScriptPanel" id="pnlTuner" x="350.0" y="160.0" width="390.0"
-             height="280.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0.0">
+             height="280.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptLabel" id="lblTuner" x="130.0" y="70.0" text="TUNE"
                parentComponent="pnlTuner"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="200.0" y="30.0" parentComponent="pnlTuner"/>
@@ -172,11 +171,10 @@
                width="315.0" parentComponent="pnlTuner"/>
     <Component type="ScriptButton" id="btnTuner" x="50.0" y="30.0" processorId="tuner"
                parameterId="Enabled" parentComponent="pnlTuner"/>
-    <Component type="ScriptButton" id="btnClick" x="20.0" y="230.0" processorId="click"
-               parameterId="clickEnable" parentComponent="pnlTuner"/>
-    <Component type="ScriptSlider" id="knbClickGain" x="180.0" y="220.0" middlePosition="0.5"
-               min="-100.0" max="24.0" mode="Decibel" processorId="click" parameterId="Gain"
-               parentComponent="pnlTuner"/>
+    <Component type="ScriptButton" id="btnClick" x="20.0" y="210.0" parentComponent="pnlTuner"/>
+    <Component type="ScriptSlider" id="knbClickGain" x="180.0" y="200.0" middlePosition="-50.0"
+               min="-100.0" max="36.0" mode="Decibel" processorId="clickGain"
+               parameterId="Gain" parentComponent="pnlTuner"/>
   </Component>
   <Component type="ScriptPanel" id="pnlDebug" x="0.0" y="750.0" width="1150.0"
              height="100.0">
@@ -205,4 +203,7 @@
   <Component type="ScriptFloatingTile" id="FloatingTile1" x="560.0" y="40.0"
              ContentType="PerformanceLabel" bgColour="0" itemColour="0" itemColour2="0"
              width="270.0" height="30.0"/>
+  <Component type="ScriptLabel" id="lblClickDisasbled" x="370.0" y="409.0"
+             width="290" height="20" text="Click disabled in Plugin version."
+             visible="0"/>
 </ContentProperties>

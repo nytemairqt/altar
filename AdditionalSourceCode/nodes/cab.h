@@ -415,7 +415,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		convolution2.setParameterT(1, 0.);     // filters::convolution::Predelay
 		convolution2.setParameterT(2, 0.);     // filters::convolution::Damping
 		convolution2.setParameterT(3, 20000.); // filters::convolution::HiCut
-		convolution2.setParameterT(4, 0.);     // filters::convolution::Multithread
+		convolution2.setParameterT(4, 1.);     // filters::convolution::Multithread
 		
 		svf_eq.setParameterT(0, 150.); // filters::svf_eq::Frequency
 		svf_eq.setParameterT(1, 0.3);  // filters::svf_eq::Q
@@ -479,7 +479,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		convolution1.setParameterT(1, 0.);     // filters::convolution::Predelay
 		convolution1.setParameterT(2, 0.);     // filters::convolution::Damping
 		convolution1.setParameterT(3, 20000.); // filters::convolution::HiCut
-		convolution1.setParameterT(4, 0.);     // filters::convolution::Multithread
+		convolution1.setParameterT(4, 1.);     // filters::convolution::Multithread
 		
 		svf_eq7.setParameterT(0, 150.); // filters::svf_eq::Frequency
 		svf_eq7.setParameterT(1, 0.3);  // filters::svf_eq::Q

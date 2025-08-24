@@ -26,7 +26,6 @@ const gate = Synth.getEffect("gate");
 const limiter = Synth.getEffect("limiter");
 const tuner = Synth.getEffect("tuner");
 const lofi = Synth.getEffect("lofi");
-const click = Synth.getEffect("click");
 
 // Amp
 const pitchShifterFixed = Synth.getEffect("pitchShifterFixed");
@@ -45,10 +44,14 @@ const cabEQCustomBlankState = "186.3ocMNsrCBBCDbqDN3A+WjeAPHwCZTKw6U5FoI0tZenxWu
 // Pedals
 const reverbFixed = Synth.getEffect("reverbFixed");
 
-// Synths (Debug) 
+// Synths
 const cabMIDIPlayer = Synth.getMidiPlayer("cabMIDIPlayer");
+const click = Synth.getChildSynth("click");
 const cabFileSave = Synth.getAudioSampleProcessor("cabFileSave");
 const testAudio = Synth.getAudioSampleProcessor("testAudio");
+
+//const clickMIDI = Synth.getMidiProcessor("clickMIDI");
+const clickMIDI = Synth.getMidiPlayer("clickMIDI");
 
 const modules = [Synth.getEffect("gate"),
     Synth.getEffect("pitchShifterFixed"),
@@ -72,6 +75,7 @@ const knbGateThreshold = Content.getComponent("knbGateThreshold");
 const knbLofiLow = Content.getComponent("knbLofiLow");
 const knbLofiHigh = Content.getComponent("knbLofiHigh");
 const knbPitch = Content.getComponent("knbPitch");
+const knbClickGain = Content.getComponent("knbClickGain");
 
 const knbCleanInput = Content.getComponent("knbCleanInput");
 const knbCleanOutput = Content.getComponent("knbCleanOutput");
@@ -123,6 +127,8 @@ const btnShowRingMod = Content.getComponent("btnShowRingMod");
 const btnShowTuner = Content.getComponent("btnShowTuner");
 const btnTunerMonitor = Content.getComponent("btnTunerMonitor");
 
+const btnClick = Content.getComponent("btnClick");
+
 
 
 // Comboboxes
@@ -131,6 +137,9 @@ const btnTunerMonitor = Content.getComponent("btnTunerMonitor");
 
 const lblCabSaveName = Content.getComponent("lblCabSaveName");
 const lblTuner = Content.getComponent("lblTuner");
+const lblClickDisasbled = Content.getComponent("lblClickDisasbled");
+
+
 
 // Panels
 
@@ -152,7 +161,27 @@ const impulseSize = 1024;
 const moduleBypassedStates = [];
 const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);
 reg cabSaveName = "myCab.wav";
+const isPlugin = Engine.isPlugin();
 
 // INITIAL SETUP
 Engine.loadAudioFilesIntoPool();
 cabMIDIPlayer.create(4, 4, 1);
+
+reg clickMIDIList = [  
+  "MessageHolder: Type: NoteOn, Channel: 1, Number: 84, Value: 100, EventId: 0, Timestamp: 0, ",
+  "MessageHolder: Type: NoteOff, Channel: 1, Number: 84, Value: 64, EventId: 0, Timestamp: 2756, ",
+  "MessageHolder: Type: NoteOn, Channel: 1, Number: 84, Value: 100, EventId: 1, Timestamp: 22050, ",
+  "MessageHolder: Type: NoteOff, Channel: 1, Number: 84, Value: 64, EventId: 1, Timestamp: 24806, ",
+  "MessageHolder: Type: NoteOn, Channel: 1, Number: 84, Value: 100, EventId: 2, Timestamp: 44100, ",
+  "MessageHolder: Type: NoteOff, Channel: 1, Number: 84, Value: 64, EventId: 2, Timestamp: 46856, ",
+  "MessageHolder: Type: NoteOn, Channel: 1, Number: 84, Value: 100, EventId: 3, Timestamp: 66150, ",
+  "MessageHolder: Type: NoteOff, Channel: 1, Number: 84, Value: 64, EventId: 3, Timestamp: 68906, "
+];
+
+// Disable App-Only controls
+if (isPlugin)
+{
+	btnClick.set("enabled", false);
+	knbClickGain.set("enabled", false);
+	lblClickDisasbled.set("visible", true);
+}
