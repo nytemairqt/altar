@@ -47,7 +47,7 @@
                     Name="convolution" Folded="1">
                 <ComplexData>
                   <AudioFiles>
-                    <AudioFile Index="0" MinValue="0" MaxValue="0"/>
+                    <AudioFile Index="0" MinValue="0" MaxValue="5512"/>
                   </AudioFiles>
                 </ComplexData>
                 <Parameters>
@@ -254,7 +254,7 @@
                     Name="convolution" Folded="1">
                 <ComplexData>
                   <AudioFiles>
-                    <AudioFile Index="1" MinValue="0" MaxValue="5512"/>
+                    <AudioFile Index="1" MinValue="0" MaxValue="23520"/>
                   </AudioFiles>
                 </ComplexData>
                 <Parameters>

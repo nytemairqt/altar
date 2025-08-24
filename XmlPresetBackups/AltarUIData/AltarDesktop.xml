@@ -7,9 +7,9 @@
              max="0.0" middlePosition="-40.0" width="170.0" height="50.0"
              processorId="gate" parameterId="GateThreshold" defaultValue="-40.0"/>
   <Component type="ScriptButton" id="btnGate" x="60.0" y="130.0" width="78.0"
-             processorId="gate" parameterId="Enabled" defaultValue="1"/>
+             processorId="gate" parameterId="Enabled" defaultValue="1.0"/>
   <Component type="ScriptSlider" id="knbPitch" x="210.0" y="90.0" middlePosition="0.0"
-             stepSize="1.0" min="-12.0" max="12.0"/>
+             min="-12.0" max="12.0"/>
   <Component type="ScriptButton" id="btnPitch" x="220.0" y="140.0" width="78.0"
              processorId="pitchShifterFixed" parameterId="Enabled"/>
   <Component type="ScriptSlider" id="knbOutputGain" x="960.0" y="20.0" min="-36.0"
@@ -71,20 +71,20 @@
                processorId="cabScriptFX" parameterId="Mix" defaultValue="0.5"/>
     <Component type="ScriptButton" id="btnCabAEnable" x="10.0" y="20.0" parentComponent="pnlCab"
                processorId="cabScriptFX" parameterId="CabAEnable"/>
-    <Component type="ScriptSlider" id="knbCabADelay" x="150" y="110" parentComponent="pnlCab"
-               max="50.0" stepSize="0.1" middlePosition="5.0" processorId="cabScriptFX"
-               parameterId="CabADelay"/>
-    <Component type="ScriptSlider" id="knbCabAAngle" x="150" y="60" parentComponent="pnlCab"
+    <Component type="ScriptSlider" id="knbCabADelay" x="150.0" y="110.0" parentComponent="pnlCab"
+               max="50.0" stepSize="0.1000000014901161" middlePosition="5.0"
+               processorId="cabScriptFX" parameterId="CabADelay"/>
+    <Component type="ScriptSlider" id="knbCabAAngle" x="150.0" y="60.0" parentComponent="pnlCab"
                defaultValue="0.5" processorId="cabScriptFX" parameterId="CabAAngle"/>
-    <Component type="ScriptSlider" id="knbCabADistance" x="10" y="110" parentComponent="pnlCab"
+    <Component type="ScriptSlider" id="knbCabADistance" x="10.0" y="110.0" parentComponent="pnlCab"
                processorId="cabScriptFX" parameterId="CabADistance"/>
-    <Component type="ScriptSlider" id="knbCabAAxis" x="10" y="60" parentComponent="pnlCab"
+    <Component type="ScriptSlider" id="knbCabAAxis" x="10.0" y="60.0" parentComponent="pnlCab"
                defaultValue="1.0" processorId="cabScriptFX" parameterId="CabAAxis"/>
     <Component type="ScriptSlider" id="knbCabAPan" x="20.0" y="439.0" parentComponent="pnlCab"
                min="-1.0" middlePosition="0.0" processorId="cabScriptFX" parameterId="CabAPan"/>
     <Component type="ScriptSlider" id="knbCabAGain" x="150.0" y="439.0" parentComponent="pnlCab"
-               min="-100.0" max="12.0" middlePosition="0.0" stepSize="0.1" processorId="cabScriptFX"
-               parameterId="CabAGain"/>
+               min="-100.0" max="12.0" middlePosition="0.0" stepSize="0.1000000014901161"
+               processorId="cabScriptFX" parameterId="CabAGain"/>
     <Component type="ScriptButton" id="btnCabAPhase" x="30.0" y="509.0" parentComponent="pnlCab"
                processorId="cabScriptFX" parameterId="CabAPhase"/>
     <Component type="ScriptButton" id="btnCabALoadPrev" x="20.0" y="398.0" parentComponent="pnlCab"
@@ -92,24 +92,24 @@
     <Component type="ScriptButton" id="btnCabALoadNext" x="150.0" y="398.0"
                parentComponent="pnlCab" isMomentary="1"/>
     <Component type="ScriptAudioWaveform" id="awfCabA" x="40.0" y="359.0" processorId="cabScriptFX"
-               enableRange="0" width="200" height="30" parentComponent="pnlCab"/>
+               enableRange="0" width="200.0" height="30.0" parentComponent="pnlCab"/>
     <Component type="ScriptPanel" id="pnlCabA" x="30.0" y="169.0" parentComponent="pnlCab"
-               width="220" height="170"/>
+               width="220.0" height="170.0"/>
     <Component type="ScriptButton" id="btnCabBEnable" x="1010.0" y="19.0" parentComponent="pnlCab"
                processorId="cabScriptFX" parameterId="CabBEnable"/>
-    <Component type="ScriptSlider" id="knbCabBAxis" x="870.0" y="60" parentComponent="pnlCab"
+    <Component type="ScriptSlider" id="knbCabBAxis" x="870.0" y="60.0" parentComponent="pnlCab"
                defaultValue="1.0" processorId="cabScriptFX" parameterId="CabBAxis"/>
-    <Component type="ScriptSlider" id="knbCabBAngle" x="1010.0" y="60" parentComponent="pnlCab"
+    <Component type="ScriptSlider" id="knbCabBAngle" x="1010.0" y="60.0" parentComponent="pnlCab"
                defaultValue="0.5" processorId="cabScriptFX" parameterId="CabBAngle"/>
-    <Component type="ScriptSlider" id="knbCabBDelay" x="1010.0" y="110" parentComponent="pnlCab"
-               max="50.0" stepSize="0.1" middlePosition="5.0" processorId="cabScriptFX"
-               parameterId="CabBDelay"/>
-    <Component type="ScriptSlider" id="knbCabBDistance" x="870.0" y="110" parentComponent="pnlCab"
-               processorId="cabScriptFX" parameterId="CabBDistance"/>
+    <Component type="ScriptSlider" id="knbCabBDelay" x="1010.0" y="110.0" parentComponent="pnlCab"
+               max="50.0" stepSize="0.1000000014901161" middlePosition="5.0"
+               processorId="cabScriptFX" parameterId="CabBDelay"/>
+    <Component type="ScriptSlider" id="knbCabBDistance" x="870.0" y="110.0"
+               parentComponent="pnlCab" processorId="cabScriptFX" parameterId="CabBDistance"/>
     <Component type="ScriptPanel" id="pnlCabB" x="890.0" y="169.0" parentComponent="pnlCab"
-               width="220" height="170"/>
+               width="220.0" height="170.0"/>
     <Component type="ScriptAudioWaveform" id="awfCabB" x="900.0" y="359.0" processorId="cabScriptFX"
-               enableRange="0" width="200" height="30" parentComponent="pnlCab"
+               enableRange="0" width="200.0" height="30.0" parentComponent="pnlCab"
                sampleIndex="1"/>
     <Component type="ScriptButton" id="btnCabBLoadPrev" x="880.0" y="398.0"
                parentComponent="pnlCab" isMomentary="1"/>
@@ -118,12 +118,12 @@
     <Component type="ScriptSlider" id="knbCabBPan" x="880.0" y="439.0" parentComponent="pnlCab"
                min="-1.0" middlePosition="0.0" processorId="cabScriptFX" parameterId="CabBPan"/>
     <Component type="ScriptSlider" id="knbCabBGain" x="1010.0" y="439.0" parentComponent="pnlCab"
-               min="-100.0" max="12.0" middlePosition="0.0" stepSize="0.1" processorId="cabScriptFX"
-               parameterId="CabBGain"/>
+               min="-100.0" max="12.0" middlePosition="0.0" stepSize="0.1000000014901161"
+               processorId="cabScriptFX" parameterId="CabBGain"/>
     <Component type="ScriptButton" id="btnCabBPhase" x="1010.0" y="509.0" parentComponent="pnlCab"
                processorId="cabScriptFX" parameterId="CabBPhase"/>
     <Component type="ScriptPanel" id="pnlCabDesigner" x="140.0" y="50.0" parentComponent="pnlCab"
-               width="810" height="490" itemColour="4278190080" itemColour2="4278190080"
+               width="810.0" height="490.0" itemColour="4278190080" itemColour2="4278190080"
                visible="0.0">
       <Component type="ScriptLabel" id="lblCabSaveName" x="400.0" y="20.0" parentComponent="pnlCabDesigner"
                  text="myCab.wav"/>
