@@ -15,6 +15,8 @@
 // Include compiled network files ------------------
 
 #include "amp.h"
+#include "cab.h"
+#include "click_networkdata.h"
 #include "pitchDetection_networkdata.h"
 #include "reverb.h"
 

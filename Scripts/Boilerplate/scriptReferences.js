@@ -35,7 +35,6 @@ const ampFixed = Synth.getEffect("ampFixed");
 const postSculpt = Synth.getEffect("postSculpt");
 
 // Cab
-const cabConvolution = Synth.getAudioSampleProcessor("cabConvolution");
 const cabScriptFX = Synth.getAudioSampleProcessor("cabScriptFX");
 const cabEQMain = Synth.getEffect("cabEQMain");
 const cabEQDetails = Synth.getEffect("cabEQDetails");
