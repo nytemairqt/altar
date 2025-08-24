@@ -160,18 +160,21 @@
   <Component type="ScriptPanel" id="pnlTuner" x="350.0" y="160.0" width="390.0"
              height="280.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0">
-    <Component type="ScriptLabel" id="lblTuner" x="30.0" y="20.0" text="TUNE"
+    <Component type="ScriptLabel" id="lblTuner" x="130.0" y="70.0" text="TUNE"
                parentComponent="pnlTuner"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="200.0" y="30.0" parentComponent="pnlTuner"/>
-    <Component type="ScriptPanel" id="Panel1" x="30.0" y="70.0" width="330.0"
+    <Component type="ScriptPanel" id="Panel1" x="30.0" y="110.0" width="330.0"
                height="50.0" itemColour="4287269514" itemColour2="4287269514"
                parentComponent="pnlTuner"/>
-    <Component type="ScriptLabel" id="Label1" x="40.0" y="150.0" text="tuner value inside the panel paint routine"
+    <Component type="ScriptLabel" id="Label1" x="40.0" y="170.0" text="tuner value inside the panel paint routine"
                width="315.0" parentComponent="pnlTuner"/>
-    <Component type="ScriptLabel" id="Label2" x="40.0" y="180.0" text="need headphones/monitor button"
-               width="315.0" parentComponent="pnlTuner"/>
-    <Component type="ScriptLabel" id="Label3" x="40.0" y="210.0" text="metronome stuff will also go in here"
-               width="315.0" parentComponent="pnlTuner"/>
+    <Component type="ScriptButton" id="btnTuner" x="50" y="30" processorId="tuner"
+               parameterId="Enabled" parentComponent="pnlTuner"/>
+    <Component type="ScriptButton" id="btnClick" x="20" y="230" processorId="click"
+               parameterId="clickEnable" parentComponent="pnlTuner"/>
+    <Component type="ScriptSlider" id="knbClickGain" x="180" y="220" middlePosition="0.5"
+               min="-100.0" max="24.0" mode="Decibel" processorId="click" parameterId="Gain"
+               parentComponent="pnlTuner"/>
   </Component>
   <Component type="ScriptPanel" id="pnlDebug" x="0.0" y="750.0" width="1150.0"
              height="100.0">

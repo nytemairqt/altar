@@ -26,6 +26,7 @@ const gate = Synth.getEffect("gate");
 const limiter = Synth.getEffect("limiter");
 const tuner = Synth.getEffect("tuner");
 const lofi = Synth.getEffect("lofi");
+const click = Synth.getEffect("click");
 
 // Amp
 const pitchShifterFixed = Synth.getEffect("pitchShifterFixed");

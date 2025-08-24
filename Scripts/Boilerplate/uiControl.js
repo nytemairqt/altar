@@ -101,8 +101,7 @@ inline function showPanelControl(component, value)
 			pnlRingMod.set("visible", value);
 			break;	
 		case btnShowTuner:
-			pnlTuner.set("visible", value);		
-			tuner.setBypassed(1-value);		
+			pnlTuner.set("visible", value);			
 			break;	
 	}
 }
