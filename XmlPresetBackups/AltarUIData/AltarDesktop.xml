@@ -83,8 +83,9 @@
     <Component type="ScriptSlider" id="knbCabAPan" x="20.0" y="439.0" parentComponent="pnlCab"
                min="-1.0" middlePosition="0.0" processorId="cabFixed" parameterId="CabAPan"/>
     <Component type="ScriptSlider" id="knbCabAGain" x="150.0" y="439.0" parentComponent="pnlCab"
-               min="-100.0" max="12.0" middlePosition="0.0" stepSize="0.1000000014901161"
-               processorId="cabFixed" parameterId="CabAGain"/>
+               min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
+               processorId="cabFixed" parameterId="CabAGain" defaultValue="-12.0"
+               mode="Decibel"/>
     <Component type="ScriptButton" id="btnCabAPhase" x="30.0" y="509.0" parentComponent="pnlCab"
                processorId="cabFixed" parameterId="CabAPhase"/>
     <Component type="ScriptButton" id="btnCabALoadPrev" x="20.0" y="398.0" parentComponent="pnlCab"
@@ -118,8 +119,9 @@
     <Component type="ScriptSlider" id="knbCabBPan" x="880.0" y="439.0" parentComponent="pnlCab"
                min="-1.0" middlePosition="0.0" processorId="cabFixed" parameterId="CabBPan"/>
     <Component type="ScriptSlider" id="knbCabBGain" x="1010.0" y="439.0" parentComponent="pnlCab"
-               min="-100.0" max="12.0" middlePosition="0.0" stepSize="0.1000000014901161"
-               processorId="cabFixed" parameterId="CabBGain"/>
+               min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
+               processorId="cabFixed" parameterId="CabBGain" defaultValue="-12.0"
+               mode="Decibel"/>
     <Component type="ScriptButton" id="btnCabBPhase" x="1010.0" y="509.0" parentComponent="pnlCab"
                processorId="cabFixed" parameterId="CabBPhase"/>
     <Component type="ScriptPanel" id="pnlCabDesigner" x="140.0" y="50.0" parentComponent="pnlCab"
@@ -200,4 +202,7 @@
              height="50.0" min="20.0" max="20000.0" stepSize="1.0" defaultValue="600.0"/>
   <Component type="ScriptSlider" id="knbLofiHigh" x="1000.0" y="140.0" width="120.0"
              height="50.0" min="20.0" max="20000.0" stepSize="1.0" defaultValue="2400.0"/>
+  <Component type="ScriptFloatingTile" id="FloatingTile1" x="560.0" y="40.0"
+             ContentType="PerformanceLabel" bgColour="0" itemColour="0" itemColour2="0"
+             width="270.0" height="30.0"/>
 </ContentProperties>

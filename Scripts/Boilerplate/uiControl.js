@@ -20,11 +20,7 @@ include("Boilerplate/pitchDetection.js");
 // Knobs
 
 inline function onknbPitchControl(component, value)
-{
-    if (value == 0)
-        pitchShifterFixed.setBypassed(true);
-    else
-        pitchShifterFixed.setBypassed(false);                       
+{                    
     local newPitch = Math.pow(2.0, value / 12.0);               
     pitchShifterFixed.setAttribute(pitchShifterFixed.FreqRatio, newPitch);
 }

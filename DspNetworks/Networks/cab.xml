@@ -33,8 +33,7 @@
               <Property ID="SmoothingTime" Value="20"/>
             </Properties>
             <Nodes>
-              <Node ID="fix_delay" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay"
-                    Folded="1">
+              <Node ID="fix_delay" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay">
                 <Parameters>
                   <Parameter MinValue="0.0" MaxValue="50.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="DelayTime" DefaultValue="50.0"
@@ -44,7 +43,7 @@
                 </Parameters>
               </Node>
               <Node ID="convolution2" FactoryPath="filters.convolution" Bypassed="0"
-                    Name="convolution" Folded="1">
+                    Name="convolution2">
                 <ComplexData>
                   <AudioFiles>
                     <AudioFile Index="0" MinValue="0" MaxValue="5512"/>
@@ -189,15 +188,14 @@
                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                 </Parameters>
               </Node>
-              <Node ID="jpanner" FactoryPath="jdsp.jpanner" Bypassed="0" Name="pan"
-                    Folded="1">
+              <Node ID="jpanner" FactoryPath="jdsp.jpanner" Bypassed="0" Name="pan">
                 <Parameters>
                   <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" DefaultValue="0.0" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
                 </Parameters>
               </Node>
               <Node ID="soft_bypass1" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="phase_bypass" Folded="1">
+                    Name="phase_bypass">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
@@ -220,11 +218,10 @@
                              SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                 </Parameters>
               </Node>
-              <Node ID="gain2" FactoryPath="core.gain" Bypassed="0" Name="gain2">
+              <Node ID="gain7" FactoryPath="core.gain" Bypassed="0" Name="outputGain">
                 <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="12.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" DefaultValue="1.490116119384766e-6"
-                             Automated="1"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
                   <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
@@ -240,8 +237,7 @@
               <Property ID="SmoothingTime" Value="20"/>
             </Properties>
             <Nodes>
-              <Node ID="fix_delay1" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay"
-                    Folded="1">
+              <Node ID="fix_delay1" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay">
                 <Parameters>
                   <Parameter MinValue="0.0" MaxValue="50.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="DelayTime" DefaultValue="50.0"
@@ -250,11 +246,11 @@
                              Value="256.0" DefaultValue="512.0"/>
                 </Parameters>
               </Node>
-              <Node ID="convolution3" FactoryPath="filters.convolution" Bypassed="0"
-                    Name="convolution" Folded="1">
+              <Node ID="convolution1" FactoryPath="filters.convolution" Bypassed="0"
+                    Name="convolution">
                 <ComplexData>
                   <AudioFiles>
-                    <AudioFile Index="1" MinValue="0" MaxValue="23520"/>
+                    <AudioFile Index="1" MinValue="0" MaxValue="0"/>
                   </AudioFiles>
                 </ComplexData>
                 <Parameters>
@@ -396,15 +392,14 @@
                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                 </Parameters>
               </Node>
-              <Node ID="jpanner1" FactoryPath="jdsp.jpanner" Bypassed="0" Name="pan"
-                    Folded="1">
+              <Node ID="jpanner2" FactoryPath="jdsp.jpanner" Bypassed="0" Name="pan">
                 <Parameters>
-                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" DefaultValue="0.0" Automated="1"/>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
                 </Parameters>
               </Node>
               <Node ID="soft_bypass3" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="phase_bypass1" Folded="1">
+                    Name="phase_bypass1">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
@@ -427,12 +422,10 @@
                              SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                 </Parameters>
               </Node>
-              <Node ID="gain3" FactoryPath="core.gain" Bypassed="0" Name="gain3"
-                    Folded="1">
+              <Node ID="gain8" FactoryPath="core.gain" Bypassed="0" Name="outputGain">
                 <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="12.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" DefaultValue="1.490116119384766e-6"
-                             Automated="1"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
                   <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
@@ -498,11 +491,11 @@
           <Connection NodeId="soft_bypass1" ParameterId="Bypassed"/>
         </Connections>
       </Parameter>
-      <Parameter ID="CabAGain" MinValue="-100.0" MaxValue="12.0" StepSize="0.1"
+      <Parameter ID="CabAGain" MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                  SkewFactor="5.422270774841309" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="gain2" ParameterId="Gain"/>
+          <Connection NodeId="gain7" ParameterId="Gain"/>
         </Connections>
       </Parameter>
       <Parameter ID="CabBEnable" MinValue="0.0" MaxValue="1.0" StepSize="1" ExternalModulation="Disabled"
@@ -541,7 +534,7 @@
       <Parameter ID="CabBPan" MinValue="-1.0" MaxValue="1.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="jpanner1" ParameterId="Pan"/>
+          <Connection NodeId="jpanner2" ParameterId="Pan"/>
         </Connections>
       </Parameter>
       <Parameter ID="CabBPhase" MinValue="0.0" MaxValue="1.0" StepSize="1" ExternalModulation="Disabled"
@@ -550,11 +543,11 @@
           <Connection NodeId="soft_bypass3" ParameterId="Bypassed"/>
         </Connections>
       </Parameter>
-      <Parameter ID="CabBGain" MinValue="-100.0" MaxValue="12.0" StepSize="0.1"
+      <Parameter ID="CabBGain" MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                  SkewFactor="5.422270774841309" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="gain3" ParameterId="Gain"/>
+          <Connection NodeId="gain8" ParameterId="Gain"/>
         </Connections>
       </Parameter>
     </Parameters>
