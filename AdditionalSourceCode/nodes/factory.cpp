@@ -32,10 +32,9 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerPolyNode<project::octave_faust<1>, scriptnode::wrap::illegal_poly<project::octave_faust<1>>>();
 		registerPolyNode<project::amp<1>, wrap::illegal_poly<project::amp<1>>>();
 		registerPolyNode<project::cab<1>, wrap::illegal_poly<project::cab<1>>>();
+		registerPolyNode<project::chug<1>, wrap::illegal_poly<project::chug<1>>>();
 		registerPolyNode<project::octaveFaust<1>, wrap::illegal_poly<project::octaveFaust<1>>>();
 		registerPolyNode<project::reverb<1>, wrap::illegal_poly<project::reverb<1>>>();
-		registerDataNode<project::octaveCombinePre_networkdata>();
-		registerDataNode<project::octaveSplit_networkdata>();
 		registerDataNode<project::pitchDetection_networkdata>();
 	}
 };

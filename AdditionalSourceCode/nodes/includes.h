@@ -17,9 +17,8 @@
 
 #include "amp.h"
 #include "cab.h"
-#include "octaveCombinePre_networkdata.h"
+#include "chug.h"
 #include "octaveFaust.h"
-#include "octaveSplit_networkdata.h"
 #include "pitchDetection_networkdata.h"
 #include "reverb.h"
 

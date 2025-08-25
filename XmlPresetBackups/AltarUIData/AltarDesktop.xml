@@ -176,9 +176,9 @@
     <Component type="ScriptSlider" id="knbClickGain" x="180.0" y="200.0" middlePosition="-50.0"
                min="-100.0" max="36.0" mode="Decibel" processorId="clickGain"
                parameterId="Gain" parentComponent="pnlTuner"/>
-    <Component type="ScriptLabel" id="lblClickDisasbled" x="20" y="249" width="290.0"
-               height="20.0" text="Click disabled in Plugin version." visible="0"
-               parentComponent="pnlTuner"/>
+    <Component type="ScriptLabel" id="lblClickDisasbled" x="20.0" y="249.0"
+               width="290.0" height="20.0" text="Click disabled in Plugin version."
+               visible="0" parentComponent="pnlTuner"/>
   </Component>
   <Component type="ScriptPanel" id="pnlDebug" x="0.0" y="750.0" width="1150.0"
              height="100.0">
@@ -212,7 +212,7 @@
   <Component type="ScriptButton" id="btnOctave" x="140.0" y="170.0" width="78.0"/>
   <Component type="ScriptButton" id="btnOctavePosition" x="230.0" y="170.0"
              enabled="0"/>
-  <Component type="ScriptSlider" id="knbOctaveFreq" x="220.0" y="110" middlePosition="300.0"
+  <Component type="ScriptSlider" id="knbOctaveFreq" x="220.0" y="110.0" middlePosition="300.0"
              defaultValue="300.0" mode="Frequency" min="60.0" max="1000.0"
              stepSize="1.0" suffix=" Hz"/>
 </ContentProperties>
