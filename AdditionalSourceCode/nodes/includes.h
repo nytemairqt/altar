@@ -19,6 +19,7 @@
 #include "cab.h"
 #include "chug.h"
 #include "octaveFaust.h"
+#include "pick.h"
 #include "pitchDetection_networkdata.h"
 #include "reverb.h"
 

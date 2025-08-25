@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ContentProperties DeviceType="Desktop">
-  <Component type="ScriptPanel" id="pnlMaster" x="0.0" y="0.0" width="1150"
-             height="250">
+  <Component type="ScriptPanel" id="pnlMaster" x="0.0" y="0.0" width="1150.0"
+             height="250.0">
     <Component type="ScriptSlider" id="knbInputGain" x="40.0" y="1.0" min="-36.0"
                max="36.0" middlePosition="0.0" processorId="inputGain" parameterId="Gain"
                parentComponent="pnlMaster"/>
@@ -63,17 +63,26 @@
     <Component type="ScriptSlider" id="knbOctaveFreq" x="220.0" y="110.0" middlePosition="300.0"
                defaultValue="300.0" mode="Frequency" min="60.0" max="1000.0"
                stepSize="1.0" suffix=" Hz" parentComponent="pnlMaster"/>
-    <Component type="ScriptFloatingTile" id="fltPerformanceLabel" x="560.0"
+    <Component type="ScriptFloatingTile" id="fltPerformanceLabel" x="680.0"
                y="40.0" ContentType="PerformanceLabel" bgColour="0" itemColour="0"
                itemColour2="0" width="270.0" height="30.0" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnChug" x="410.0" y="150.0" width="78.0"
                parentComponent="pnlMaster" processorId="chugFixed" parameterId="Enabled"/>
     <Component type="ScriptSlider" id="knbChugThreshold" x="370.0" y="40.0"
                middlePosition="-50.0" parentComponent="pnlMaster" min="-100.0"
-               max="0.0" stepSize="0.1"/>
+               max="0.0" stepSize="0.1000000014901161"/>
     <Component type="ScriptSlider" id="knbChugFreq" x="370.0" y="100.0" middlePosition="240.0"
                defaultValue="240.0" min="30.0" max="500.0" stepSize="1.0" suffix=" Hz"
                parentComponent="pnlMaster" processorId="chugFixed" parameterId="Freq"/>
+    <Component type="ScriptButton" id="btnPick" x="530.0" y="150.0" width="78.0"
+               parentComponent="pnlMaster" processorId="pickFixed" parameterId="Enabled"/>
+    <Component type="ScriptSlider" id="knbPickFreq" x="520.0" y="100.0" middlePosition="3000.0"
+               defaultValue="2700.0" min="2000.0" max="4000.0" stepSize="1.0"
+               suffix=" Hz" parentComponent="pnlMaster" processorId="pickFixed"
+               parameterId="Freq"/>
+    <Component type="ScriptSlider" id="knbPickThreshold" x="520" y="40.0" middlePosition="50.0"
+               parentComponent="pnlMaster" max="100.0" stepSize="0.1000000014901161"
+               processorId="pickFixed" parameterId="Threshold"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="250.0" width="1150.0"
              height="550.0" itemColour="4278190080" itemColour2="4278190080"
