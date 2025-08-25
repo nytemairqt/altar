@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ContentProperties DeviceType="Desktop">
-  <Component type="ScriptSlider" id="knbInputGain" x="40.0" y="10.0" min="-36.0"
+  <Component type="ScriptSlider" id="knbInputGain" x="40.0" y="1.0" min="-36.0"
              max="36.0" middlePosition="0.0" processorId="inputGain" parameterId="Gain"/>
-  <Component type="ScriptSlider" id="knbGateThreshold" x="40.0" y="60.0" min="-100.0"
+  <Component type="ScriptSlider" id="knbGateThreshold" x="40.0" y="50.0" min="-100.0"
              max="0.0" middlePosition="-40.0" width="170.0" height="50.0"
              processorId="gate" parameterId="GateThreshold" defaultValue="-40.0"/>
-  <Component type="ScriptButton" id="btnGate" x="60.0" y="130.0" width="78.0"
+  <Component type="ScriptButton" id="btnGate" x="90.0" y="90.0" width="78.0"
              processorId="gate" parameterId="Enabled" defaultValue="1.0"/>
-  <Component type="ScriptSlider" id="knbPitch" x="210.0" y="90.0" middlePosition="0.0"
+  <Component type="ScriptSlider" id="knbPitch" x="40.0" y="120.0" middlePosition="0.0"
              min="-12.0" max="12.0" stepSize="1.0"/>
-  <Component type="ScriptButton" id="btnPitch" x="220.0" y="140.0" width="78.0"
+  <Component type="ScriptButton" id="btnPitch" x="50.0" y="170.0" width="78.0"
              processorId="pitchShifterFixed" parameterId="Enabled"/>
   <Component type="ScriptSlider" id="knbOutputGain" x="960.0" y="20.0" min="-36.0"
              max="36.0" middlePosition="0.0" processorId="outputGain" parameterId="Gain"/>
@@ -160,7 +160,8 @@
              height="550.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0"/>
   <Component type="ScriptPanel" id="pnlTuner" x="350.0" y="160.0" width="390.0"
-             height="280.0" itemColour="4278190080" itemColour2="4278190080">
+             height="280.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0.0">
     <Component type="ScriptLabel" id="lblTuner" x="130.0" y="70.0" text="TUNE"
                parentComponent="pnlTuner"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="200.0" y="30.0" parentComponent="pnlTuner"/>
@@ -175,6 +176,9 @@
     <Component type="ScriptSlider" id="knbClickGain" x="180.0" y="200.0" middlePosition="-50.0"
                min="-100.0" max="36.0" mode="Decibel" processorId="clickGain"
                parameterId="Gain" parentComponent="pnlTuner"/>
+    <Component type="ScriptLabel" id="lblClickDisasbled" x="20" y="249" width="290.0"
+               height="20.0" text="Click disabled in Plugin version." visible="0"
+               parentComponent="pnlTuner"/>
   </Component>
   <Component type="ScriptPanel" id="pnlDebug" x="0.0" y="750.0" width="1150.0"
              height="100.0">
@@ -203,7 +207,12 @@
   <Component type="ScriptFloatingTile" id="FloatingTile1" x="560.0" y="40.0"
              ContentType="PerformanceLabel" bgColour="0" itemColour="0" itemColour2="0"
              width="270.0" height="30.0"/>
-  <Component type="ScriptLabel" id="lblClickDisasbled" x="370.0" y="409.0"
-             width="290" height="20" text="Click disabled in Plugin version."
-             visible="0"/>
+  <Component type="ScriptSlider" id="knbOctave" x="220.0" y="50.0" middlePosition="0.5"
+             defaultValue="0.5"/>
+  <Component type="ScriptButton" id="btnOctave" x="140.0" y="170.0" width="78.0"/>
+  <Component type="ScriptButton" id="btnOctavePosition" x="230.0" y="170.0"
+             enabled="0"/>
+  <Component type="ScriptSlider" id="knbOctaveFreq" x="220.0" y="110" middlePosition="300.0"
+             defaultValue="300.0" mode="Frequency" min="60.0" max="1000.0"
+             stepSize="1.0" suffix=" Hz"/>
 </ContentProperties>

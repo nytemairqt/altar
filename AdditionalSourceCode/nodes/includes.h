@@ -9,6 +9,7 @@
 
 // Include third party header files ----------------
 
+#include "octave_faust.h"
 #include "reverb_faust.h"
 #include "rubberband.h"
 
@@ -16,7 +17,9 @@
 
 #include "amp.h"
 #include "cab.h"
-#include "click_networkdata.h"
+#include "octaveCombinePre_networkdata.h"
+#include "octaveFaust.h"
+#include "octaveSplit_networkdata.h"
 #include "pitchDetection_networkdata.h"
 #include "reverb.h"
 

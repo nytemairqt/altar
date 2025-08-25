@@ -50,11 +50,27 @@ inline function onknbLofiControl(component, value)
 	}
 }
 
+inline function onknbOctaveControl(component, value)
+{
+	switch (component)
+	{
+		case knbOctave:
+			octavePre.setAttribute(octavePre.Mix, value);
+			octavePost.setAttribute(octavePost.Mix, value);
+			break;		
+		case knbOctaveFreq:
+			octavePre.setAttribute(octavePre.Freq, value);
+			octavePost.setAttribute(octavePost.Freq, value);
+		break;
+	}
+}
+
 knbPitch.setControlCallback(onknbPitchControl);
 knbEQWhistle.setControlCallback(onknbEQWhistleControl);
-
 knbLofiLow.setControlCallback(onknbLofiControl);
 knbLofiHigh.setControlCallback(onknbLofiControl);
+knbOctave.setControlCallback(onknbOctaveControl);
+knbOctaveFreq.setControlCallback(onknbOctaveControl);
 
 // Buttons
 
@@ -66,6 +82,7 @@ inline function onbtnBypass(component, value)
 			tuner.setAttribute(tuner.Monitor, 1-value);
 			break;
 		case btnClick:
+			click.setBypassed(1-value);
 			if (value)
 			{
                 setupClick();
@@ -73,6 +90,23 @@ inline function onbtnBypass(component, value)
 			}
 			else
 				clickMIDI.stop(0);
+			break;
+		case btnOctave:
+			if (value)
+			{
+				octavePre.setBypassed(btnOctavePosition.getValue());
+				octavePost.setBypassed(1-btnOctavePosition.getValue());
+				btnOctavePosition.set("enabled", true);
+			}
+			else
+			{
+				octavePre.setBypassed(true);
+				octavePost.setBypassed(true);
+				btnOctavePosition.set("enabled", false);
+			}
+			break;
+		case btnOctavePosition:
+			btnOctave.changed();
 			break;
 	}
 }
@@ -247,6 +281,8 @@ inline function onbtnOpenCabFolderControl(component, value)
 // Basic Toggles
 btnTunerMonitor.setControlCallback(onbtnBypass);
 btnClick.setControlCallback(onbtnBypass);
+btnOctave.setControlCallback(onbtnBypass);
+btnOctavePosition.setControlCallback(onbtnBypass);
 
 // Cab Select Stuff
 btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);

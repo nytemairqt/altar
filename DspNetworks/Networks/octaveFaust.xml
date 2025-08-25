@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="octaveFaust" AllowCompilation="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="octaveFaust" Bypassed="0" Name="octaveFaust"
+        ShowParameters="1">
+    <Nodes>
+      <Node ID="faust1" FactoryPath="core.faust" Bypassed="0" Name="faust1">
+        <Properties>
+          <Property ID="ClassId" Value="octave_faust"/>
+          <Property ID="NumParameters" Value="0"/>
+        </Properties>
+        <Parameters>
+          <Parameter MinValue="20.0" MaxValue="1000.0" StepSize="1.0" ID="Freq" Value="300.0"/>
+          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.009999999776482582"
+                     ID="Mix" Value="1.0"/>
+          <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window"
+                     Value="1000.0"/>
+          <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade" Value="16.0"/>
+        </Parameters>
+        <SwitchTargets/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

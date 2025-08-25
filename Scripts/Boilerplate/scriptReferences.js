@@ -27,6 +27,10 @@ const limiter = Synth.getEffect("limiter");
 const tuner = Synth.getEffect("tuner");
 const lofi = Synth.getEffect("lofi");
 
+// Octave
+const octavePre = Synth.getEffect("octavePre");
+const octavePost = Synth.getEffect("octavePost");
+
 // Amp
 const pitchShifterFixed = Synth.getEffect("pitchShifterFixed");
 const preSculpt = Synth.getEffect("preSculpt");
@@ -76,6 +80,8 @@ const knbLofiLow = Content.getComponent("knbLofiLow");
 const knbLofiHigh = Content.getComponent("knbLofiHigh");
 const knbPitch = Content.getComponent("knbPitch");
 const knbClickGain = Content.getComponent("knbClickGain");
+const knbOctave = Content.getComponent("knbOctave");
+const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
 
 const knbCleanInput = Content.getComponent("knbCleanInput");
 const knbCleanOutput = Content.getComponent("knbCleanOutput");
@@ -104,6 +110,8 @@ const btnPitch = Content.getComponent("btnPitch");
 const btnGate = Content.getComponent("btnGate");
 const btnLofi = Content.getComponent("btnLofi");
 const btnOversampling = Content.getComponent("btnOversampling");
+const btnOctave = Content.getComponent("btnOctave");
+const btnOctavePosition = Content.getComponent("btnOctavePosition");
 
 const btnAmpMode = Content.getComponent("btnAmpMode");
 
@@ -167,6 +175,7 @@ const isPlugin = Engine.isPlugin();
 Engine.loadAudioFilesIntoPool();
 cabMIDIPlayer.create(4, 4, 1);
 
+// keep me here
 reg clickMIDIList = [  
   "MessageHolder: Type: NoteOn, Channel: 1, Number: 84, Value: 100, EventId: 0, Timestamp: 0, ",
   "MessageHolder: Type: NoteOff, Channel: 1, Number: 84, Value: 64, EventId: 0, Timestamp: 2756, ",
@@ -183,5 +192,5 @@ if (isPlugin)
 {
 	btnClick.set("enabled", false);
 	knbClickGain.set("enabled", false);
-	lblClickDisasbled.set("visible", true);
+	lblClickDisasbled.set("visible", true); 
 }
