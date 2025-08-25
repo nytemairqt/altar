@@ -65,12 +65,18 @@ inline function onknbOctaveControl(component, value)
 	}
 }
 
+inline function onknbChugControl(component, value)
+{
+	chugFixed.setAttribute(chugFixed.Threshold, 1-value);
+}
+
 knbPitch.setControlCallback(onknbPitchControl);
 knbEQWhistle.setControlCallback(onknbEQWhistleControl);
 knbLofiLow.setControlCallback(onknbLofiControl);
 knbLofiHigh.setControlCallback(onknbLofiControl);
 knbOctave.setControlCallback(onknbOctaveControl);
 knbOctaveFreq.setControlCallback(onknbOctaveControl);
+knbChugThreshold.setControlCallback(onknbChugControl);
 
 // Buttons
 

@@ -100,7 +100,7 @@
               </Node>
               <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
                 <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="36.0" StepSize="0.1000000014901161"
+                  <Parameter MinValue="0.0" MaxValue="100.0" StepSize="0.1000000014901161"
                              SkewFactor="1" ID="Gain" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
@@ -150,7 +150,7 @@
           <Connection NodeId="pma_unscaled1" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter ID="Threshold" MinValue="0.0" MaxValue="36.0" StepSize="0.1000000014901161"
+      <Parameter ID="Threshold" MinValue="0.0" MaxValue="100.0" StepSize="0.1000000014901161"
                  SkewFactor="1" ExternalModulation="Disabled" DefaultValue=""
                  Value="0.0" TextToValueConverter="">
         <Connections>

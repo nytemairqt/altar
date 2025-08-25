@@ -26,6 +26,7 @@ const gate = Synth.getEffect("gate");
 const limiter = Synth.getEffect("limiter");
 const tuner = Synth.getEffect("tuner");
 const lofi = Synth.getEffect("lofi");
+const chugFixed = Synth.getEffect("chugFixed");
 
 // Octave
 const octavePre = Synth.getEffect("octavePre");
@@ -82,6 +83,8 @@ const knbPitch = Content.getComponent("knbPitch");
 const knbClickGain = Content.getComponent("knbClickGain");
 const knbOctave = Content.getComponent("knbOctave");
 const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
+const knbChugThreshold = Content.getComponent("knbChugThreshold");
+const knbChugFreq = Content.getComponent("knbChugFreq");
 
 const knbCleanInput = Content.getComponent("knbCleanInput");
 const knbCleanOutput = Content.getComponent("knbCleanOutput");
@@ -112,6 +115,7 @@ const btnLofi = Content.getComponent("btnLofi");
 const btnOversampling = Content.getComponent("btnOversampling");
 const btnOctave = Content.getComponent("btnOctave");
 const btnOctavePosition = Content.getComponent("btnOctavePosition");
+const btnChug = Content.getComponent("btnChug");
 
 const btnAmpMode = Content.getComponent("btnAmpMode");
 
