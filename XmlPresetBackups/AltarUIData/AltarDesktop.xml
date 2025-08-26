@@ -24,8 +24,7 @@
     <Component type="ScriptButton" id="btnShowTuner" x="320.0" y="11.0" width="108.0"
                parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnOversampling" x="930.0" y="100.0"
-               width="160.0" height="30.0" defaultValue="1.0" processorId="ampFixed"
-               parameterId="oversampling" parentComponent="pnlMaster"/>
+               width="160.0" height="30.0" defaultValue="1.0" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnLimiter" x="960.0" y="70.0" defaultValue="1.0"
                processorId="limiter" parameterId="Enabled" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnShowOverdrive" x="320.0" y="210.0"
@@ -85,7 +84,7 @@
                stepSize="0.1000000014901161" processorId="pickFixed" parameterId="Threshold"
                defaultValue="50.0"/>
     <Component type="ScriptSlider" id="knbGrit" x="680.0" y="90.0" parentComponent="pnlMaster"
-               min="-100.0" max="0.0" middlePosition="-36.0" stepSize="0.1"
+               min="-100.0" max="0.0" middlePosition="-36.0" stepSize="0.1000000014901161"
                defaultValue="-36.0" processorId="gritFixed" parameterId="Grit"/>
     <Component type="ScriptButton" id="btnGrit" x="690.0" y="60.0" parentComponent="pnlMaster"
                processorId="gritFixed" parameterId="Enabled"/>

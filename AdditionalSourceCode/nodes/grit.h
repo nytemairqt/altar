@@ -15,8 +15,6 @@ namespace grit_impl
 {
 // ==============================| Node & Parameter type declarations |==============================
 
-using chain_t = container::chain<parameter::empty, 
-                                 wrap::fix<2, core::empty>>;
 template <int NumVoices> struct grit
 {
 	SNEX_NODE(grit);
@@ -72,13 +70,50 @@ template <int NumVoices> struct grit
 };
 
 template <int NV>
-using snex_shaper_t = wrap::no_data<core::snex_shaper<grit<NV>>>;
+using snex_shaper1_t = wrap::no_data<core::snex_shaper<grit<NV>>>;
+
+template <int NV>
+using soft_bypass2_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, snex_shaper1_t<NV>>>;
+
+template <int NV>
+using soft_bypass2_t = bypass::smoothed<20, soft_bypass2_t_<NV>>;
+template <int NV>
+using xfader_c0 = parameter::bypass<soft_bypass2_t<NV>>;
+
+template <int NV> using snex_shaper_t = snex_shaper1_t<NV>;
+
+template <int NV>
+using oversample4x_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, snex_shaper_t<NV>>>;
+
+template <int NV>
+using oversample4x_t = wrap::oversample<4, oversample4x_t_<NV>>;
+
+template <int NV>
+using soft_bypass1_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, oversample4x_t<NV>>>;
+
+template <int NV>
+using soft_bypass1_t = bypass::smoothed<20, soft_bypass1_t_<NV>>;
+template <int NV>
+using xfader_c1 = parameter::bypass<soft_bypass1_t<NV>>;
+
+template <int NV>
+using xfader_multimod = parameter::list<xfader_c0<NV>, xfader_c1<NV>>;
+
+template <int NV>
+using xfader_t = control::xfader<xfader_multimod<NV>, faders::switcher>;
+
+using chain_t = container::chain<parameter::empty, 
+                                 wrap::fix<2, core::empty>>;
 
 template <int NV>
 using chain1_t = container::chain<parameter::empty, 
                                   wrap::fix<2, filters::svf<NV>>, 
                                   filters::svf<NV>, 
-                                  snex_shaper_t<NV>, 
+                                  soft_bypass1_t<NV>, 
+                                  soft_bypass2_t<NV>, 
                                   filters::svf<NV>, 
                                   filters::svf<NV>, 
                                   filters::svf_eq<NV>, 
@@ -91,17 +126,27 @@ using split_t = container::split<parameter::empty,
 
 template <int NV>
 using soft_bypass_t_ = container::chain<parameter::empty, 
-                                        wrap::fix<2, split_t<NV>>>;
+                                        wrap::fix<2, xfader_t<NV>>, 
+                                        split_t<NV>>;
 
 template <int NV>
 using soft_bypass_t = bypass::smoothed<20, soft_bypass_t_<NV>>;
 
 namespace grit_t_parameters
 {
+// Parameter list for grit_impl::grit_t ------------------------------------------------------------
+
+template <int NV>
+using Grit = parameter::plain<core::gain<NV>, 0>;
+template <int NV>
+using Oversampling = parameter::plain<grit_impl::xfader_t<NV>, 
+                                      0>;
+template <int NV>
+using grit_t_plist = parameter::list<Grit<NV>, Oversampling<NV>>;
 }
 
 template <int NV>
-using grit_t_ = container::chain<parameter::plain<core::gain<NV>, 0>, 
+using grit_t_ = container::chain<grit_t_parameters::grit_t_plist<NV>, 
                                  wrap::fix<2, soft_bypass_t<NV>>>;
 
 // =================================| Root node initialiser class |=================================
@@ -119,10 +164,13 @@ template <int NV> struct instance: public grit_impl::grit_t_<NV>
 		
 		SNEX_METADATA_ID(grit);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(16)
+		SNEX_METADATA_ENCODED_PARAMETERS(36)
 		{
 			0x005C, 0x0000, 0x0000, 0x7247, 0x7469, 0x0000, 0xC800, 0x00C2, 
-            0x0000, 0x3300, 0x1333, 0x00C1, 0x8000, 0xCD3F, 0xCCCC, 0x003D
+            0x0000, 0x3300, 0x1333, 0x00C1, 0x8000, 0xCD3F, 0xCCCC, 0x5C3D, 
+            0x0100, 0x0000, 0x4F00, 0x6576, 0x7372, 0x6D61, 0x6C70, 0x6E69, 
+            0x0067, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 
+            0x3F80, 0x0000, 0x3F80, 0x0000
 		};
 		SNEX_METADATA_ENCODED_MOD_INFO(17)
 		{
@@ -136,23 +184,38 @@ template <int NV> struct instance: public grit_impl::grit_t_<NV>
 	{
 		// Node References -------------------------------------------------------------------------
 		
-		auto& soft_bypass = this->getT(0);                         // grit_impl::soft_bypass_t<NV>
-		auto& split = this->getT(0).getT(0);                       // grit_impl::split_t<NV>
-		auto& chain = this->getT(0).getT(0).getT(0);               // grit_impl::chain_t
-		auto& chain1 = this->getT(0).getT(0).getT(1);              // grit_impl::chain1_t<NV>
-		auto& svf = this->getT(0).getT(0).getT(1).getT(0);         // filters::svf<NV>
-		auto& svf4 = this->getT(0).getT(0).getT(1).getT(1);        // filters::svf<NV>
-		auto& snex_shaper = this->getT(0).getT(0).getT(1).getT(2); // grit_impl::snex_shaper_t<NV>
-		auto& svf1 = this->getT(0).getT(0).getT(1).getT(3);        // filters::svf<NV>
-		auto& svf5 = this->getT(0).getT(0).getT(1).getT(4);        // filters::svf<NV>
-		auto& svf_eq = this->getT(0).getT(0).getT(1).getT(5);      // filters::svf_eq<NV>
-		auto& gain1 = this->getT(0).getT(0).getT(1).getT(6);       // core::gain<NV>
+		auto& soft_bypass = this->getT(0);                                         // grit_impl::soft_bypass_t<NV>
+		auto& xfader = this->getT(0).getT(0);                                      // grit_impl::xfader_t<NV>
+		auto& split = this->getT(0).getT(1);                                       // grit_impl::split_t<NV>
+		auto& chain = this->getT(0).getT(1).getT(0);                               // grit_impl::chain_t
+		auto& chain1 = this->getT(0).getT(1).getT(1);                              // grit_impl::chain1_t<NV>
+		auto& svf = this->getT(0).getT(1).getT(1).getT(0);                         // filters::svf<NV>
+		auto& svf4 = this->getT(0).getT(1).getT(1).getT(1);                        // filters::svf<NV>
+		auto& soft_bypass1 = this->getT(0).getT(1).getT(1).getT(2);                // grit_impl::soft_bypass1_t<NV>
+		auto& oversample4x = this->getT(0).getT(1).getT(1).getT(2).getT(0);        // grit_impl::oversample4x_t<NV>
+		auto& snex_shaper = this->getT(0).getT(1).getT(1).getT(2).getT(0).getT(0); // grit_impl::snex_shaper_t<NV>
+		auto& soft_bypass2 = this->getT(0).getT(1).getT(1).getT(3);                // grit_impl::soft_bypass2_t<NV>
+		auto& snex_shaper1 = this->getT(0).getT(1).getT(1).getT(3).getT(0);        // grit_impl::snex_shaper1_t<NV>
+		auto& svf1 = this->getT(0).getT(1).getT(1).getT(4);                        // filters::svf<NV>
+		auto& svf5 = this->getT(0).getT(1).getT(1).getT(5);                        // filters::svf<NV>
+		auto& svf_eq = this->getT(0).getT(1).getT(1).getT(6);                      // filters::svf_eq<NV>
+		auto& gain1 = this->getT(0).getT(1).getT(1).getT(7);                       // core::gain<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
 		this->getParameterT(0).connectT(0, gain1); // Grit -> gain1::Gain
 		
+		this->getParameterT(1).connectT(0, xfader); // Oversampling -> xfader::Value
+		
+		// Modulation Connections ------------------------------------------------------------------
+		
+		auto& xfader_p = xfader.getWrappedObject().getParameter();
+		xfader_p.getParameterT(0).connectT(0, soft_bypass2); // xfader -> soft_bypass2::Bypassed
+		xfader_p.getParameterT(1).connectT(0, soft_bypass1); // xfader -> soft_bypass1::Bypassed
+		
 		// Default Values --------------------------------------------------------------------------
+		
+		; // xfader::Value is automated
 		
 		svf.setParameterT(0, 426.102); // filters::svf::Frequency
 		svf.setParameterT(1, 1.);      // filters::svf::Q
@@ -167,6 +230,8 @@ template <int NV> struct instance: public grit_impl::grit_t_<NV>
 		svf4.setParameterT(3, 0.01);    // filters::svf::Smoothing
 		svf4.setParameterT(4, 1.);      // filters::svf::Mode
 		svf4.setParameterT(5, 1.);      // filters::svf::Enabled
+		
+		oversample4x.setParameterT(0, 0.); // container::chain::FilterType
 		
 		svf1.setParameterT(0, 313.229); // filters::svf::Frequency
 		svf1.setParameterT(1, 0.38711); // filters::svf::Q
@@ -194,6 +259,7 @@ template <int NV> struct instance: public grit_impl::grit_t_<NV>
 		gain1.setParameterT(2, 0.);  // core::gain::ResetValue
 		
 		this->setParameterT(0, -9.2);
+		this->setParameterT(1, 0.);
 		this->setExternalData({}, -1);
 	}
 	~instance() override
@@ -213,7 +279,8 @@ template <int NV> struct instance: public grit_impl::grit_t_<NV>
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(0).getT(0).getT(1).getT(2).setExternalData(b, index); // grit_impl::snex_shaper_t<NV>
+		this->getT(0).getT(1).getT(1).getT(2).getT(0).getT(0).setExternalData(b, index); // grit_impl::snex_shaper_t<NV>
+		this->getT(0).getT(1).getT(1).getT(3).getT(0).setExternalData(b, index);         // grit_impl::snex_shaper1_t<NV>
 	}
 };
 }

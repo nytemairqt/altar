@@ -87,6 +87,10 @@ inline function onbtnBypass(component, value)
 		case btnTunerMonitor:
 			tuner.setAttribute(tuner.Monitor, 1-value);
 			break;
+		case btnOversampling:
+			ampFixed.setAttribute(ampFixed.oversampling, value); // little o (fix me later)
+			gritFixed.setAttribute(gritFixed.Oversampling, value); // big o
+			break;
 		case btnClick:
 			click.setBypassed(1-value);
 			if (value)
@@ -305,6 +309,7 @@ btnOctavePosition.setControlCallback(onbtnBypass);
 btnAmpMode.setControlCallback(onbtnBypass);
 btnCabAEnable.setControlCallback(onbtnBypass);
 btnCabBEnable.setControlCallback(onbtnBypass);
+btnOversampling.setControlCallback(onbtnBypass);
 
 // Cab Select
 btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);

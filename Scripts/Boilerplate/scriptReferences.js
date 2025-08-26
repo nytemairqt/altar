@@ -27,6 +27,7 @@ const limiter = Synth.getEffect("limiter");
 const tuner = Synth.getEffect("tuner");
 const lofi = Synth.getEffect("lofi");
 const chugFixed = Synth.getEffect("chugFixed");
+const gritFixed = Synth.getEffect("gritFixed");
 
 // Octave
 const octavePre = Synth.getEffect("octavePre");

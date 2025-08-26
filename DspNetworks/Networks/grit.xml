@@ -10,6 +10,27 @@
           <Property ID="SmoothingTime" Value="20"/>
         </Properties>
         <Nodes>
+          <Node ID="xfader" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
+            <Properties>
+              <Property ID="NumParameters" Value="2"/>
+              <Property ID="Mode" Value="Switch"/>
+            </Properties>
+            <SwitchTargets>
+              <SwitchTarget>
+                <Connections>
+                  <Connection NodeId="soft_bypass2" ParameterId="Bypassed"/>
+                </Connections>
+              </SwitchTarget>
+              <SwitchTarget>
+                <Connections>
+                  <Connection NodeId="soft_bypass1" ParameterId="Bypassed"/>
+                </Connections>
+              </SwitchTarget>
+            </SwitchTargets>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1" ID="Value" Automated="1"/>
+            </Parameters>
+          </Node>
           <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
             <Nodes>
               <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="dry">
@@ -57,20 +78,63 @@
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                     </Parameters>
                   </Node>
-                  <Node ID="snex_shaper" FactoryPath="core.snex_shaper" Bypassed="0"
-                        Name="snex_shaper">
+                  <Node ID="soft_bypass1" FactoryPath="container.soft_bypass" Bypassed="0"
+                        Name="soft_bypass1">
                     <Properties>
-                      <Property ID="ClassId" Value="grit"/>
+                      <Property ID="SmoothingTime" Value="20"/>
                     </Properties>
-                    <ComplexData>
-                      <Tables/>
-                      <SliderPacks/>
-                      <AudioFiles/>
-                      <Filters/>
-                      <DisplayBuffers>
-                        <DisplayBuffer Index="-1" EmbeddedData=""/>
-                      </DisplayBuffers>
-                    </ComplexData>
+                    <Nodes>
+                      <Node ID="oversample4x" FactoryPath="container.oversample4x" Bypassed="0"
+                            Name="oversample4x">
+                        <Nodes>
+                          <Node ID="snex_shaper" FactoryPath="core.snex_shaper" Bypassed="0"
+                                Name="snex_shaper">
+                            <Properties>
+                              <Property ID="ClassId" Value="grit"/>
+                            </Properties>
+                            <ComplexData>
+                              <Tables/>
+                              <SliderPacks/>
+                              <AudioFiles/>
+                              <Filters/>
+                              <DisplayBuffers>
+                                <DisplayBuffer Index="-1" EmbeddedData=""/>
+                              </DisplayBuffers>
+                            </ComplexData>
+                            <Parameters/>
+                          </Node>
+                        </Nodes>
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="FilterType"
+                                     Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="soft_bypass2" FactoryPath="container.soft_bypass" Bypassed="0"
+                        Name="soft_bypass2">
+                    <Properties>
+                      <Property ID="SmoothingTime" Value="20"/>
+                    </Properties>
+                    <Nodes>
+                      <Node ID="snex_shaper1" FactoryPath="core.snex_shaper" Bypassed="0"
+                            Name="snex_shaper">
+                        <Properties>
+                          <Property ID="ClassId" Value="grit"/>
+                        </Properties>
+                        <ComplexData>
+                          <Tables/>
+                          <SliderPacks/>
+                          <AudioFiles/>
+                          <Filters/>
+                          <DisplayBuffers>
+                            <DisplayBuffer Index="-1" EmbeddedData=""/>
+                          </DisplayBuffers>
+                        </ComplexData>
+                        <Parameters/>
+                      </Node>
+                    </Nodes>
                     <Parameters/>
                   </Node>
                   <Node ID="svf1" FactoryPath="filters.svf" Bypassed="0" Name="svf">
@@ -157,6 +221,12 @@
                  DefaultValue="" Value="-9.199999999999989">
         <Connections>
           <Connection NodeId="gain1" ParameterId="Gain"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="Oversampling" MinValue="0.0" MaxValue="1.0" StepSize="1"
+                 ExternalModulation="Disabled" DefaultValue="" Value="0.0">
+        <Connections>
+          <Connection NodeId="xfader" ParameterId="Value"/>
         </Connections>
       </Parameter>
     </Parameters>
