@@ -92,7 +92,7 @@
     </Nodes>
     <Parameters>
       <Parameter ID="Monitor" MinValue="0.0" MaxValue="1.0" StepSize="1" ExternalModulation="Disabled"
-                 DefaultValue="" Value="1.0">
+                 DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="soft_bypass" ParameterId="Bypassed"/>
         </Connections>

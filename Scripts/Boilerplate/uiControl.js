@@ -114,6 +114,11 @@ inline function onbtnBypass(component, value)
 		case btnOctavePosition:
 			btnOctave.changed();
 			break;
+		case btnAmpMode:
+			ampFixed.setAttribute(ampFixed.channel, value);
+			pnlAmpClean.set("visible", 1-value);
+			pnlAmpDirty.set("visible", value);
+			break;
 	}
 }
 
@@ -289,6 +294,7 @@ btnTunerMonitor.setControlCallback(onbtnBypass);
 btnClick.setControlCallback(onbtnBypass);
 btnOctave.setControlCallback(onbtnBypass);
 btnOctavePosition.setControlCallback(onbtnBypass);
+btnAmpMode.setControlCallback(onbtnBypass);
 
 // Cab Select Stuff
 btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);

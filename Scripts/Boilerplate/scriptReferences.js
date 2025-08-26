@@ -157,6 +157,8 @@ const lblClickDisasbled = Content.getComponent("lblClickDisasbled");
 
 const pnlOverdrive = Content.getComponent("pnlOverdrive");
 const pnlAmp = Content.getComponent("pnlAmp");
+const pnlAmpClean = Content.getComponent("pnlAmpClean");
+const pnlAmpDirty = Content.getComponent("pnlAmpDirty");
 const pnlCab = Content.getComponent("pnlCab");
 const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
 const pnlTuner = Content.getComponent("pnlTuner");
