@@ -63,8 +63,8 @@
     <Component type="ScriptSlider" id="knbOctaveFreq" x="220.0" y="110.0" middlePosition="300.0"
                defaultValue="300.0" mode="Frequency" min="60.0" max="1000.0"
                stepSize="1.0" suffix=" Hz" parentComponent="pnlMaster"/>
-    <Component type="ScriptFloatingTile" id="fltPerformanceLabel" x="680.0"
-               y="40.0" ContentType="PerformanceLabel" bgColour="0" itemColour="0"
+    <Component type="ScriptFloatingTile" id="fltPerformanceLabel" x="880.0"
+               y="210.0" ContentType="PerformanceLabel" bgColour="0" itemColour="0"
                itemColour2="0" width="270.0" height="30.0" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnChug" x="410.0" y="150.0" width="78.0"
                parentComponent="pnlMaster" processorId="chugFixed" parameterId="Enabled"/>
@@ -84,6 +84,11 @@
                middlePosition="50.0" parentComponent="pnlMaster" max="100.0"
                stepSize="0.1000000014901161" processorId="pickFixed" parameterId="Threshold"
                defaultValue="50.0"/>
+    <Component type="ScriptSlider" id="knbGrit" x="680.0" y="90.0" parentComponent="pnlMaster"
+               min="-100.0" max="0.0" middlePosition="-36.0" stepSize="0.1"
+               defaultValue="-36.0" processorId="gritFixed" parameterId="Grit"/>
+    <Component type="ScriptButton" id="btnGrit" x="690.0" y="60.0" parentComponent="pnlMaster"
+               processorId="gritFixed" parameterId="Enabled"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="250.0" width="1150.0"
              height="550.0" itemColour="4278190080" itemColour2="4278190080"
@@ -147,7 +152,7 @@
     </Component>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="251.0" width="1150.0"
-             height="550.0" itemColour2="4278190080" itemColour="4278190080">
+             height="490.0" itemColour2="4278190080" itemColour="4278190080">
     <Component type="ScriptButton" id="btnOpenCabFolder" x="700.0" y="19.0"
                parentComponent="pnlCab" isMomentary="1"/>
     <Component type="ScriptComboBox" id="cmbCabMicrophone" x="280.0" y="19.0"
@@ -156,7 +161,7 @@
                parentComponent="pnlCab"/>
     <Component type="ScriptButton" id="btnShowCabDesigner" x="420.0" y="19.0"
                parentComponent="pnlCab"/>
-    <Component type="ScriptSlider" id="knbCabMix" x="450.0" y="470.0" parentComponent="pnlCab"
+    <Component type="ScriptSlider" id="knbCabMix" x="500.0" y="429.0" parentComponent="pnlCab"
                processorId="cabFixed" parameterId="Mix" defaultValue="0.5"/>
     <Component type="ScriptButton" id="btnCabAEnable" x="10.0" y="20.0" parentComponent="pnlCab"/>
     <Component type="ScriptSlider" id="knbCabADelay" x="150.0" y="110.0" parentComponent="pnlCab"
@@ -174,7 +179,7 @@
                min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
                processorId="cabFixed" parameterId="CabAGain" defaultValue="-12.0"
                mode="Decibel"/>
-    <Component type="ScriptButton" id="btnCabAPhase" x="30.0" y="509.0" parentComponent="pnlCab"
+    <Component type="ScriptButton" id="btnCabAPhase" x="150.0" y="19.0" parentComponent="pnlCab"
                processorId="cabFixed" parameterId="CabAPhase"/>
     <Component type="ScriptButton" id="btnCabALoadPrev" x="20.0" y="398.0" parentComponent="pnlCab"
                isMomentary="1"/>
@@ -209,7 +214,7 @@
                min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
                processorId="cabFixed" parameterId="CabBGain" defaultValue="-12.0"
                mode="Decibel"/>
-    <Component type="ScriptButton" id="btnCabBPhase" x="1010.0" y="509.0" parentComponent="pnlCab"
+    <Component type="ScriptButton" id="btnCabBPhase" x="870.0" y="19.0" parentComponent="pnlCab"
                processorId="cabFixed" parameterId="CabBPhase"/>
     <Component type="ScriptPanel" id="pnlCabDesigner" x="140.0" y="50.0" parentComponent="pnlCab"
                width="810.0" height="490.0" itemColour="4278190080" itemColour2="4278190080"
@@ -287,4 +292,6 @@
              height="180.0"/>
   <Component type="ScriptPanel" id="pnlOutputVU" x="1120.0" y="10.0" width="20.0"
              height="180.0"/>
+  <Component type="ScriptPanel" id="pnlQuickSelect" x="300.0" y="740.0" width="500.0"
+             height="60.0" itemColour="4282099711" itemColour2="4282099711"/>
 </ContentProperties>

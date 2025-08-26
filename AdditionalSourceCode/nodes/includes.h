@@ -18,6 +18,7 @@
 #include "amp.h"
 #include "cab.h"
 #include "chug.h"
+#include "grit.h"
 #include "octaveFaust.h"
 #include "pick.h"
 #include "pitchDetection_networkdata.h"
