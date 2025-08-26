@@ -40,11 +40,13 @@ const postSculpt = Synth.getEffect("postSculpt");
 
 // Cab
 const cabScriptFX = Synth.getAudioSampleProcessor("cabScriptFX");
+const cabFixed = Synth.getEffect("cabFixed");
 const cabEQMain = Synth.getEffect("cabEQMain");
 const cabEQDetails = Synth.getEffect("cabEQDetails");
 const cabEQCustom = Synth.getEffect("cabEQCustom");
 const eqWhistle = Synth.getEffect("eqWhistle");
 const cabEQCustomBlankState = "186.3ocMNsrCBBCDbqDN3A+WjeAPHwCZTKw6U5FoI0tZenxWutfxdZlLyrybvScXHPdPj2NbGAwx7pj+IV+.1tADqx6TWpOVkBQ5FTNbWEBnFDhr8oaMFaD8ANp.3qoos1otX+oKxp0lH4kQUDYOYkjdP1SubLNu.NaBF16OhjrzHZM.U8Fq9v7rB7eOQonwccmJ5Mu4x3lkTx2gU8JmCsSCXALFchuddPRzomHe36uXwHW7WrXVD9hSykzK";
+
 
 // Pedals
 const reverbFixed = Synth.getEffect("reverbFixed");
@@ -120,6 +122,8 @@ const btnChug = Content.getComponent("btnChug");
 const btnAmpMode = Content.getComponent("btnAmpMode");
 
 const btnCabAEnable = Content.getComponent("btnCabAEnable");
+const btnCabBEnable = Content.getComponent("btnCabBEnable");
+
 const btnCabAPhase = Content.getComponent("btnCabAPhase");
 const btnCabALoadPrev = Content.getComponent("btnCabALoadPrev");
 const btnCabALoadNext = Content.getComponent("btnCabALoadNext");

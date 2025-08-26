@@ -27,410 +27,448 @@
       </Node>
       <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
         <Nodes>
-          <Node ID="soft_bypass" FactoryPath="container.soft_bypass" Bypassed="0"
-                Name="soft_bypass">
-            <Properties>
-              <Property ID="SmoothingTime" Value="20"/>
-            </Properties>
+          <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chainA">
             <Nodes>
-              <Node ID="fix_delay" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay">
-                <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="50.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="DelayTime" DefaultValue="50.0"
-                             Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1024.0" StepSize="1.0" ID="FadeTime"
-                             Value="256.0" DefaultValue="512.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="convolution2" FactoryPath="filters.convolution" Bypassed="0"
-                    Name="convolution2">
-                <ComplexData>
-                  <AudioFiles>
-                    <AudioFile Index="0" MinValue="0" MaxValue="5512"/>
-                  </AudioFiles>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="1.0" ID="Predelay"
-                             Value="0.0"/>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Damping" Value="0.0"/>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
-                             ID="HiCut" Value="20000.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
-                             Value="1.0" DefaultValue="0.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisLow"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="150.0"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.300000011920929" DefaultValue="1.0"/>
-                  <Parameter MinValue="6.0" MaxValue="0.0" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="2.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq1" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisHigh"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="2300.0"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.300000011920929" DefaultValue="1.0"/>
-                  <Parameter MinValue="-6.0" MaxValue="0.0" ID="Gain" DefaultValue="-6.0"
-                             Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq2" FactoryPath="filters.svf_eq" Bypassed="0" Name="angleA"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="2003.681507987359"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.6247118424258002" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="3.0" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq3" FactoryPath="filters.svf_eq" Bypassed="0" Name="angleB"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="4048.246029855146"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.3495162128175771" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="2.0" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq4" FactoryPath="filters.svf_eq" Bypassed="0" Name="distanceA"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.4178652656787664" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="3.0" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq6" FactoryPath="filters.svf_eq" Bypassed="0" Name="distanceB"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="4000.0"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.5482324665684978" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="-4.0" ID="Gain" DefaultValue="-4.0"
-                             Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="jpanner" FactoryPath="jdsp.jpanner" Bypassed="0" Name="pan">
-                <Parameters>
-                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" DefaultValue="0.0" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="soft_bypass1" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="phase_bypass">
+              <Node ID="soft_bypass" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="cabA">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
                 <Nodes>
-                  <Node ID="inv" FactoryPath="math.inv" Bypassed="0" Name="inv">
+                  <Node ID="fix_delay" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="50.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="DelayTime" DefaultValue="50.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1024.0" StepSize="1.0" ID="FadeTime"
+                                 Value="256.0" DefaultValue="512.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="convolution2" FactoryPath="filters.convolution" Bypassed="0"
+                        Name="convolution2">
+                    <ComplexData>
+                      <AudioFiles>
+                        <AudioFile Index="0" MinValue="0" MaxValue="5512"/>
+                      </AudioFiles>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="1.0" ID="Predelay"
+                                 Value="0.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Damping" Value="0.0"/>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
+                                 ID="HiCut" Value="20000.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
+                                 Value="1.0" DefaultValue="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisLow"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="150.0"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.300000011920929" DefaultValue="1.0"/>
+                      <Parameter MinValue="6.0" MaxValue="0.0" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="2.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq1" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisHigh"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="2300.0"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.300000011920929" DefaultValue="1.0"/>
+                      <Parameter MinValue="-6.0" MaxValue="0.0" ID="Gain" DefaultValue="-6.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq2" FactoryPath="filters.svf_eq" Bypassed="0" Name="angleA"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="2003.681507987359"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.6247118424258002" DefaultValue="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="3.0" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq3" FactoryPath="filters.svf_eq" Bypassed="0" Name="angleB"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="4048.246029855146"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.3495162128175771" DefaultValue="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="2.0" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq4" FactoryPath="filters.svf_eq" Bypassed="0" Name="distanceA"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.4178652656787664" DefaultValue="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="3.0" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq6" FactoryPath="filters.svf_eq" Bypassed="0" Name="distanceB"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="4000.0"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.5482324665684978" DefaultValue="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="-4.0" ID="Gain" DefaultValue="-4.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="jpanner" FactoryPath="jdsp.jpanner" Bypassed="0" Name="pan">
+                    <Parameters>
+                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" DefaultValue="0.0" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="soft_bypass1" FactoryPath="container.soft_bypass" Bypassed="0"
+                        Name="phase_bypass">
+                    <Properties>
+                      <Property ID="SmoothingTime" Value="20"/>
+                    </Properties>
+                    <Nodes>
+                      <Node ID="inv" FactoryPath="math.inv" Bypassed="0" Name="inv">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="mix">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="11.2023" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="gain7" FactoryPath="core.gain" Bypassed="0" Name="outputGain">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="soft_bypass4" FactoryPath="container.soft_bypass" Bypassed="1"
+                    Name="clearA">
+                <Properties>
+                  <Property ID="SmoothingTime" Value="20"/>
+                </Properties>
+                <Nodes>
+                  <Node ID="clear" FactoryPath="math.clear" Bypassed="0" Name="clear">
                     <Parameters>
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
                     </Parameters>
                   </Node>
                 </Nodes>
                 <Parameters/>
-              </Node>
-              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="mix">
-                <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="11.2023" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="gain7" FactoryPath="core.gain" Bypassed="0" Name="outputGain">
-                <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                </Parameters>
               </Node>
             </Nodes>
             <Parameters/>
           </Node>
-          <Node ID="soft_bypass2" FactoryPath="container.soft_bypass" Bypassed="0"
-                Name="soft_bypass">
-            <Properties>
-              <Property ID="SmoothingTime" Value="20"/>
-            </Properties>
+          <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chainB">
             <Nodes>
-              <Node ID="fix_delay1" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay">
-                <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="50.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="DelayTime" DefaultValue="50.0"
-                             Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1024.0" StepSize="1.0" ID="FadeTime"
-                             Value="256.0" DefaultValue="512.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="convolution1" FactoryPath="filters.convolution" Bypassed="0"
-                    Name="convolution">
-                <ComplexData>
-                  <AudioFiles>
-                    <AudioFile Index="1" MinValue="0" MaxValue="0"/>
-                  </AudioFiles>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="1.0" ID="Predelay"
-                             Value="0.0"/>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Damping" Value="0.0"/>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
-                             ID="HiCut" Value="20000.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
-                             Value="1.0" DefaultValue="0.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq7" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisLow"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="150.0"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.300000011920929" DefaultValue="1.0"/>
-                  <Parameter MinValue="6.0" MaxValue="0.0" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="2.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq8" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisHigh"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="2300.0"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.300000011920929" DefaultValue="1.0"/>
-                  <Parameter MinValue="-6.0" MaxValue="0.0" ID="Gain" DefaultValue="-6.0"
-                             Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq9" FactoryPath="filters.svf_eq" Bypassed="0" Name="angleA"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="2003.681507987359"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.6247118424258002" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="3.0" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq10" FactoryPath="filters.svf_eq" Bypassed="0" Name="angleB"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="4048.246029855146"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.3495162128175771" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="2.0" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq11" FactoryPath="filters.svf_eq" Bypassed="0" Name="distanceA"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.4178652656787664" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="3.0" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="svf_eq12" FactoryPath="filters.svf_eq" Bypassed="0" Name="distanceB"
-                    Folded="1">
-                <ComplexData>
-                  <Filters>
-                    <Filter Index="-1"/>
-                  </Filters>
-                </ComplexData>
-                <Parameters>
-                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="4000.0"
-                             DefaultValue="1000.0"/>
-                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.5482324665684978" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="-4.0" ID="Gain" DefaultValue="-4.0"
-                             Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                             ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
-                             DefaultValue="0.0"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="jpanner2" FactoryPath="jdsp.jpanner" Bypassed="0" Name="pan">
-                <Parameters>
-                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="soft_bypass3" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="phase_bypass1">
+              <Node ID="soft_bypass2" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="cabB">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
                 <Nodes>
-                  <Node ID="inv1" FactoryPath="math.inv" Bypassed="0" Name="inv">
+                  <Node ID="fix_delay1" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="50.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="DelayTime" DefaultValue="50.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1024.0" StepSize="1.0" ID="FadeTime"
+                                 Value="256.0" DefaultValue="512.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="convolution1" FactoryPath="filters.convolution" Bypassed="0"
+                        Name="convolution">
+                    <ComplexData>
+                      <AudioFiles>
+                        <AudioFile Index="1" MinValue="0" MaxValue="0"/>
+                      </AudioFiles>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="1.0" ID="Predelay"
+                                 Value="0.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Damping" Value="0.0"/>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
+                                 ID="HiCut" Value="20000.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
+                                 Value="1.0" DefaultValue="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq7" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisLow"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="150.0"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.300000011920929" DefaultValue="1.0"/>
+                      <Parameter MinValue="6.0" MaxValue="0.0" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="2.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq8" FactoryPath="filters.svf_eq" Bypassed="0" Name="axisHigh"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="2300.0"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.300000011920929" DefaultValue="1.0"/>
+                      <Parameter MinValue="-6.0" MaxValue="0.0" ID="Gain" DefaultValue="-6.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq9" FactoryPath="filters.svf_eq" Bypassed="0" Name="angleA"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="2003.681507987359"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.6247118424258002" DefaultValue="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="3.0" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq10" FactoryPath="filters.svf_eq" Bypassed="0" Name="angleB"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="4048.246029855146"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.3495162128175771" DefaultValue="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="2.0" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq11" FactoryPath="filters.svf_eq" Bypassed="0" Name="distanceA"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.4178652656787664" DefaultValue="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="3.0" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="4.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="svf_eq12" FactoryPath="filters.svf_eq" Bypassed="0" Name="distanceB"
+                        Folded="1">
+                    <ComplexData>
+                      <Filters>
+                        <Filter Index="-1"/>
+                      </Filters>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                 ID="Frequency" TextToValueConverter="Frequency" Value="4000.0"
+                                 DefaultValue="1000.0"/>
+                      <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                 ID="Q" Value="0.5482324665684978" DefaultValue="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="-4.0" ID="Gain" DefaultValue="-4.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                 ID="Smoothing" Value="0.009999999776482582"/>
+                      <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="3.0"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="jpanner2" FactoryPath="jdsp.jpanner" Bypassed="0" Name="pan">
+                    <Parameters>
+                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="soft_bypass3" FactoryPath="container.soft_bypass" Bypassed="0"
+                        Name="phase_bypass1">
+                    <Properties>
+                      <Property ID="SmoothingTime" Value="20"/>
+                    </Properties>
+                    <Nodes>
+                      <Node ID="inv1" FactoryPath="math.inv" Bypassed="0" Name="inv">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="gain1" FactoryPath="core.gain" Bypassed="0" Name="mix">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="11.2023" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="gain8" FactoryPath="core.gain" Bypassed="0" Name="outputGain">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="soft_bypass5" FactoryPath="container.soft_bypass" Bypassed="1"
+                    Name="clearB">
+                <Properties>
+                  <Property ID="SmoothingTime" Value="20"/>
+                </Properties>
+                <Nodes>
+                  <Node ID="clear1" FactoryPath="math.clear" Bypassed="0" Name="clear1">
                     <Parameters>
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
                     </Parameters>
                   </Node>
                 </Nodes>
                 <Parameters/>
-              </Node>
-              <Node ID="gain1" FactoryPath="core.gain" Bypassed="0" Name="mix">
-                <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="11.2023" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                </Parameters>
-              </Node>
-              <Node ID="gain8" FactoryPath="core.gain" Bypassed="0" Name="outputGain">
-                <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                </Parameters>
               </Node>
             </Nodes>
             <Parameters/>
@@ -548,6 +586,18 @@
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="gain8" ParameterId="Gain"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="CabAClear" MinValue="0.0" MaxValue="1.0" StepSize="1" ExternalModulation="Disabled"
+                 DefaultValue="" Value="0.0">
+        <Connections>
+          <Connection NodeId="soft_bypass4" ParameterId="Bypassed"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="CabBClear" MinValue="0.0" MaxValue="1.0" StepSize="1" ExternalModulation="Disabled"
+                 DefaultValue="" Value="0.0">
+        <Connections>
+          <Connection NodeId="soft_bypass5" ParameterId="Bypassed"/>
         </Connections>
       </Parameter>
     </Parameters>

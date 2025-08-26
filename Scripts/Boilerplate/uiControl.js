@@ -119,6 +119,14 @@ inline function onbtnBypass(component, value)
 			pnlAmpClean.set("visible", 1-value);
 			pnlAmpDirty.set("visible", value);
 			break;
+		case btnCabAEnable:
+			cabFixed.setAttribute(cabFixed.CabAEnable, value);
+			cabFixed.setAttribute(cabFixed.CabAClear, 1-value);
+			break;
+		case btnCabBEnable:
+			cabFixed.setAttribute(cabFixed.CabBEnable, value);
+			cabFixed.setAttribute(cabFixed.CabBClear, 1-value);
+			break;
 	}
 }
 
@@ -295,8 +303,10 @@ btnClick.setControlCallback(onbtnBypass);
 btnOctave.setControlCallback(onbtnBypass);
 btnOctavePosition.setControlCallback(onbtnBypass);
 btnAmpMode.setControlCallback(onbtnBypass);
+btnCabAEnable.setControlCallback(onbtnBypass);
+btnCabBEnable.setControlCallback(onbtnBypass);
 
-// Cab Select Stuff
+// Cab Select
 btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);
 btnCabALoadNext.setControlCallback(onbtnCabSelectControl);
 

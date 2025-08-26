@@ -185,4 +185,4 @@ tunerTimer.setTimerCallback(function()
 });
 
 // definitely dont need this to be too fast
-tunerTimer.startTimer(100);
+tunerTimer.startTimer(50);
