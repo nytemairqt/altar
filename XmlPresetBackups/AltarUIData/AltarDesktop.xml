@@ -13,7 +13,7 @@
     <Component type="ScriptButton" id="btnGate" x="90.0" y="90.0" width="78.0"
                processorId="gate" parameterId="Enabled" defaultValue="1.0" parentComponent="pnlMaster"/>
     <Component type="ScriptSlider" id="knbPitch" x="40.0" y="120.0" middlePosition="0.0"
-               min="-12.0" max="12.0" stepSize="1.0" parentComponent="pnlMaster"/>
+               min="-12.0" max="12.0" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnPitch" x="50.0" y="170.0" width="78.0"
                processorId="pitchShifterFixed" parameterId="Enabled" parentComponent="pnlMaster"/>
     <Component type="ScriptSlider" id="knbOutputGain" x="960.0" y="20.0" min="-36.0"
@@ -88,6 +88,8 @@
                defaultValue="-36.0" processorId="gritFixed" parameterId="Grit"/>
     <Component type="ScriptButton" id="btnGrit" x="690.0" y="60.0" parentComponent="pnlMaster"
                processorId="gritFixed" parameterId="Enabled"/>
+    <Component type="ScriptButton" id="btnPitchSnap" x="50.0" y="210" width="78.0"
+               parentComponent="pnlMaster"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="250.0" width="1150.0"
              height="550.0" itemColour="4278190080" itemColour2="4278190080"

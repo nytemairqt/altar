@@ -113,6 +113,7 @@ const knbReverbFeedback = Content.getComponent("knbReverbFeedback");
 // Buttons
 const btnLimiter = Content.getComponent("btnLimiter");
 const btnPitch = Content.getComponent("btnPitch");
+const btnPitchSnap = Content.getComponent("btnPitchSnap");
 const btnGate = Content.getComponent("btnGate");
 const btnLofi = Content.getComponent("btnLofi");
 const btnOversampling = Content.getComponent("btnOversampling");

@@ -131,6 +131,9 @@ inline function onbtnBypass(component, value)
 			cabFixed.setAttribute(cabFixed.CabBEnable, value);
 			cabFixed.setAttribute(cabFixed.CabBClear, 1-value);
 			break;
+		case btnPitchSnap:
+			knbPitch.set("stepSize", value ? 1.0 : 0.01);
+			break;
 	}
 }
 
@@ -310,6 +313,7 @@ btnAmpMode.setControlCallback(onbtnBypass);
 btnCabAEnable.setControlCallback(onbtnBypass);
 btnCabBEnable.setControlCallback(onbtnBypass);
 btnOversampling.setControlCallback(onbtnBypass);
+btnPitchSnap.setControlCallback(onbtnBypass);
 
 // Cab Select
 btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);
