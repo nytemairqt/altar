@@ -15,7 +15,7 @@
     <Component type="ScriptSlider" id="knbPitch" x="40.0" y="120.0" middlePosition="0.0"
                min="-12.0" max="12.0" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnPitch" x="50.0" y="170.0" width="78.0"
-               processorId="pitchShifterFixed" parameterId="Enabled" parentComponent="pnlMaster"/>
+               processorId="pitch" parameterId="Enabled" parentComponent="pnlMaster"/>
     <Component type="ScriptSlider" id="knbOutputGain" x="960.0" y="20.0" min="-36.0"
                max="36.0" middlePosition="0.0" processorId="outputGain" parameterId="Gain"
                parentComponent="pnlMaster"/>
@@ -66,91 +66,89 @@
                y="210.0" ContentType="PerformanceLabel" bgColour="0" itemColour="0"
                itemColour2="0" width="270.0" height="30.0" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnChug" x="410.0" y="150.0" width="78.0"
-               parentComponent="pnlMaster" processorId="chugFixed" parameterId="Enabled"/>
+               parentComponent="pnlMaster" processorId="chug" parameterId="Enabled"/>
     <Component type="ScriptSlider" id="knbChugThreshold" x="370.0" y="40.0"
                middlePosition="-50.0" parentComponent="pnlMaster" min="-100.0"
                max="0.0" stepSize="0.1000000014901161"/>
     <Component type="ScriptSlider" id="knbChugFreq" x="370.0" y="100.0" middlePosition="240.0"
                defaultValue="70.0" min="30.0" max="500.0" stepSize="1.0" suffix=" Hz"
-               parentComponent="pnlMaster" processorId="chugFixed" parameterId="Freq"/>
+               parentComponent="pnlMaster" processorId="chug" parameterId="Freq"/>
     <Component type="ScriptButton" id="btnPick" x="530.0" y="150.0" width="78.0"
-               parentComponent="pnlMaster" processorId="pickFixed" parameterId="Enabled"/>
+               parentComponent="pnlMaster" processorId="pick" parameterId="Enabled"/>
     <Component type="ScriptSlider" id="knbPickFreq" x="520.0" y="100.0" middlePosition="3000.0"
                defaultValue="2900.0" min="2000.0" max="4000.0" stepSize="1.0"
-               suffix=" Hz" parentComponent="pnlMaster" processorId="pickFixed"
-               parameterId="Freq"/>
+               suffix=" Hz" parentComponent="pnlMaster" processorId="pick" parameterId="Freq"/>
     <Component type="ScriptSlider" id="knbPickThreshold" x="520.0" y="40.0"
                middlePosition="50.0" parentComponent="pnlMaster" max="100.0"
-               stepSize="0.1000000014901161" processorId="pickFixed" parameterId="Threshold"
+               stepSize="0.1000000014901161" processorId="pick" parameterId="Threshold"
                defaultValue="50.0"/>
     <Component type="ScriptSlider" id="knbGrit" x="680.0" y="90.0" parentComponent="pnlMaster"
                min="-100.0" max="0.0" middlePosition="-36.0" stepSize="0.1000000014901161"
-               defaultValue="-36.0" processorId="gritFixed" parameterId="Grit"/>
+               defaultValue="-36.0" processorId="grit" parameterId="Grit"/>
     <Component type="ScriptButton" id="btnGrit" x="690.0" y="60.0" parentComponent="pnlMaster"
-               processorId="gritFixed" parameterId="Enabled"/>
+               processorId="grit" parameterId="Enabled"/>
     <Component type="ScriptButton" id="btnPitchSnap" x="50.0" y="210.0" width="78.0"
                parentComponent="pnlMaster"/>
-    <Component type="ScriptButton" id="btnTest" x="750.0" y="200.0" parentComponent="pnlMaster"
-               isMomentary="1"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="250.0" width="1150.0"
              height="490.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0"/>
   <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="250.0" width="1150.0"
-             height="490.0" itemColour="4278190080" itemColour2="4278190080">
+             height="490.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0.0">
     <Component type="ScriptButton" id="btnAmpMode" x="40.0" y="50.0" width="160.0"
                height="30.0" defaultValue="1.0" parentComponent="pnlAmp"/>
     <Component type="ScriptButton" id="btnAmp" x="40.0" y="10.0" parentComponent="pnlAmp"
-               processorId="ampFixed" parameterId="Enabled"/>
+               processorId="amp" parameterId="Enabled"/>
     <Component type="ScriptButton" id="btnAmpPreSculpt" x="220.0" y="10.0" parentComponent="pnlAmp"
-               processorId="preSculpt" parameterId="Enabled"/>
+               processorId="ampPreSculpt" parameterId="Enabled"/>
     <Component type="ScriptButton" id="btnAmpPostSculpt" x="220.0" y="40.0"
-               parentComponent="pnlAmp" processorId="postSculpt" parameterId="Enabled"/>
+               parentComponent="pnlAmp" processorId="ampPostSculpt" parameterId="Enabled"/>
     <Component type="ScriptPanel" id="pnlAmpClean" x="110.0" y="90.0" parentComponent="pnlAmp"
                width="900.0" height="360.0">
       <Component type="ScriptSlider" id="knbCleanInput" x="110.0" y="80.0" stepSize="0.1000000014901161"
                  min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmpClean"
-                 processorId="ampFixed" parameterId="InputGainClean"/>
+                 processorId="amp" parameterId="InputGainClean"/>
       <Component type="ScriptSlider" id="knbCleanOutput" x="600.0" y="80.0" stepSize="0.1000000014901161"
                  min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmpClean"
-                 processorId="ampFixed" parameterId="OutputGainClean"/>
+                 processorId="amp" parameterId="OutputGainClean"/>
       <Component type="ScriptLabel" id="lblAmpClean" x="360.0" y="10.0" parentComponent="pnlAmpClean"
                  text="CLEAN"/>
       <Component type="ScriptSlider" id="knbAmpCleanLow" x="160.0" y="180.0" parentComponent="pnlAmpClean"
-                 min="-12.0" max="12.0" middlePosition="0.0" processorId="ampFixed"
+                 min="-12.0" max="12.0" middlePosition="0.0" processorId="amp"
                  parameterId="CleanLow"/>
       <Component type="ScriptSlider" id="knbAmpCleanMid" x="290.0" y="180.0" parentComponent="pnlAmpClean"
-                 min="-12.0" max="12.0" middlePosition="0.0" processorId="ampFixed"
+                 min="-12.0" max="12.0" middlePosition="0.0" processorId="amp"
                  parameterId="CleanMid"/>
       <Component type="ScriptSlider" id="knbAmpCleanHigh" x="420.0" y="180.0"
                  parentComponent="pnlAmpClean" min="-12.0" max="12.0" middlePosition="0.0"
-                 processorId="ampFixed" parameterId="CleanHigh"/>
+                 processorId="amp" parameterId="CleanHigh"/>
       <Component type="ScriptSlider" id="knbAmpCleanPresence" x="550.0" y="180.0"
                  parentComponent="pnlAmpClean" min="-12.0" max="12.0" middlePosition="0.0"
-                 processorId="ampFixed" parameterId="CleanPresence"/>
+                 processorId="amp" parameterId="CleanPresence"/>
     </Component>
     <Component type="ScriptPanel" id="pnlAmpDirty" x="110.0" y="90.0" parentComponent="pnlAmp"
                width="900.0" height="360.0" visible="0.0">
       <Component type="ScriptSlider" id="knbDirtyInput" x="110.0" y="80.0" stepSize="0.1000000014901161"
                  min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmpDirty"
-                 processorId="ampFixed" parameterId="InputGainDirty" defaultValue="75.0"/>
+                 processorId="amp" parameterId="InputGainDirty" defaultValue="75.0"/>
       <Component type="ScriptSlider" id="knbDirtyOutput" x="600.0" y="80.0" stepSize="0.1000000014901161"
                  min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmpDirty"
-                 processorId="ampFixed" parameterId="OutputGainDirty"/>
+                 processorId="amp" parameterId="OutputGainDirty"/>
       <Component type="ScriptLabel" id="lblAmpDirty" x="360.0" y="10.0" parentComponent="pnlAmpDirty"
                  text="DIRTY"/>
       <Component type="ScriptSlider" id="knbAmpDirtyLow" x="160.0" y="180.0" parentComponent="pnlAmpDirty"
-                 min="-12.0" max="12.0" middlePosition="0.0" processorId="ampFixed"
+                 min="-12.0" max="12.0" middlePosition="0.0" processorId="amp"
                  parameterId="DirtyLow"/>
       <Component type="ScriptSlider" id="knbAmpDirtyMid" x="290.0" y="180.0" parentComponent="pnlAmpDirty"
-                 min="-12.0" max="12.0" middlePosition="0.0" processorId="ampFixed"
+                 min="-12.0" max="12.0" middlePosition="0.0" processorId="amp"
                  parameterId="DirtyMid"/>
       <Component type="ScriptSlider" id="knbAmpDirtyHigh" x="420.0" y="180.0"
                  parentComponent="pnlAmpDirty" min="-12.0" max="12.0" middlePosition="0.0"
-                 processorId="ampFixed" parameterId="DirtyHigh"/>
+                 processorId="amp" parameterId="DirtyHigh"/>
       <Component type="ScriptSlider" id="knbAmpDirtyPresence" x="550.0" y="180.0"
                  parentComponent="pnlAmpDirty" min="-12.0" max="12.0" middlePosition="0.0"
-                 processorId="ampFixed" parameterId="DirtyPresence"/>
+                 processorId="amp" parameterId="DirtyPresence"/>
     </Component>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="251.0" width="1150.0"
@@ -158,53 +156,51 @@
              visible="0.0">
     <Component type="ScriptButton" id="btnOpenCabFolder" x="700.0" y="19.0"
                parentComponent="pnlCab" isMomentary="1"/>
-    <Component type="ScriptComboBox" id="cmbCabMicrophone" x="280.0" y="19.0"
-               max="10" parentComponent="pnlCab" items="AD-57&#10;AD-7B&#10;AD-421&#10;AD-e906&#10;AC-87&#10;AC-414&#10;AC-184&#10;AR-121&#10;AR-4038&#10;AR-R84&#10;"/>
     <Component type="ScriptSlider" id="knbEQWhistle" x="560.0" y="9.0" defaultValue="1.0"
                parentComponent="pnlCab"/>
     <Component type="ScriptButton" id="btnShowCabDesigner" x="420.0" y="19.0"
                parentComponent="pnlCab"/>
     <Component type="ScriptSlider" id="knbCabMix" x="500.0" y="429.0" parentComponent="pnlCab"
-               processorId="cabFixed" parameterId="Mix" defaultValue="0.5"/>
+               processorId="cab" parameterId="Mix" defaultValue="0.5"/>
     <Component type="ScriptButton" id="btnCabAEnable" x="10.0" y="20.0" parentComponent="pnlCab"/>
     <Component type="ScriptSlider" id="knbCabADelay" x="150.0" y="110.0" parentComponent="pnlCab"
                max="50.0" stepSize="0.1000000014901161" middlePosition="5.0"
-               processorId="cabFixed" parameterId="CabADelay"/>
+               processorId="cab" parameterId="CabADelay"/>
     <Component type="ScriptSlider" id="knbCabAAngle" x="150.0" y="60.0" parentComponent="pnlCab"
-               defaultValue="0.5" processorId="cabFixed" parameterId="CabAAngle"/>
+               defaultValue="0.5" processorId="cab" parameterId="CabAAngle"/>
     <Component type="ScriptSlider" id="knbCabADistance" x="10.0" y="110.0" parentComponent="pnlCab"
-               processorId="cabFixed" parameterId="CabADistance"/>
+               processorId="cab" parameterId="CabADistance"/>
     <Component type="ScriptSlider" id="knbCabAAxis" x="10.0" y="60.0" parentComponent="pnlCab"
-               defaultValue="1.0" processorId="cabFixed" parameterId="CabAAxis"/>
+               defaultValue="1.0" processorId="cab" parameterId="CabAAxis"/>
     <Component type="ScriptSlider" id="knbCabAPan" x="20.0" y="439.0" parentComponent="pnlCab"
-               min="-1.0" middlePosition="0.0" processorId="cabFixed" parameterId="CabAPan"/>
+               min="-1.0" middlePosition="0.0" processorId="cab" parameterId="CabAPan"/>
     <Component type="ScriptSlider" id="knbCabAGain" x="150.0" y="439.0" parentComponent="pnlCab"
                min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
-               processorId="cabFixed" parameterId="CabAGain" defaultValue="-12.0"
+               processorId="cab" parameterId="CabAGain" defaultValue="-12.0"
                mode="Decibel"/>
     <Component type="ScriptButton" id="btnCabAPhase" x="150.0" y="19.0" parentComponent="pnlCab"
-               processorId="cabFixed" parameterId="CabAPhase"/>
+               processorId="cab" parameterId="CabAPhase"/>
     <Component type="ScriptButton" id="btnCabALoadPrev" x="20.0" y="398.0" parentComponent="pnlCab"
                isMomentary="1"/>
     <Component type="ScriptButton" id="btnCabALoadNext" x="150.0" y="398.0"
                parentComponent="pnlCab" isMomentary="1"/>
-    <Component type="ScriptAudioWaveform" id="awfCabA" x="40.0" y="359.0" processorId="cabFixed"
+    <Component type="ScriptAudioWaveform" id="awfCabA" x="40.0" y="359.0" processorId="cab"
                enableRange="0" width="200.0" height="30.0" parentComponent="pnlCab"/>
     <Component type="ScriptPanel" id="pnlCabA" x="30.0" y="169.0" parentComponent="pnlCab"
                width="220.0" height="170.0"/>
     <Component type="ScriptButton" id="btnCabBEnable" x="1010.0" y="19.0" parentComponent="pnlCab"/>
     <Component type="ScriptSlider" id="knbCabBAxis" x="870.0" y="60.0" parentComponent="pnlCab"
-               defaultValue="1.0" processorId="cabFixed" parameterId="CabBAxis"/>
+               defaultValue="1.0" processorId="cab" parameterId="CabBAxis"/>
     <Component type="ScriptSlider" id="knbCabBAngle" x="1010.0" y="60.0" parentComponent="pnlCab"
-               defaultValue="0.5" processorId="cabFixed" parameterId="CabBAngle"/>
+               defaultValue="0.5" processorId="cab" parameterId="CabBAngle"/>
     <Component type="ScriptSlider" id="knbCabBDelay" x="1010.0" y="110.0" parentComponent="pnlCab"
                max="50.0" stepSize="0.1000000014901161" middlePosition="5.0"
-               processorId="cabFixed" parameterId="CabBDelay"/>
+               processorId="cab" parameterId="CabBDelay"/>
     <Component type="ScriptSlider" id="knbCabBDistance" x="870.0" y="110.0"
-               parentComponent="pnlCab" processorId="cabFixed" parameterId="CabBDistance"/>
+               parentComponent="pnlCab" processorId="cab" parameterId="CabBDistance"/>
     <Component type="ScriptPanel" id="pnlCabB" x="890.0" y="169.0" parentComponent="pnlCab"
                width="220.0" height="170.0"/>
-    <Component type="ScriptAudioWaveform" id="awfCabB" x="900.0" y="359.0" processorId="cabFixed"
+    <Component type="ScriptAudioWaveform" id="awfCabB" x="900.0" y="359.0" processorId="cab"
                enableRange="0" width="200.0" height="30.0" parentComponent="pnlCab"
                sampleIndex="1"/>
     <Component type="ScriptButton" id="btnCabBLoadPrev" x="880.0" y="398.0"
@@ -212,17 +208,18 @@
     <Component type="ScriptButton" id="btnCabBLoadNext" x="1010.0" y="398.0"
                parentComponent="pnlCab" isMomentary="1"/>
     <Component type="ScriptSlider" id="knbCabBPan" x="880.0" y="439.0" parentComponent="pnlCab"
-               min="-1.0" middlePosition="0.0" processorId="cabFixed" parameterId="CabBPan"/>
+               min="-1.0" middlePosition="0.0" processorId="cab" parameterId="CabBPan"/>
     <Component type="ScriptSlider" id="knbCabBGain" x="1010.0" y="439.0" parentComponent="pnlCab"
                min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
-               processorId="cabFixed" parameterId="CabBGain" defaultValue="-12.0"
+               processorId="cab" parameterId="CabBGain" defaultValue="-12.0"
                mode="Decibel"/>
     <Component type="ScriptButton" id="btnCabBPhase" x="870.0" y="19.0" parentComponent="pnlCab"
-               processorId="cabFixed" parameterId="CabBPhase"/>
+               processorId="cab" parameterId="CabBPhase"/>
     <Component type="ScriptButton" id="btnCab" x="290.0" y="59.0" parentComponent="pnlCab"
-               processorId="cabFixed" parameterId="Enabled"/>
+               processorId="cab" parameterId="Enabled"/>
     <Component type="ScriptPanel" id="pnlCabDesigner" x="140.0" y="50.0" parentComponent="pnlCab"
-               width="810.0" height="490.0" itemColour="4278190080" itemColour2="4278190080">
+               width="810.0" height="490.0" itemColour="4278190080" itemColour2="4278190080"
+               visible="0.0">
       <Component type="ScriptLabel" id="lblCabSaveName" x="674.0" y="59.0" parentComponent="pnlCabDesigner"
                  text="myCab.wav"/>
       <Component type="ScriptButton" id="btnCabSave" x="580.0" y="59.0" isMomentary="1"
@@ -248,15 +245,15 @@
              height="490.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0">
     <Component type="ScriptSlider" id="knbReverbMix" x="144.0" y="114.0" defaultValue="0.5"
-               parentComponent="pnlReverb" processorId="reverbFixed" parameterId="Mix"/>
+               parentComponent="pnlReverb" processorId="reverb" parameterId="Mix"/>
     <Component type="ScriptSlider" id="knbReverbBrightness" x="660.0" y="116.0"
                defaultValue="0.800000011920929" parentComponent="pnlReverb"
-               processorId="reverbFixed" parameterId="Brightness"/>
+               processorId="reverb" parameterId="Brightness"/>
     <Component type="ScriptSlider" id="knbReverbFeedback" x="380.0" y="110.0"
                defaultValue="0.800000011920929" parentComponent="pnlReverb"
-               processorId="reverbFixed" parameterId="Feedback"/>
+               processorId="reverb" parameterId="Feedback"/>
     <Component type="ScriptButton" id="btnReverb" x="150.0" y="50.0" parentComponent="pnlReverb"
-               processorId="reverbFixed" parameterId="Enabled"/>
+               processorId="reverb" parameterId="Enabled"/>
   </Component>
   <Component type="ScriptPanel" id="pnlDelay" x="0.0" y="250.0" width="1150.0"
              height="490.0" itemColour="4278190080" itemColour2="4278190080"
@@ -265,8 +262,7 @@
              height="490.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0"/>
   <Component type="ScriptPanel" id="pnlRingMod" x="0.0" y="250.0" width="1150.0"
-             height="490.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0.0"/>
+             height="490.0" itemColour="4278190080" itemColour2="4278190080"/>
   <Component type="ScriptPanel" id="pnlTuner" x="350.0" y="160.0" width="390.0"
              height="280.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0">

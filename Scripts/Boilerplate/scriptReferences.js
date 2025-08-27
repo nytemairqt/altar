@@ -52,7 +52,7 @@ const limiter = Synth.getEffect("limiter");
 const btnLimiter = Content.getComponent("btnLimiter");
 
 // Whistle
-const eqWhistle = Synth.getEffect("eqWhistle");
+const whistle = Synth.getEffect("whistle");
 const knbEQWhistle = Content.getComponent("knbEQWhistle");
 
 // Tuner
@@ -68,10 +68,10 @@ const btnPitch = Content.getComponent("btnPitch");
 const btnPitchSnap = Content.getComponent("btnPitchSnap");
 
 // Amp
-const pitchShifterFixed = Synth.getEffect("pitchShifterFixed");
-const preSculpt = Synth.getEffect("preSculpt");
-const ampFixed = Synth.getEffect("ampFixed");
-const postSculpt = Synth.getEffect("postSculpt");
+const pitch = Synth.getEffect("pitch");
+const ampPreSculpt = Synth.getEffect("ampPreSculpt");
+const amp = Synth.getEffect("amp");
+const ampPostSculpt = Synth.getEffect("ampPostSculpt");
 const btnShowAmp = Content.getComponent("btnShowAmp");
 const btnAmpMode = Content.getComponent("btnAmpMode");
 const knbCleanInput = Content.getComponent("knbCleanInput");
@@ -84,7 +84,7 @@ const pnlAmpDirty = Content.getComponent("pnlAmpDirty");
 
 // Cab
 const cabScriptFX = Synth.getAudioSampleProcessor("cabScriptFX");
-const cabFixed = Synth.getEffect("cabFixed");
+const cab = Synth.getEffect("cab");
 const btnShowCab = Content.getComponent("btnShowCab");
 const btnCabAEnable = Content.getComponent("btnCabAEnable");
 const btnCabBEnable = Content.getComponent("btnCabBEnable");
@@ -119,13 +119,13 @@ const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");
 const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
 
 // Chug
-const chugFixed = Synth.getEffect("chugFixed");
+const chug = Synth.getEffect("chug");
 const btnChug = Content.getComponent("btnChug");
 const knbChugThreshold = Content.getComponent("knbChugThreshold");
 const knbChugFreq = Content.getComponent("knbChugFreq");
 
 // Grit
-const gritFixed = Synth.getEffect("gritFixed");
+const grit = Synth.getEffect("grit");
 
 // LoFi
 const lofi = Synth.getEffect("lofi");
@@ -147,7 +147,7 @@ const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
 const btnShowOverdrive = Content.getComponent("btnShowOverdrive");
 const pnlOverdrive = Content.getComponent("pnlOverdrive");
 // Reverb
-const reverbFixed = Synth.getEffect("reverbFixed");
+const reverb = Synth.getEffect("reverb");
 const btnShowReverb = Content.getComponent("btnShowReverb");
 const knbReverbMix = Content.getComponent("knbReverbMix");
 const knbReverbBrightness = Content.getComponent("knbReverbBrightness");
@@ -164,15 +164,7 @@ const btnShowRingMod = Content.getComponent("btnShowRingMod");
 const pnlRingMod = Content.getComponent("pnlRingMod");
 
 // Modules for Resetting in Cab Designer
-const modules = [Synth.getEffect("gate"),
-    Synth.getEffect("pitchShifterFixed"),
-    Synth.getEffect("preSculpt"),
-    Synth.getEffect("ampFixed"),
-    Synth.getEffect("postSculpt"),
-    Synth.getEffect("tuner"),
-    Synth.getEffect("cabScriptFX"),
-    Synth.getEffect("eqWhistle"),
-    Synth.getEffect("reverbFixed")];
+const modules = [];
     
 // MISC VARIABLES
 var eventList = [];

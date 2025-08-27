@@ -91,7 +91,7 @@ const fft = Engine.createFFT();
 //fft.setWindowType(fft.BlackmanHarris);
 fft.setWindowType(fft.Hann);
 fft.setOverlap(0.0);
-var pitch = [];
+var detectedPitch = [];
 
 // make sure the ring buffer is as big as possible
 dp.setRingBufferProperties({
@@ -157,7 +157,7 @@ fft.setMagnitudeFunction(function(magBuffer, offset)
 {
     // pass the bins through the HPS
     var f = findPitchHPS(magBuffer, 4);
-    pitch = analyzePitch(f); 
+    detectedPitch = analyzePitch(f); 
 }, false);
 
 

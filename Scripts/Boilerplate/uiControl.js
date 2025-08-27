@@ -22,17 +22,17 @@ include("Boilerplate/pitchDetection.js");
 inline function onknbPitchControl(component, value)
 {                    
     local newPitch = Math.pow(2.0, value / 12.0);               
-    pitchShifterFixed.setAttribute(pitchShifterFixed.FreqRatio, newPitch);
+    pitch.setAttribute(pitch.FreqRatio, newPitch);
 }
 
 inline function onknbEQWhistleControl(component, value)
 {
-    local A = 0 * eqWhistle.BandOffset + eqWhistle.Gain;    
-    local B = 1 * eqWhistle.BandOffset + eqWhistle.Gain;    
+    local A = 0 * whistle.BandOffset + whistle.Gain;    
+    local B = 1 * whistle.BandOffset + whistle.Gain;    
     local scaledA = -0.0 - (5.0 * value);
     local scaledB = -0.0 - (8.0 * value);    
-    eqWhistle.setAttribute(A, scaledA); 
-    eqWhistle.setAttribute(B, scaledB); 
+    whistle.setAttribute(A, scaledA); 
+    whistle.setAttribute(B, scaledB); 
 };
 
 inline function onknbLofiControl(component, value)
@@ -67,7 +67,7 @@ inline function onknbOctaveControl(component, value)
 
 inline function onknbChugControl(component, value)
 {
-	chugFixed.setAttribute(chugFixed.Threshold, 1-value);
+	chug.setAttribute(chug.Threshold, 1-value);
 }
 
 knbPitch.setControlCallback(onknbPitchControl);
@@ -88,8 +88,8 @@ inline function onbtnBypass(component, value)
 			tuner.setAttribute(tuner.Monitor, 1-value);
 			break;
 		case btnOversampling:
-			ampFixed.setAttribute(ampFixed.Oversampling, value);
-			gritFixed.setAttribute(gritFixed.Oversampling, value);
+			amp.setAttribute(amp.Oversampling, value);
+			grit.setAttribute(grit.Oversampling, value);
 			break;
 		case btnClick:
 			click.setBypassed(1-value);
@@ -119,17 +119,17 @@ inline function onbtnBypass(component, value)
 			btnOctave.changed();
 			break;
 		case btnAmpMode:
-			ampFixed.setAttribute(ampFixed.Channel, value);
+			amp.setAttribute(amp.Channel, value);
 			pnlAmpClean.set("visible", 1-value);
 			pnlAmpDirty.set("visible", value);
 			break;
 		case btnCabAEnable:
-			cabFixed.setAttribute(cabFixed.CabAEnable, value);
-			cabFixed.setAttribute(cabFixed.CabAClear, 1-value);
+			cab.setAttribute(cab.CabAEnable, value);
+			cab.setAttribute(cab.CabAClear, 1-value);
 			break;
 		case btnCabBEnable:
-			cabFixed.setAttribute(cabFixed.CabBEnable, value);
-			cabFixed.setAttribute(cabFixed.CabBClear, 1-value);
+			cab.setAttribute(cab.CabBEnable, value);
+			cab.setAttribute(cab.CabBClear, 1-value);
 			break;
 		case btnPitchSnap:
 			knbPitch.set("stepSize", value ? 1.0 : 0.01);
