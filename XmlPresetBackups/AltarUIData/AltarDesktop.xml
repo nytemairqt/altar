@@ -282,9 +282,9 @@
   </Component>
   <Component type="ScriptPanel" id="pnlCabDesigner" x="0.0" y="0.0" width="1150.0"
              height="800.0" itemColour="1023410176" itemColour2="1023410176"
-             allowCallbacks="Clicks Only" visible="0.0">
+             allowCallbacks="Clicks Only">
     <Component type="ScriptLabel" id="lblCabSaveName" x="824.0" y="389.0" parentComponent="pnlCabDesigner"
-               text="myCab.wav"/>
+               text="derek.wav"/>
     <Component type="ScriptButton" id="btnCabSave" x="730.0" y="389.0" isMomentary="1"
                parentComponent="pnlCabDesigner" text="Save" width="88.0" saveInPreset="0"/>
     <Component type="ScriptFloatingTile" id="fltCabDesignerEQ" x="235.0" y="430.0"

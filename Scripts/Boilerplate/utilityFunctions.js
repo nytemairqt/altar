@@ -155,9 +155,9 @@ inline function sanitizeFileName(fileName)
         return "INVALID_FILENAME";
 
     if (!sanitized.contains(".wav"))
-    {
-        Console.print("appending .wav");
+    { 
         sanitized = sanitized + ".wav";
+        lblCabSaveName.set("text", sanitized);
     }
     else
     {

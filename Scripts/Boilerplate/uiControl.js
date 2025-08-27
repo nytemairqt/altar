@@ -283,7 +283,6 @@ inline function onbtnCabGenerateControl(component, value)
     for (i = 0; i<60; i++)
     {   
     	mojoGain = (Math.randInt(-2, 2) + Math.random()) * knbCabDesignerMojo.getValue();
-    	Console.print(mojoGain);
     	
         //Gains
         gain = i * cabDesignerMojo.BandOffset + cabDesignerMojo.Gain;
