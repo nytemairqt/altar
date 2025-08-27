@@ -20,7 +20,7 @@
                              Automated="1"/>
                   <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
                              ID="Q" Value="0.9856191188737089" DefaultValue="1.0"/>
-                  <Parameter MinValue="0.0" MaxValue="-24.0" ID="Gain" DefaultValue="-24.0"
+                  <Parameter MinValue="0.0" MaxValue="-10.0" ID="Gain" DefaultValue="-10.0"
                              Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
                              ID="Smoothing" Value="0.009999999776482582"/>
@@ -143,7 +143,7 @@
     <Parameters>
       <Parameter ID="Freq" MinValue="20.0" MaxValue="500.0" SkewFactor="0.2299045622348785"
                  ExternalModulation="Disabled" TextToValueConverter="Frequency"
-                 Value="240.0">
+                 Value="100.0">
         <Connections>
           <Connection NodeId="svf_eq" ParameterId="Frequency"/>
           <Connection NodeId="pma_unscaled" ParameterId="Value"/>

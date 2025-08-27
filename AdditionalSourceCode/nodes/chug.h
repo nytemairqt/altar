@@ -26,7 +26,7 @@ using pma_unscaled1_t = control::pma_unscaled<NV,
 template <int NV> using pma_unscaled_t = pma_unscaled1_t<NV>;
 
 DECLARE_PARAMETER_RANGE_INV(envelope_follower_modRange, 
-                            -24., 
+                            -10., 
                             0.);
 
 template <int NV>
@@ -91,7 +91,7 @@ template <int NV> struct instance: public chug_impl::chug_t_<NV>
 		SNEX_METADATA_ENCODED_PARAMETERS(34)
 		{
 			0x015C, 0x0000, 0x0000, 0x7246, 0x7165, 0x0000, 0xA000, 0x0041, 
-            0xFA00, 0x0043, 0x7000, 0x1A43, 0x6B6C, 0x003E, 0x0000, 0x5C00, 
+            0xFA00, 0x0043, 0xC800, 0x1A42, 0x6B6C, 0x003E, 0x0000, 0x5C00, 
             0x0100, 0x0000, 0x5400, 0x7268, 0x7365, 0x6F68, 0x646C, 0x0000, 
             0x0000, 0x0000, 0xC800, 0x0042, 0x0000, 0x0000, 0x8000, 0xCD3F, 
             0xCCCC, 0x003D
@@ -176,7 +176,7 @@ template <int NV> struct instance: public chug_impl::chug_t_<NV>
 		
 		clear1.setParameterT(0, 0.); // math::clear::Value
 		
-		this->setParameterT(0, 240.);
+		this->setParameterT(0, 100.);
 		this->setParameterT(1, 0.);
 		this->setExternalData({}, -1);
 	}
