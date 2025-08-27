@@ -54,13 +54,14 @@ template <int NV> struct rubberband: public data::base
 
 	// declare a unique_ptr to store our shifter
 	std::unique_ptr<RubberBand::RubberBandStretcher> rb;
+	const int numChannels = 1;
 	
 	// Scriptnode Callbacks ------------------------------------------------------------------------
 	
 	void prepare(PrepareSpecs specs)
 	{		
 		// assign the shifter to our pointer
-		rb = std::make_unique<RubberBand::RubberBandStretcher> (specs.sampleRate, specs.numChannels, RubberBand::RubberBandStretcher::Option::OptionProcessRealTime);
+		rb = std::make_unique<RubberBand::RubberBandStretcher> (specs.sampleRate, numChannels, RubberBand::RubberBandStretcher::Option::OptionProcessRealTime | RubberBand::RubberBandStretcher::Option::OptionEngineFaster | RubberBand::RubberBandStretcher::Option::OptionWindowShort);
 		rb->reset(); // not sure if this is necessary, but I don't think it hurts		
 	}
 	
@@ -68,7 +69,7 @@ template <int NV> struct rubberband: public data::base
 	void handleHiseEvent(HiseEvent& e){}	
 	
 	template <typename T> void process(T& data)
-	{
+	{		
 		if (!rb) return; // safety check in case the rb object isn't constructed yet
 		
 		int numSamples = data.getNumSamples();
@@ -82,7 +83,9 @@ template <int NV> struct rubberband: public data::base
 		{
 			// We have enough output, retrieve it directly
 			rb->retrieve(ptrs, numSamples);
-		}			
+
+			std::memcpy(ptrs[1], ptrs[0], sizeof(float) * numSamples);
+		}
 	}
 	
 	template <typename T> void processFrame(T& data){}
