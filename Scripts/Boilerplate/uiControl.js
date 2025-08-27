@@ -88,8 +88,8 @@ inline function onbtnBypass(component, value)
 			tuner.setAttribute(tuner.Monitor, 1-value);
 			break;
 		case btnOversampling:
-			ampFixed.setAttribute(ampFixed.oversampling, value); // little o (fix me later)
-			gritFixed.setAttribute(gritFixed.Oversampling, value); // big o
+			ampFixed.setAttribute(ampFixed.Oversampling, value);
+			gritFixed.setAttribute(gritFixed.Oversampling, value);
 			break;
 		case btnClick:
 			click.setBypassed(1-value);
@@ -119,7 +119,7 @@ inline function onbtnBypass(component, value)
 			btnOctave.changed();
 			break;
 		case btnAmpMode:
-			ampFixed.setAttribute(ampFixed.channel, value);
+			ampFixed.setAttribute(ampFixed.Channel, value);
 			pnlAmpClean.set("visible", 1-value);
 			pnlAmpDirty.set("visible", value);
 			break;

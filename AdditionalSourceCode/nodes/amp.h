@@ -275,40 +275,40 @@ namespace amp_t_parameters
 // Parameter list for amp_impl::amp_t --------------------------------------------------------------
 
 template <int NV>
-using channel = parameter::plain<amp_impl::xfader1_t<NV>, 
+using Channel = parameter::plain<amp_impl::xfader1_t<NV>, 
                                  0>;
 template <int NV>
-using inputGainClean = parameter::plain<core::gain<NV>, 0>;
-template <int NV> using inputGainDirty = inputGainClean<NV>;
-template <int NV> using outputGainClean = inputGainClean<NV>;
-template <int NV> using outputGainDirty = inputGainClean<NV>;
+using InputGainClean = parameter::plain<core::gain<NV>, 0>;
+template <int NV> using InputGainDirty = InputGainClean<NV>;
+template <int NV> using OutputGainClean = InputGainClean<NV>;
+template <int NV> using OutputGainDirty = InputGainClean<NV>;
 template <int NV>
-using oversampling = parameter::plain<amp_impl::xfader2_t<NV>, 
+using Oversampling = parameter::plain<amp_impl::xfader2_t<NV>, 
                                       0>;
 template <int NV>
-using cleanLow = parameter::plain<filters::svf_eq<NV>, 2>;
-template <int NV> using cleanMid = cleanLow<NV>;
-template <int NV> using cleanHigh = cleanLow<NV>;
-template <int NV> using cleanPresence = cleanLow<NV>;
-template <int NV> using dirtyLow = cleanLow<NV>;
-template <int NV> using dirtyMid = cleanLow<NV>;
-template <int NV> using dirtyHigh = cleanLow<NV>;
-template <int NV> using dirtyPresence = cleanLow<NV>;
+using CleanLow = parameter::plain<filters::svf_eq<NV>, 2>;
+template <int NV> using CleanMid = CleanLow<NV>;
+template <int NV> using CleanHigh = CleanLow<NV>;
+template <int NV> using CleanPresence = CleanLow<NV>;
+template <int NV> using DirtyLow = CleanLow<NV>;
+template <int NV> using DirtyMid = CleanLow<NV>;
+template <int NV> using DirtyHigh = CleanLow<NV>;
+template <int NV> using DirtyPresence = CleanLow<NV>;
 template <int NV>
-using amp_t_plist = parameter::list<channel<NV>, 
-                                    inputGainClean<NV>, 
-                                    inputGainDirty<NV>, 
-                                    outputGainClean<NV>, 
-                                    outputGainDirty<NV>, 
-                                    oversampling<NV>, 
-                                    cleanLow<NV>, 
-                                    cleanMid<NV>, 
-                                    cleanHigh<NV>, 
-                                    cleanPresence<NV>, 
-                                    dirtyLow<NV>, 
-                                    dirtyMid<NV>, 
-                                    dirtyHigh<NV>, 
-                                    dirtyPresence<NV>>;
+using amp_t_plist = parameter::list<Channel<NV>, 
+                                    InputGainClean<NV>, 
+                                    InputGainDirty<NV>, 
+                                    OutputGainClean<NV>, 
+                                    OutputGainDirty<NV>, 
+                                    Oversampling<NV>, 
+                                    CleanLow<NV>, 
+                                    CleanMid<NV>, 
+                                    CleanHigh<NV>, 
+                                    CleanPresence<NV>, 
+                                    DirtyLow<NV>, 
+                                    DirtyMid<NV>, 
+                                    DirtyHigh<NV>, 
+                                    DirtyPresence<NV>>;
 }
 
 template <int NV>
@@ -334,38 +334,38 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		SNEX_METADATA_NUM_CHANNELS(2);
 		SNEX_METADATA_ENCODED_PARAMETERS(266)
 		{
-			0x005C, 0x0000, 0x0000, 0x6863, 0x6E61, 0x656E, 0x006C, 0x0000, 
+			0x005C, 0x0000, 0x0000, 0x6843, 0x6E61, 0x656E, 0x006C, 0x0000, 
             0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
-            0x3F80, 0x005C, 0x0001, 0x0000, 0x6E69, 0x7570, 0x4774, 0x6961, 
+            0x3F80, 0x005C, 0x0001, 0x0000, 0x6E49, 0x7570, 0x4774, 0x6961, 
             0x436E, 0x656C, 0x6E61, 0x0000, 0xC800, 0x00C2, 0xC800, 0x0042, 
             0x0000, 0x0000, 0x8000, 0xCD3F, 0xCCCC, 0x5C3D, 0x0200, 0x0000, 
-            0x6900, 0x706E, 0x7475, 0x6147, 0x6E69, 0x6944, 0x7472, 0x0079, 
+            0x4900, 0x706E, 0x7475, 0x6147, 0x6E69, 0x6944, 0x7472, 0x0079, 
             0x0000, 0xC2C8, 0x0000, 0x42C8, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0xCCCD, 0x3DCC, 0x005C, 0x0003, 0x0000, 0x756F, 0x7074, 0x7475, 
+            0xCCCD, 0x3DCC, 0x005C, 0x0003, 0x0000, 0x754F, 0x7074, 0x7475, 
             0x6147, 0x6E69, 0x6C43, 0x6165, 0x006E, 0x0000, 0xC2C8, 0x0000, 
             0x42C8, 0x0000, 0x0000, 0x0000, 0x3F80, 0xCCCD, 0x3DCC, 0x005C, 
-            0x0004, 0x0000, 0x756F, 0x7074, 0x7475, 0x6147, 0x6E69, 0x6944, 
+            0x0004, 0x0000, 0x754F, 0x7074, 0x7475, 0x6147, 0x6E69, 0x6944, 
             0x7472, 0x0079, 0x0000, 0xC2C8, 0x0000, 0x42C8, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0xCCCD, 0x3DCC, 0x005C, 0x0005, 0x0000, 0x766F, 
+            0x0000, 0x3F80, 0xCCCD, 0x3DCC, 0x005C, 0x0005, 0x0000, 0x764F, 
             0x7265, 0x6173, 0x706D, 0x696C, 0x676E, 0x0000, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5C3F, 
-            0x0600, 0x0000, 0x6300, 0x656C, 0x6E61, 0x6F4C, 0x0077, 0x0000, 
+            0x0600, 0x0000, 0x4300, 0x656C, 0x6E61, 0x6F4C, 0x0077, 0x0000, 
             0xC140, 0x0000, 0x4140, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
-            0x0000, 0x005C, 0x0007, 0x0000, 0x6C63, 0x6165, 0x4D6E, 0x6469, 
+            0x0000, 0x005C, 0x0007, 0x0000, 0x6C43, 0x6165, 0x4D6E, 0x6469, 
             0x0000, 0x4000, 0x00C1, 0x4000, 0x0041, 0x0000, 0x0000, 0x8000, 
-            0x003F, 0x0000, 0x5C00, 0x0800, 0x0000, 0x6300, 0x656C, 0x6E61, 
+            0x003F, 0x0000, 0x5C00, 0x0800, 0x0000, 0x4300, 0x656C, 0x6E61, 
             0x6948, 0x6867, 0x0000, 0x4000, 0x00C1, 0x4000, 0x0041, 0x0000, 
-            0x0000, 0x8000, 0x003F, 0x0000, 0x5C00, 0x0900, 0x0000, 0x6300, 
+            0x0000, 0x8000, 0x003F, 0x0000, 0x5C00, 0x0900, 0x0000, 0x4300, 
             0x656C, 0x6E61, 0x7250, 0x7365, 0x6E65, 0x6563, 0x0000, 0x4000, 
             0x00C1, 0x4000, 0x0041, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
-            0x5C00, 0x0A00, 0x0000, 0x6400, 0x7269, 0x7974, 0x6F4C, 0x0077, 
+            0x5C00, 0x0A00, 0x0000, 0x4400, 0x7269, 0x7974, 0x6F4C, 0x0077, 
             0x0000, 0xC140, 0x0000, 0x4140, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x0000, 0x0000, 0x005C, 0x000B, 0x0000, 0x6964, 0x7472, 0x4D79, 
+            0x0000, 0x0000, 0x005C, 0x000B, 0x0000, 0x6944, 0x7472, 0x4D79, 
             0x6469, 0x0000, 0x4000, 0x00C1, 0x4000, 0x0041, 0x0000, 0x0000, 
-            0x8000, 0x003F, 0x0000, 0x5C00, 0x0C00, 0x0000, 0x6400, 0x7269, 
+            0x8000, 0x003F, 0x0000, 0x5C00, 0x0C00, 0x0000, 0x4400, 0x7269, 
             0x7974, 0x6948, 0x6867, 0x0000, 0x4000, 0x00C1, 0x4000, 0x0041, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5C00, 0x0D00, 0x0000, 
-            0x6400, 0x7269, 0x7974, 0x7250, 0x7365, 0x6E65, 0x6563, 0x0000, 
+            0x4400, 0x7269, 0x7974, 0x7250, 0x7365, 0x6E65, 0x6563, 0x0000, 
             0x4000, 0x00C1, 0x4000, 0x0041, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0000
 		};
@@ -411,33 +411,33 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
-		this->getParameterT(0).connectT(0, xfader1); // channel -> xfader1::Value
+		this->getParameterT(0).connectT(0, xfader1); // Channel -> xfader1::Value
 		
-		this->getParameterT(1).connectT(0, gain8); // inputGainClean -> gain8::Gain
+		this->getParameterT(1).connectT(0, gain8); // InputGainClean -> gain8::Gain
 		
-		this->getParameterT(2).connectT(0, gain6); // inputGainDirty -> gain6::Gain
+		this->getParameterT(2).connectT(0, gain6); // InputGainDirty -> gain6::Gain
 		
-		this->getParameterT(3).connectT(0, gain9); // outputGainClean -> gain9::Gain
+		this->getParameterT(3).connectT(0, gain9); // OutputGainClean -> gain9::Gain
 		
-		this->getParameterT(4).connectT(0, gain7); // outputGainDirty -> gain7::Gain
+		this->getParameterT(4).connectT(0, gain7); // OutputGainDirty -> gain7::Gain
 		
-		this->getParameterT(5).connectT(0, xfader2); // oversampling -> xfader2::Value
+		this->getParameterT(5).connectT(0, xfader2); // Oversampling -> xfader2::Value
 		
-		this->getParameterT(6).connectT(0, svf_eq); // cleanLow -> svf_eq::Gain
+		this->getParameterT(6).connectT(0, svf_eq); // CleanLow -> svf_eq::Gain
 		
-		this->getParameterT(7).connectT(0, svf_eq3); // cleanMid -> svf_eq3::Gain
+		this->getParameterT(7).connectT(0, svf_eq3); // CleanMid -> svf_eq3::Gain
 		
-		this->getParameterT(8).connectT(0, svf_eq2); // cleanHigh -> svf_eq2::Gain
+		this->getParameterT(8).connectT(0, svf_eq2); // CleanHigh -> svf_eq2::Gain
 		
-		this->getParameterT(9).connectT(0, svf_eq1); // cleanPresence -> svf_eq1::Gain
+		this->getParameterT(9).connectT(0, svf_eq1); // CleanPresence -> svf_eq1::Gain
 		
-		this->getParameterT(10).connectT(0, svf_eq7); // dirtyLow -> svf_eq7::Gain
+		this->getParameterT(10).connectT(0, svf_eq7); // DirtyLow -> svf_eq7::Gain
 		
-		this->getParameterT(11).connectT(0, svf_eq6); // dirtyMid -> svf_eq6::Gain
+		this->getParameterT(11).connectT(0, svf_eq6); // DirtyMid -> svf_eq6::Gain
 		
-		this->getParameterT(12).connectT(0, svf_eq5); // dirtyHigh -> svf_eq5::Gain
+		this->getParameterT(12).connectT(0, svf_eq5); // DirtyHigh -> svf_eq5::Gain
 		
-		this->getParameterT(13).connectT(0, svf_eq4); // dirtyPresence -> svf_eq4::Gain
+		this->getParameterT(13).connectT(0, svf_eq4); // DirtyPresence -> svf_eq4::Gain
 		
 		// Modulation Connections ------------------------------------------------------------------
 		

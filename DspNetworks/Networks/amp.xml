@@ -393,85 +393,85 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="channel" MinValue="0.0" MaxValue="1.0" StepSize="1" ExternalModulation="Disabled"
+      <Parameter ID="Channel" MinValue="0.0" MaxValue="1.0" StepSize="1" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="xfader1" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter ID="inputGainClean" MinValue="-100.0" MaxValue="100.0" ExternalModulation="Disabled"
+      <Parameter ID="InputGainClean" MinValue="-100.0" MaxValue="100.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0" StepSize="0.1">
         <Connections>
           <Connection NodeId="gain8" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="inputGainDirty" MinValue="-100.0" MaxValue="100.0" ExternalModulation="Disabled"
+      <Parameter ID="InputGainDirty" MinValue="-100.0" MaxValue="100.0" ExternalModulation="Disabled"
                  Value="0.0" StepSize="0.1">
         <Connections>
           <Connection NodeId="gain6" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="outputGainClean" MinValue="-100.0" MaxValue="100.0" ExternalModulation="Disabled"
+      <Parameter ID="OutputGainClean" MinValue="-100.0" MaxValue="100.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0" StepSize="0.1">
         <Connections>
           <Connection NodeId="gain9" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="outputGainDirty" MinValue="-100.0" MaxValue="100.0" ExternalModulation="Disabled"
+      <Parameter ID="OutputGainDirty" MinValue="-100.0" MaxValue="100.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0" StepSize="0.1">
         <Connections>
           <Connection NodeId="gain7" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="oversampling" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
+      <Parameter ID="Oversampling" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="1.0" StepSize="1">
         <Connections>
           <Connection NodeId="xfader2" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter ID="cleanLow" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
+      <Parameter ID="CleanLow" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="svf_eq" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="cleanMid" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
+      <Parameter ID="CleanMid" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="svf_eq3" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="cleanHigh" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
+      <Parameter ID="CleanHigh" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="svf_eq2" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="cleanPresence" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
+      <Parameter ID="CleanPresence" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="svf_eq1" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="dirtyLow" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
+      <Parameter ID="DirtyLow" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
                  Value="0.0">
         <Connections>
           <Connection NodeId="svf_eq7" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="dirtyMid" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
+      <Parameter ID="DirtyMid" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="svf_eq6" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="dirtyHigh" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
+      <Parameter ID="DirtyHigh" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="svf_eq5" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="dirtyPresence" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
+      <Parameter ID="DirtyPresence" MinValue="-12.0" MaxValue="12.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
           <Connection NodeId="svf_eq4" ParameterId="Gain"/>
