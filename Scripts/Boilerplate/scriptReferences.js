@@ -105,6 +105,7 @@ const pnlCab = Content.getComponent("pnlCab");
 const cabDesignerSpeaker = Synth.getEffect("cabDesignerSpeaker");
 const cabDesignerMojo = Synth.getEffect("cabDesignerMojo");
 const cabDesignerMic = Synth.getEffect("cabDesignerMic");
+const cabDesignerAge = Synth.getEffect("cabDesignerAge");
 const cabDesignerEQ = Synth.getEffect("cabDesignerEQ");
 const cabDesignerFileSave = Synth.getAudioSampleProcessor("cabDesignerFileSave");
 const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");

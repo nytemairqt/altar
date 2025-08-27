@@ -217,8 +217,7 @@
     <Component type="ScriptButton" id="btnCab" x="290.0" y="59.0" parentComponent="pnlCab"
                processorId="cab" parameterId="Enabled"/>
     <Component type="ScriptPanel" id="pnlCabDesigner" x="140.0" y="50.0" parentComponent="pnlCab"
-               width="810.0" height="490.0" itemColour="4278190080" itemColour2="4278190080"
-               visible="0.0">
+               width="810.0" height="490.0" itemColour="4278190080" itemColour2="4278190080">
       <Component type="ScriptLabel" id="lblCabSaveName" x="674.0" y="59.0" parentComponent="pnlCabDesigner"
                  text="myCab.wav"/>
       <Component type="ScriptButton" id="btnCabSave" x="580.0" y="59.0" isMomentary="1"

@@ -25,22 +25,14 @@ inline function onknbPitchControl(component, value)
     pitch.setAttribute(pitch.FreqRatio, newPitch);
 }
 
-
-
-inline function onknbCabDesignerMojoControl(component, value)
+inline function onknbCabDesignerAgeControl(component, value)
 {
-	/*
-
-	local gain = 0.0;
-	
-	// Details
-	for (i = 0; i<60; i++)
-	{   
-	    //Gains
-	    gain = i * cabDesignerMojo.BandOffset + cabDesignerMojo.Gain;
-	    cabDesignerMojo.setAttribute(gain, gain * knbCabDesignerMojo.getValue());                                 
-	}  
-	*/
+	local hi = 0 * cabDesignerAge.BandOffset + cabDesignerAge.Gain;
+	local lo = 1 * cabDesignerAge.BandOffset + cabDesignerAge.Gain;
+	local hiScaled = -0.0 - (5.0 * value);
+	local loScaled = -0.0 + (4.0 * value);
+	cabDesignerAge.setAttribute(hi, hiScaled);
+	cabDesignerAge.setAttribute(lo, loScaled);	
 };
 
 inline function onknbEQWhistleControl(component, value)
@@ -95,7 +87,7 @@ knbLofiHigh.setControlCallback(onknbLofiControl);
 knbOctave.setControlCallback(onknbOctaveControl);
 knbOctaveFreq.setControlCallback(onknbOctaveControl);
 knbChugThreshold.setControlCallback(onknbChugControl);
-knbCabDesignerMojo.setControlCallback(onknbCabDesignerMojoControl);
+knbCabDesignerAge.setControlCallback(onknbCabDesignerAgeControl);
 
 // Buttons
 
@@ -264,8 +256,12 @@ inline function onbtnShowCabDesignerControl(component, value)
 	cabDesignerSpeaker.setBypassed(1-value);
 	cabDesignerMojo.setBypassed(1-value);
 	cabDesignerMic.setBypassed(1-value);
+	cabDesignerAge.setBypassed(1-value);
 	cabDesignerEQ.setBypassed(1-value);
 }
+
+
+
 
 inline function onbtnCabGenerateControl(component, value)
 {
