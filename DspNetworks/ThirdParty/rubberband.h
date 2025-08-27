@@ -61,7 +61,7 @@ template <int NV> struct rubberband: public data::base
 	void prepare(PrepareSpecs specs)
 	{		
 		// assign the shifter to our pointer
-		rb = std::make_unique<RubberBand::RubberBandStretcher> (specs.sampleRate, numChannels, RubberBand::RubberBandStretcher::Option::OptionProcessRealTime | RubberBand::RubberBandStretcher::Option::OptionEngineFaster | RubberBand::RubberBandStretcher::Option::OptionWindowShort);
+		rb = std::make_unique<RubberBand::RubberBandStretcher> (specs.sampleRate, numChannels, RubberBand::RubberBandStretcher::Option::OptionProcessRealTime | RubberBand::RubberBandStretcher::Option::OptionEngineFaster | RubberBand::RubberBandStretcher::Option::OptionPitchHighConsistency);
 		rb->reset(); // not sure if this is necessary, but I don't think it hurts		
 	}
 	
