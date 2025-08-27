@@ -32,13 +32,21 @@ const btnClick = Content.getComponent("btnClick");
 const knbClickGain = Content.getComponent("knbClickGain");
 const lblClickDisasbled = Content.getComponent("lblClickDisasbled");
 
-// Input Gain
+// Input Chain
 const inputGain = Synth.getEffect("inputGain");
+const preProcessComp = Synth.getEffect("preProcessComp");
+const preProcessEQ = Synth.getEffect("preProcessEQ");
 const knbInputGain = Content.getComponent("knbInputGain");
+const pnlPreProcess = Content.getComponent("pnlPreProcess");
+const btnShowPreProcess = Content.getComponent("btnShowPreProcess");
 
-// Output Gain
+// Output Chain
 const outputGain = Synth.getEffect("outputGain");
+const postProcessComp = Synth.getEffect("postProcessComp");
+const postProcessEQ = Synth.getEffect("postProcessEQ");
 const knbOutputGain = Content.getComponent("knbOutputGain");
+const btnShowPostProcess = Content.getComponent("btnShowPostProcess");
+const pnlPostProcess = Content.getComponent("pnlPostProcess");
 
 // Oversampling
 const btnOversampling = Content.getComponent("btnOversampling");
@@ -144,11 +152,10 @@ const btnOctavePosition = Content.getComponent("btnOctavePosition");
 const knbOctave = Content.getComponent("knbOctave");
 const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
 
-// Preprocess (Comp & EQ)
-// Postprocess (Comp & EQ)
 // Overdrive & Fuzz
 const btnShowOverdrive = Content.getComponent("btnShowOverdrive");
 const pnlOverdrive = Content.getComponent("pnlOverdrive");
+
 // Reverb
 const reverb = Synth.getEffect("reverb");
 const btnShowReverb = Content.getComponent("btnShowReverb");
@@ -156,15 +163,19 @@ const knbReverbMix = Content.getComponent("knbReverbMix");
 const knbReverbBrightness = Content.getComponent("knbReverbBrightness");
 const knbReverbFeedback = Content.getComponent("knbReverbFeedback");
 const pnlReverb = Content.getComponent("pnlReverb");
+
 // Delay
 const btnShowDelay = Content.getComponent("btnShowDelay");
 const pnlDelay = Content.getComponent("pnlDelay");
+
 // Chorus
 const btnShowChorus = Content.getComponent("btnShowChorus");
 const pnlChorus = Content.getComponent("pnlChorus");
+
 // Ring Mod
 const btnShowRingMod = Content.getComponent("btnShowRingMod");
 const pnlRingMod = Content.getComponent("pnlRingMod");
+
     
 // MISC VARIABLES
 var eventList = [];

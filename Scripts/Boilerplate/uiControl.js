@@ -182,6 +182,12 @@ inline function showPanelControl(component, value)
 			}
 				
 			break;	
+		case btnShowPreProcess:
+			pnlPreProcess.set("visible", value);
+			break;
+		case btnShowPostProcess:
+			pnlPostProcess.set("visible", value);
+			break;
 	}
 }
 
@@ -380,6 +386,8 @@ btnShowDelay.setControlCallback(showPanelControl);
 btnShowChorus.setControlCallback(showPanelControl);
 btnShowRingMod.setControlCallback(showPanelControl);
 btnShowTuner.setControlCallback(showPanelControl);
+btnShowPreProcess.setControlCallback(showPanelControl);
+btnShowPostProcess.setControlCallback(showPanelControl);
 
 // Panels
 // FIX ME
@@ -426,6 +434,50 @@ pnlTuner.setMouseCallback(function(event)
 	{
 		btnShowTuner.setValue(0);
 		btnShowTuner.changed();
+	}	
+});
+
+pnlPreProcess.setPaintRoutine(function(g)
+{
+	var bounds = [300, 250, 500, 450];
+
+	g.setColour(Colours.withAlpha(Colours.black, 1.0));
+	g.fillRoundedRectangle(bounds, 2.0);
+});
+
+pnlPreProcess.setMouseCallback(function(event)
+{
+	var x = 300;
+	var y = 250;
+	var w = 500;
+	var h = 450;
+	
+	if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
+	{
+		btnShowPreProcess.setValue(0);
+		btnShowPreProcess.changed();
+	}	
+});
+
+pnlPostProcess.setPaintRoutine(function(g)
+{
+	var bounds = [300, 250, 500, 450];
+
+	g.setColour(Colours.withAlpha(Colours.black, 1.0));
+	g.fillRoundedRectangle(bounds, 2.0);
+});
+
+pnlPostProcess.setMouseCallback(function(event)
+{
+	var x = 300;
+	var y = 250;
+	var w = 500;
+	var h = 450;
+	
+	if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
+	{
+		btnShowPostProcess.setValue(0);
+		btnShowPostProcess.changed();
 	}	
 });
 
