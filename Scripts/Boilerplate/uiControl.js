@@ -174,7 +174,13 @@ inline function showPanelControl(component, value)
 			pnlRingMod.set("visible", value);
 			break;	
 		case btnShowTuner:
-			pnlTuner.set("visible", value);			
+			pnlTuner.set("visible", value);		
+			if (!value)
+			{
+				btnClick.setValue(0);	
+				btnClick.changed();
+			}
+				
 			break;	
 	}
 }
@@ -376,8 +382,53 @@ btnShowChorus.setControlCallback(showPanelControl);
 btnShowRingMod.setControlCallback(showPanelControl);
 btnShowTuner.setControlCallback(showPanelControl);
 
+// Panels
+// FIX ME
+pnlCabDesigner.setPaintRoutine(function(g) // move to LAF later
+{
+	var bounds = [145, 310, 860, 490];
+
+	g.setColour(Colours.withAlpha(Colours.black, 1.0));
+	g.fillRoundedRectangle(bounds, 2.0);
+});
 
 
+pnlCabDesigner.setMouseCallback(function(event)
+{
+	var x = 145;
+	var y = 310;
+	var w = 860;
+	var h = 490;
+	
+	if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
+	{
+		btnShowCabDesigner.setValue(0);
+		btnShowCabDesigner.changed();
+	}	
+});
+
+pnlTuner.setPaintRoutine(function(g) // move to LAF later
+{
+	var bounds = [310, 80, 530, 310];
+
+	g.setColour(Colours.withAlpha(Colours.black, 1.0));
+	g.fillRoundedRectangle(bounds, 2.0);
+});
+
+
+pnlTuner.setMouseCallback(function(event)
+{
+	var x = 310;
+	var y = 80;
+	var w = 530;
+	var h = 310;
+	
+	if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
+	{
+		btnShowTuner.setValue(0);
+		btnShowTuner.changed();
+	}	
+});
 
 // Labels
 
