@@ -45,6 +45,125 @@ inline function onknbEQWhistleControl(component, value)
     whistle.setAttribute(B, scaledB); 
 };
 
+inline function onknbProcessControl(component, value)
+{
+	local point = 0.0; 
+	switch (component)
+	{
+		// PREPROCESS
+		// High Pass
+		case knbPreProcessEQHighPass:
+			point = 0 * preProcessEQ.BandOffset + preProcessEQ.Freq;   
+			preProcessEQ.setAttribute(point, value);			
+			break;
+		// Low Shelf
+		case knbPreProcessEQLowFreq:
+			point = 1 * preProcessEQ.BandOffset + preProcessEQ.Freq;   
+			preProcessEQ.setAttribute(point, value);	
+			break;			
+		case knbPreProcessEQLowGain:
+			point = 1 * preProcessEQ.BandOffset + preProcessEQ.Gain;   
+			preProcessEQ.setAttribute(point, value);	
+			break;
+		// Low Mid
+		case knbPreProcessEQLowMidFreq:
+			point = 2 * preProcessEQ.BandOffset + preProcessEQ.Freq;
+			preProcessEQ.setAttribute(point, value);	
+			break;
+		case knbPreProcessEQLowMidGain:
+			point = 2 * preProcessEQ.BandOffset + preProcessEQ.Gain;
+			preProcessEQ.setAttribute(point, value);	
+			break;
+		case knbPreProcessEQLowMidQ:
+			point = 2 * preProcessEQ.BandOffset + preProcessEQ.Q;
+			preProcessEQ.setAttribute(point, value);	
+			break;
+		// High Mid
+		case knbPreProcessEQHighMidFreq:
+			point = 3 * preProcessEQ.BandOffset + preProcessEQ.Freq;
+			preProcessEQ.setAttribute(point, value);	
+			break;
+		case knbPreProcessEQHighMidGain:
+			point = 3 * preProcessEQ.BandOffset + preProcessEQ.Gain;
+			preProcessEQ.setAttribute(point, value);	
+			break;
+		case knbPreProcessEQHighMidQ:
+			point = 3 * preProcessEQ.BandOffset + preProcessEQ.Q;
+			preProcessEQ.setAttribute(point, value);	
+			break;
+		// High Shelf
+		case knbPreProcessEQHighFreq:
+			point = 4 * preProcessEQ.BandOffset + preProcessEQ.Freq;   
+			preProcessEQ.setAttribute(point, value);	
+			break;			
+		case knbPreProcessEQHighGain:
+			point = 4 * preProcessEQ.BandOffset + preProcessEQ.Gain;   
+			preProcessEQ.setAttribute(point, value);	
+			break;
+		// Low Pass
+		case knbPreProcessEQLowPass:
+			point = 5 * preProcessEQ.BandOffset + preProcessEQ.Freq;   
+			preProcessEQ.setAttribute(point, value);			
+			break;
+
+		// POSTPROCESS
+		// High Pass
+		case knbPostProcessEQHighPass:
+			point = 0 * postProcessEQ.BandOffset + postProcessEQ.Freq;   
+			postProcessEQ.setAttribute(point, value);			
+			break;
+		// Low Shelf
+		case knbPostProcessEQLowFreq:
+			point = 1 * postProcessEQ.BandOffset + postProcessEQ.Freq;   
+			postProcessEQ.setAttribute(point, value);	
+			break;			
+		case knbPostProcessEQLowGain:
+			point = 1 * postProcessEQ.BandOffset + postProcessEQ.Gain;   
+			postProcessEQ.setAttribute(point, value);	
+			break;
+		// Low Mid
+		case knbPostProcessEQLowMidFreq:
+			point = 2 * postProcessEQ.BandOffset + postProcessEQ.Freq;
+			postProcessEQ.setAttribute(point, value);	
+			break;
+		case knbPostProcessEQLowMidGain:
+			point = 2 * postProcessEQ.BandOffset + postProcessEQ.Gain;
+			postProcessEQ.setAttribute(point, value);	
+			break;
+		case knbPostProcessEQLowMidQ:
+			point = 2 * postProcessEQ.BandOffset + postProcessEQ.Q;
+			postProcessEQ.setAttribute(point, value);	
+			break;
+		// High Mid
+		case knbPostProcessEQHighMidFreq:
+			point = 3 * postProcessEQ.BandOffset + postProcessEQ.Freq;
+			postProcessEQ.setAttribute(point, value);	
+			break;
+		case knbPostProcessEQHighMidGain:
+			point = 3 * postProcessEQ.BandOffset + postProcessEQ.Gain;
+			postProcessEQ.setAttribute(point, value);	
+			break;
+		case knbPostProcessEQHighMidQ:
+			point = 3 * postProcessEQ.BandOffset + postProcessEQ.Q;
+			postProcessEQ.setAttribute(point, value);	
+			break;
+		// High Shelf
+		case knbPostProcessEQHighFreq:
+			point = 4 * postProcessEQ.BandOffset + postProcessEQ.Freq;   
+			postProcessEQ.setAttribute(point, value);	
+			break;			
+		case knbPostProcessEQHighGain:
+			point = 4 * postProcessEQ.BandOffset + postProcessEQ.Gain;   
+			postProcessEQ.setAttribute(point, value);	
+			break;
+		// Low Pass
+		case knbPostProcessEQLowPass:
+			point = 5 * postProcessEQ.BandOffset + postProcessEQ.Freq;   
+			postProcessEQ.setAttribute(point, value);			
+			break;
+	}
+}
+
 inline function onknbLofiControl(component, value)
 {
 	switch (component)
@@ -88,6 +207,31 @@ knbOctave.setControlCallback(onknbOctaveControl);
 knbOctaveFreq.setControlCallback(onknbOctaveControl);
 knbChugThreshold.setControlCallback(onknbChugControl);
 knbCabDesignerAge.setControlCallback(onknbCabDesignerAgeControl);
+
+knbPreProcessEQHighPass.setControlCallback(onknbProcessControl);
+knbPreProcessEQLowFreq.setControlCallback(onknbProcessControl);
+knbPreProcessEQLowGain.setControlCallback(onknbProcessControl);
+knbPreProcessEQLowMidFreq.setControlCallback(onknbProcessControl);
+knbPreProcessEQLowMidGain.setControlCallback(onknbProcessControl);
+knbPreProcessEQLowMidQ.setControlCallback(onknbProcessControl);
+knbPreProcessEQHighMidFreq.setControlCallback(onknbProcessControl);
+knbPreProcessEQHighMidGain.setControlCallback(onknbProcessControl);
+knbPreProcessEQHighMidQ.setControlCallback(onknbProcessControl);
+knbPreProcessEQHighFreq.setControlCallback(onknbProcessControl);
+knbPreProcessEQHighGain.setControlCallback(onknbProcessControl);
+knbPreProcessEQLowPass.setControlCallback(onknbProcessControl);
+knbPostProcessEQHighPass.setControlCallback(onknbProcessControl);
+knbPostProcessEQLowFreq.setControlCallback(onknbProcessControl);
+knbPostProcessEQLowGain.setControlCallback(onknbProcessControl);
+knbPostProcessEQLowMidFreq.setControlCallback(onknbProcessControl);
+knbPostProcessEQLowMidGain.setControlCallback(onknbProcessControl);
+knbPostProcessEQLowMidQ.setControlCallback(onknbProcessControl);
+knbPostProcessEQHighMidFreq.setControlCallback(onknbProcessControl);
+knbPostProcessEQHighMidGain.setControlCallback(onknbProcessControl);
+knbPostProcessEQHighMidQ.setControlCallback(onknbProcessControl);
+knbPostProcessEQHighFreq.setControlCallback(onknbProcessControl);
+knbPostProcessEQHighGain.setControlCallback(onknbProcessControl);
+knbPostProcessEQLowPass.setControlCallback(onknbProcessControl);
 
 // Buttons
 
@@ -272,9 +416,6 @@ inline function onbtnShowCabDesignerControl(component, value)
 	cabDesignerEQ.setBypassed(1-value);
 }
 
-
-
-
 inline function onbtnCabGenerateControl(component, value)
 {
     if (!value)
@@ -439,17 +580,17 @@ pnlTuner.setMouseCallback(function(event)
 
 pnlPreProcess.setPaintRoutine(function(g)
 {
-	var bounds = [300, 250, 500, 450];
+	var bounds = [200, 250, 700, 450];
 
-	g.setColour(Colours.withAlpha(Colours.black, 1.0));
+	g.setColour(Colours.withAlpha(Colours.red, 1.0));
 	g.fillRoundedRectangle(bounds, 2.0);
 });
 
 pnlPreProcess.setMouseCallback(function(event)
 {
-	var x = 300;
+	var x = 200;
 	var y = 250;
-	var w = 500;
+	var w = 700;
 	var h = 450;
 	
 	if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
@@ -461,17 +602,17 @@ pnlPreProcess.setMouseCallback(function(event)
 
 pnlPostProcess.setPaintRoutine(function(g)
 {
-	var bounds = [300, 250, 500, 450];
+	var bounds = [200, 250, 700, 450];
 
-	g.setColour(Colours.withAlpha(Colours.black, 1.0));
+	g.setColour(Colours.withAlpha(Colours.green, 1.0));
 	g.fillRoundedRectangle(bounds, 2.0);
 });
 
 pnlPostProcess.setMouseCallback(function(event)
 {
-	var x = 300;
+	var x = 200;
 	var y = 250;
-	var w = 500;
+	var w = 700;
 	var h = 450;
 	
 	if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 

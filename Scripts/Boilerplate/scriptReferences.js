@@ -39,6 +39,26 @@ const preProcessEQ = Synth.getEffect("preProcessEQ");
 const knbInputGain = Content.getComponent("knbInputGain");
 const pnlPreProcess = Content.getComponent("pnlPreProcess");
 const btnShowPreProcess = Content.getComponent("btnShowPreProcess");
+const btnPreProcessEQ = Content.getComponent("btnPreProcessEQ");
+const knbPreProcessEQHighFreq = Content.getComponent("knbPreProcessEQHighFreq");
+const knbPreProcessEQHighGain = Content.getComponent("knbPreProcessEQHighGain");
+const knbPreProcessEQHighMidGain = Content.getComponent("knbPreProcessEQHighMidGain");
+const knbPreProcessEQHighMidFreq = Content.getComponent("knbPreProcessEQHighMidFreq");
+const knbPreProcessEQHighMidQ = Content.getComponent("knbPreProcessEQHighMidQ");
+const knbPreProcessEQLowMidFreq = Content.getComponent("knbPreProcessEQLowMidFreq");
+const knbPreProcessEQLowMidGain = Content.getComponent("knbPreProcessEQLowMidGain");
+const knbPreProcessEQLowMidQ = Content.getComponent("knbPreProcessEQLowMidQ");
+const knbPreProcessEQLowFreq = Content.getComponent("knbPreProcessEQLowFreq");
+const knbPreProcessEQLowGain = Content.getComponent("knbPreProcessEQLowGain");
+const knbPreProcessEQHighPass = Content.getComponent("knbPreProcessEQHighPass");
+const knbPreProcessEQLowPass = Content.getComponent("knbPreProcessEQLowPass");
+const btnPreProcessComp = Content.getComponent("btnPreProcessComp");
+const knbPreProcessCompThreshold = Content.getComponent("knbPreProcessCompThreshold");
+const knbPreProcessCompAttack = Content.getComponent("knbPreProcessCompAttack");
+const knbPreProcessCompRelease = Content.getComponent("knbPreProcessCompRelease");
+const knbPreProcessCompRatio = Content.getComponent("knbPreProcessCompRatio");
+const btnPreProcessCompMakeup = Content.getComponent("btnPreProcessCompMakeup");
+
 
 // Output Chain
 const outputGain = Synth.getEffect("outputGain");
@@ -47,6 +67,25 @@ const postProcessEQ = Synth.getEffect("postProcessEQ");
 const knbOutputGain = Content.getComponent("knbOutputGain");
 const btnShowPostProcess = Content.getComponent("btnShowPostProcess");
 const pnlPostProcess = Content.getComponent("pnlPostProcess");
+const btnPostProcessEQ = Content.getComponent("btnPostProcessEQ");
+const knbPostProcessEQHighFreq = Content.getComponent("knbPostProcessEQHighFreq");
+const knbPostProcessEQHighGain = Content.getComponent("knbPostProcessEQHighGain");
+const knbPostProcessEQHighMidGain = Content.getComponent("knbPostProcessEQHighMidGain");
+const knbPostProcessEQHighMidFreq = Content.getComponent("knbPostProcessEQHighMidFreq");
+const knbPostProcessEQHighMidQ = Content.getComponent("knbPostProcessEQHighMidQ");
+const knbPostProcessEQLowMidFreq = Content.getComponent("knbPostProcessEQLowMidFreq");
+const knbPostProcessEQLowMidGain = Content.getComponent("knbPostProcessEQLowMidGain");
+const knbPostProcessEQLowMidQ = Content.getComponent("knbPostProcessEQLowMidQ");
+const knbPostProcessEQLowFreq = Content.getComponent("knbPostProcessEQLowFreq");
+const knbPostProcessEQLowGain = Content.getComponent("knbPostProcessEQLowGain");
+const knbPostProcessEQHighPass = Content.getComponent("knbPostProcessEQHighPass");
+const knbPostProcessEQLowPass = Content.getComponent("knbPostProcessEQLowPass");
+const btnPostProcessComp = Content.getComponent("btnPostProcessComp");
+const knbPostProcessCompThreshold = Content.getComponent("knbPostProcessCompThreshold");
+const knbPostProcessCompAttack = Content.getComponent("knbPostProcessCompAttack");
+const knbPostProcessCompRelease = Content.getComponent("knbPostProcessCompRelease");
+const knbPostProcessCompRatio = Content.getComponent("knbPostProcessCompRatio");
+const btnPostProcessCompMakeup = Content.getComponent("btnPostProcessCompMakeup");
 
 // Oversampling
 const btnOversampling = Content.getComponent("btnOversampling");
