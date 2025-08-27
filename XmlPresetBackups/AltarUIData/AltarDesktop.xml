@@ -90,6 +90,8 @@
                processorId="gritFixed" parameterId="Enabled"/>
     <Component type="ScriptButton" id="btnPitchSnap" x="50.0" y="210.0" width="78.0"
                parentComponent="pnlMaster"/>
+    <Component type="ScriptButton" id="btnTest" x="750.0" y="200.0" parentComponent="pnlMaster"
+               isMomentary="1"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="250.0" width="1150.0"
              height="490.0" itemColour="4278190080" itemColour2="4278190080"
@@ -153,8 +155,7 @@
     </Component>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="251.0" width="1150.0"
-             height="490.0" itemColour2="4278190080" itemColour="4278190080"
-             visible="0.0">
+             height="490.0" itemColour2="4278190080" itemColour="4278190080">
     <Component type="ScriptButton" id="btnOpenCabFolder" x="700.0" y="19.0"
                parentComponent="pnlCab" isMomentary="1"/>
     <Component type="ScriptComboBox" id="cmbCabMicrophone" x="280.0" y="19.0"
@@ -218,23 +219,30 @@
                mode="Decibel"/>
     <Component type="ScriptButton" id="btnCabBPhase" x="870.0" y="19.0" parentComponent="pnlCab"
                processorId="cabFixed" parameterId="CabBPhase"/>
+    <Component type="ScriptButton" id="btnCab" x="290.0" y="59.0" parentComponent="pnlCab"
+               processorId="cabFixed" parameterId="Enabled"/>
     <Component type="ScriptPanel" id="pnlCabDesigner" x="140.0" y="50.0" parentComponent="pnlCab"
-               width="810.0" height="490.0" itemColour="4278190080" itemColour2="4278190080"
-               visible="0.0">
-      <Component type="ScriptLabel" id="lblCabSaveName" x="400.0" y="20.0" parentComponent="pnlCabDesigner"
+               width="810.0" height="490.0" itemColour="4278190080" itemColour2="4278190080">
+      <Component type="ScriptLabel" id="lblCabSaveName" x="674.0" y="59.0" parentComponent="pnlCabDesigner"
                  text="myCab.wav"/>
-      <Component type="ScriptButton" id="btnCabSave" x="260.0" y="20.0" isMomentary="1"
-                 parentComponent="pnlCabDesigner"/>
-      <Component type="ScriptFloatingTile" id="fltCabEQCustom" x="60.0" y="100.0"
+      <Component type="ScriptButton" id="btnCabSave" x="580.0" y="59.0" isMomentary="1"
+                 parentComponent="pnlCabDesigner" text="Save" width="88.0"/>
+      <Component type="ScriptFloatingTile" id="fltCabDesignerEQ" x="60.0" y="100.0"
                  width="670.0" height="300.0" ContentType="DraggableFilterPanel"
                  bgColour="4280955724" itemColour="4294967295" itemColour2="4294967295"
-                 Data="{&#10;  &quot;ProcessorId&quot;: &quot;cabEQCustom&quot;,&#10;  &quot;Index&quot;: -1,&#10;  &quot;FollowWorkspace&quot;: false,&#10;  &quot;AllowFilterResizing&quot;: true,&#10;  &quot;AllowDynamicSpectrumAnalyser&quot;: 0,&#10;  &quot;UseUndoManager&quot;: false,&#10;  &quot;ResetOnDoubleClick&quot;: false,&#10;  &quot;ShowLines&quot;: true,&#10;  &quot;PathMargin&quot;: 3.0,&#10;  &quot;PathType&quot;: &quot;StrokeFullWidth&quot;,&#10;  &quot;GainRange&quot;: 24.0,&#10;  &quot;AllowContextMenu&quot;: true&#10;}"
+                 Data="{&#10;  &quot;ProcessorId&quot;: &quot;cabDesignerEQ&quot;,&#10;  &quot;Index&quot;: -1,&#10;  &quot;FollowWorkspace&quot;: false,&#10;  &quot;AllowFilterResizing&quot;: true,&#10;  &quot;AllowDynamicSpectrumAnalyser&quot;: 0,&#10;  &quot;UseUndoManager&quot;: false,&#10;  &quot;ResetOnDoubleClick&quot;: false,&#10;  &quot;ShowLines&quot;: true,&#10;  &quot;PathMargin&quot;: 3.0,&#10;  &quot;PathType&quot;: &quot;StrokeFullWidth&quot;,&#10;  &quot;GainRange&quot;: 24.0,&#10;  &quot;AllowContextMenu&quot;: true&#10;}"
                  parentComponent="pnlCabDesigner" itemColour3="16777215"/>
-      <Component type="ScriptButton" id="btnCabGenerate" x="60.0" y="20.0" isMomentary="1"
-                 parentComponent="pnlCabDesigner"/>
+      <Component type="ScriptButton" id="btnCabGenerate" x="580.0" y="19.0" isMomentary="1"
+                 parentComponent="pnlCabDesigner" text="Generate" width="88.0"/>
+      <Component type="ScriptComboBox" id="cmbCabDesignerSpeaker" x="30.0" y="29.0"
+                 max="5" parentComponent="pnlCabDesigner" text="Speaker" items="AL-30 Mod&#10;AL-30&#10;AL-K100&#10;AL-65&#10;AL-77&#10;"/>
+      <Component type="ScriptComboBox" id="cmbCabDesignerMic" x="170.0" y="29.0"
+                 max="6" parentComponent="pnlCabDesigner" text="Microphone" items="Linear (No Mic)&#10;AL-57&#10;AL-421&#10;AL-414&#10;AL-184&#10;AL-121"/>
+      <Component type="ScriptSlider" id="knbCabDesignerMojo" x="310.0" y="19.0"
+                 parentComponent="pnlCabDesigner" text="Mojo Strength"/>
+      <Component type="ScriptSlider" id="knbCabDesignerAge" x="440.0" y="19.0"
+                 parentComponent="pnlCabDesigner" text="Speaker Age"/>
     </Component>
-    <Component type="ScriptButton" id="btnCab" x="410.0" y="137.0" parentComponent="pnlCab"
-               processorId="cabFixed" parameterId="Enabled"/>
   </Component>
   <Component type="ScriptPanel" id="pnlReverb" x="0.0" y="250.0" width="1150.0"
              height="490.0" itemColour="4278190080" itemColour2="4278190080"
@@ -257,7 +265,8 @@
              height="490.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0"/>
   <Component type="ScriptPanel" id="pnlRingMod" x="0.0" y="250.0" width="1150.0"
-             height="490.0" itemColour="4278190080" itemColour2="4278190080"/>
+             height="490.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0.0"/>
   <Component type="ScriptPanel" id="pnlTuner" x="350.0" y="160.0" width="390.0"
              height="280.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0">

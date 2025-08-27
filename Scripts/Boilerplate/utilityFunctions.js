@@ -91,15 +91,16 @@ inline function renderAudioCallback (obj)
         local buffer = normalizeBuffer(obj.channels);                       
         local file = audioFiles.getChildFile(cabSaveName);
 
-        // Force Stereo (HISE Convolution is stereo for some reason)
+        // Force Stereo (HISE Convolution is stereo)
         file.writeAudioFile([buffer[0], buffer[0]], Engine.getSampleRate(), 24);
 
-        restoreModuleBypassedState();
-        cabEQMain.setBypassed(1);
-        cabEQDetails.setBypassed(1);
-        cabFileSave.setBypassed(1);     
+        restoreModuleBypassedState();               
+        cabDesignerSpeaker.setBypassed(1);
+        cabDesignerMojo.setBypassed(1);
+        cabDesignerMic.setBypassed(1);
+        cabDesignerFileSave.setBypassed(1);             
         testAudio.setBypassed(0); // force enable audio player  
-        cabEQCustom.restoreState(cabEQCustomBlankState); // reset the custom EQ 
+        cabEQCustom.restoreState(dspNoProfile); // reset the custom EQ 
         cabConvolution.setFile("");     
         cabConvolution.setFile(file.toString(0));
         cabConvolution.setBypassed(0);              

@@ -187,6 +187,60 @@ inline function onbtnCabSelectControl(component, value)
 	}
 }
 
+inline function oncmbCabGenerateControl(component, value)
+{
+	switch (component)
+	{
+		case cmbCabDesignerSpeaker:
+		switch (value)
+		{
+			case 1:
+				cabDesignerSpeaker.restoreState(dspCabA);
+				break;
+			case 2:
+				cabDesignerSpeaker.restoreState(dspCabB);
+				break;
+			case 3:
+				cabDesignerSpeaker.restoreState(dspCabC);
+				break;
+			case 4:
+				cabDesignerSpeaker.restoreState(dspCabD);
+				break;
+			case 5:
+				cabDesignerSpeaker.restoreState(dspCabE);
+				break;
+			case 6:
+				cabDesignerSpeaker.restoreState(dspCabF);
+				break;	
+		}
+		break;
+		
+		case cmbCabDesignerMic:
+		switch (value)
+		{
+			case 1:
+				cabDesignerMic.restoreState(dspNoProfile);
+				break;
+			case 2:
+				cabDesignerMic.restoreState(dspMicA);
+				break;
+			case 3:
+				cabDesignerMic.restoreState(dspMicB);
+				break;
+			case 4:
+				cabDesignerMic.restoreState(dspMicC);
+				break;
+			case 5:
+				cabDesignerMic.restoreState(dspMicD);
+				break;
+			case 6:
+				cabDesignerMic.restoreState(dspMicE);
+				break;				
+		}
+		break;
+	}
+}
+
 inline function onbtnCabGenerateControl(component, value)
 {
     if (!value)
@@ -195,8 +249,12 @@ inline function onbtnCabGenerateControl(component, value)
     local gain = 0.0;
     local q = 0.0;
     local freq = 0;
+    
+    // Main
+    
 
     // Main
+    /*
     for (i = 1; i<21; i++)
     {
         gain = i * cabEQMain.BandOffset + cabEQMain.Gain;   
@@ -234,6 +292,7 @@ inline function onbtnCabGenerateControl(component, value)
             cabEQMain.setAttribute(freq, Math.randInt(6000, 9000));      
         }
     }
+    */
 
     // Details
     for (i = 0; i<60; i++)
@@ -315,9 +374,11 @@ btnCabBEnable.setControlCallback(onbtnBypass);
 btnOversampling.setControlCallback(onbtnBypass);
 btnPitchSnap.setControlCallback(onbtnBypass);
 
-// Cab Select
+// Cab
 btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);
 btnCabALoadNext.setControlCallback(onbtnCabSelectControl);
+cmbCabDesignerSpeaker.setControlCallback(oncmbCabGenerateControl);
+cmbCabDesignerMic.setControlCallback(oncmbCabGenerateControl);
 
 // More Complex Functions
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
@@ -334,6 +395,8 @@ btnShowDelay.setControlCallback(showPanelControl);
 btnShowChorus.setControlCallback(showPanelControl);
 btnShowRingMod.setControlCallback(showPanelControl);
 btnShowTuner.setControlCallback(showPanelControl);
+
+
 
 
 // Labels

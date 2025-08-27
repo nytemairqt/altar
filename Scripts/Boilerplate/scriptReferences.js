@@ -19,48 +19,151 @@
 // ===============================
 // DSP MODULES
 
-// Master FX
-const inputGain = Synth.getEffect("inputGain");
-const outputGain = Synth.getEffect("outputGain");
-const gate = Synth.getEffect("gate");
-const limiter = Synth.getEffect("limiter");
-const tuner = Synth.getEffect("tuner");
-const lofi = Synth.getEffect("lofi");
-const chugFixed = Synth.getEffect("chugFixed");
-const gritFixed = Synth.getEffect("gritFixed");
+include("Boilerplate/dspProfiles.js");
 
-// Octave
-const octavePre = Synth.getEffect("octavePre");
-const octavePost = Synth.getEffect("octavePost");
+// Generic
+const testAudio = Synth.getAudioSampleProcessor("testAudio");
+
+// Click
+const click = Synth.getChildSynth("click");
+const clickMIDI = Synth.getMidiPlayer("clickMIDI");
+const btnClick = Content.getComponent("btnClick");
+const knbClickGain = Content.getComponent("knbClickGain");
+const lblClickDisasbled = Content.getComponent("lblClickDisasbled");
+
+// Input Gain
+const inputGain = Synth.getEffect("inputGain");
+const knbInputGain = Content.getComponent("knbInputGain");
+
+// Output Gain
+const outputGain = Synth.getEffect("outputGain");
+const knbOutputGain = Content.getComponent("knbOutputGain");
+
+// Oversampling
+const btnOversampling = Content.getComponent("btnOversampling");
+
+// Gate
+const gate = Synth.getEffect("gate");
+const btnGate = Content.getComponent("btnGate");
+const knbGateThreshold = Content.getComponent("knbGateThreshold");
+
+// Limiter
+const limiter = Synth.getEffect("limiter");
+const btnLimiter = Content.getComponent("btnLimiter");
+
+// Whistle
+const eqWhistle = Synth.getEffect("eqWhistle");
+const knbEQWhistle = Content.getComponent("knbEQWhistle");
+
+// Tuner
+const tuner = Synth.getEffect("tuner");
+const btnShowTuner = Content.getComponent("btnShowTuner");
+const btnTunerMonitor = Content.getComponent("btnTunerMonitor");
+const lblTuner = Content.getComponent("lblTuner");
+const pnlTuner = Content.getComponent("pnlTuner");
+
+// Pitch-Shifter
+const knbPitch = Content.getComponent("knbPitch");
+const btnPitch = Content.getComponent("btnPitch");
+const btnPitchSnap = Content.getComponent("btnPitchSnap");
 
 // Amp
 const pitchShifterFixed = Synth.getEffect("pitchShifterFixed");
 const preSculpt = Synth.getEffect("preSculpt");
 const ampFixed = Synth.getEffect("ampFixed");
 const postSculpt = Synth.getEffect("postSculpt");
+const btnShowAmp = Content.getComponent("btnShowAmp");
+const btnAmpMode = Content.getComponent("btnAmpMode");
+const knbCleanInput = Content.getComponent("knbCleanInput");
+const knbCleanOutput = Content.getComponent("knbCleanOutput");
+const knbDirtyInput = Content.getComponent("knbDirtyInput");
+const knbDirtyOutput = Content.getComponent("knbDirtyOutput");
+const pnlAmp = Content.getComponent("pnlAmp");
+const pnlAmpClean = Content.getComponent("pnlAmpClean");
+const pnlAmpDirty = Content.getComponent("pnlAmpDirty");
 
 // Cab
 const cabScriptFX = Synth.getAudioSampleProcessor("cabScriptFX");
 const cabFixed = Synth.getEffect("cabFixed");
-const cabEQMain = Synth.getEffect("cabEQMain");
-const cabEQDetails = Synth.getEffect("cabEQDetails");
-const cabEQCustom = Synth.getEffect("cabEQCustom");
-const eqWhistle = Synth.getEffect("eqWhistle");
-const cabEQCustomBlankState = "186.3ocMNsrCBBCDbqDN3A+WjeAPHwCZTKw6U5FoI0tZenxWutfxdZlLyrybvScXHPdPj2NbGAwx7pj+IV+.1tADqx6TWpOVkBQ5FTNbWEBnFDhr8oaMFaD8ANp.3qoos1otX+oKxp0lH4kQUDYOYkjdP1SubLNu.NaBF16OhjrzHZM.U8Fq9v7rB7eOQonwccmJ5Mu4x3lkTx2gU8JmCsSCXALFchuddPRzomHe36uXwHW7WrXVD9hSykzK";
+const btnShowCab = Content.getComponent("btnShowCab");
+const btnCabAEnable = Content.getComponent("btnCabAEnable");
+const btnCabBEnable = Content.getComponent("btnCabBEnable");
+const btnCabAPhase = Content.getComponent("btnCabAPhase");
+const btnCabALoadPrev = Content.getComponent("btnCabALoadPrev");
+const btnCabALoadNext = Content.getComponent("btnCabALoadNext");
+const knbCabAAxis = Content.getComponent("knbCabAAxis");
+const knbCabAAngle = Content.getComponent("knbCabAAngle");
+const knbCabADistance = Content.getComponent("knbCabADistance");
+const knbCabADelay = Content.getComponent("knbCabADelay");
+const knbCabAPan = Content.getComponent("knbCabAPan");
+const knbCabAGain = Content.getComponent("knbCabAGain");
+const pnlCab = Content.getComponent("pnlCab");
 
+// Cab Designer
+const cabDesignerSpeaker = Synth.getEffect("cabDesignerSpeaker");
+const cabDesignerMojo = Synth.getEffect("cabDesignerMojo");
+const cabDesignerMic = Synth.getEffect("cabDesignerMic");
+const cabDesignerEQ = Synth.getEffect("cabDesignerEQ");
+const cabDesignerFileSave = Synth.getAudioSampleProcessor("cabDesignerFileSave");
+const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");
+const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
+const btnCabGenerate = Content.getComponent("btnCabGenerate");
+const btnCabSave = Content.getComponent("btnCabSave");
+const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
+const cmbCabDesignerSpeaker = Content.getComponent("cmbCabDesignerSpeaker");
+const cmbCabDesignerMic = Content.getComponent("cmbCabDesignerMic");
+const knbCabDesignerMojo = Content.getComponent("knbCabDesignerMojo");
+const knbCabDesignerAge = Content.getComponent("knbCabDesignerAge");
+const lblCabSaveName = Content.getComponent("lblCabSaveName");
+const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");
+const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
 
-// Pedals
+// Chug
+const chugFixed = Synth.getEffect("chugFixed");
+const btnChug = Content.getComponent("btnChug");
+const knbChugThreshold = Content.getComponent("knbChugThreshold");
+const knbChugFreq = Content.getComponent("knbChugFreq");
+
+// Grit
+const gritFixed = Synth.getEffect("gritFixed");
+
+// LoFi
+const lofi = Synth.getEffect("lofi");
+const btnLofi = Content.getComponent("btnLofi");
+const knbLofiLow = Content.getComponent("knbLofiLow");
+const knbLofiHigh = Content.getComponent("knbLofiHigh");
+
+// Octave
+const octavePre = Synth.getEffect("octavePre");
+const octavePost = Synth.getEffect("octavePost");
+const btnOctave = Content.getComponent("btnOctave");
+const btnOctavePosition = Content.getComponent("btnOctavePosition");
+const knbOctave = Content.getComponent("knbOctave");
+const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
+
+// Preprocess (Comp & EQ)
+// Postprocess (Comp & EQ)
+// Overdrive & Fuzz
+const btnShowOverdrive = Content.getComponent("btnShowOverdrive");
+const pnlOverdrive = Content.getComponent("pnlOverdrive");
+// Reverb
 const reverbFixed = Synth.getEffect("reverbFixed");
+const btnShowReverb = Content.getComponent("btnShowReverb");
+const knbReverbMix = Content.getComponent("knbReverbMix");
+const knbReverbBrightness = Content.getComponent("knbReverbBrightness");
+const knbReverbFeedback = Content.getComponent("knbReverbFeedback");
+const pnlReverb = Content.getComponent("pnlReverb");
+// Delay
+const btnShowDelay = Content.getComponent("btnShowDelay");
+const pnlDelay = Content.getComponent("pnlDelay");
+// Chorus
+const btnShowChorus = Content.getComponent("btnShowChorus");
+const pnlChorus = Content.getComponent("pnlChorus");
+// Ring Mod
+const btnShowRingMod = Content.getComponent("btnShowRingMod");
+const pnlRingMod = Content.getComponent("pnlRingMod");
 
-// Synths
-const cabMIDIPlayer = Synth.getMidiPlayer("cabMIDIPlayer");
-const click = Synth.getChildSynth("click");
-const cabFileSave = Synth.getAudioSampleProcessor("cabFileSave");
-const testAudio = Synth.getAudioSampleProcessor("testAudio");
-
-//const clickMIDI = Synth.getMidiProcessor("clickMIDI");
-const clickMIDI = Synth.getMidiPlayer("clickMIDI");
-
+// Modules for Resetting in Cab Designer
 const modules = [Synth.getEffect("gate"),
     Synth.getEffect("pitchShifterFixed"),
     Synth.getEffect("preSculpt"),
@@ -68,113 +171,9 @@ const modules = [Synth.getEffect("gate"),
     Synth.getEffect("postSculpt"),
     Synth.getEffect("tuner"),
     Synth.getEffect("cabScriptFX"),
-    Synth.getEffect("cabEQMain"),
-    Synth.getEffect("cabEQDetails"),
     Synth.getEffect("eqWhistle"),
     Synth.getEffect("reverbFixed")];
     
-// ===============================
-// UI ELEMENTS
-
-// Knobs
-const knbInputGain = Content.getComponent("knbInputGain");
-const knbOutputGain = Content.getComponent("knbOutputGain");
-const knbGateThreshold = Content.getComponent("knbGateThreshold");
-const knbLofiLow = Content.getComponent("knbLofiLow");
-const knbLofiHigh = Content.getComponent("knbLofiHigh");
-const knbPitch = Content.getComponent("knbPitch");
-const knbClickGain = Content.getComponent("knbClickGain");
-const knbOctave = Content.getComponent("knbOctave");
-const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
-const knbChugThreshold = Content.getComponent("knbChugThreshold");
-const knbChugFreq = Content.getComponent("knbChugFreq");
-
-const knbCleanInput = Content.getComponent("knbCleanInput");
-const knbCleanOutput = Content.getComponent("knbCleanOutput");
-const knbDirtyInput = Content.getComponent("knbDirtyInput");
-const knbDirtyOutput = Content.getComponent("knbDirtyOutput");
-
-
-const knbCabAAxis = Content.getComponent("knbCabAAxis");
-const knbCabAAngle = Content.getComponent("knbCabAAngle");
-const knbCabADistance = Content.getComponent("knbCabADistance");
-const knbCabADelay = Content.getComponent("knbCabADelay");
-const knbCabAPan = Content.getComponent("knbCabAPan");
-const knbCabAGain = Content.getComponent("knbCabAGain");
-
-
-const knbEQWhistle = Content.getComponent("knbEQWhistle");
-
-
-const knbReverbMix = Content.getComponent("knbReverbMix");
-const knbReverbBrightness = Content.getComponent("knbReverbBrightness");
-const knbReverbFeedback = Content.getComponent("knbReverbFeedback");
-
-// Buttons
-const btnLimiter = Content.getComponent("btnLimiter");
-const btnPitch = Content.getComponent("btnPitch");
-const btnPitchSnap = Content.getComponent("btnPitchSnap");
-const btnGate = Content.getComponent("btnGate");
-const btnLofi = Content.getComponent("btnLofi");
-const btnOversampling = Content.getComponent("btnOversampling");
-const btnOctave = Content.getComponent("btnOctave");
-const btnOctavePosition = Content.getComponent("btnOctavePosition");
-const btnChug = Content.getComponent("btnChug");
-
-const btnAmpMode = Content.getComponent("btnAmpMode");
-
-const btnCabAEnable = Content.getComponent("btnCabAEnable");
-const btnCabBEnable = Content.getComponent("btnCabBEnable");
-
-const btnCabAPhase = Content.getComponent("btnCabAPhase");
-const btnCabALoadPrev = Content.getComponent("btnCabALoadPrev");
-const btnCabALoadNext = Content.getComponent("btnCabALoadNext");
-
-const btnCabGenerate = Content.getComponent("btnCabGenerate");
-const btnCabSave = Content.getComponent("btnCabSave");
-const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
-
-const btnShowOverdrive = Content.getComponent("btnShowOverdrive");
-const btnShowAmp = Content.getComponent("btnShowAmp");
-const btnShowCab = Content.getComponent("btnShowCab");
-const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
-const btnShowReverb = Content.getComponent("btnShowReverb");
-const btnShowDelay = Content.getComponent("btnShowDelay");
-const btnShowChorus = Content.getComponent("btnShowChorus");
-const btnShowRingMod = Content.getComponent("btnShowRingMod");
-const btnShowTuner = Content.getComponent("btnShowTuner");
-const btnTunerMonitor = Content.getComponent("btnTunerMonitor");
-
-const btnClick = Content.getComponent("btnClick");
-
-
-
-// Comboboxes
-
-// Labels
-
-const lblCabSaveName = Content.getComponent("lblCabSaveName");
-const lblTuner = Content.getComponent("lblTuner");
-const lblClickDisasbled = Content.getComponent("lblClickDisasbled");
-
-
-
-// Panels
-
-const pnlOverdrive = Content.getComponent("pnlOverdrive");
-const pnlAmp = Content.getComponent("pnlAmp");
-const pnlAmpClean = Content.getComponent("pnlAmpClean");
-const pnlAmpDirty = Content.getComponent("pnlAmpDirty");
-const pnlCab = Content.getComponent("pnlCab");
-const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
-const pnlTuner = Content.getComponent("pnlTuner");
-const pnlReverb = Content.getComponent("pnlReverb");
-const pnlDelay = Content.getComponent("pnlDelay");
-const pnlChorus = Content.getComponent("pnlChorus");
-const pnlRingMod = Content.getComponent("pnlRingMod");
-
-
-// ===============================
 // MISC VARIABLES
 var eventList = [];
 const impulseSize = 1024;
@@ -185,7 +184,7 @@ const isPlugin = Engine.isPlugin();
 
 // INITIAL SETUP
 Engine.loadAudioFilesIntoPool();
-cabMIDIPlayer.create(4, 4, 1);
+cabDesignerMIDIPlayer.create(4, 4, 1);
 
 // keep me here
 reg clickMIDIList = [  
