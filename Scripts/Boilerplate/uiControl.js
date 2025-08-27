@@ -25,6 +25,24 @@ inline function onknbPitchControl(component, value)
     pitch.setAttribute(pitch.FreqRatio, newPitch);
 }
 
+
+
+inline function onknbCabDesignerMojoControl(component, value)
+{
+	/*
+
+	local gain = 0.0;
+	
+	// Details
+	for (i = 0; i<60; i++)
+	{   
+	    //Gains
+	    gain = i * cabDesignerMojo.BandOffset + cabDesignerMojo.Gain;
+	    cabDesignerMojo.setAttribute(gain, gain * knbCabDesignerMojo.getValue());                                 
+	}  
+	*/
+};
+
 inline function onknbEQWhistleControl(component, value)
 {
     local A = 0 * whistle.BandOffset + whistle.Gain;    
@@ -77,6 +95,7 @@ knbLofiHigh.setControlCallback(onknbLofiControl);
 knbOctave.setControlCallback(onknbOctaveControl);
 knbOctaveFreq.setControlCallback(onknbOctaveControl);
 knbChugThreshold.setControlCallback(onknbChugControl);
+knbCabDesignerMojo.setControlCallback(onknbCabDesignerMojoControl);
 
 // Buttons
 
@@ -150,9 +169,6 @@ inline function showPanelControl(component, value)
 		case btnShowCab:
 			pnlCab.set("visible", value);
 			break;
-		case btnShowCabDesigner:
-			pnlCabDesigner.set("visible", value);
-			break;
 		case btnShowReverb:
 			pnlReverb.set("visible", value);
 			break;
@@ -213,8 +229,7 @@ inline function oncmbCabGenerateControl(component, value)
 				cabDesignerSpeaker.restoreState(dspCabF);
 				break;	
 		}
-		break;
-		
+		break;		
 		case cmbCabDesignerMic:
 		switch (value)
 		{
@@ -241,6 +256,17 @@ inline function oncmbCabGenerateControl(component, value)
 	}
 }
 
+inline function onbtnShowCabDesignerControl(component, value)
+{
+	btnCab.setValue(1-value);
+	btnCab.changed();	
+	pnlCabDesigner.set("visible", value);
+	cabDesignerSpeaker.setBypassed(1-value);
+	cabDesignerMojo.setBypassed(1-value);
+	cabDesignerMic.setBypassed(1-value);
+	cabDesignerEQ.setBypassed(1-value);
+}
+
 inline function onbtnCabGenerateControl(component, value)
 {
     if (!value)
@@ -249,63 +275,23 @@ inline function onbtnCabGenerateControl(component, value)
     local gain = 0.0;
     local q = 0.0;
     local freq = 0;
-    
-    // Main
-    
-
-    // Main
-    /*
-    for (i = 1; i<21; i++)
-    {
-        gain = i * cabEQMain.BandOffset + cabEQMain.Gain;   
-        q = i * cabEQMain.BandOffset + cabEQMain.Q;
-        freq = i * cabEQMain.BandOffset + cabEQMain.Freq;
-
-        if (i < 3) // Low End Broad Curves
-        {
-            cabEQMain.setAttribute(gain, Math.randInt(-1, 1) + Math.random());                                  
-            cabEQMain.setAttribute(q, Math.randInt(1, 2) + Math.random());     
-            cabEQMain.setAttribute(freq, Math.randInt(60, 150));  
-        }                             
-        if (i >=3 && i < 6) // Low Mud
-        {
-            cabEQMain.setAttribute(gain, Math.randInt(-6, -1) + Math.random());                                 
-            cabEQMain.setAttribute(q, Math.randInt(3, 4) + Math.random());  
-            cabEQMain.setAttribute(freq, Math.randInt(200, 500));     
-        }
-        if (i >= 6 && i < 11) // Mids
-        {
-            cabEQMain.setAttribute(gain, Math.randInt(-3, -1) + Math.random());                                 
-            cabEQMain.setAttribute(q, Math.randInt(3, 4) + Math.random());  
-            cabEQMain.setAttribute(freq, Math.randInt(600, 1800));   
-        }
-        if (i >= 11 && i < 15) // High Mids
-        {
-            cabEQMain.setAttribute(gain, Math.randInt(-4, -4) + Math.random());                                                     
-            cabEQMain.setAttribute(q, Math.randInt(2, 4) + Math.random());     
-            cabEQMain.setAttribute(freq, Math.randInt(2000, 6000));  
-        }
-        if (i >= 15 && i < 21) // Fizzy Top
-        {
-            cabEQMain.setAttribute(gain, Math.randInt(-6, -1) + Math.random());                                                     
-            cabEQMain.setAttribute(q, Math.randInt(1, 3) + Math.random()); 
-            cabEQMain.setAttribute(freq, Math.randInt(6000, 9000));      
-        }
-    }
-    */
+    local mojoGain = 0.0;
 
     // Details
     for (i = 0; i<60; i++)
     {   
+    	mojoGain = (Math.randInt(-2, 2) + Math.random()) * knbCabDesignerMojo.getValue();
+    	Console.print(mojoGain);
+    	
         //Gains
-        gain = i * cabEQDetails.BandOffset + cabEQDetails.Gain;
-        cabEQDetails.setAttribute(gain, Math.randInt(-4, 4) + Math.random());                     
+        gain = i * cabDesignerMojo.BandOffset + cabDesignerMojo.Gain;
+        cabDesignerMojo.setAttribute(gain, mojoGain);                     
         //Q's
-        q = i * cabEQDetails.BandOffset + cabEQDetails.Q;
-        cabEQDetails.setAttribute(q, Math.randInt(6, 8) + Math.random());                     
+        q = i * cabDesignerMojo.BandOffset + cabDesignerMojo.Q;
+        cabDesignerMojo.setAttribute(q, Math.randInt(6, 8) + Math.random());                     
         //Frequencies                     
-        freq = i * cabEQDetails.BandOffset + cabEQDetails.Freq;
-        cabEQDetails.setAttribute(freq, Math.randInt(200, 8000));             
+        freq = i * cabDesignerMojo.BandOffset + cabDesignerMojo.Freq;
+        cabDesignerMojo.setAttribute(freq, Math.randInt(200, 8000));             
     }      
 }
 
@@ -321,14 +307,14 @@ inline function onbtnCabSaveControl(component, value)
 
     testAudio.setBypassed(1); // force disable
 
-    // force enable filters
-    
-    cabEQMain.setBypassed(0);
-    cabEQDetails.setBypassed(0);
-    cabEQCustom.setBypassed(0);
-    cabFileSave.setBypassed(0);
+    // enable filters    
+    cabDesignerSpeaker.setBypassed(0);
+    cabDesignerMojo.setBypassed(0);
+    cabDesignerMic.setBypassed(0);
+    cabDesignerEQ.setBypassed(0);
+    cabDesignerFileSave.setBypassed(0);
         
-    cabFileSave.setFile(""); // clears audio buffer
+    cabDesignerFileSave.setFile(""); // clears audio buffer
 
     local buffer = Buffer.create(impulseSize);      
     buffer[0] = 1.0; // Dirac delta
@@ -337,9 +323,7 @@ inline function onbtnCabSaveControl(component, value)
     local tempFiles = FileSystem.getFolder(FileSystem.Temp);
     local tempFile = tempFiles.getChildFile("tempImpulse.wav");
     
-    tempFile.writeAudioFile(buffer, Engine.getSampleRate(), 24);
-    
-    cabConvolution.setFile(tempFile.toString(0)); // make sure the cab doesn't have the previous saved impulse so we can safely overwrite
+    tempFile.writeAudioFile(buffer, Engine.getSampleRate(), 24);  
     cabFileSave.setFile(tempFile.toString(0));  
 
     eventList.clear();
@@ -379,6 +363,7 @@ btnCabALoadPrev.setControlCallback(onbtnCabSelectControl);
 btnCabALoadNext.setControlCallback(onbtnCabSelectControl);
 cmbCabDesignerSpeaker.setControlCallback(oncmbCabGenerateControl);
 cmbCabDesignerMic.setControlCallback(oncmbCabGenerateControl);
+btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);
 
 // More Complex Functions
 btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
@@ -389,7 +374,6 @@ btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
 btnShowOverdrive.setControlCallback(showPanelControl);
 btnShowAmp.setControlCallback(showPanelControl);
 btnShowCab.setControlCallback(showPanelControl);
-btnShowCabDesigner.setControlCallback(showPanelControl);
 btnShowReverb.setControlCallback(showPanelControl);
 btnShowDelay.setControlCallback(showPanelControl);
 btnShowChorus.setControlCallback(showPanelControl);

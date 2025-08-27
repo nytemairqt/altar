@@ -90,6 +90,10 @@ inline function renderAudioCallback (obj)
         // get the buffer                               
         local buffer = normalizeBuffer(obj.channels);                       
         local file = audioFiles.getChildFile(cabSaveName);
+        
+       	// FIX ME:
+        // check if chosen file name is already loaded in either cab waveform
+        // if it is, show alert window and return
 
         // Force Stereo (HISE Convolution is stereo)
         file.writeAudioFile([buffer[0], buffer[0]], Engine.getSampleRate(), 24);
@@ -98,12 +102,13 @@ inline function renderAudioCallback (obj)
         cabDesignerSpeaker.setBypassed(1);
         cabDesignerMojo.setBypassed(1);
         cabDesignerMic.setBypassed(1);
+        cabDesignerEQ.setBypassed(1);
         cabDesignerFileSave.setBypassed(1);             
         testAudio.setBypassed(0); // force enable audio player  
-        cabEQCustom.restoreState(dspNoProfile); // reset the custom EQ 
-        cabConvolution.setFile("");     
-        cabConvolution.setFile(file.toString(0));
-        cabConvolution.setBypassed(0);              
+        cabDesignerEQ.restoreState(dspNoProfile); // reset the custom EQ 
+        
+        // FIX ME:
+        // refresh audio files list somehow so new cab shows up in list
     } 
 }
 

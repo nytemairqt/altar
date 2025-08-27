@@ -23,6 +23,7 @@ include("Boilerplate/dspProfiles.js");
 
 // Generic
 const testAudio = Synth.getAudioSampleProcessor("testAudio");
+const modules = Synth.getAllEffects(".*");
 
 // Click
 const click = Synth.getChildSynth("click");
@@ -85,6 +86,7 @@ const pnlAmpDirty = Content.getComponent("pnlAmpDirty");
 // Cab
 const cabScriptFX = Synth.getAudioSampleProcessor("cabScriptFX");
 const cab = Synth.getEffect("cab");
+const btnCab = Content.getComponent("btnCab");
 const btnShowCab = Content.getComponent("btnShowCab");
 const btnCabAEnable = Content.getComponent("btnCabAEnable");
 const btnCabBEnable = Content.getComponent("btnCabBEnable");
@@ -162,9 +164,6 @@ const pnlChorus = Content.getComponent("pnlChorus");
 // Ring Mod
 const btnShowRingMod = Content.getComponent("btnShowRingMod");
 const pnlRingMod = Content.getComponent("pnlRingMod");
-
-// Modules for Resetting in Cab Designer
-const modules = [];
     
 // MISC VARIABLES
 var eventList = [];
