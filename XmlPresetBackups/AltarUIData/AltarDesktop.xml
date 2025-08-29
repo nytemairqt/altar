@@ -27,20 +27,6 @@
                width="160.0" height="30.0" defaultValue="1.0" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnLimiter" x="960.0" y="70.0" defaultValue="1.0"
                processorId="limiter" parameterId="Enabled" parentComponent="pnlMaster"/>
-    <Component type="ScriptButton" id="btnShowOverdrive" x="320.0" y="210.0"
-               radioGroup="1.0" text="OD" width="60.0" height="40.0" parentComponent="pnlMaster"/>
-    <Component type="ScriptButton" id="btnShowAmp" x="380.0" y="210.0" radioGroup="1.0"
-               text="AMP" width="60.0" height="40.0" parentComponent="pnlMaster"/>
-    <Component type="ScriptButton" id="btnShowCab" x="440.0" y="210.0" radioGroup="1.0"
-               text="CAB" width="60.0" height="40.0" parentComponent="pnlMaster"/>
-    <Component type="ScriptButton" id="btnShowReverb" x="500.0" y="210.0" radioGroup="1.0"
-               text="RVB" width="60.0" height="40.0" parentComponent="pnlMaster"/>
-    <Component type="ScriptButton" id="btnShowDelay" x="560.0" y="210.0" radioGroup="1.0"
-               text="DLY" width="60.0" height="40.0" parentComponent="pnlMaster"/>
-    <Component type="ScriptButton" id="btnShowChorus" x="620.0" y="210.0" radioGroup="1.0"
-               text="CHR" width="60.0" height="40.0" parentComponent="pnlMaster"/>
-    <Component type="ScriptButton" id="btnShowRingMod" x="680.0" y="210.0" radioGroup="1.0"
-               text="RNG" width="60.0" height="40.0" parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnShowPreProcess" x="320.0" y="180.0"
                parentComponent="pnlMaster"/>
     <Component type="ScriptButton" id="btnShowPostProcess" x="610.0" y="180.0"
@@ -89,6 +75,20 @@
                processorId="grit" parameterId="Enabled"/>
     <Component type="ScriptButton" id="btnPitchSnap" x="50.0" y="210.0" width="78.0"
                parentComponent="pnlMaster"/>
+    <Component type="ScriptPanel" id="pnlFxSlotA" x="320.0" y="210.0" parentComponent="pnlMaster"
+               width="60.0" height="40" text="overdrive" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlFxSlotB" x="380.0" y="210.0" parentComponent="pnlMaster"
+               width="60.0" height="40" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlFxSlotC" x="440.0" y="210.0" parentComponent="pnlMaster"
+               width="60.0" height="40" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlFxSlotD" x="500.0" y="210.0" parentComponent="pnlMaster"
+               width="60.0" height="40" text="reverb" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlFxSlotE" x="560" y="210.0" parentComponent="pnlMaster"
+               width="60.0" height="40" text="delay" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlFxSlotF" x="620" y="210.0" parentComponent="pnlMaster"
+               width="60.0" height="40" text="chorus" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlFxSlotG" x="680" y="210.0" parentComponent="pnlMaster"
+               width="60.0" height="40" text="ringmod" allowCallbacks="Clicks, Hover &amp; Dragging"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="250.0" width="1150.0"
              height="490.0" itemColour="4278190080" itemColour2="4278190080"

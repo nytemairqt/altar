@@ -17,12 +17,16 @@
 
 #include "amp.h"
 #include "cab.h"
+#include "chorus.h"
 #include "chug.h"
+#include "delay.h"
 #include "grit.h"
 #include "octaveFaust.h"
+#include "overdrive.h"
 #include "pick.h"
 #include "pitchDetection_networkdata.h"
 #include "reverb.h"
+#include "ringmod.h"
 
 #if (defined (_WIN32) || defined (_WIN64))
 #pragma warning( pop )

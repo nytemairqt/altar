@@ -32,11 +32,15 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerPolyNode<project::octave_faust<1>, scriptnode::wrap::illegal_poly<project::octave_faust<1>>>();
 		registerPolyNode<project::amp<1>, wrap::illegal_poly<project::amp<1>>>();
 		registerPolyNode<project::cab<1>, wrap::illegal_poly<project::cab<1>>>();
+		registerPolyNode<project::chorus<1>, wrap::illegal_poly<project::chorus<1>>>();
 		registerPolyNode<project::chug<1>, wrap::illegal_poly<project::chug<1>>>();
+		registerPolyNode<project::delay<1>, wrap::illegal_poly<project::delay<1>>>();
 		registerPolyNode<project::grit<1>, wrap::illegal_poly<project::grit<1>>>();
 		registerPolyNode<project::octaveFaust<1>, wrap::illegal_poly<project::octaveFaust<1>>>();
+		registerPolyNode<project::overdrive<1>, wrap::illegal_poly<project::overdrive<1>>>();
 		registerPolyNode<project::pick<1>, wrap::illegal_poly<project::pick<1>>>();
 		registerPolyNode<project::reverb<1>, wrap::illegal_poly<project::reverb<1>>>();
+		registerPolyNode<project::ringmod<1>, wrap::illegal_poly<project::ringmod<1>>>();
 		registerDataNode<project::pitchDetection_networkdata>();
 	}
 };

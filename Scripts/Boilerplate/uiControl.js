@@ -519,13 +519,13 @@ btnCabSave.setControlCallback(onbtnCabSaveControl);
 btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
 
 // Show / Hide Panels
-btnShowOverdrive.setControlCallback(showPanelControl);
-btnShowAmp.setControlCallback(showPanelControl);
-btnShowCab.setControlCallback(showPanelControl);
-btnShowReverb.setControlCallback(showPanelControl);
-btnShowDelay.setControlCallback(showPanelControl);
-btnShowChorus.setControlCallback(showPanelControl);
-btnShowRingMod.setControlCallback(showPanelControl);
+//btnShowOverdrive.setControlCallback(showPanelControl);
+//btnShowAmp.setControlCallback(showPanelControl);
+//btnShowCab.setControlCallback(showPanelControl);
+//btnShowReverb.setControlCallback(showPanelControl);
+//btnShowDelay.setControlCallback(showPanelControl);
+//btnShowChorus.setControlCallback(showPanelControl);
+//btnShowRingMod.setControlCallback(showPanelControl);
 btnShowTuner.setControlCallback(showPanelControl);
 btnShowPreProcess.setControlCallback(showPanelControl);
 btnShowPostProcess.setControlCallback(showPanelControl);
@@ -621,6 +621,173 @@ pnlPostProcess.setMouseCallback(function(event)
 		btnShowPostProcess.changed();
 	}	
 });
+
+inline function pnlFxSlotPaint(g)
+{
+	local area = [0, 0, this.getWidth(), this.getHeight()];
+	
+	g.setColour(Colours.white);
+	g.drawRoundedRectangle(area, 1.0, 1.0);
+	//g.drawAlignedText(this.get("text"), area, "centred");
+	
+	local newText = "";
+	
+	switch (this.get("text"))
+	{
+		case "overdrive":
+			newText = "OD";
+			break;
+		case "amp":
+			newText = "AMP";
+			break;
+		case "cab":
+			newText = "CAB";
+			break;
+		case "reverb":
+			newText = "RVB";
+			break;
+		case "delay":
+			newText = "DLY";
+			break;
+		case "chorus":
+			newText = "CHR";
+			break;
+		case "ringmod":
+			newText = "RNG";
+			break;	
+	}
+	
+	g.drawAlignedText(newText, area, "centred");
+					
+	if (this.data.isTarget)
+		g.drawLine(5, area[2]-5, area[3]-5, area[3]-5, 1.0);
+	
+	g.setColour(Colours.withAlpha(Colours.white, .3));
+	g.fillRoundedRectangle([area[2] - 14, area[3] - 14, 4, 4], 3.0);
+	g.fillRoundedRectangle([area[2] - 8, area[3] - 14, 4, 4], 3.0);
+	g.fillRoundedRectangle([area[2] - 14, area[3] - 8, 4, 4], 3.0);
+	g.fillRoundedRectangle([area[2] - 8, area[3] - 8, 4, 4], 3.0);
+}
+
+inline function pnlFxSlotReloadText()
+{
+	local newText = "";
+
+	for (i=0; i<pnlFxSlots.length; i++)
+	{
+		pnlFxSlots[i].set("text", fxSlots[i].getCurrentEffectId());
+		pnlFxSlots[i].repaint();
+	}
+}
+
+for (p in pnlFxSlots)
+	p.setPaintRoutine(pnlFxSlotPaint);
+
+pnlFxSlotReloadText(); 
+
+inline function repaintPnlFxSlots()
+{
+	for (p in pnlFxSlots)
+	{
+		p.data.isTarget = false;
+		p.repaint();
+	}
+}
+
+function pnlFxSlotsDragPaint(g, obj)
+{
+	var isValid = false;
+	isValid = obj.valid;
+	isValid |= obj.target == "";
+	isValid |= obj.target.length == 0;
+	isValid |= obj.target == obj.source;
+
+	// probably ways to improve this
+	if (isValid && obj.target != "" && obj.target != obj.source)
+	{
+		repaintPnlFxSlots();
+
+		var component = Content.getComponent(obj.target);
+		component.data.isTarget = true;
+		component.repaint();
+	}
+		
+	g.setColour(Colours.withAlpha(Colours.white, 0.2));
+	g.fillRoundedRectangle(obj.area, 2.0);
+	g.setColour(Colours.withAlpha(Colours.white, 0.6));
+	g.fillRoundedRectangle(obj.area, 2.0, 2.0);	
+}
+
+function onPnlFxSlotsDrag(isValid, targetName)
+{
+	if (targetName != "")
+		var target = Content.getComponent(targetName);
+	
+	repaintPnlFxSlots();
+		
+	if (!pnlFxSlots.contains(target))
+		return;
+	
+	if (target == this)
+		return;
+		
+	var xT = target.get("x");
+	var xP = this.get("x");
+	
+	var currentIndex = pnlFxSlots.indexOf(this);
+	var targetIndex = pnlFxSlots.indexOf(target);
+	var currentName = this.get("text");
+	var targetName  = target.get("text");
+	var currentSlot = fxSlots[currentIndex];
+	var targetSlot = fxSlots[targetIndex]; 
+	
+	
+	// swap FX
+	currentSlot.setEffect(targetName);
+	targetSlot.setEffect(currentName);
+	
+	// get the new effects (after swap)
+	var targetEffect = targetSlot.getCurrentEffect(); // pan
+	var targetEffectName = targetSlot.getCurrentEffectId(); // pan
+	var currentEffect = currentSlot.getCurrentEffect(); // gain
+	var currentEffectName = currentSlot.getCurrentEffectId(); // gain
+	
+	// FIX ME
+	// UNCOMMENT ME WHEN UI IS DONE
+	/*
+	for (k in knbs)
+		k.changed();		
+	*/
+	
+	// repaint
+	pnlFxSlotReloadText();
+}
+
+inline function checkValidPnlFxSlot(targetId)
+{
+	// called whenever hover over
+	
+	// update drag image
+	Content.refreshDragImage();		
+	local pnlFxSlotNames = ["pnlFxSlotA", "pnlFxSlotB", "pnlFxSlotC", "pnlFxSlotD", "pnlFxSlotE", "pnlFxSlotF", "pnlFxSlotG"];	
+	return pnlFxSlotNames.contains(targetId);
+}
+
+inline function dragPnlFxSlot(event)
+{
+	if (event.clicked && !event.rightClick && event.mouseDownX > this.getWidth() - 16 && event.mouseDownY > this.getHeight() - 16)
+	{
+		this.startInternalDrag({
+			area: [0, 0, 25, 25],
+			paintRoutine: pnlFxSlotsDragPaint,
+			dragCallback: onPnlFxSlotsDrag,
+			isValid: checkValidPnlFxSlot
+		});
+	}	
+}
+
+for (p in pnlFxSlots)
+	p.setMouseCallback(dragPnlFxSlot);
 
 // Labels
 

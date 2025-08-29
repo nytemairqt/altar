@@ -32,6 +32,25 @@ const btnClick = Content.getComponent("btnClick");
 const knbClickGain = Content.getComponent("knbClickGain");
 const lblClickDisasbled = Content.getComponent("lblClickDisasbled");
 
+// DSP Modules
+const fxSlots = [Synth.getSlotFX("fxSlotA"),
+					Synth.getSlotFX("fxSlotB"),
+					Synth.getSlotFX("fxSlotC"),
+					Synth.getSlotFX("fxSlotD"),
+					Synth.getSlotFX("fxSlotE"),
+					Synth.getSlotFX("fxSlotF"),
+					Synth.getSlotFX("fxSlotG")];
+					
+// DSP Module Panels
+const pnlFxSlots = [Content.getComponent("pnlFxSlotA"),
+					Content.getComponent("pnlFxSlotB"),
+					Content.getComponent("pnlFxSlotC"),
+					Content.getComponent("pnlFxSlotD"),
+					Content.getComponent("pnlFxSlotE"),
+					Content.getComponent("pnlFxSlotF"),
+					Content.getComponent("pnlFxSlotG")];
+
+
 // Input Chain
 const inputGain = Synth.getEffect("inputGain");
 const preProcessComp = Synth.getEffect("preProcessComp");
@@ -118,7 +137,7 @@ const btnPitchSnap = Content.getComponent("btnPitchSnap");
 // Amp
 const pitch = Synth.getEffect("pitch");
 const amp = Synth.getEffect("amp");
-const btnShowAmp = Content.getComponent("btnShowAmp");
+//const btnShowAmp = Content.getComponent("btnShowAmp");
 const btnAmpMode = Content.getComponent("btnAmpMode");
 const knbCleanInput = Content.getComponent("knbCleanInput");
 const knbCleanOutput = Content.getComponent("knbCleanOutput");
@@ -132,7 +151,7 @@ const pnlAmpDirty = Content.getComponent("pnlAmpDirty");
 const cabScriptFX = Synth.getAudioSampleProcessor("cabScriptFX");
 const cab = Synth.getEffect("cab");
 const btnCab = Content.getComponent("btnCab");
-const btnShowCab = Content.getComponent("btnShowCab");
+//const btnShowCab = Content.getComponent("btnShowCab");
 const btnCabAEnable = Content.getComponent("btnCabAEnable");
 const btnCabBEnable = Content.getComponent("btnCabBEnable");
 const btnCabAPhase = Content.getComponent("btnCabAPhase");
@@ -190,27 +209,27 @@ const knbOctave = Content.getComponent("knbOctave");
 const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
 
 // Overdrive & Fuzz
-const btnShowOverdrive = Content.getComponent("btnShowOverdrive");
+//const btnShowOverdrive = Content.getComponent("btnShowOverdrive");
 const pnlOverdrive = Content.getComponent("pnlOverdrive");
 
 // Reverb
 const reverb = Synth.getEffect("reverb");
-const btnShowReverb = Content.getComponent("btnShowReverb");
+//const btnShowReverb = Content.getComponent("btnShowReverb");
 const knbReverbMix = Content.getComponent("knbReverbMix");
 const knbReverbBrightness = Content.getComponent("knbReverbBrightness");
 const knbReverbFeedback = Content.getComponent("knbReverbFeedback");
 const pnlReverb = Content.getComponent("pnlReverb");
 
 // Delay
-const btnShowDelay = Content.getComponent("btnShowDelay");
+//const btnShowDelay = Content.getComponent("btnShowDelay");
 const pnlDelay = Content.getComponent("pnlDelay");
 
 // Chorus
-const btnShowChorus = Content.getComponent("btnShowChorus");
+//const btnShowChorus = Content.getComponent("btnShowChorus");
 const pnlChorus = Content.getComponent("pnlChorus");
 
 // Ring Mod
-const btnShowRingMod = Content.getComponent("btnShowRingMod");
+//const btnShowRingMod = Content.getComponent("btnShowRingMod");
 const pnlRingMod = Content.getComponent("pnlRingMod");
 
     
