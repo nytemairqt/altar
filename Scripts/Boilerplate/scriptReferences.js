@@ -117,9 +117,7 @@ const btnPitchSnap = Content.getComponent("btnPitchSnap");
 
 // Amp
 const pitch = Synth.getEffect("pitch");
-const ampPreSculpt = Synth.getEffect("ampPreSculpt");
 const amp = Synth.getEffect("amp");
-const ampPostSculpt = Synth.getEffect("ampPostSculpt");
 const btnShowAmp = Content.getComponent("btnShowAmp");
 const btnAmpMode = Content.getComponent("btnAmpMode");
 const knbCleanInput = Content.getComponent("knbCleanInput");

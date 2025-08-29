@@ -20,14 +20,14 @@
             <Control type="ScriptButton" id="btnOversampling" value="0.0"/>
             <Control type="ScriptButton" id="btnLimiter" value="1.0"/>
             <Control type="ScriptButton" id="btnShowOverdrive" value="0"/>
-            <Control type="ScriptButton" id="btnShowAmp" value="0"/>
-            <Control type="ScriptButton" id="btnShowCab" value="1.0"/>
-            <Control type="ScriptButton" id="btnShowReverb" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowDelay" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowChorus" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowRingMod" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowAmp" value="1.0"/>
+            <Control type="ScriptButton" id="btnShowCab" value="0"/>
+            <Control type="ScriptButton" id="btnShowReverb" value="0"/>
+            <Control type="ScriptButton" id="btnShowDelay" value="0"/>
+            <Control type="ScriptButton" id="btnShowChorus" value="0"/>
+            <Control type="ScriptButton" id="btnShowRingMod" value="0"/>
             <Control type="ScriptButton" id="btnShowPreProcess" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowPostProcess" value="1.0"/>
+            <Control type="ScriptButton" id="btnShowPostProcess" value="0.0"/>
             <Control type="ScriptButton" id="btnLofi" value="0.0"/>
             <Control type="ScriptSlider" id="knbLofiLow" value="600.0"/>
             <Control type="ScriptSlider" id="knbLofiHigh" value="2400.0"/>
@@ -54,7 +54,7 @@
             <Control type="ScriptSlider" id="knbAmpCleanMid" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpCleanHigh" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpCleanPresence" value="0.0"/>
-            <Control type="ScriptSlider" id="knbDirtyInput" value="75.0"/>
+            <Control type="ScriptSlider" id="knbDirtyInput" value="100.0"/>
             <Control type="ScriptSlider" id="knbDirtyOutput" value="1.490116119384766e-6"/>
             <Control type="ScriptSlider" id="knbAmpDirtyLow" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpDirtyMid" value="0.0"/>
@@ -247,19 +247,8 @@
           <RoutingMatrix NumSourceChannels="4" Channel0="0" Send0="-1" Channel1="1" Send1="-1"
                          Channel2="-1" Send2="-1" Channel3="-1" Send3="-1"/>
         </Processor>
-        <Processor Type="CurveEq" ID="ampPreSculpt" Bypassed="0" NumFilters="4"
-                   Band0="0.0" Band1="54.93442153930664" Band2="0.6692273020744324"
-                   Band3="1.0" Band4="1.0" Band5="4.058484077453613" Band6="870.0"
-                   Band7="0.4327991008758545" Band8="1.0" Band9="4.0" Band10="7.051036357879639"
-                   Band11="3670.0" Band12="0.300000011920929" Band13="1.0" Band14="4.0"
-                   Band15="16.22068977355957" Band16="6998.5341796875" Band17="0.7379442453384399"
-                   Band18="1.0" Band19="3.0" FFTEnabled="0">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="4" Channel0="0" Send0="-1" Channel1="1" Send1="-1"
-                         Channel2="-1" Send2="-1" Channel3="-1" Send3="-1"/>
-        </Processor>
         <Processor Type="Hardcoded Master FX" ID="amp" Bypassed="0" Network="amp"
-                   Channel="1.0" InputGainClean="1.490116119384766e-6" InputGainDirty="75.0"
+                   Channel="1.0" InputGainClean="1.490116119384766e-6" InputGainDirty="100.0"
                    OutputGainClean="1.490116119384766e-6" OutputGainDirty="1.490116119384766e-6"
                    Oversampling="0.0" CleanLow="0.0" CleanMid="0.0" CleanHigh="0.0"
                    CleanPresence="0.0" DirtyLow="0.0" DirtyMid="0.0" DirtyHigh="0.0"
@@ -268,7 +257,7 @@
           <RoutingMatrix NumSourceChannels="4" Channel0="0" Send0="-1" Channel1="1" Send1="-1"
                          Channel2="-1" Send2="-1" Channel3="-1" Send3="-1"/>
         </Processor>
-        <Processor Type="ScriptFX" ID="ampScriptFX" Bypassed="0">
+        <Processor Type="ScriptFX" ID="ampScriptFX" Bypassed="1">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="4" Channel0="0" Send0="-1" Channel1="1" Send1="-1"
                          Channel2="-1" Send2="-1" Channel3="-1" Send3="-1"/>
@@ -276,22 +265,6 @@
           <UIData>
             <ContentProperties DeviceType="Desktop"/>
           </UIData>
-        </Processor>
-        <Processor Type="CurveEq" ID="ampPostSculpt" Bypassed="0" NumFilters="8"
-                   Band0="-6.693517684936523" Band1="61.0" Band2="0.6211283802986145"
-                   Band3="1.0" Band4="1.0" Band5="-3.508965015411377" Band6="140.0"
-                   Band7="2.373145818710327" Band8="1.0" Band9="4.0" Band10="-5.958621501922607"
-                   Band11="666.7676391601562" Band12="1.219099283218384" Band13="1.0"
-                   Band14="4.0" Band15="4.0" Band16="2200.0" Band17="0.300000011920929"
-                   Band18="1.0" Band19="4.0" Band20="-7.0" Band21="4000.0" Band22="5.242974281311035"
-                   Band23="1.0" Band24="4.0" Band25="4.848001003265381" Band26="6400.0"
-                   Band27="1.0" Band28="1.0" Band29="3.0" Band30="5.19724178314209"
-                   Band31="9997.302734375" Band32="1.0" Band33="1.0" Band34="0.0"
-                   Band35="-5.111172199249268" Band36="2600.0" Band37="5.778449058532715"
-                   Band38="1.0" Band39="4.0" FFTEnabled="0">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="4" Channel0="0" Send0="-1" Channel1="1" Send1="-1"
-                         Channel2="-1" Send2="-1" Channel3="-1" Send3="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="cab" Bypassed="0" Network="cab"
                    Mix="0.0" CabAEnable="1.0" CabADelay="0.0" CabAAxis="1.0" CabAAngle="0.5"
@@ -579,8 +552,8 @@
     <Processor Type="AudioLooper" ID="testAudio" Bypassed="0" Gain="1.0" Balance="0.0"
                VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0" SyncMode="1.0"
                PitchTracking="0.0" LoopEnabled="1.0" RootNote="64.0" SampleStartMod="0.0"
-               Reversed="0.0" FileName="{PROJECT_FOLDER}chuggy.wav" min="1616"
-               max="1221955" loopStart="1616" loopEnd="1221955">
+               Reversed="0.0" FileName="{PROJECT_FOLDER}jaded.wav" min="3317"
+               max="627020" loopStart="3317" loopEnd="627020">
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors/>
@@ -615,10 +588,30 @@
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors>
-            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="149.0"
+            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="154.0"
                        CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
               <ChildProcessors/>
               <MidiFiles>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
                 <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>

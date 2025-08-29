@@ -266,9 +266,33 @@ template <int NV>
 using xfader2_t = control::xfader<xfader2_multimod<NV>, faders::switcher>;
 
 template <int NV>
+using soft_bypass_t_ = container::chain<parameter::empty, 
+                                        wrap::fix<2, filters::svf_eq<NV>>, 
+                                        filters::svf_eq<NV>, 
+                                        filters::svf_eq<NV>, 
+                                        filters::svf_eq<NV>>;
+
+template <int NV>
+using soft_bypass_t = bypass::smoothed<20, soft_bypass_t_<NV>>;
+
+template <int NV>
 using chain2_t = container::chain<parameter::empty, 
                                   wrap::fix<2, soft_bypass7_t<NV>>, 
                                   soft_bypass3_t<NV>>;
+
+template <int NV>
+using soft_bypass1_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, filters::svf_eq<NV>>, 
+                                         filters::svf_eq<NV>, 
+                                         filters::svf_eq<NV>, 
+                                         filters::svf_eq<NV>, 
+                                         filters::svf_eq<NV>, 
+                                         filters::svf_eq<NV>, 
+                                         filters::svf_eq<NV>, 
+                                         filters::svf_eq<NV>>;
+
+template <int NV>
+using soft_bypass1_t = bypass::smoothed<20, soft_bypass1_t_<NV>>;
 
 namespace amp_t_parameters
 {
@@ -315,7 +339,9 @@ template <int NV>
 using amp_t_ = container::chain<amp_t_parameters::amp_t_plist<NV>, 
                                 wrap::fix<2, xfader1_t<NV>>, 
                                 xfader2_t<NV>, 
-                                chain2_t<NV>>;
+                                soft_bypass_t<NV>, 
+                                chain2_t<NV>, 
+                                soft_bypass1_t<NV>>;
 
 // =================================| Root node initialiser class |=================================
 
@@ -335,12 +361,12 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		SNEX_METADATA_ENCODED_PARAMETERS(266)
 		{
 			0x005C, 0x0000, 0x0000, 0x6843, 0x6E61, 0x656E, 0x006C, 0x0000, 
-            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
+            0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x005C, 0x0001, 0x0000, 0x6E49, 0x7570, 0x4774, 0x6961, 
             0x436E, 0x656C, 0x6E61, 0x0000, 0xC800, 0x00C2, 0xC800, 0x0042, 
             0x0000, 0x0000, 0x8000, 0xCD3F, 0xCCCC, 0x5C3D, 0x0200, 0x0000, 
             0x4900, 0x706E, 0x7475, 0x6147, 0x6E69, 0x6944, 0x7472, 0x0079, 
-            0x0000, 0xC2C8, 0x0000, 0x42C8, 0x0000, 0x0000, 0x0000, 0x3F80, 
+            0x0000, 0xC2C8, 0x0000, 0x42C8, 0x0000, 0x4296, 0x0000, 0x3F80, 
             0xCCCD, 0x3DCC, 0x005C, 0x0003, 0x0000, 0x754F, 0x7074, 0x7475, 
             0x6147, 0x6E69, 0x6C43, 0x6165, 0x006E, 0x0000, 0xC2C8, 0x0000, 
             0x42C8, 0x0000, 0x0000, 0x0000, 0x3F80, 0xCCCD, 0x3DCC, 0x005C, 
@@ -383,31 +409,45 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		
 		auto& xfader1 = this->getT(0);                                      // amp_impl::xfader1_t<NV>
 		auto& xfader2 = this->getT(1);                                      // amp_impl::xfader2_t<NV>
-		auto& chain2 = this->getT(2);                                       // amp_impl::chain2_t<NV>
-		auto& soft_bypass7 = this->getT(2).getT(0);                         // amp_impl::soft_bypass7_t<NV>
-		auto& gain8 = this->getT(2).getT(0).getT(0);                        // core::gain<NV>
-		auto& svf_eq = this->getT(2).getT(0).getT(1);                       // filters::svf_eq<NV>
-		auto& svf_eq3 = this->getT(2).getT(0).getT(2);                      // filters::svf_eq<NV>
-		auto& svf_eq2 = this->getT(2).getT(0).getT(3);                      // filters::svf_eq<NV>
-		auto& soft_bypass9 = this->getT(2).getT(0).getT(4);                 // amp_impl::soft_bypass9_t<NV>
-		auto& oversample4x4 = this->getT(2).getT(0).getT(4).getT(0);        // amp_impl::oversample4x4_t<NV>
-		auto& snex_shaper2 = this->getT(2).getT(0).getT(4).getT(0).getT(0); // amp_impl::snex_shaper2_t<NV>
-		auto& soft_bypass16 = this->getT(2).getT(0).getT(5);                // amp_impl::soft_bypass16_t<NV>
-		auto& snex_shaper6 = this->getT(2).getT(0).getT(5).getT(0);         // amp_impl::snex_shaper6_t<NV>
-		auto& svf_eq1 = this->getT(2).getT(0).getT(6);                      // filters::svf_eq<NV>
-		auto& gain9 = this->getT(2).getT(0).getT(7);                        // core::gain<NV>
-		auto& soft_bypass3 = this->getT(2).getT(1);                         // amp_impl::soft_bypass3_t<NV>
-		auto& gain6 = this->getT(2).getT(1).getT(0);                        // core::gain<NV>
-		auto& svf_eq7 = this->getT(2).getT(1).getT(1);                      // filters::svf_eq<NV>
-		auto& svf_eq6 = this->getT(2).getT(1).getT(2);                      // filters::svf_eq<NV>
-		auto& svf_eq5 = this->getT(2).getT(1).getT(3);                      // filters::svf_eq<NV>
-		auto& soft_bypass10 = this->getT(2).getT(1).getT(4);                // amp_impl::soft_bypass10_t<NV>
-		auto& oversample4x3 = this->getT(2).getT(1).getT(4).getT(0);        // amp_impl::oversample4x3_t<NV>
-		auto& snex_shaper4 = this->getT(2).getT(1).getT(4).getT(0).getT(0); // amp_impl::snex_shaper4_t<NV>
-		auto& soft_bypass11 = this->getT(2).getT(1).getT(5);                // amp_impl::soft_bypass11_t<NV>
-		auto& snex_shaper5 = this->getT(2).getT(1).getT(5).getT(0);         // amp_impl::snex_shaper5_t<NV>
-		auto& svf_eq4 = this->getT(2).getT(1).getT(6);                      // filters::svf_eq<NV>
-		auto& gain7 = this->getT(2).getT(1).getT(7);                        // core::gain<NV>
+		auto& soft_bypass = this->getT(2);                                  // amp_impl::soft_bypass_t<NV>
+		auto& svf_eq9 = this->getT(2).getT(0);                              // filters::svf_eq<NV>
+		auto& svf_eq10 = this->getT(2).getT(1);                             // filters::svf_eq<NV>
+		auto& svf_eq11 = this->getT(2).getT(2);                             // filters::svf_eq<NV>
+		auto& svf_eq12 = this->getT(2).getT(3);                             // filters::svf_eq<NV>
+		auto& chain2 = this->getT(3);                                       // amp_impl::chain2_t<NV>
+		auto& soft_bypass7 = this->getT(3).getT(0);                         // amp_impl::soft_bypass7_t<NV>
+		auto& gain8 = this->getT(3).getT(0).getT(0);                        // core::gain<NV>
+		auto& svf_eq = this->getT(3).getT(0).getT(1);                       // filters::svf_eq<NV>
+		auto& svf_eq3 = this->getT(3).getT(0).getT(2);                      // filters::svf_eq<NV>
+		auto& svf_eq2 = this->getT(3).getT(0).getT(3);                      // filters::svf_eq<NV>
+		auto& soft_bypass9 = this->getT(3).getT(0).getT(4);                 // amp_impl::soft_bypass9_t<NV>
+		auto& oversample4x4 = this->getT(3).getT(0).getT(4).getT(0);        // amp_impl::oversample4x4_t<NV>
+		auto& snex_shaper2 = this->getT(3).getT(0).getT(4).getT(0).getT(0); // amp_impl::snex_shaper2_t<NV>
+		auto& soft_bypass16 = this->getT(3).getT(0).getT(5);                // amp_impl::soft_bypass16_t<NV>
+		auto& snex_shaper6 = this->getT(3).getT(0).getT(5).getT(0);         // amp_impl::snex_shaper6_t<NV>
+		auto& svf_eq1 = this->getT(3).getT(0).getT(6);                      // filters::svf_eq<NV>
+		auto& gain9 = this->getT(3).getT(0).getT(7);                        // core::gain<NV>
+		auto& soft_bypass3 = this->getT(3).getT(1);                         // amp_impl::soft_bypass3_t<NV>
+		auto& gain6 = this->getT(3).getT(1).getT(0);                        // core::gain<NV>
+		auto& svf_eq7 = this->getT(3).getT(1).getT(1);                      // filters::svf_eq<NV>
+		auto& svf_eq6 = this->getT(3).getT(1).getT(2);                      // filters::svf_eq<NV>
+		auto& svf_eq5 = this->getT(3).getT(1).getT(3);                      // filters::svf_eq<NV>
+		auto& soft_bypass10 = this->getT(3).getT(1).getT(4);                // amp_impl::soft_bypass10_t<NV>
+		auto& oversample4x3 = this->getT(3).getT(1).getT(4).getT(0);        // amp_impl::oversample4x3_t<NV>
+		auto& snex_shaper4 = this->getT(3).getT(1).getT(4).getT(0).getT(0); // amp_impl::snex_shaper4_t<NV>
+		auto& soft_bypass11 = this->getT(3).getT(1).getT(5);                // amp_impl::soft_bypass11_t<NV>
+		auto& snex_shaper5 = this->getT(3).getT(1).getT(5).getT(0);         // amp_impl::snex_shaper5_t<NV>
+		auto& svf_eq4 = this->getT(3).getT(1).getT(6);                      // filters::svf_eq<NV>
+		auto& gain7 = this->getT(3).getT(1).getT(7);                        // core::gain<NV>
+		auto& soft_bypass1 = this->getT(4);                                 // amp_impl::soft_bypass1_t<NV>
+		auto& svf_eq8 = this->getT(4).getT(0);                              // filters::svf_eq<NV>
+		auto& svf_eq13 = this->getT(4).getT(1);                             // filters::svf_eq<NV>
+		auto& svf_eq14 = this->getT(4).getT(2);                             // filters::svf_eq<NV>
+		auto& svf_eq15 = this->getT(4).getT(3);                             // filters::svf_eq<NV>
+		auto& svf_eq16 = this->getT(4).getT(4);                             // filters::svf_eq<NV>
+		auto& svf_eq17 = this->getT(4).getT(5);                             // filters::svf_eq<NV>
+		auto& svf_eq18 = this->getT(4).getT(6);                             // filters::svf_eq<NV>
+		auto& svf_eq19 = this->getT(4).getT(7);                             // filters::svf_eq<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -455,6 +495,34 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		; // xfader1::Value is automated
 		
 		; // xfader2::Value is automated
+		
+		svf_eq9.setParameterT(0, 55.);  // filters::svf_eq::Frequency
+		svf_eq9.setParameterT(1, 1.);   // filters::svf_eq::Q
+		svf_eq9.setParameterT(2, 0.);   // filters::svf_eq::Gain
+		svf_eq9.setParameterT(3, 0.01); // filters::svf_eq::Smoothing
+		svf_eq9.setParameterT(4, 1.);   // filters::svf_eq::Mode
+		svf_eq9.setParameterT(5, 1.);   // filters::svf_eq::Enabled
+		
+		svf_eq10.setParameterT(0, 870.); // filters::svf_eq::Frequency
+		svf_eq10.setParameterT(1, 0.43); // filters::svf_eq::Q
+		svf_eq10.setParameterT(2, 4.);   // filters::svf_eq::Gain
+		svf_eq10.setParameterT(3, 0.01); // filters::svf_eq::Smoothing
+		svf_eq10.setParameterT(4, 4.);   // filters::svf_eq::Mode
+		svf_eq10.setParameterT(5, 1.);   // filters::svf_eq::Enabled
+		
+		svf_eq11.setParameterT(0, 3700.); // filters::svf_eq::Frequency
+		svf_eq11.setParameterT(1, 0.3);   // filters::svf_eq::Q
+		svf_eq11.setParameterT(2, 7.);    // filters::svf_eq::Gain
+		svf_eq11.setParameterT(3, 0.01);  // filters::svf_eq::Smoothing
+		svf_eq11.setParameterT(4, 4.);    // filters::svf_eq::Mode
+		svf_eq11.setParameterT(5, 1.);    // filters::svf_eq::Enabled
+		
+		svf_eq12.setParameterT(0, 7000.); // filters::svf_eq::Frequency
+		svf_eq12.setParameterT(1, 0.7);   // filters::svf_eq::Q
+		svf_eq12.setParameterT(2, 16.);   // filters::svf_eq::Gain
+		svf_eq12.setParameterT(3, 0.01);  // filters::svf_eq::Smoothing
+		svf_eq12.setParameterT(4, 3.);    // filters::svf_eq::Mode
+		svf_eq12.setParameterT(5, 1.);    // filters::svf_eq::Enabled
 		
 		;                            // gain8::Gain is automated
 		gain8.setParameterT(1, 20.); // core::gain::Smoothing
@@ -532,9 +600,65 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 		gain7.setParameterT(1, 20.); // core::gain::Smoothing
 		gain7.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		this->setParameterT(0, 0.);
+		svf_eq8.setParameterT(0, 60.);  // filters::svf_eq::Frequency
+		svf_eq8.setParameterT(1, 0.6);  // filters::svf_eq::Q
+		svf_eq8.setParameterT(2, 0.);   // filters::svf_eq::Gain
+		svf_eq8.setParameterT(3, 0.01); // filters::svf_eq::Smoothing
+		svf_eq8.setParameterT(4, 1.);   // filters::svf_eq::Mode
+		svf_eq8.setParameterT(5, 1.);   // filters::svf_eq::Enabled
+		
+		svf_eq13.setParameterT(0, 140.); // filters::svf_eq::Frequency
+		svf_eq13.setParameterT(1, 2.37); // filters::svf_eq::Q
+		svf_eq13.setParameterT(2, -3.5); // filters::svf_eq::Gain
+		svf_eq13.setParameterT(3, 0.01); // filters::svf_eq::Smoothing
+		svf_eq13.setParameterT(4, 4.);   // filters::svf_eq::Mode
+		svf_eq13.setParameterT(5, 1.);   // filters::svf_eq::Enabled
+		
+		svf_eq14.setParameterT(0, 667.); // filters::svf_eq::Frequency
+		svf_eq14.setParameterT(1, 1.2);  // filters::svf_eq::Q
+		svf_eq14.setParameterT(2, -6.);  // filters::svf_eq::Gain
+		svf_eq14.setParameterT(3, 0.01); // filters::svf_eq::Smoothing
+		svf_eq14.setParameterT(4, 4.);   // filters::svf_eq::Mode
+		svf_eq14.setParameterT(5, 1.);   // filters::svf_eq::Enabled
+		
+		svf_eq15.setParameterT(0, 2200.); // filters::svf_eq::Frequency
+		svf_eq15.setParameterT(1, 0.3);   // filters::svf_eq::Q
+		svf_eq15.setParameterT(2, 4.);    // filters::svf_eq::Gain
+		svf_eq15.setParameterT(3, 0.01);  // filters::svf_eq::Smoothing
+		svf_eq15.setParameterT(4, 4.);    // filters::svf_eq::Mode
+		svf_eq15.setParameterT(5, 1.);    // filters::svf_eq::Enabled
+		
+		svf_eq16.setParameterT(0, 2600.); // filters::svf_eq::Frequency
+		svf_eq16.setParameterT(1, 5.77);  // filters::svf_eq::Q
+		svf_eq16.setParameterT(2, -5.1);  // filters::svf_eq::Gain
+		svf_eq16.setParameterT(3, 0.01);  // filters::svf_eq::Smoothing
+		svf_eq16.setParameterT(4, 4.);    // filters::svf_eq::Mode
+		svf_eq16.setParameterT(5, 1.);    // filters::svf_eq::Enabled
+		
+		svf_eq17.setParameterT(0, 4000.); // filters::svf_eq::Frequency
+		svf_eq17.setParameterT(1, 5.2);   // filters::svf_eq::Q
+		svf_eq17.setParameterT(2, -7.);   // filters::svf_eq::Gain
+		svf_eq17.setParameterT(3, 0.01);  // filters::svf_eq::Smoothing
+		svf_eq17.setParameterT(4, 4.);    // filters::svf_eq::Mode
+		svf_eq17.setParameterT(5, 1.);    // filters::svf_eq::Enabled
+		
+		svf_eq18.setParameterT(0, 6400.); // filters::svf_eq::Frequency
+		svf_eq18.setParameterT(1, 1.);    // filters::svf_eq::Q
+		svf_eq18.setParameterT(2, 4.8);   // filters::svf_eq::Gain
+		svf_eq18.setParameterT(3, 0.01);  // filters::svf_eq::Smoothing
+		svf_eq18.setParameterT(4, 3.);    // filters::svf_eq::Mode
+		svf_eq18.setParameterT(5, 1.);    // filters::svf_eq::Enabled
+		
+		svf_eq19.setParameterT(0, 10000.); // filters::svf_eq::Frequency
+		svf_eq19.setParameterT(1, 1.);     // filters::svf_eq::Q
+		svf_eq19.setParameterT(2, 0.);     // filters::svf_eq::Gain
+		svf_eq19.setParameterT(3, 0.01);   // filters::svf_eq::Smoothing
+		svf_eq19.setParameterT(4, 0.);     // filters::svf_eq::Mode
+		svf_eq19.setParameterT(5, 1.);     // filters::svf_eq::Enabled
+		
+		this->setParameterT(0, 1.);
 		this->setParameterT(1, 0.);
-		this->setParameterT(2, 0.);
+		this->setParameterT(2, 75.);
 		this->setParameterT(3, 0.);
 		this->setParameterT(4, 0.);
 		this->setParameterT(5, 1.);
@@ -565,10 +689,10 @@ template <int NV> struct instance: public amp_impl::amp_t_<NV>
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(2).getT(0).getT(4).getT(0).getT(0).setExternalData(b, index); // amp_impl::snex_shaper2_t<NV>
-		this->getT(2).getT(0).getT(5).getT(0).setExternalData(b, index);         // amp_impl::snex_shaper6_t<NV>
-		this->getT(2).getT(1).getT(4).getT(0).getT(0).setExternalData(b, index); // amp_impl::snex_shaper4_t<NV>
-		this->getT(2).getT(1).getT(5).getT(0).setExternalData(b, index);         // amp_impl::snex_shaper5_t<NV>
+		this->getT(3).getT(0).getT(4).getT(0).getT(0).setExternalData(b, index); // amp_impl::snex_shaper2_t<NV>
+		this->getT(3).getT(0).getT(5).getT(0).setExternalData(b, index);         // amp_impl::snex_shaper6_t<NV>
+		this->getT(3).getT(1).getT(4).getT(0).getT(0).setExternalData(b, index); // amp_impl::snex_shaper4_t<NV>
+		this->getT(3).getT(1).getT(5).getT(0).setExternalData(b, index);         // amp_impl::snex_shaper5_t<NV>
 	}
 };
 }

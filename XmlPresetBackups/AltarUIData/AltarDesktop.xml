@@ -94,8 +94,7 @@
              height="490.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0.0"/>
   <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="250.0" width="1150.0"
-             height="490.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0.0">
+             height="490.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptButton" id="btnAmpMode" x="40.0" y="50.0" width="160.0"
                height="30.0" defaultValue="1.0" parentComponent="pnlAmp"/>
     <Component type="ScriptButton" id="btnAmp" x="40.0" y="10.0" parentComponent="pnlAmp"
@@ -152,7 +151,8 @@
     </Component>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="251.0" width="1150.0"
-             height="490.0" itemColour2="4278190080" itemColour="4278190080">
+             height="490.0" itemColour2="4278190080" itemColour="4278190080"
+             visible="0.0">
     <Component type="ScriptButton" id="btnOpenCabFolder" x="700.0" y="19.0"
                parentComponent="pnlCab" isMomentary="1"/>
     <Component type="ScriptSlider" id="knbEQWhistle" x="560.0" y="9.0" defaultValue="1.0"
@@ -272,7 +272,7 @@
                max="150000.0" stepSize="1.0" middlePosition="10000.0" defaultValue="10000.0"/>
     <Component type="ScriptSlider" id="knbPreProcessEQHighMidGain" x="350.0"
                y="380.0" parentComponent="pnlPreProcess" text="HiMidGain" width="118.0"
-               min="-12.0" max="12.0"/>
+               min="-12.0" max="12.0" middlePosition="0.0"/>
     <Component type="ScriptSlider" id="knbPreProcessEQHighMidFreq" x="430.0"
                y="330.0" parentComponent="pnlPreProcess" text="HiMidFreq" width="118.0"
                min="1500.0" max="4000.0" middlePosition="2700.0" defaultValue="2700.0"/>
@@ -284,10 +284,10 @@
                max="200.0" middlePosition="100.0" defaultValue="100.0"/>
     <Component type="ScriptSlider" id="knbPreProcessEQLowGain" x="510.0" y="530.0"
                parentComponent="pnlPreProcess" text="LoGain" width="118.0" min="-12.0"
-               max="12.0"/>
+               max="12.0" middlePosition="0.0"/>
     <Component type="ScriptSlider" id="knbPreProcessEQLowMidGain" x="200.0"
                y="540.0" parentComponent="pnlPreProcess" text="LoMidGain" width="118.0"
-               min="-12.0" max="12.0"/>
+               min="-12.0" max="12.0" middlePosition="0.0"/>
     <Component type="ScriptSlider" id="knbPreProcessEQLowMidFreq" x="280.0"
                y="490.0" parentComponent="pnlPreProcess" text="LoMidFreq" width="118.0"
                min="150.0" max="1000.0" defaultValue="500.0" middlePosition="500.0"/>
@@ -324,7 +324,8 @@
                parameterId="CompressorMakeup"/>
   </Component>
   <Component type="ScriptPanel" id="pnlPostProcess" x="0.0" y="0.0" width="1150.0"
-             height="740.0" allowCallbacks="Clicks Only" itemColour="818991175">
+             height="740.0" allowCallbacks="Clicks Only" itemColour="818991175"
+             visible="0.0">
     <Component type="ScriptButton" id="btnPostProcessEQ" x="210.0" y="260.0"
                parentComponent="pnlPostProcess" text="EQ" processorId="postProcessEQ"
                parameterId="Enabled"/>
@@ -337,7 +338,7 @@
                defaultValue="10000.0"/>
     <Component type="ScriptSlider" id="knbPostProcessEQHighMidGain" x="350.0"
                y="380.0" parentComponent="pnlPostProcess" text="HiMidGain" width="118.0"
-               min="-12.0" max="12.0"/>
+               min="-12.0" max="12.0" middlePosition="0.0"/>
     <Component type="ScriptSlider" id="knbPostProcessEQHighMidFreq" x="430.0"
                y="330.0" parentComponent="pnlPostProcess" text="HiMidFreq" width="118.0"
                min="1500.0" max="4000.0" middlePosition="2700.0" defaultValue="2700.0"/>
@@ -349,10 +350,10 @@
                min="60.0" max="200.0" middlePosition="100.0" defaultValue="100.0"/>
     <Component type="ScriptSlider" id="knbPostProcessEQLowGain" x="510.0" y="530.0"
                parentComponent="pnlPostProcess" text="LoGain" width="118.0"
-               min="-12.0" max="12.0"/>
+               min="-12.0" max="12.0" middlePosition="0.0"/>
     <Component type="ScriptSlider" id="knbPostProcessEQLowMidGain" x="200.0"
                y="540.0" parentComponent="pnlPostProcess" text="LoMidGain" width="118.0"
-               min="-12.0" max="12.0"/>
+               min="-12.0" max="12.0" middlePosition="0.0"/>
     <Component type="ScriptSlider" id="knbPostProcessEQLowMidFreq" x="280.0"
                y="490.0" parentComponent="pnlPostProcess" text="LoMidFreq" width="118.0"
                min="150.0" max="1000.0" defaultValue="500.0" middlePosition="500.0"/>
