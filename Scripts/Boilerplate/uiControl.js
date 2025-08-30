@@ -243,7 +243,9 @@ inline function onbtnBypass(component, value)
 			tuner.setAttribute(tuner.Monitor, 1-value);
 			break;
 		case btnOversampling:
-			amp.setAttribute(amp.Oversampling, value);
+			// FIX ME 
+			// move this to the modular system later
+			//amp.setAttribute(amp.Oversampling, value);
 			grit.setAttribute(grit.Oversampling, value);
 			break;
 		case btnClick:
@@ -274,17 +276,23 @@ inline function onbtnBypass(component, value)
 			btnOctave.changed();
 			break;
 		case btnAmpMode:
-			amp.setAttribute(amp.Channel, value);
-			pnlAmpClean.set("visible", 1-value);
-			pnlAmpDirty.set("visible", value);
+			// FIX ME
+			// move to modular 
+			//amp.setAttribute(amp.Channel, value);
+			//pnlAmpClean.set("visible", 1-value);
+			//pnlAmpDirty.set("visible", value);
 			break;
 		case btnCabAEnable:
-			cab.setAttribute(cab.CabAEnable, value);
-			cab.setAttribute(cab.CabAClear, 1-value);
+			// FIX ME
+			// move to modular later
+			//cab.setAttribute(cab.CabAEnable, value);
+			//cab.setAttribute(cab.CabAClear, 1-value);
 			break;
 		case btnCabBEnable:
-			cab.setAttribute(cab.CabBEnable, value);
-			cab.setAttribute(cab.CabBClear, 1-value);
+			// FIX ME 
+			// move to modular later?
+			//cab.setAttribute(cab.CabBEnable, value);
+			//cab.setAttribute(cab.CabBClear, 1-value);
 			break;
 		case btnPitchSnap:
 			knbPitch.set("stepSize", value ? 1.0 : 0.01);
@@ -297,25 +305,25 @@ inline function showPanelControl(component, value)
 	switch (component)
 	{
 		case btnShowOverdrive:
-			pnlOverdrive.set("visible", value);
+			//pnlOverdrive.set("visible", value);
 			break;
 		case btnShowAmp:
-			pnlAmp.set("visible", value);
+			//pnlAmp.set("visible", value);
 			break;
 		case btnShowCab:
-			pnlCab.set("visible", value);
+			//pnlCab.set("visible", value);
 			break;
 		case btnShowReverb:
-			pnlReverb.set("visible", value);
+			//pnlReverb.set("visible", value);
 			break;
 		case btnShowDelay:
-			pnlDelay.set("visible", value);
+			//pnlDelay.set("visible", value);
 			break;
 		case btnShowChorus:
-			pnlChorus.set("visible", value);
+			//pnlChorus.set("visible", value);
 			break;
 		case btnShowRingMod:
-			pnlRingMod.set("visible", value);
+			//pnlRingMod.set("visible", value);
 			break;	
 		case btnShowTuner:
 			pnlTuner.set("visible", value);		
@@ -500,9 +508,9 @@ btnTunerMonitor.setControlCallback(onbtnBypass);
 btnClick.setControlCallback(onbtnBypass);
 btnOctave.setControlCallback(onbtnBypass);
 btnOctavePosition.setControlCallback(onbtnBypass);
-btnAmpMode.setControlCallback(onbtnBypass);
-btnCabAEnable.setControlCallback(onbtnBypass);
-btnCabBEnable.setControlCallback(onbtnBypass);
+//btnAmpMode.setControlCallback(onbtnBypass);
+//btnCabAEnable.setControlCallback(onbtnBypass);
+//btnCabBEnable.setControlCallback(onbtnBypass);
 btnOversampling.setControlCallback(onbtnBypass);
 btnPitchSnap.setControlCallback(onbtnBypass);
 
@@ -622,6 +630,10 @@ pnlPostProcess.setMouseCallback(function(event)
 	}	
 });
 
+// FIX ME
+// BULLSHIT BEGINS HERE
+
+
 inline function pnlFxSlotPaint(g)
 {
 	local area = [0, 0, this.getWidth(), this.getHeight()];
@@ -730,9 +742,6 @@ function onPnlFxSlotsDrag(isValid, targetName)
 	
 	if (target == this)
 		return;
-		
-	var xT = target.get("x");
-	var xP = this.get("x");
 	
 	var currentIndex = pnlFxSlots.indexOf(this);
 	var targetIndex = pnlFxSlots.indexOf(target);
@@ -741,27 +750,35 @@ function onPnlFxSlotsDrag(isValid, targetName)
 	var currentSlot = fxSlots[currentIndex];
 	var targetSlot = fxSlots[targetIndex]; 
 	
+	// swap FX & restore state
+	var currentState = fxModules[currentIndex].exportState();
+	var targetState = fxModules[targetIndex].exportState();			
+	currentSlot.swap(targetSlot);
 	
-	// swap FX
-	currentSlot.setEffect(targetName);
-	targetSlot.setEffect(currentName);
+	// CRASH RELATED TO SWAPPING CAB POSITION
+	// MODULE POSITIONS AREN'T SAVING 
+	//currentSlot.setEffect(targetName);
+	//targetSlot.setEffect(currentName);	
+
+	// This crashes due to a &nullptr 
+	// christoph recommends using predefined states, not dynamic ones
+	//fxModules[currentIndex].restoreState(targetState);
+	//fxModules[targetIndex].restoreState(currentState);
 	
 	// get the new effects (after swap)
-	var targetEffect = targetSlot.getCurrentEffect(); // pan
-	var targetEffectName = targetSlot.getCurrentEffectId(); // pan
-	var currentEffect = currentSlot.getCurrentEffect(); // gain
-	var currentEffectName = currentSlot.getCurrentEffectId(); // gain
+	var targetEffect = targetSlot.getCurrentEffect(); 
+	var targetEffectName = targetSlot.getCurrentEffectId(); 
+	var currentEffect = currentSlot.getCurrentEffect(); 
+	var currentEffectName = currentSlot.getCurrentEffectId(); 
 	
-	// FIX ME
-	// UNCOMMENT ME WHEN UI IS DONE
-	/*
-	for (k in knbs)
-		k.changed();		
-	*/
-	
+	// reconnect params
+	//reconnectParameters(targetEffectName, fxSlotsIds[targetIndex]);
+	//reconnectParameters(currentEffectName, fxSlotsIds[currentIndex]);
+		
 	// repaint
-	pnlFxSlotReloadText();
+	pnlFxSlotReloadText();		
 }
+
 
 inline function checkValidPnlFxSlot(targetId)
 {
@@ -769,13 +786,22 @@ inline function checkValidPnlFxSlot(targetId)
 	
 	// update drag image
 	Content.refreshDragImage();		
-	local pnlFxSlotNames = ["pnlFxSlotA", "pnlFxSlotB", "pnlFxSlotC", "pnlFxSlotD", "pnlFxSlotE", "pnlFxSlotF", "pnlFxSlotG"];	
-	return pnlFxSlotNames.contains(targetId);
+		
+	return pnlFxSlotsNames.contains(targetId);
 }
+
+inline function hideFXPanels()
+{
+	for (p in pnlFx)
+		p.set("visible", false);
+}
+
+hideFXPanels();
+pnlFx[1].set("visible", true); // show amp 
 
 inline function dragPnlFxSlot(event)
 {
-	if (event.clicked && !event.rightClick && event.mouseDownX > this.getWidth() - 16 && event.mouseDownY > this.getHeight() - 16)
+	if (event.drag && !event.rightClick && event.mouseDownX > this.getWidth() - 16 && event.mouseDownY > this.getHeight() - 16)
 	{
 		this.startInternalDrag({
 			area: [0, 0, 25, 25],
@@ -783,7 +809,122 @@ inline function dragPnlFxSlot(event)
 			dragCallback: onPnlFxSlotsDrag,
 			isValid: checkValidPnlFxSlot
 		});
-	}	
+	}
+	else if (event.clicked && !event.rightClick && event.mouseDownX < this.getWidth() - 16 && event.mouseDownY < this.getHeight() - 16)
+	{
+		// hide other panels
+		hideFXPanels();
+			
+		switch (this.get("text"))
+		{
+			case "overdrive":
+				pnlFx[0].set("visible", true);
+				break;
+			case "amp":
+				pnlFx[1].set("visible", true);
+				break;
+			case "cab":
+				pnlFx[2].set("visible", true);
+				break;
+			case "reverb":
+				pnlFx[3].set("visible", true);
+				break;
+			case "delay":
+				pnlFx[4].set("visible", true);
+				break;
+			case "chorus":
+				pnlFx[5].set("visible", true);
+				break;
+			case "ringmod":
+				pnlFx[6].set("visible", true);
+				break;							
+		}
+	}
+}
+
+inline function onModularControl(component, value)
+{
+	for (i=0; i<fxSlots.length; i++)
+	{
+		local effect = fxSlots[i].getCurrentEffect();
+		local effectName = fxSlots[i].getCurrentEffectId();
+		local text = component.get("text");
+		local underscore = text.indexOf("_");
+		local componentName = text.substring(0, underscore);
+		local attributeName = text.substring(underscore+1, text.length);
+
+		// bypass buttons
+		if (attributeName == "Bypass" && effectName == componentName)
+		{
+			// have to reference the module, not the slotfx
+			fxModules[i].setBypassed(1-value);
+			return;
+		}
+
+		// amp channel (with panel function)
+		if (attributeName == "Channel" && effectName == "amp")
+		{
+			pnlAmpClean.set("visible", 1-value);
+			pnlAmpDirty.set("visible", value);
+			effect.setAttribute(0, value);
+			return;
+		}
+
+		// parameters
+		if (effectName == componentName)
+		{						
+			local attribute = effect.getAttributeIndex(attributeName);
+			effect.setAttribute(attribute, value);
+			return;
+		}
+	}
+}
+
+for (f in fxControls)
+	f.setControlCallback(onModularControl);
+
+inline function reconnectParameters(fxName, newTarget)
+{
+	switch (fxName)
+	{
+	// add ui controls to this bad boy
+
+		case "overdrive":
+		break;
+		case "amp":
+			// FIX ME 
+			// need to do oversampling
+			// need to add preSculpt & postSculpt
+			/*
+			btnAmpMode.set("processorId", newTarget);
+			knbAmpCleanInput.set("processorId", newTarget);
+			knbAmpCleanOutput.set("processorId", newTarget);
+			knbAmpCleanLow.set("processorId", newTarget);
+			knbAmpCleanMid.set("processorId", newTarget);
+			knbAmpCleanHigh.set("processorId", newTarget);
+			knbAmpCleanPresence.set("processorId", newTarget);
+			knbAmpDirtyInput.set("processorId", newTarget);
+			knbAmpDirtyOutput.set("processorId", newTarget);
+			knbAmpDirtyLow.set("processorId", newTarget);
+			knbAmpDirtyMid.set("processorId", newTarget);
+			knbAmpDirtyHigh.set("processorId", newTarget);
+			knbAmpDirtyPresence.set("processorId", newTarget);	
+			*/
+		break;
+		case "cab":
+			//local fileA = 
+			//awfCabA.set("processorId", newTarget);
+			//awfCabB.set("processorId", newTarget);
+		break;
+		case "reverb":
+		break;
+		case "delay":
+		break;
+		case "chorus":
+		break;
+		case "ringmod":
+		break;
+	}
 }
 
 for (p in pnlFxSlots)

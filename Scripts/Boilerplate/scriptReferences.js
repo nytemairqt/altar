@@ -41,6 +41,22 @@ const fxSlots = [Synth.getSlotFX("fxSlotA"),
 					Synth.getSlotFX("fxSlotF"),
 					Synth.getSlotFX("fxSlotG")];
 					
+const fxSlotsIds = [Synth.getEffect("fxSlotA").getId(),
+					Synth.getEffect("fxSlotB").getId(),
+					Synth.getEffect("fxSlotC").getId(),
+					Synth.getEffect("fxSlotD").getId(),
+					Synth.getEffect("fxSlotE").getId(),
+					Synth.getEffect("fxSlotF").getId(),
+					Synth.getEffect("fxSlotG").getId()];	
+
+const fxModules = [Synth.getEffect("fxSlotA"),
+					Synth.getEffect("fxSlotB"),
+					Synth.getEffect("fxSlotC"),
+					Synth.getEffect("fxSlotD"),
+					Synth.getEffect("fxSlotE"),
+					Synth.getEffect("fxSlotF"),
+					Synth.getEffect("fxSlotG")];							
+					
 // DSP Module Panels
 const pnlFxSlots = [Content.getComponent("pnlFxSlotA"),
 					Content.getComponent("pnlFxSlotB"),
@@ -49,6 +65,58 @@ const pnlFxSlots = [Content.getComponent("pnlFxSlotA"),
 					Content.getComponent("pnlFxSlotE"),
 					Content.getComponent("pnlFxSlotF"),
 					Content.getComponent("pnlFxSlotG")];
+					
+const pnlFxSlotsNames = ["pnlFxSlotA", 
+						"pnlFxSlotB", 
+						"pnlFxSlotC", 
+						"pnlFxSlotD", 
+						"pnlFxSlotE", 
+						"pnlFxSlotF", 
+						"pnlFxSlotG"];			
+						
+const pnlFx = [Content.getComponent("pnlOverdrive"),
+			   Content.getComponent("pnlAmp"),
+			   Content.getComponent("pnlCab"),
+			   Content.getComponent("pnlReverb"),
+			   Content.getComponent("pnlDelay"),
+			   Content.getComponent("pnlChorus"),
+			   Content.getComponent("pnlRingmod")];
+
+const fxControls = [Content.getComponent("btnAmp"),
+										Content.getComponent("btnAmpMode"),
+										Content.getComponent("knbAmpCleanInput"),
+										Content.getComponent("knbAmpCleanOutput"),
+										Content.getComponent("knbAmpCleanLow"),
+										Content.getComponent("knbAmpCleanMid"),
+										Content.getComponent("knbAmpCleanHigh"),
+										Content.getComponent("knbAmpCleanPresence"),
+										Content.getComponent("knbAmpDirtyInput"),
+										Content.getComponent("knbAmpDirtyOutput"),
+										Content.getComponent("knbAmpDirtyLow"),
+										Content.getComponent("knbAmpDirtyMid"),
+										Content.getComponent("knbAmpDirtyHigh"),
+										Content.getComponent("knbAmpDirtyPresence"),
+										Content.getComponent("btnCab"),
+										Content.getComponent("knbCabMix"),
+										Content.getComponent("btnCabAEnable"),
+										Content.getComponent("btnCabBEnable"),
+										Content.getComponent("btnCabAPhase"),
+										Content.getComponent("knbCabAAxis"),
+										Content.getComponent("knbCabAAngle"),
+										Content.getComponent("knbCabADistance"),
+										Content.getComponent("knbCabADelay"),
+										Content.getComponent("knbCabAPan"),
+										Content.getComponent("knbCabAGain"),
+										Content.getComponent("btnCabBPhase"),
+										Content.getComponent("knbCabBAxis"),
+										Content.getComponent("knbCabBAngle"),
+										Content.getComponent("knbCabBDistance"),
+										Content.getComponent("knbCabBDelay"),
+										Content.getComponent("knbCabBPan"),
+										Content.getComponent("knbCabBGain"),
+										Content.getComponent("knbReverbMix"),
+										Content.getComponent("knbReverbBrightness"),
+										Content.getComponent("knbReverbFeedback")]
 
 
 // Input Chain
@@ -130,28 +198,37 @@ const lblTuner = Content.getComponent("lblTuner");
 const pnlTuner = Content.getComponent("pnlTuner");
 
 // Pitch-Shifter
+const pitch = Synth.getEffect("pitch");
 const knbPitch = Content.getComponent("knbPitch");
 const btnPitch = Content.getComponent("btnPitch");
 const btnPitchSnap = Content.getComponent("btnPitchSnap");
 
 // Amp
-const pitch = Synth.getEffect("pitch");
-const amp = Synth.getEffect("amp");
 //const btnShowAmp = Content.getComponent("btnShowAmp");
+const btnAmp = Content.getComponent("btnAmp");
 const btnAmpMode = Content.getComponent("btnAmpMode");
-const knbCleanInput = Content.getComponent("knbCleanInput");
-const knbCleanOutput = Content.getComponent("knbCleanOutput");
-const knbDirtyInput = Content.getComponent("knbDirtyInput");
-const knbDirtyOutput = Content.getComponent("knbDirtyOutput");
+const knbAmpCleanInput = Content.getComponent("knbAmpCleanInput");
+const knbAmpCleanOutput = Content.getComponent("knbAmpCleanOutput");
+const knbAmpCleanLow = Content.getComponent("knbAmpCleanLow");
+const knbAmpCleanMid = Content.getComponent("knbAmpCleanMid");
+const knbAmpCleanHigh = Content.getComponent("knbAmpCleanHigh");
+const knbAmpCleanPresence = Content.getComponent("knbAmpCleanPresence");
+const knbAmpDirtyInput = Content.getComponent("knbAmpDirtyInput");
+const knbAmpDirtyOutput = Content.getComponent("knbAmpDirtyOutput");
+const knbAmpDirtyLow = Content.getComponent("knbAmpDirtyLow");
+const knbAmpDirtyMid = Content.getComponent("knbAmpDirtyMid");
+const knbAmpDirtyHigh = Content.getComponent("knbAmpDirtyHigh");
+const knbAmpDirtyPresence = Content.getComponent("knbAmpDirtyPresence");
 const pnlAmp = Content.getComponent("pnlAmp");
 const pnlAmpClean = Content.getComponent("pnlAmpClean");
 const pnlAmpDirty = Content.getComponent("pnlAmpDirty");
 
 // Cab
 const cabScriptFX = Synth.getAudioSampleProcessor("cabScriptFX");
-const cab = Synth.getEffect("cab");
 const btnCab = Content.getComponent("btnCab");
 //const btnShowCab = Content.getComponent("btnShowCab");
+const awfCabA = Content.getComponent("awfCabA");
+const awfCabB = Content.getComponent("awfCabB");
 const btnCabAEnable = Content.getComponent("btnCabAEnable");
 const btnCabBEnable = Content.getComponent("btnCabBEnable");
 const btnCabAPhase = Content.getComponent("btnCabAPhase");
@@ -213,7 +290,6 @@ const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
 const pnlOverdrive = Content.getComponent("pnlOverdrive");
 
 // Reverb
-const reverb = Synth.getEffect("reverb");
 //const btnShowReverb = Content.getComponent("btnShowReverb");
 const knbReverbMix = Content.getComponent("knbReverbMix");
 const knbReverbBrightness = Content.getComponent("knbReverbBrightness");
@@ -230,7 +306,7 @@ const pnlChorus = Content.getComponent("pnlChorus");
 
 // Ring Mod
 //const btnShowRingMod = Content.getComponent("btnShowRingMod");
-const pnlRingMod = Content.getComponent("pnlRingMod");
+const pnlRingmod = Content.getComponent("pnlRingmod");
 
     
 // MISC VARIABLES

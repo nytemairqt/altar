@@ -44,11 +44,11 @@
                                  Value="256.0" DefaultValue="512.0"/>
                     </Parameters>
                   </Node>
-                  <Node ID="convolution2" FactoryPath="filters.convolution" Bypassed="0"
-                        Name="convolution2">
+                  <Node ID="convolution" FactoryPath="filters.convolution" Bypassed="0"
+                        Name="convolution">
                     <ComplexData>
                       <AudioFiles>
-                        <AudioFile Index="0" MinValue="0" MaxValue="5512"/>
+                        <AudioFile Index="0" MinValue="0" MaxValue="0"/>
                       </AudioFiles>
                     </ComplexData>
                     <Parameters>
@@ -268,7 +268,7 @@
                     </Parameters>
                   </Node>
                   <Node ID="convolution1" FactoryPath="filters.convolution" Bypassed="0"
-                        Name="convolution">
+                        Name="convolution1">
                     <ComplexData>
                       <AudioFiles>
                         <AudioFile Index="1" MinValue="0" MaxValue="0"/>

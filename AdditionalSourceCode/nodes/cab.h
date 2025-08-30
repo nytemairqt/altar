@@ -32,8 +32,8 @@ using xfader_multimod = parameter::list<xfader_c0<NV>, xfader_c1<NV>>;
 
 template <int NV>
 using xfader_t = control::xfader<xfader_multimod<NV>, faders::linear>;
-using convolution2_t = wrap::data<filters::convolution, 
-                                  data::external::audiofile<0>>;
+using convolution_t = wrap::data<filters::convolution, 
+                                 data::external::audiofile<0>>;
 
 template <int NV>
 using soft_bypass1_t_ = container::chain<parameter::empty, 
@@ -45,7 +45,7 @@ using soft_bypass1_t = bypass::smoothed<20, soft_bypass1_t_<NV>>;
 template <int NV>
 using soft_bypass_t_ = container::chain<parameter::empty, 
                                         wrap::fix<2, core::fix_delay>, 
-                                        convolution2_t, 
+                                        convolution_t, 
                                         filters::svf_eq<NV>, 
                                         filters::svf_eq<NV>, 
                                         filters::svf_eq<NV>, 
@@ -359,7 +359,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		auto& chain1 = this->getT(1).getT(0);                       // cab_impl::chain1_t<NV>
 		auto& soft_bypass = this->getT(1).getT(0).getT(0);          // cab_impl::soft_bypass_t<NV>
 		auto& fix_delay = this->getT(1).getT(0).getT(0).getT(0);    // core::fix_delay
-		auto& convolution2 = this->getT(1).getT(0).getT(0).getT(1); // cab_impl::convolution2_t
+		auto& convolution = this->getT(1).getT(0).getT(0).getT(1);  // cab_impl::convolution_t
 		auto& svf_eq = this->getT(1).getT(0).getT(0).getT(2);       // filters::svf_eq<NV>
 		auto& svf_eq1 = this->getT(1).getT(0).getT(0).getT(3);      // filters::svf_eq<NV>
 		auto& svf_eq2 = this->getT(1).getT(0).getT(0).getT(4);      // filters::svf_eq<NV>
@@ -456,11 +456,11 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		;                                 // fix_delay::DelayTime is automated
 		fix_delay.setParameterT(1, 256.); // core::fix_delay::FadeTime
 		
-		convolution2.setParameterT(0, 1.);     // filters::convolution::Gate
-		convolution2.setParameterT(1, 0.);     // filters::convolution::Predelay
-		convolution2.setParameterT(2, 0.);     // filters::convolution::Damping
-		convolution2.setParameterT(3, 20000.); // filters::convolution::HiCut
-		convolution2.setParameterT(4, 1.);     // filters::convolution::Multithread
+		convolution.setParameterT(0, 1.);     // filters::convolution::Gate
+		convolution.setParameterT(1, 0.);     // filters::convolution::Predelay
+		convolution.setParameterT(2, 0.);     // filters::convolution::Damping
+		convolution.setParameterT(3, 20000.); // filters::convolution::HiCut
+		convolution.setParameterT(4, 1.);     // filters::convolution::Multithread
 		
 		svf_eq.setParameterT(0, 150.); // filters::svf_eq::Frequency
 		svf_eq.setParameterT(1, 0.3);  // filters::svf_eq::Q
@@ -623,7 +623,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(1).getT(0).getT(0).getT(1).setExternalData(b, index); // cab_impl::convolution2_t
+		this->getT(1).getT(0).getT(0).getT(1).setExternalData(b, index); // cab_impl::convolution_t
 		this->getT(1).getT(1).getT(0).getT(1).setExternalData(b, index); // cab_impl::convolution1_t
 	}
 };

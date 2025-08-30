@@ -34,14 +34,14 @@
         <SwitchTargets>
           <SwitchTarget>
             <Connections>
-              <Connection NodeId="soft_bypass11" ParameterId="Bypassed"/>
-              <Connection NodeId="soft_bypass16" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass5" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass2" ParameterId="Bypassed"/>
             </Connections>
           </SwitchTarget>
           <SwitchTarget>
             <Connections>
-              <Connection NodeId="soft_bypass10" ParameterId="Bypassed"/>
-              <Connection NodeId="soft_bypass9" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass6" ParameterId="Bypassed"/>
+              <Connection NodeId="soft_bypass4" ParameterId="Bypassed"/>
             </Connections>
           </SwitchTarget>
         </SwitchTargets>
@@ -216,17 +216,42 @@
                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                 </Parameters>
               </Node>
-              <Node ID="soft_bypass9" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="cleanOversampled" Folded="1">
+              <Node ID="soft_bypass5" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="cleanNoOversampling">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
                 <Nodes>
-                  <Node ID="oversample4x4" FactoryPath="container.oversample4x" Bypassed="0"
-                        Name="oversample4x">
+                  <Node ID="snex_shaper2" FactoryPath="core.snex_shaper" Bypassed="0"
+                        Name="snex_shaper2">
+                    <Properties>
+                      <Property ID="ClassId" Value="clean_channel"/>
+                    </Properties>
+                    <ComplexData>
+                      <Tables/>
+                      <SliderPacks/>
+                      <AudioFiles/>
+                      <Filters/>
+                      <DisplayBuffers>
+                        <DisplayBuffer Index="-1" EmbeddedData=""/>
+                      </DisplayBuffers>
+                    </ComplexData>
+                    <Parameters/>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="soft_bypass6" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="cleanOversampling">
+                <Properties>
+                  <Property ID="SmoothingTime" Value="20"/>
+                </Properties>
+                <Nodes>
+                  <Node ID="oversample4x1" FactoryPath="container.oversample4x" Bypassed="0"
+                        Name="oversample4x1">
                     <Nodes>
-                      <Node ID="snex_shaper2" FactoryPath="core.snex_shaper" Bypassed="0"
-                            Name="snex_shaper1">
+                      <Node ID="snex_shaper3" FactoryPath="core.snex_shaper" Bypassed="0"
+                            Name="snex_shaper2">
                         <Properties>
                           <Property ID="ClassId" Value="clean_channel"/>
                         </Properties>
@@ -246,31 +271,6 @@
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="FilterType"
                                  Value="0.0"/>
                     </Parameters>
-                  </Node>
-                </Nodes>
-                <Parameters/>
-              </Node>
-              <Node ID="soft_bypass16" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="cleanNoOversampled" Folded="1">
-                <Properties>
-                  <Property ID="SmoothingTime" Value="20"/>
-                </Properties>
-                <Nodes>
-                  <Node ID="snex_shaper6" FactoryPath="core.snex_shaper" Bypassed="0"
-                        Name="snex_shaper1">
-                    <Properties>
-                      <Property ID="ClassId" Value="clean_channel"/>
-                    </Properties>
-                    <ComplexData>
-                      <Tables/>
-                      <SliderPacks/>
-                      <AudioFiles/>
-                      <Filters/>
-                      <DisplayBuffers>
-                        <DisplayBuffer Index="-1" EmbeddedData=""/>
-                      </DisplayBuffers>
-                    </ComplexData>
-                    <Parameters/>
                   </Node>
                 </Nodes>
                 <Parameters/>
@@ -385,16 +385,41 @@
                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                 </Parameters>
               </Node>
-              <Node ID="soft_bypass10" FactoryPath="container.soft_bypass" Bypassed="0"
-                    Name="dirtyOversampled" Folded="1">
+              <Node ID="soft_bypass2" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="dirtyNoOversampling">
                 <Properties>
                   <Property ID="SmoothingTime" Value="20"/>
                 </Properties>
                 <Nodes>
-                  <Node ID="oversample4x3" FactoryPath="container.oversample4x" Bypassed="0"
+                  <Node ID="snex_shaper" FactoryPath="core.snex_shaper" Bypassed="0"
+                        Name="snex_shaper">
+                    <Properties>
+                      <Property ID="ClassId" Value="dirty_channel"/>
+                    </Properties>
+                    <ComplexData>
+                      <Tables/>
+                      <SliderPacks/>
+                      <AudioFiles/>
+                      <Filters/>
+                      <DisplayBuffers>
+                        <DisplayBuffer Index="-1" EmbeddedData=""/>
+                      </DisplayBuffers>
+                    </ComplexData>
+                    <Parameters/>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="soft_bypass4" FactoryPath="container.soft_bypass" Bypassed="0"
+                    Name="dirtyOversampling">
+                <Properties>
+                  <Property ID="SmoothingTime" Value="20"/>
+                </Properties>
+                <Nodes>
+                  <Node ID="oversample4x" FactoryPath="container.oversample4x" Bypassed="0"
                         Name="oversample4x">
                     <Nodes>
-                      <Node ID="snex_shaper4" FactoryPath="core.snex_shaper" Bypassed="0"
+                      <Node ID="snex_shaper1" FactoryPath="core.snex_shaper" Bypassed="0"
                             Name="snex_shaper">
                         <Properties>
                           <Property ID="ClassId" Value="dirty_channel"/>
@@ -415,31 +440,6 @@
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="FilterType"
                                  Value="0.0"/>
                     </Parameters>
-                  </Node>
-                </Nodes>
-                <Parameters/>
-              </Node>
-              <Node ID="soft_bypass11" FactoryPath="container.soft_bypass" Bypassed="1"
-                    Name="dirtyNoOversampled" Folded="1">
-                <Properties>
-                  <Property ID="SmoothingTime" Value="20"/>
-                </Properties>
-                <Nodes>
-                  <Node ID="snex_shaper5" FactoryPath="core.snex_shaper" Bypassed="0"
-                        Name="snex_shaper">
-                    <Properties>
-                      <Property ID="ClassId" Value="dirty_channel"/>
-                    </Properties>
-                    <ComplexData>
-                      <Tables/>
-                      <SliderPacks/>
-                      <AudioFiles/>
-                      <Filters/>
-                      <DisplayBuffers>
-                        <DisplayBuffer Index="-1" EmbeddedData=""/>
-                      </DisplayBuffers>
-                    </ComplexData>
-                    <Parameters/>
                   </Node>
                 </Nodes>
                 <Parameters/>
@@ -681,7 +681,7 @@
         </Connections>
       </Parameter>
       <Parameter ID="Oversampling" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
-                 DefaultValue="" Value="1.0" StepSize="1">
+                 DefaultValue="" Value="0.0" StepSize="1">
         <Connections>
           <Connection NodeId="xfader2" ParameterId="Value"/>
         </Connections>
