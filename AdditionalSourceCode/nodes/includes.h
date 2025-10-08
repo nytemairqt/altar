@@ -9,24 +9,12 @@
 
 // Include third party header files ----------------
 
-#include "octave_faust.h"
-#include "reverb_faust.h"
 #include "rubberband.h"
+#include "tuner.h"
 
 // Include compiled network files ------------------
 
-#include "amp.h"
-#include "cab.h"
-#include "chorus.h"
-#include "chug.h"
-#include "delay.h"
-#include "grit.h"
-#include "octaveFaust.h"
-#include "overdrive.h"
-#include "pick.h"
-#include "pitchDetection_networkdata.h"
-#include "reverb.h"
-#include "ringmod.h"
+#include "tuner_networkdata.h"
 
 #if (defined (_WIN32) || defined (_WIN64))
 #pragma warning( pop )

@@ -91,19 +91,19 @@
                parentComponent="pnlMaster" tooltip="Snap pitch-shifter to semitones."
                text=""/>
     <Component type="ScriptPanel" id="pnlModularA" x="320.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="overdrive" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularB" x="380.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularD" x="500.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="reverb" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularE" x="560.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="delay" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularF" x="620.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="chorus" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularG" x="680.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="ringmod" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlTooltip" x="860.0" y="770.0" parentComponent="pnlMaster"
                width="220.0" height="30.0"/>
     <Component type="ScriptLabel" id="lblInputGain" x="20.0" y="130.0" parentComponent="pnlMaster"
@@ -436,7 +436,7 @@
   </Component>
   <Component type="ScriptPanel" id="pnlCabDesigner" x="0.0" y="0.0" width="1150.0"
              height="800.0" itemColour="1023410176" itemColour2="1023410176"
-             allowCallbacks="Clicks Only">
+             allowCallbacks="Clicks Only" visible="0.0">
     <Component type="ScriptLabel" id="lblCabSaveName" x="824.0" y="389.0" parentComponent="pnlCabDesigner"
                text="derek.wav"/>
     <Component type="ScriptButton" id="btnCabSave" x="730.0" y="389.0" isMomentary="1"

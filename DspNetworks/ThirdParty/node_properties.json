@@ -1,9 +1,4 @@
 {
-  "octave_faust": [],
-  "reverb_faust": [],
   "rubberband": [],
-  "overdrive": [
-    "IsPolyphonic",
-    "AllowPolyphonic"
-  ]
+  "tuner": []
 }

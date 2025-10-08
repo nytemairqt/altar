@@ -97,7 +97,7 @@ namespace OutputChain
 
     inline function onknbChugControl(component, value)
     {
-        chug.setAttribute(chug.Threshold, 1-value);
+        //chug.setAttribute(chug.Threshold, 1-value);
     }
 
     knbChugThreshold.setControlCallback(onknbChugControl);

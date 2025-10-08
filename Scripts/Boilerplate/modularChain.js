@@ -60,65 +60,25 @@ namespace ModularChain
     inline function rebuildEffectMap()
     {
         effectToSlot = {};
-        for (i = 0; i < fxSlots.length; i++)
-            effectToSlot[fxSlots[i].getCurrentEffectId()] = i;
+        for (i = 0; i < fxSlots.length; i++) { effectToSlot[fxSlots[i].getCurrentEffectId()] = i; }
     }
  
-    inline function pnlFxSlotPaint(g)
+    inline function paintRoutine(g)
     {
-        local area = [0, 0, this.getWidth(), this.getHeight()];
-        
+        for (i=0; i<pnlFxSlots.length; i++) { pnlFxSlots[i].set("text", fxSlots[i].getCurrentEffectId()); }        
+        local area = [0, 0, this.getWidth(), this.getHeight()];        
         g.setColour(Colours.white);
-        g.drawRoundedRectangle(area, 1.0, 1.0);
-        
-        local newText = "";
-        
-        switch (this.get("text"))
-        {
-            case "overdrive":
-                newText = "OD";
-                break;
-            case "amp":
-                newText = "AMP";
-                break;
-            case "cab":
-                newText = "CAB";
-                break;
-            case "reverb":
-                newText = "RVB";
-                break;
-            case "delay":
-                newText = "DLY";
-                break;
-            case "chorus":
-                newText = "CHR";
-                break;
-            case "ringmod":
-                newText = "RNG";
-                break;  
-        }
-        
-        g.drawAlignedText(newText, area, "centred");
+        g.drawRoundedRectangle(area, 1.0, 1.0);               
+        g.drawAlignedText(this.get("text"), area, "centred");
                         
         if (this.data.isTarget)
             g.drawLine(5, area[2]-5, area[3]-5, area[3]-5, 1.0);
-    }   
-
-    inline function pnlFxSlotReloadText() // move this into paintroutine?
-    {
-        for (i=0; i<pnlFxSlots.length; i++)
-        {
-            pnlFxSlots[i].set("text", fxSlots[i].getCurrentEffectId());
-            pnlFxSlots[i].repaint();
-        }
-    }
+    }       
 
     for (p in pnlFxSlots)
-        p.setPaintRoutine(pnlFxSlotPaint);
+        p.setPaintRoutine(paintRoutine);
 
-    pnlFxSlotReloadText(); // move to paint routine?
-
-    inline function repaintPnlFxSlots()
+    inline function repaint()
     {
         for (p in pnlFxSlots)
         {
@@ -127,7 +87,7 @@ namespace ModularChain
         }
     }
 
-    function pnlFxSlotsDragPaint(g, obj)
+    function dragPaintRoutine(g, obj)
     {
         var isValid = false;
         isValid = obj.valid;
@@ -138,7 +98,7 @@ namespace ModularChain
         // probably ways to improve this
         if (isValid && obj.target != "" && obj.target != obj.source)
         {
-            repaintPnlFxSlots();
+            repaint();
 
             var component = Content.getComponent(obj.target);
             component.data.isTarget = true;
@@ -151,12 +111,12 @@ namespace ModularChain
         g.fillRoundedRectangle(obj.area, 2.0, 2.0); 
     }    
 
-    function onPnlFxSlotsDrag(isValid, targetName)
+    function drag(isValid, targetName)
     {
         if (targetName != "")
             var target = Content.getComponent(targetName);
         
-        repaintPnlFxSlots();
+        //repaintPnlFxSlots();
             
         if (!pnlFxSlots.contains(target))
             return;
@@ -166,15 +126,12 @@ namespace ModularChain
         
         var currentIndex = pnlFxSlots.indexOf(this);
         var targetIndex = pnlFxSlots.indexOf(target);
-        //var currentName = this.get("text");
-        //var targetName  = target.get("text");
         var currentSlot = fxSlots[currentIndex];
         var targetSlot = fxSlots[targetIndex]; 
         
         // swap FX & restore state
         var currentState = fxModules[currentIndex].exportState();
         var targetState = fxModules[targetIndex].exportState();         
-        //currentSlot.swap(targetSlot);
         
         // CRASH RELATED TO SWAPPING CAB POSITION
         // MODULE POSITIONS AREN'T SAVING 
@@ -193,7 +150,8 @@ namespace ModularChain
         var currentEffectName = currentSlot.getCurrentEffectId(); 
             
         // repaint
-        pnlFxSlotReloadText();      
+        //pnlFxSlotReloadText();      
+        repaint();
     }    
 
     inline function checkValidPnlFxSlot(targetId)
@@ -209,15 +167,15 @@ namespace ModularChain
             p.set("visible", false);
     }   
 
-    inline function dragPnlFxSlot(event)
+    inline function dragMouseCallback(event)
     {
         if (event.drag && !event.rightClick)
         {
             if (event.dragX > 10 || event.dragY > 10 || event.dragX < -10 || event.dragY < -10)
                 this.startInternalDrag({
                     area: [0, 0, 25, 25],
-                    paintRoutine: pnlFxSlotsDragPaint,
-                    dragCallback: onPnlFxSlotsDrag,
+                    paintRoutine: dragPaintRoutine,
+                    dragCallback: drag,
                     isValid: checkValidPnlFxSlot
                 });
         }
@@ -244,7 +202,7 @@ namespace ModularChain
     }
 
     for (p in pnlFxSlots)
-        p.setMouseCallback(dragPnlFxSlot);
+        p.setMouseCallback(dragMouseCallback);
 
     // NEW STUFF
     

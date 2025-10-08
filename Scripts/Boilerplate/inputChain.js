@@ -128,12 +128,12 @@ namespace InputChain
         switch (component)
         {
             case knbOctave:
-                octavePre.setAttribute(octavePre.Mix, value);
-                octavePost.setAttribute(octavePost.Mix, value);
+                //octavePre.setAttribute(octavePre.Mix, value);
+                //octavePost.setAttribute(octavePost.Mix, value);
                 break;      
             case knbOctaveFreq:
-                octavePre.setAttribute(octavePre.Freq, value);
-                octavePost.setAttribute(octavePost.Freq, value);
+                //octavePre.setAttribute(octavePre.Freq, value);
+                //octavePost.setAttribute(octavePost.Freq, value);
             break;
         }
     }

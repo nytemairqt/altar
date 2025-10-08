@@ -24,7 +24,7 @@ namespace Tuner
     const pnlTuner = Content.getComponent("pnlTuner");
 
     inline function onbtnShowTunerControl(component, value) { pnlTuner.set("visible", value); }    
-    inline function onbtnTunerMonitorControl(component, value) { tuner.setAttribute(tuner.Monitor, 1-value); }
+    inline function onbtnTunerMonitorControl(component, value) {} //{ tuner.setAttribute(tuner.Monitor, 1-value); }
     btnShowTuner.setControlCallback(onbtnShowTunerControl);
     btnTunerMonitor.setControlCallback(onbtnTunerMonitorControl);
 
