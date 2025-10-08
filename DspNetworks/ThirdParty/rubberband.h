@@ -115,7 +115,7 @@ template <int NV> struct rubberband: public data::base
 	{
 		{
 			// Create a parameter like this
-			parameter::data p("FreqRatio", { 0.5, 2.0 });
+			parameter::data p("FreqRatio", { 0.25, 4.0 });
 			// The template parameter (<0>) will be forwarded to setParameter<P>()
 			registerCallback<0>(p);
 			p.setDefaultValue(1.0);
