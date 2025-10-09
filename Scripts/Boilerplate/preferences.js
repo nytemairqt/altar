@@ -17,5 +17,36 @@
 
 namespace Preferences
 {
+	const btnPreferences = Content.getComponent("btnPreferences");
+	const pnlPreferences = Content.getComponent("pnlPreferences");		
+	
+	inline function onbtnPreferencesControl(component, value)
+	{
+		pnlPreferences.set("visible", value);
+	};
+	
+	btnPreferences.setControlCallback(onbtnPreferencesControl);
+	
+	pnlPreferences.setPaintRoutine(function(g)
+    {
+        var bounds = [310, 80, 530, 310];
+
+        g.setColour(Colours.withAlpha(Colours.black, 1.0));
+        g.fillRoundedRectangle(bounds, 2.0);
+    });
+
+    pnlPreferences.setMouseCallback(function(event)
+    {
+        var x = 310;
+        var y = 80;
+        var w = 530;
+        var h = 310;
+        
+        if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
+        {
+            btnPreferences.setValue(0);
+            btnPreferences.changed();
+        }   
+    });
 	
 }

@@ -4,6 +4,7 @@ include("Boilerplate/lookAndFeel.js");
 include("Boilerplate/tooltip.js");
 include("Boilerplate/click.js");
 include("Boilerplate/tuner.js");
+include("Boilerplate/preferences.js");
 include("Boilerplate/cabDesigner.js");
 include("Boilerplate/inputChain.js");
 include("Boilerplate/modularChain.js");

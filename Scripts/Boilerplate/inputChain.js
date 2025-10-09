@@ -28,46 +28,29 @@ namespace InputChain
 
     // Preprocess
     const pnlPreProcess = Content.getComponent("pnlPreProcess");
-    const btnShowPreProcess = Content.getComponent("btnShowPreProcess");
-    const btnPreProcessEQ = Content.getComponent("btnPreProcessEQ");
-    const knbPreProcessEQHighFreq = Content.getComponent("knbPreProcessEQHighFreq");
-    const knbPreProcessEQHighGain = Content.getComponent("knbPreProcessEQHighGain");
-    const knbPreProcessEQHighMidGain = Content.getComponent("knbPreProcessEQHighMidGain");
-    const knbPreProcessEQHighMidFreq = Content.getComponent("knbPreProcessEQHighMidFreq");
-    const knbPreProcessEQHighMidQ = Content.getComponent("knbPreProcessEQHighMidQ");
-    const knbPreProcessEQLowMidFreq = Content.getComponent("knbPreProcessEQLowMidFreq");
-    const knbPreProcessEQLowMidGain = Content.getComponent("knbPreProcessEQLowMidGain");
-    const knbPreProcessEQLowMidQ = Content.getComponent("knbPreProcessEQLowMidQ");
-    const knbPreProcessEQLowFreq = Content.getComponent("knbPreProcessEQLowFreq");
-    const knbPreProcessEQLowGain = Content.getComponent("knbPreProcessEQLowGain");
-    const knbPreProcessEQHighPass = Content.getComponent("knbPreProcessEQHighPass");
-    const knbPreProcessEQLowPass = Content.getComponent("knbPreProcessEQLowPass");
-    const btnPreProcessComp = Content.getComponent("btnPreProcessComp");
-    const knbPreProcessCompThreshold = Content.getComponent("knbPreProcessCompThreshold");
-    const knbPreProcessCompAttack = Content.getComponent("knbPreProcessCompAttack");
-    const knbPreProcessCompRelease = Content.getComponent("knbPreProcessCompRelease");
-    const knbPreProcessCompRatio = Content.getComponent("knbPreProcessCompRatio");
-    const btnPreProcessCompMakeup = Content.getComponent("btnPreProcessCompMakeup");
+    const btnShowPreProcess = Content.getComponent("btnShowPreProcess");    
+    
+   	const bounds = [150, 250, 800, 450];
 
     inline function onbtnShowPreProcessControl(component, value)
     {
         pnlPreProcess.set("visible", value);
     }
+    
+    btnShowPreProcess.setControlCallback(onbtnShowPreProcessControl);
 
     pnlPreProcess.setPaintRoutine(function(g)
     {
-        var bounds = [200, 250, 700, 450];
-
-        g.setColour(Colours.withAlpha(Colours.red, 1.0));
+        g.setColour(Colours.withAlpha(Colours.black, 1.0));
         g.fillRoundedRectangle(bounds, 2.0);
     });
 
     pnlPreProcess.setMouseCallback(function(event)
     {
-        var x = 200;
-        var y = 250;
-        var w = 700;
-        var h = 450;
+        var x = bounds[0];
+        var y = bounds[1];
+        var w = bounds[2];
+        var h = bounds[3];
         
         if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
         {

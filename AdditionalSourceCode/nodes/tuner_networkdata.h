@@ -13,7 +13,7 @@ struct tuner_networkdata: public scriptnode::dll::InterpretedNetworkData
 	}
 	String getNetworkData() const override
 	{
-		return "214.nT6K8CVo.TlA.H1xjDBPqsM.MxnHsIKpz.WXnOgAzGxsuiyd5wwvq5yDWYiszOv+M3QgCj7GVKNZubd6EaUn.ITBGR0SnDh2UGMjKXKEdG49cnlQWXYGjfmHfj2PtFqs1H4TwisYQajJOgHtyPasz44fyVYCChU1Ja1xfEbuoSEO71LYB3ckwpb2SnDJw1Ui0EmUliFA3NBJfbmAdezpRXAHfI7f8TK9Hw.tYihbaOxTa6nCQU2goRKTFtyfcEg2rQ8evGVjf.tBeR.q7P4eKXjYcjkJO.";
+		return "225.nT6K8CVt.zqA.H8hlHBPKNM.L3lTflr.LNgI6SvaD9EUAk+yXKKJJvVzZ5j.aoe.++fHEjfDue.kKnKdXw7nMy4sWrUAGPkT3PpbURg3cE5Q1fsT.3dx86RcixvxOXAWg.IdK4Zr1JjjSFQVGFERtbEh3tCs0xmHDNakNMIVYqrYaCZvcmNYDwa2jIf2UG6xcWkTIEaWMVabVYPMFv8EJjbuAdiz5RvEf.jQD55AIiORZ.WsQQt2iYR7YuBiqGhZ2g4RKtLb2f8Eg2sQ83fOrHAAbE9j.VggxyVvHv5HqWd.";
 	}
 };
 }
