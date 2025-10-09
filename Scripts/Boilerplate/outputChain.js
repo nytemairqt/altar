@@ -24,25 +24,8 @@ namespace OutputChain
     // Postprocess
     const btnShowPostProcess = Content.getComponent("btnShowPostProcess");
     const pnlPostProcess = Content.getComponent("pnlPostProcess");
-    const btnPostProcessEQ = Content.getComponent("btnPostProcessEQ");
-    const knbPostProcessEQHighFreq = Content.getComponent("knbPostProcessEQHighFreq");
-    const knbPostProcessEQHighGain = Content.getComponent("knbPostProcessEQHighGain");
-    const knbPostProcessEQHighMidGain = Content.getComponent("knbPostProcessEQHighMidGain");
-    const knbPostProcessEQHighMidFreq = Content.getComponent("knbPostProcessEQHighMidFreq");
-    const knbPostProcessEQHighMidQ = Content.getComponent("knbPostProcessEQHighMidQ");
-    const knbPostProcessEQLowMidFreq = Content.getComponent("knbPostProcessEQLowMidFreq");
-    const knbPostProcessEQLowMidGain = Content.getComponent("knbPostProcessEQLowMidGain");
-    const knbPostProcessEQLowMidQ = Content.getComponent("knbPostProcessEQLowMidQ");
-    const knbPostProcessEQLowFreq = Content.getComponent("knbPostProcessEQLowFreq");
-    const knbPostProcessEQLowGain = Content.getComponent("knbPostProcessEQLowGain");
-    const knbPostProcessEQHighPass = Content.getComponent("knbPostProcessEQHighPass");
-    const knbPostProcessEQLowPass = Content.getComponent("knbPostProcessEQLowPass");
-    const btnPostProcessComp = Content.getComponent("btnPostProcessComp");
-    const knbPostProcessCompThreshold = Content.getComponent("knbPostProcessCompThreshold");
-    const knbPostProcessCompAttack = Content.getComponent("knbPostProcessCompAttack");
-    const knbPostProcessCompRelease = Content.getComponent("knbPostProcessCompRelease");
-    const knbPostProcessCompRatio = Content.getComponent("knbPostProcessCompRatio");
-    const btnPostProcessCompMakeup = Content.getComponent("btnPostProcessCompMakeup");
+    
+    const bounds = [150, 250, 800, 450];
 
     inline function onbtnShowPostProcessControl(component, value)
     {
@@ -53,18 +36,16 @@ namespace OutputChain
 
     pnlPostProcess.setPaintRoutine(function(g)
     {
-        var bounds = [200, 250, 700, 450];
-
-        g.setColour(Colours.withAlpha(Colours.green, 1.0));
+        g.setColour(Colours.withAlpha(Colours.black, 1.0));
         g.fillRoundedRectangle(bounds, 2.0);
     });
 
     pnlPostProcess.setMouseCallback(function(event)
     {
-        var x = 200;
-        var y = 250;
-        var w = 700;
-        var h = 450;
+        var x = bounds[0];
+        var y = bounds[1];
+        var w = bounds[2];
+        var h = bounds[3];
         
         if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
         {

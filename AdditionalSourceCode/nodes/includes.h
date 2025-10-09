@@ -10,6 +10,7 @@
 // Include third party header files ----------------
 
 #include "gate.h"
+#include "postprocess.h"
 #include "preprocess.h"
 #include "rubberband.h"
 #include "tuner.h"
