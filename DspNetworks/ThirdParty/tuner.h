@@ -8,7 +8,7 @@ namespace project
 using namespace juce;
 using namespace hise;
 using namespace scriptnode;
-using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056)>;
+using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056)>; 
 
 enum class GlobalCables
 {
@@ -17,32 +17,22 @@ enum class GlobalCables
 
 // ==========================| The node class with all required callbacks |==========================
 
-template <int NV> struct tuner: public data::base, public cable_manager_t, public juce::Timer
+template <int NV> struct tuner: public data::base, public cable_manager_t, public hise::DllTimer
 {
 	// Metadata Definitions ------------------------------------------------------------------------
 	
 	SNEX_NODE(tuner);    
 
-    
     tuner()
     {
-        //startTimerHz(30);
-
-        // maybe this weird ass lambda?
-
-        /*
-        this->registerDataCallback<GlobalCables::pitch>([](const var& funky)
-        {
-            // do stuff
-        });
-        */
+        startTimer(100); // Faster update for better responsiveness
+        pitchHistory.resize(pitchHistorySize, 0.0f);
     }
 
     ~tuner()
     {
         stopTimer();
     }
-    
 	
 	struct MetadataClass
 	{
@@ -66,52 +56,51 @@ template <int NV> struct tuner: public data::base, public cable_manager_t, publi
     void setExternalData(const ExternalData& data, int index) {}
 	
 	// Scriptnode Callbacks ------------------------------------------------------------------------
-
-    
-	
+    	
 	void prepare(PrepareSpecs specs) 
 	{
 		sampleRate.store(static_cast<float>(specs.sampleRate));
-        auto numChannels = specs.numChannels;
-        auto samplesPerBlock = specs.blockSize;
-
-        // YIN parameters
-        //bufferSize = static_cast<int>(sampleRate * 0.2f); // 0.2f seems a good value for low tuning guitar
-        bufferSize = static_cast<int>(sampleRate.load() * 0.2f); // 0.2f seems a good value for low tuning guitar
+        
+        // Optimized buffer size for low tuning (drop F ~87Hz needs ~0.3s window)
+        bufferSize = static_cast<int>(sampleRate.load() * 0.25f); 
+        
+        // Initialize YIN buffers
         yinBuffer.resize(bufferSize, 0.0f);
         differenceFunction.resize(bufferSize / 2, 0.0f);
         cumulativeMeanNormalizedDifference.resize(bufferSize / 2, 0.0f);
-
-        circularBuffer.resize(bufferSize * 2, 0.0f); 
+        
+        // Circular buffer for continuous audio capture
+        circularBuffer.resize(bufferSize * 2, 0.0f);
         writeIndex = 0;
-
+        
         // Reset detection state
         lastDetectedPitch.store(0.0f);
         pitchConfidence.store(0.0f);
         isNoteDetected.store(false);
-
-        pitchHistoryIndex = 0;
+        
+        // Initialize pitch history
         std::fill(pitchHistory.begin(), pitchHistory.end(), 0.0f);
-
-        //startTimerHz(30);
-
+        pitchHistoryIndex = 0;
         
-        //randomGenerator.setSeedRandomly();
-        //float randomValue = randomGenerator.nextFloat();
-        //setGlobalCableValue<GlobalCables::pitch>(randomValue);
-        //if (randomValue >= 0.5) { monitorOutput.store(true); }
-        //else { monitorOutput.store(false); }
-        
-        //startTimerHz(30);
-	}
+        samplesSinceLastDetection = 0;
+        totalSamplesCollected = 0;
+	}    	
 
-	void reset() 
+    void reset() 
     {
-        //stopTimer();
+        writeIndex = 0;
+        samplesSinceLastDetection = 0;
+        std::fill(circularBuffer.begin(), circularBuffer.end(), 0.0f);
+        std::fill(pitchHistory.begin(), pitchHistory.end(), 0.0f);
+        pitchHistoryIndex = 0;
+        lastDetectedPitch.store(0.0f);
+        pitchConfidence.store(0.0f);
+        isNoteDetected.store(false);
+        totalSamplesCollected = 0;
+
     }
 	
-	
-		
+    /*
 	template <typename T> void process(T& data)
 	{		
         int numSamples = data.getNumSamples();
@@ -120,83 +109,88 @@ template <int NV> struct tuner: public data::base, public cable_manager_t, publi
 		{
 			dyn<float> channelData = data.toChannelData(ch);
 
+	        // Copy audio samples to circular buffer for pitch detection
 	        for (int i = 0; i < numSamples; ++i)
 	        {
 	            circularBuffer[writeIndex] = channelData[i];
 	            writeIndex = (writeIndex + 1) % (bufferSize * 2);
-	            if (++samplesSinceLastDetection >= pitchDetectionInterval)            
-	                samplesSinceLastDetection = 0; // reset 
+	            samplesSinceLastDetection++;
 	        }
 
-	        // Mute audio through
+	        // Mute audio through if monitor is off
 	        if (!monitorOutput.load())
-	        	channelData.clear();	        				        
+	        	channelData.clear();
 		}       
-
-        randomGenerator.setSeedRandomly();
-        float randomValue = randomGenerator.nextFloat();
-        setGlobalCableValue<GlobalCables::pitch>(randomValue);
 	}
+    */
 
-	struct TuningInfo
+    template <typename T> void process(T& data)
     {
-        int closestStringIndex = -1;
-        juce::String noteName = "";
-        float centDeviation = 0.0f;
-        bool inTune = false;
-    };
-	
-	TuningInfo getTuningInfo() const
-    {
-        TuningInfo info;
-        float detectedPitch = lastDetectedPitch.load();
+        const int numSamples = data.getNumSamples();
+        const int numChannels = data.getNumChannels(); // or iterate to count
 
-        if (detectedPitch > 0.0f && isNoteDetected.load())
+        for (int i = 0; i < numSamples; ++i)
         {
-            float minDifference = std::numeric_limits<float>::max();
+            float mono = 0.0f;
+            for (auto ch : data)
+                mono += data.toChannelData(ch)[i];
 
-            for (int i = 0; i < standardTuning.size(); ++i)
-            {
-                float difference = std::abs(detectedPitch - standardTuning[i]);
-                if (difference < minDifference)
-                {
-                    minDifference = difference;
-                    info.closestStringIndex = i;
-                    info.noteName = tuningNames[i];
-                }
-            }
-            if (info.closestStringIndex >= 0)
-            {
-                float targetFreq = standardTuning[info.closestStringIndex];
-                info.centDeviation = 1200.0f * std::log2(detectedPitch / targetFreq);
-                info.inTune = std::abs(info.centDeviation) <= tuningToleranceCents;
-            }
+            mono /= (float)numChannels; // simple average
+
+            // Write exactly one sample per frame
+            circularBuffer[writeIndex] = mono;
+            writeIndex = (writeIndex + 1) % (bufferSize * 2);
+
+            samplesSinceLastDetection++;
+            totalSamplesCollected++;
         }
-        return info;
+
+        // Optionally mute output AFTER copying
+        if (!monitorOutput.load())
+        {
+            for (auto ch : data)
+                data.toChannelData(ch).clear();
+        }
     }
 
     juce::Random randomGenerator;
 
+    /*
 	void timerCallback() override
+    {        
+        // Perform pitch detection only if we have enough new samples
+        if (samplesSinceLastDetection >= pitchDetectionInterval)
+        {
+            performPitchDetection();
+            samplesSinceLastDetection = 0;
+                
+            // send detected pitch back to cable
+            setGlobalCableValue<GlobalCables::pitch>(lastDetectedPitch.load());
+        }
+    }
+    */
+    void timerCallback() override
     {
-        //randomGenerator.setSeedRandomly();
-        performPitchDetection();
+        if (totalSamplesCollected < bufferSize)
+            return; // not enough data to analyze yet
 
-        randomGenerator.setSeedRandomly();
-        float randomValue = randomGenerator.nextFloat();
-        //setGlobalCableValue<GlobalCables::pitch>(randomValue);
-    } 		    
+        if (samplesSinceLastDetection >= pitchDetectionInterval)
+        {
+            performPitchDetection();
+            samplesSinceLastDetection = 0;
+            float normalizedPitch = normalizePitchForCable(lastDetectedPitch.load());
+            setGlobalCableValue<GlobalCables::pitch>(normalizedPitch);
+        }
+    }
 
 	// Parameter Functions -------------------------------------------------------------------------
 	
 	template <int P> void setParameter(double v)
 	{
-		if (P == 0)
+		if (P == 0) // Monitor parameter
 		{            
-            if (v >= 0.5) { monitorOutput.store(true); }
-            else { monitorOutput.store(false); }    
+            monitorOutput.store(v >= 0.5);
 		}
-		
 	}
 	
 	void createParameters(ParameterDataList& data)
@@ -209,97 +203,141 @@ template <int NV> struct tuner: public data::base, public cable_manager_t, publi
         }        
 	}
 
+    // Public API for getting tuning information
+    struct TuningInfo
+    {
+        int closestStringIndex = -1;
+        juce::String noteName = "";
+        float centDeviation = 0.0f;
+        bool inTune = false;
+        float frequency = 0.0f;
+        float confidence = 0.0f;
+    };
+    
+    TuningInfo getTuningInfo() const
+    {
+        TuningInfo info;
+        info.frequency = lastDetectedPitch.load();
+        info.confidence = pitchConfidence.load();
+        
+        if (info.frequency > 0.0f && isNoteDetected.load())
+        {
+            float minDifference = std::numeric_limits<float>::max();
+            
+            // Check against 7-string drop F tuning
+            for (int i = 0; i < sevenStringDropF.size(); ++i)
+            {
+                float difference = std::abs(info.frequency - sevenStringDropF[i]);
+                if (difference < minDifference)
+                {
+                    minDifference = difference;
+                    info.closestStringIndex = i;
+                    info.noteName = dropFNames[i];
+                }
+            }
+            
+            if (info.closestStringIndex >= 0)
+            {
+                float targetFreq = sevenStringDropF[info.closestStringIndex];
+                info.centDeviation = 1200.0f * std::log2(info.frequency / targetFreq);
+                info.inTune = std::abs(info.centDeviation) <= tuningToleranceCents;
+            }
+        }
+        return info;
+    }
+
 private:
 
 	std::atomic<bool> monitorOutput{ false };
 	std::atomic<float> sampleRate{ 44100.0f };
-    float detectedPitch = 0.0f;    
+    int totalSamplesCollected = 0;   // total mono frames written
+    int numChannelsCached = 0;       // (optional) store channel count if needed
+    
+    // YIN Algorithm parameters - optimized for low tuning
+    float threshold = 0.12f; // Lower threshold for better low frequency detection
+    float minFrequency = 40.0f; // Lower minimum for drop F (87Hz)
+    float maxFrequency = 400.0f; // Upper range for guitar fundamentals
+    float stabilityFactor = 0.75f; // Stability filtering
+    float tuningToleranceCents = 8.0f; // Tolerance for "in tune"
 
-    // YIN parameters
-    float threshold = 0.15f; // sensitivity 
-    float minFrequency = 20.0f;
-    float maxFrequency = 500.0f; 
-    float stabilityFactor = 0.7f; 
-
-    float tuningToleranceCents = 5.0f; 
-
-    int bufferSize = 4096;
+    // Buffer management
+    int bufferSize = 8192;
     std::vector<float> circularBuffer;
     std::vector<float> yinBuffer;
     std::vector<float> differenceFunction;
     std::vector<float> cumulativeMeanNormalizedDifference;
     int writeIndex = 0;
 
-    int pitchDetectionInterval = 512; 
+    // Detection timing
+    int pitchDetectionInterval = 1024; // Samples between detections
     int samplesSinceLastDetection = 0;
 
-    static constexpr int pitchHistorySize = 5;
+    // Pitch history for stability
+    static constexpr int pitchHistorySize = 7;
     std::vector<float> pitchHistory;
     int pitchHistoryIndex = 0;
 
+    // Detection results
     std::atomic<float> lastDetectedPitch{ 0.0f };
     std::atomic<float> pitchConfidence{ 0.0f };
     std::atomic<bool> isNoteDetected{ false };
 
-    std::vector<float> standardTuning{ 440.0f };
-    std::vector<juce::String> tuningNames{ "E2", "A2", "D3", "G3", "B3", "E4" };
+    // 7-string drop F tuning: F1, C2, F2, Bb2, Eb3, G3, C4
+    std::vector<float> sevenStringDropF{ 87.31f, 130.81f, 174.61f, 233.08f, 311.13f, 392.0f, 523.25f };
+    std::vector<juce::String> dropFNames{ "F1", "C2", "F2", "Bb2", "Eb3", "G3", "C4" };
 
     void performPitchDetection()
     {
-        // Copy buffer to process
-        int startIndex = writeIndex >= bufferSize ? writeIndex - bufferSize :
-            (bufferSize * 2) + writeIndex - bufferSize;
-
+        // Copy circular buffer to YIN buffer
+        int startIndex = (writeIndex + bufferSize) % (bufferSize * 2);
         for (int i = 0; i < bufferSize; ++i)
         {
             int index = (startIndex + i) % (bufferSize * 2);
             yinBuffer[i] = circularBuffer[index];
         }
 
+        // Apply window function to reduce spectral leakage
         applyHannWindow(yinBuffer);
+        
+        // YIN Algorithm steps
         calculateDifferenceFunction();
         calculateCumulativeMeanNormalizedDifference();
         int tau = getAbsoluteThreshold();
 
         if (tau != -1)
         {
-            // YIN Algorithm Step 4: Parabolic interpolation
+            // Parabolic interpolation for sub-sample precision
             float betterTau = parabolicInterpolation(tau);
-            //detectedPitch = sampleRate / betterTau;
-            detectedPitch = sampleRate.load() / betterTau;
-
-            //DBG("detectedPitch: " << detectedPitch);
+            float detectedFreq = sampleRate.load() / betterTau;
 
             // Validate frequency range
-            if (detectedPitch >= minFrequency && detectedPitch <= maxFrequency)
+            if (detectedFreq >= minFrequency && detectedFreq <= maxFrequency)
             {
                 // Add to pitch history for stability
-                pitchHistory[pitchHistoryIndex] = detectedPitch;
+                pitchHistory[pitchHistoryIndex] = detectedFreq;
                 pitchHistoryIndex = (pitchHistoryIndex + 1) % pitchHistorySize;
 
-                // Calculate stable pitch using weighted average
+                // Get stable pitch using weighted average
                 float stablePitch = getStablePitch();
-
-                // Calculate confidence based on clarity of detection
                 float confidence = 1.0f - cumulativeMeanNormalizedDifference[tau];
 
                 lastDetectedPitch.store(stablePitch);
                 pitchConfidence.store(confidence);
-                isNoteDetected.store(confidence > 0.7f);
-
+                isNoteDetected.store(confidence > 0.5f); // Lower threshold for low frequencies
             }
             else
             {
+                // Decay confidence if out of range
                 pitchConfidence.store(pitchConfidence.load() * 0.9f);
-                isNoteDetected.store(pitchConfidence.load() > 0.5f);
+                isNoteDetected.store(pitchConfidence.load() > 0.4f);
             }
         }
         else
         {
-            pitchConfidence.store(pitchConfidence.load() * 0.8f);
+            // Decay confidence if no pitch detected
+            pitchConfidence.store(pitchConfidence.load() * 0.85f);
             isNoteDetected.store(pitchConfidence.load() > 0.3f);
         }
-
     }
 
     void applyHannWindow(std::vector<float>& buffer)
@@ -314,12 +352,11 @@ private:
 
     void calculateDifferenceFunction()
     {
-        int W = bufferSize / 2; 
-
+        int W = bufferSize / 2;
         for (int tau = 0; tau < W; ++tau)
         {
             float sum = 0.0f;
-            for (int j = 0; j < W; ++j)
+            for (int j = 0; j < W - tau; ++j)
             {
                 float diff = yinBuffer[j] - yinBuffer[j + tau];
                 sum += diff * diff;
@@ -336,32 +373,25 @@ private:
         for (int tau = 1; tau < differenceFunction.size(); ++tau)
         {
             runningSum += differenceFunction[tau];
-            if (runningSum == 0.0f)
-            {
-                cumulativeMeanNormalizedDifference[tau] = 1.0f;
-            }
-            else
-            {
-                cumulativeMeanNormalizedDifference[tau] =
-                    differenceFunction[tau] * tau / runningSum;
-            }
+            cumulativeMeanNormalizedDifference[tau] = 
+                (runningSum == 0.0f) ? 1.0f : differenceFunction[tau] * tau / runningSum;
         }
     }
 
     int getAbsoluteThreshold()
     {
-        int minTau = static_cast<int>(sampleRate / maxFrequency);
-        int maxTau = static_cast<int>(sampleRate / minFrequency);
-
-        minTau = juce::jmax(2, juce::jmin(minTau, static_cast<int>(cumulativeMeanNormalizedDifference.size()) - 1));
-        maxTau = juce::jmax(minTau, juce::jmin(maxTau, static_cast<int>(cumulativeMeanNormalizedDifference.size()) - 1));
+        const float sr = sampleRate.load();
+        int minTau = juce::jmax(2, static_cast<int>(sr / maxFrequency));
+        int maxTau = juce::jmin(static_cast<int>(sr / minFrequency), 
+                               static_cast<int>(cumulativeMeanNormalizedDifference.size()) - 1);
 
         for (int tau = minTau; tau < maxTau; ++tau)
         {
             if (cumulativeMeanNormalizedDifference[tau] < threshold)
             {
+                // Find local minimum
                 while (tau + 1 < maxTau &&
-                    cumulativeMeanNormalizedDifference[tau + 1] < cumulativeMeanNormalizedDifference[tau])
+                       cumulativeMeanNormalizedDifference[tau + 1] < cumulativeMeanNormalizedDifference[tau])
                 {
                     tau++;
                 }
@@ -383,10 +413,7 @@ private:
         float a = (s0 - 2.0f * s1 + s2) / 2.0f;
         float b = (s2 - s0) / 2.0f;
 
-        if (a == 0.0f)
-            return static_cast<float>(tau);
-
-        return static_cast<float>(tau) - b / (2.0f * a);
+        return (a == 0.0f) ? static_cast<float>(tau) : static_cast<float>(tau) - b / (2.0f * a);
     }
 
     float getStablePitch()
@@ -394,11 +421,13 @@ private:
         float weightedSum = 0.0f;
         float totalWeight = 0.0f;
 
+        // Use recent history with higher weights for newer samples
         for (int i = 0; i < pitchHistorySize; ++i)
         {
             if (pitchHistory[i] > 0.0f)
             {
-                float weight = 1.0f; 
+                int age = (pitchHistoryIndex - i + pitchHistorySize) % pitchHistorySize;
+                float weight = 1.0f / (1.0f + age * 0.1f); // Newer samples have higher weight
                 weightedSum += pitchHistory[i] * weight;
                 totalWeight += weight;
             }
@@ -408,16 +437,25 @@ private:
         {
             float averagePitch = weightedSum / totalWeight;
             float currentPitch = lastDetectedPitch.load();
-
-            if (currentPitch > 0.0f)
-                return currentPitch * (1.0f - stabilityFactor) + averagePitch * stabilityFactor;
-            else
-                return averagePitch;
+            
+            return (currentPitch > 0.0f) ? 
+                currentPitch * (1.0f - stabilityFactor) + averagePitch * stabilityFactor :
+                averagePitch;
         }
 
         return lastDetectedPitch.load();
     }
+    
+    float normalizePitchForCable(float frequency)
+    {
+        if (frequency <= 0.0f) return 0.0f;
+
+        // Map frequency to 0.0-1.0 range (natural log scale from 60Hz to 400Hz)
+        float logFreq = std::log(juce::jlimit(minFrequency, maxFrequency, frequency));
+        float logMin = std::log(minFrequency);
+        float logMax = std::log(maxFrequency);
+
+        return (logFreq - logMin) / (logMax - logMin);
+    }
 };
 }
-
-

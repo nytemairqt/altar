@@ -16,7 +16,8 @@
 */
 
 namespace Tuner
-{
+{	
+
 	const tuner = Synth.getEffect("tuner");
     const btnShowTuner = Content.getComponent("btnShowTuner");
     const btnTunerMonitor = Content.getComponent("btnTunerMonitor");
@@ -55,8 +56,8 @@ namespace Tuner
     var referenceTuning = 440; // might include a 432 button or something
     var tuningMode = 'cents'; // 'cents' or 'hz', might not even implement a hz toggle
 
-    const MIN_FREQ = 20.0;   // min frequency to consider, we go LOW TUNE
-    const MAX_FREQ = 2000.0; // max frequency for fundamental detection
+    const MIN_FREQ = 40.0;   // min frequency to consider, we go LOW TUNE
+    const MAX_FREQ = 400.0; // max frequency for fundamental detection
     const HARMONIC_THRESHOLD = 0.3; // min relative amplitude for harmonic detection
 
     inline function analyzePitch(freq)
@@ -100,99 +101,23 @@ namespace Tuner
         return [note, deviation, unit, freq, targetFreq];
     }
 
-    const dp0 = Synth.getDisplayBufferSource("tuner");
-    const dp = dp0.getDisplayBuffer(0);
-    const FFT_SIZE = 65536;
-    const MAX_LENGTH = 65536;
-    const fft = Engine.createFFT();
-    fft.setWindowType(fft.Hann);
-    fft.setOverlap(0.0);
-    var detectedPitch = [];
+    /* GLOBAL CABLE */
 
-    dp.setRingBufferProperties({
-      "BufferLength": MAX_LENGTH,
-      "NumChannels": 2
-    });
-
-    inline function binIndexToFreq(idx)
+    const grm = Engine.getGlobalRoutingManager();
+    const pitchCable = grm.getCable("pitch");
+        
+    pitchCable.registerCallback(function(data)
     {
-        return (idx / FFT_SIZE) * Engine.getSampleRate();
-    }
-
-    inline function findPitchHPS(magBuffer, numHarmonics)
-    {
-        /* multiplies downsampled versions of the spectrum to enhance fundamental / avoid stupid overtones */
-        if (!numHarmonics) numHarmonics = 8;
+        if (data < 0.0)
+            return;
         
-        local spectrum = magBuffer[0];
-        local spectrumLength = spectrum.length;
-        local hpsSpectrum = Buffer.create(Math.floor(spectrumLength / numHarmonics));                    
+        var logMin = Math.log(40.0);
+        var logMax = Math.log(400.0);
+        var logFreq = logMin + data * (logMax - logMin);
+        var pitch = Math.exp(logFreq);  
         
-        for (i = 0; i < hpsSpectrum.length; i++)
-        {
-            hpsSpectrum[i] = spectrum[i];
-        }
-        
-        for (h = 2; h <= numHarmonics; h++)
-        {
-            local maxIndex = Math.min(Math.floor(spectrumLength / h), hpsSpectrum.length);
-            for (i = 0; i < maxIndex; i++)
-            {
-                local harmonicIndex = i * h;
-                if (harmonicIndex < spectrumLength)
-                    hpsSpectrum[i] *= spectrum[harmonicIndex];
-            }
-        }
-        
-        // find peak in valid frequency range
-        local maxIdx = 0;
-        local maxVal = 0;    
-        local minBin = Math.floor((MIN_FREQ / Engine.getSampleRate()) * FFT_SIZE);
-        local maxBin = Math.floor((MAX_FREQ / Engine.getSampleRate()) * FFT_SIZE);
-        
-        for (i = minBin; i < Math.min(maxBin, hpsSpectrum.length); i++)
-        {
-            if (hpsSpectrum[i] > maxVal)
-            {
-                maxVal = hpsSpectrum[i];
-                maxIdx = i;
-            }
-        }
-        
-        // grab index
-        return binIndexToFreq(maxIdx);
-    }
-
-    // executed per slice of the fft
-    // the false bool is {normalized | decibels}
-    fft.setMagnitudeFunction(function(magBuffer, offset)
-    {
-        // pass the bins through the HPS
-        var f = findPitchHPS(magBuffer, 4);
-        detectedPitch = analyzePitch(f); 
+        //Console.print(Math.round(pitch) + "hz");
+        var analyzed = analyzePitch(pitch);
     }, false);
-
-
-    // prepare FFT & setup record buffer to pass to it
-    fft.prepare(FFT_SIZE, 2);
-    const recordBuffer = [Buffer.create(MAX_LENGTH), Buffer.create(MAX_LENGTH)];
-
-    inline function analyse()
-    {
-        // Copy the buffer using the thread safe copy method
-        // might need this in the HPS function as well...
-        dp.copyReadBuffer(recordBuffer);
-
-        // and process
-        fft.process(recordBuffer);
-    }
-
-    const tunerTimer = Engine.createTimerObject();
-    tunerTimer.setTimerCallback(function()
-    {
-        analyse();
-    });
-
-    // definitely dont need this to be too fast
-    tunerTimer.startTimer(50);
+    
 }

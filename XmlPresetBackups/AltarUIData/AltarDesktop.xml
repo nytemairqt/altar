@@ -418,8 +418,8 @@
   </Component>
   <Component type="ScriptPanel" id="pnlTuner" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
-             allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="TUNE"
+             allowCallbacks="Clicks Only">
+    <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="F# -9C"
                parentComponent="pnlTuner"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="580.0" y="130.0"
                parentComponent="pnlTuner"/>
