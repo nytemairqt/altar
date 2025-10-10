@@ -9,6 +9,7 @@
 
 // Include third party header files ----------------
 
+#include "amp.h"
 #include "gate.h"
 #include "postprocess.h"
 #include "preprocess.h"
