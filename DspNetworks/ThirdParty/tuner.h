@@ -8,11 +8,13 @@ namespace project
 using namespace juce;
 using namespace hise;
 using namespace scriptnode;
-using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056)>; 
+using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056),
+    SN_GLOBAL_CABLE(108826)>;
 
 enum class GlobalCables
 {
-	pitch = 0
+	pitch = 0,
+    nam = 1,
 };
 
 // ==========================| The node class with all required callbacks |==========================
@@ -99,30 +101,6 @@ template <int NV> struct tuner: public data::base, public cable_manager_t, publi
         totalSamplesCollected = 0;
 
     }
-	
-    /*
-	template <typename T> void process(T& data)
-	{		
-        int numSamples = data.getNumSamples();
-
-		for (auto ch : data)
-		{
-			dyn<float> channelData = data.toChannelData(ch);
-
-	        // Copy audio samples to circular buffer for pitch detection
-	        for (int i = 0; i < numSamples; ++i)
-	        {
-	            circularBuffer[writeIndex] = channelData[i];
-	            writeIndex = (writeIndex + 1) % (bufferSize * 2);
-	            samplesSinceLastDetection++;
-	        }
-
-	        // Mute audio through if monitor is off
-	        if (!monitorOutput.load())
-	        	channelData.clear();
-		}       
-	}
-    */
 
     template <typename T> void process(T& data)
     {
@@ -153,22 +131,6 @@ template <int NV> struct tuner: public data::base, public cable_manager_t, publi
         }
     }
 
-    juce::Random randomGenerator;
-
-    /*
-	void timerCallback() override
-    {        
-        // Perform pitch detection only if we have enough new samples
-        if (samplesSinceLastDetection >= pitchDetectionInterval)
-        {
-            performPitchDetection();
-            samplesSinceLastDetection = 0;
-                
-            // send detected pitch back to cable
-            setGlobalCableValue<GlobalCables::pitch>(lastDetectedPitch.load());
-        }
-    }
-    */
     void timerCallback() override
     {
         if (totalSamplesCollected < bufferSize)

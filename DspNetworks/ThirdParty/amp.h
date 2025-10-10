@@ -6,17 +6,25 @@
 #include <RTNeural.h>
 #include <wavenet/wavenet_model.hpp>
 
+enum class GlobalCables
+{
+    pitch = 0,
+    nam = 1,
+};
+
 namespace project
 {
 using namespace juce;
 using namespace hise;
 using namespace scriptnode;
+using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056),
+                                                          SN_GLOBAL_CABLE(108826)>; 
 
 // ==========================| The node class with all required callbacks |==========================
 
 /* pretty much all of this is vibe-coded/regenerated because I had to transfer it from my original JUCE version */
 
-template <int NV> struct amp: public data::base
+template <int NV> struct amp: public data::base, public cable_manager_t
 {
     SNEX_NODE(amp);        
     
@@ -39,7 +47,18 @@ template <int NV> struct amp: public data::base
     int handleModulation(double& value) { return 0; }
     template <typename T> void processFrame(T& data) {}
     void handleHiseEvent(HiseEvent& e) {}
-    void setExternalData(const ExternalData& data, int index) {}
+
+
+    amp()
+    {        
+        this->registerDataCallback<GlobalCables::nam>([this](const var& data)
+        {
+            // thread: https://forum.hise.audio/post/103680
+            this->loadNAMModelFromJSON(data);
+            //jassertfalse;
+        });
+        
+    }
     
     void prepare(PrepareSpecs specs) 
     {
@@ -60,11 +79,11 @@ template <int NV> struct amp: public data::base
         {
             model.prepare(specs.blockSize);
             model.prewarm();
-        }
+        }        
         
         // Reset all filters
-        reset();
-    }       
+        reset();        
+    }           
 
     void reset() 
     {
@@ -125,6 +144,11 @@ template <int NV> struct amp: public data::base
             }
             channelIndex++;
         }
+    }
+
+    void setExternalData(const ExternalData& data, int index) 
+    {
+        
     }
     
     template <int P> void setParameter(double v)
@@ -420,6 +444,48 @@ private:
     BiquadState cleanToneStackStates[2][numToneStackStates]; // 4 filters
     BiquadState dirtyToneStackStates[2][numToneStackStates]; // 4 filters
     BiquadState namToneStackStates[2][numToneStackStates];   // 4 filters
+
+    void loadNAMModelFromJSON(const var& jsonData)
+    {
+        try
+        {
+            // Convert JUCE var to nlohmann::json
+            nlohmann::json modelJson;
+        
+            if (jsonData.isObject())
+            {
+                // Convert JUCE DynamicObject to JSON string, then parse
+                String jsonString = JSON::toString(jsonData);
+                modelJson = nlohmann::json::parse(jsonString.toStdString());
+            }
+            else if (jsonData.isString())
+            {
+                // If it's already a JSON string
+                modelJson = nlohmann::json::parse(jsonData.toString().toStdString());
+            }
+            else
+            {
+                DBG("Invalid JSON data format for NAM loader.");
+                return;
+            }
+        
+            model.load_weights(modelJson);
+            modelLoaded = true;
+            modelPath = ""; // Clear file path since we're loading from memory
+        
+            DBG("Loaded NAM model from JSON successfully.");
+        }
+        catch (const std::exception& e)
+        {
+            DBG("Exception loading NAM model: " << e.what());
+            modelLoaded = false;
+        }
+        catch (...)
+        {
+            DBG("Unknown exception loading NAM model");
+            modelLoaded = false;
+        }
+    }
     
     // NAM Model
     struct NAMMathsProvider

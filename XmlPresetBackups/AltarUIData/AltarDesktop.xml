@@ -139,8 +139,7 @@
              height="390.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0"/>
   <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0">
+             height="390.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptSlider" id="knbAmpMode" x="50.0" y="170.0" defaultValue="1.0"
                max="2.0" stepSize="1.0" middlePosition="1.0" width="48.0" parentComponent="pnlAmp"
                tooltip="Amp mode. [CLEAN, DRIVE, NAM]"/>
@@ -182,7 +181,8 @@
                text="Mode" width="80.0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="351.0" width="1150.0"
-             height="390.0" itemColour2="4278190080" itemColour="4278190080">
+             height="390.0" itemColour2="4278190080" itemColour="4278190080"
+             visible="0">
     <Component type="ScriptButton" id="btnOpenCabFolder" x="700.0" y="19.0"
                parentComponent="pnlCab" isMomentary="1" tooltip="Open saved cabs folder."/>
     <Component type="ScriptButton" id="btnShowCabDesigner" x="420.0" y="19.0"
@@ -579,4 +579,6 @@
                ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
                itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: true,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
   </Component>
+  <Component type="ScriptButton" id="btnTest" x="190.0" y="400.0" enableMidiLearn="0"
+             isMomentary="1"/>
 </ContentProperties>
