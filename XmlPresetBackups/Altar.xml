@@ -194,7 +194,20 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="1" Network="cab"
+        <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="1" Network="overdrive"
+                   DistortionMode="0.0" Oversampling="0.0" Drive="9.059000015258789"
+                   Tone="0.0" ToneFreq="1000.0" OutputGain="0.0" Mix="1.0" Bits="16.0"
+                   SRReduction="1.0" FoldAmount="2.0">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="1" Network="amp"
+                   AmpMode="1.0" Oversampling="1.0" InputGain="69.59999847412109"
+                   Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="-39.20000076293945">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Hardcoded Master FX" ID="modularC" Bypassed="1" Network="cab"
                    Mix="0.5" CabAEnable="0.0" CabADelay="5.400000095367432" CabAAxis="0.0"
                    CabADistance="20000.0" CabAPhase="0.0" CabAPan="0.0" CabAGain="1.490116119384766e-6"
                    CabBEnable="0.0" CabBDelay="0.0" CabBAxis="0.0" CabBDistance="0.05000000074505806"
@@ -206,29 +219,16 @@
             <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
           </AudioFiles>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="delay"
+        <Processor Type="Hardcoded Master FX" ID="modularD" Bypassed="1" Network="reverb"
+                   Mix="1.0" PreDelay="0.02999999932944775" RoomSize="0.5879999995231628"
+                   Decay="0.6940000057220459" DampingFrequency="3000.0" ChorusDepth="0.300000011920929">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Hardcoded Master FX" ID="modularE" Bypassed="1" Network="delay"
                    Mix="0.5" DelayTime="0.5" Feedback="0.699999988079071" Damping="2000.0"
                    Modulation="0.4000000059604645" StereoWidth="0.300000011920929"
                    TempoSync="1.0" DelayMode="0.0">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
-        </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularC" Bypassed="1" Network="overdrive"
-                   DistortionMode="0.0" Oversampling="0.0" Drive="9.059000015258789"
-                   Tone="0.0" ToneFreq="1000.0" OutputGain="0.0" Mix="1.0" Bits="16.0"
-                   SRReduction="1.0" FoldAmount="2.0">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
-        </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularD" Bypassed="1" Network="amp"
-                   AmpMode="1.0" Oversampling="1.0" InputGain="69.59999847412109"
-                   Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="-39.20000076293945">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
-        </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularE" Bypassed="1" Network="reverb"
-                   Mix="1.0" PreDelay="0.02999999932944775" RoomSize="0.5879999995231628"
-                   Decay="0.6940000057220459" DampingFrequency="3000.0" ChorusDepth="0.300000011920929">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -236,7 +236,10 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularG" Bypassed="1" Network="">
+        <Processor Type="Hardcoded Master FX" ID="modularG" Bypassed="0" Network="ringmod"
+                   Mix="0.5879999995231628" Frequency="1523.287963867188" Depth="0.699999988079071"
+                   Mode="0.0" LFORate="1.20799994468689" LFODepth="0.7839999794960022"
+                   FilterFrequency="8000.0" StereoMode="1.0" TempoSync="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -358,7 +361,7 @@
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors>
-            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="279.0"
+            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="280.0"
                        CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
               <ChildProcessors/>
               <MidiFiles>
@@ -1470,8 +1473,11 @@
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>
-                <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
-                          FileName="">
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>

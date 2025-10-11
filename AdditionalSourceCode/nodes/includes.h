@@ -16,6 +16,7 @@
 #include "postprocess.h"
 #include "preprocess.h"
 #include "reverb.h"
+#include "ringmod.h"
 #include "rubberband.h"
 #include "tuner.h"
 

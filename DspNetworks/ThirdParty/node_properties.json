@@ -6,6 +6,7 @@
   "postprocess": [],
   "preprocess": [],
   "reverb": [],
+  "ringmod": [],
   "rubberband": [],
   "tuner": []
 }

@@ -91,15 +91,15 @@
                parentComponent="pnlMaster" tooltip="Snap pitch-shifter to semitones."
                text=""/>
     <Component type="ScriptPanel" id="pnlModularA" x="320.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularB" x="380.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="delay" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="overdrive" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularD" x="500.0" y="310.0" parentComponent="pnlMaster"
+    <Component type="ScriptPanel" id="pnlModularB" x="380.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularE" x="560.0" y="310.0" parentComponent="pnlMaster"
+    <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
+               width="60.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularD" x="500.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="reverb" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularE" x="560.0" y="310.0" parentComponent="pnlMaster"
+               width="60.0" height="40.0" text="delay" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularF" x="620.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularG" x="680.0" y="310.0" parentComponent="pnlMaster"
@@ -185,8 +185,7 @@
                visible="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="351.0" width="1150.0"
-             height="390.0" itemColour2="4278190080" itemColour="4278190080"
-             visible="0">
+             height="390.0" itemColour2="4278190080" itemColour="4278190080">
     <Component type="ScriptButton" id="btnOpenCabFolder" x="700.0" y="19.0"
                parentComponent="pnlCab" isMomentary="1" tooltip="Open saved cabs folder."/>
     <Component type="ScriptButton" id="btnShowCabDesigner" x="420.0" y="19.0"
@@ -260,7 +259,8 @@
                processorId="reverb" parameterId="Enabled"/>
   </Component>
   <Component type="ScriptPanel" id="pnlDelay" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080"/>
+             height="390.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0"/>
   <Component type="ScriptPanel" id="pnlChorus" x="0.0" y="350.0" width="1150.0"
              height="390.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0"/>
