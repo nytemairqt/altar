@@ -90,7 +90,6 @@ namespace LookAndFeel
 	                            Content.getComponent("knbGateThreshold"),
 	                            Content.getComponent("knbPitch"),
 	                            Content.getComponent("knbOctave"),
-	                            Content.getComponent("knbOctaveFreq"),
 	                            Content.getComponent("knbChugThreshold"),
 	                            Content.getComponent("knbChugFreq"),
 	                            Content.getComponent("knbPickThreshold"),

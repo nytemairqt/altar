@@ -83,45 +83,8 @@ namespace InputChain
     const grit = Synth.getEffect("grit");
 
     // Octave
-    const octavePre = Synth.getEffect("octavePre");
-    const octavePost = Synth.getEffect("octavePost");
+    const octave = Synth.getEffect("octave");
     const btnOctave = Content.getComponent("btnOctave");
-    const btnOctavePosition = Content.getComponent("btnOctavePosition");
     const knbOctave = Content.getComponent("knbOctave");
-    const knbOctaveFreq = Content.getComponent("knbOctaveFreq");
     
-    inline function onbtnOctaveControl(component, value)
-    {
-        if (value)
-        {
-            octavePre.setBypassed(btnOctavePosition.getValue());
-            octavePost.setBypassed(1-btnOctavePosition.getValue());
-            btnOctavePosition.set("enabled", true);
-        }
-        else
-        {
-            octavePre.setBypassed(true);
-            octavePost.setBypassed(true);
-            btnOctavePosition.set("enabled", false);
-        }
-    }
-
-    inline function onknbOctaveControl(component, value)
-    {
-        switch (component)
-        {
-            case knbOctave:
-                //octavePre.setAttribute(octavePre.Mix, value);
-                //octavePost.setAttribute(octavePost.Mix, value);
-                break;      
-            case knbOctaveFreq:
-                //octavePre.setAttribute(octavePre.Freq, value);
-                //octavePost.setAttribute(octavePost.Freq, value);
-            break;
-        }
-    }
-
-    knbOctave.setControlCallback(onknbOctaveControl);
-    knbOctaveFreq.setControlCallback(onknbOctaveControl);
-    btnOctave.setControlCallback(onbtnOctaveControl);
 }
