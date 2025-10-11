@@ -97,13 +97,13 @@
     <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularD" x="500.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="reverb" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="chorus" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularE" x="560.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="delay" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="reverb" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularF" x="620.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="delay" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularG" x="680.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="ringmod" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlTooltip" x="860.0" y="770.0" parentComponent="pnlMaster"
                width="220.0" height="30.0"/>
     <Component type="ScriptLabel" id="lblInputGain" x="20.0" y="130.0" parentComponent="pnlMaster"

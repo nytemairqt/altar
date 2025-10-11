@@ -10,6 +10,7 @@
 // Include third party header files ----------------
 
 #include "amp.h"
+#include "chorus.h"
 #include "delay.h"
 #include "gate.h"
 #include "overdrive.h"
