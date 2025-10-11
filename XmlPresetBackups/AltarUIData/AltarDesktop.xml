@@ -97,7 +97,7 @@
     <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularD" x="500.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+               width="60.0" height="40.0" text="reverb" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularE" x="560.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularF" x="620.0" y="310.0" parentComponent="pnlMaster"

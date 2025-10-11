@@ -29,6 +29,7 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		
 		registerPolyNode<project::tuner<1>, scriptnode::wrap::illegal_poly<project::tuner<1>>>();
 		registerPolyNode<project::rubberband<1>, scriptnode::wrap::illegal_poly<project::rubberband<1>>>();
+		registerPolyNode<project::reverb<1>, scriptnode::wrap::illegal_poly<project::reverb<1>>>();
 		registerPolyNode<project::preprocess<1>, scriptnode::wrap::illegal_poly<project::preprocess<1>>>();
 		registerPolyNode<project::postprocess<1>, scriptnode::wrap::illegal_poly<project::postprocess<1>>>();
 		registerPolyNode<project::overdrive<1>, scriptnode::wrap::illegal_poly<project::overdrive<1>>>();

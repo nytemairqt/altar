@@ -14,6 +14,7 @@
 #include "overdrive.h"
 #include "postprocess.h"
 #include "preprocess.h"
+#include "reverb.h"
 #include "rubberband.h"
 #include "tuner.h"
 
