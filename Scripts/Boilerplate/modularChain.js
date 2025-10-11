@@ -17,44 +17,7 @@
 
 namespace ModularChain
 {
-    /* GLOBAL CABLE */
-
-    const grm = Engine.getGlobalRoutingManager();
-    const namCable = grm.getCable("nam");
-        
-    /*
-    namCable.registerCallback(function(data)
-    {
-        if (data < 0.0)
-            return;
-        
-        var logMin = Math.log(40.0);
-        var logMax = Math.log(400.0);
-        var logFreq = logMin + data * (logMax - logMin);
-        var pitch = Math.exp(logFreq);  
-        
-        //Console.print(Math.round(pitch) + "hz");
-        var analyzed = analyzePitch(pitch);
-    }, false);
-    */
     
-    const filePath = "C:/Users/iamla/Desktop/14a Marshall JCM800 2203X RATT Rhythm.nam";
-    const namModel = FileSystem.fromAbsolutePath(filePath);
-    const jsonData = namModel.loadAsObject();
-    
-    const btnTest = Content.getComponent("btnTest");
-    
-    
-    inline function onbtnTestControl(component, value)
-    {
-	    if (value)
-	    	namCable.sendData(jsonData);
-    }
-    
-    btnTest.setControlCallback(onbtnTestControl);
-    
-    
-
 	const fxSlots = [Synth.getSlotFX("modularA"),
                      Synth.getSlotFX("modularB"),
                      Synth.getSlotFX("modularC"),

@@ -55,7 +55,6 @@ template <int NV> struct amp: public data::base, public cable_manager_t
         {
             // thread: https://forum.hise.audio/post/103680
             this->loadNAMModelFromJSON(data);
-            //jassertfalse;
         });
         
     }
@@ -94,12 +93,8 @@ template <int NV> struct amp: public data::base, public cable_manager_t
                 preSculptStates[ch][i].reset();
             for (int i = 0; i < numPostSculptStates; ++i)
                 postSculptStates[ch][i].reset();
-            for (int i = 0; i < numToneStackStates; ++i)
-            {
-                cleanToneStackStates[ch][i].reset();
-                dirtyToneStackStates[ch][i].reset();
-                namToneStackStates[ch][i].reset();
-            }
+            for (int i = 0; i < numToneStackStates; ++i)                
+                toneStackStates[ch][i].reset();
         }
         
         // Reset oversampling if active
@@ -165,30 +160,14 @@ template <int NV> struct amp: public data::base, public cable_manager_t
                 updateOversampling();
             break;
         }
-        
-        // Clean Mode Parameters (2-7)
-        case 2: cleanInputGain = static_cast<float>(v); break;
-        case 3: cleanLow = static_cast<float>(v); updateCleanToneStack(); break;
-        case 4: cleanMid = static_cast<float>(v); updateCleanToneStack(); break;
-        case 5: cleanHigh = static_cast<float>(v); updateCleanToneStack(); break;
-        case 6: cleanPresence = static_cast<float>(v); updateCleanToneStack(); break;
-        case 7: cleanOutputGain = static_cast<float>(v); break;
-        
-        // Dirty Mode Parameters (8-13)
-        case 8: dirtyInputGain = static_cast<float>(v); break;
-        case 9: dirtyLow = static_cast<float>(v); updateDirtyToneStack(); break;
-        case 10: dirtyMid = static_cast<float>(v); updateDirtyToneStack(); break;
-        case 11: dirtyHigh = static_cast<float>(v); updateDirtyToneStack(); break;
-        case 12: dirtyPresence = static_cast<float>(v); updateDirtyToneStack(); break;
-        case 13: dirtyOutputGain = static_cast<float>(v); break;
-        
-        // NAM Mode Parameters (14-19)
-        case 14: namInputGain = static_cast<float>(v); break;
-        case 15: namLow = static_cast<float>(v); updateNamToneStack(); break;
-        case 16: namMid = static_cast<float>(v); updateNamToneStack(); break;
-        case 17: namHigh = static_cast<float>(v); updateNamToneStack(); break;
-        case 18: namPresence = static_cast<float>(v); updateNamToneStack(); break;
-        case 19: namOutputGain = static_cast<float>(v); break;
+
+        // Amp Parameters
+        case 2: inputGain = static_cast<float>(v); break;
+        case 3: low = static_cast<float>(v); updateToneStack(); break;
+        case 4: mid = static_cast<float>(v); updateToneStack(); break;
+        case 5: high = static_cast<float>(v); updateToneStack(); break;
+        case 6: presence = static_cast<float>(v); updateToneStack(); break;
+        case 7: outputGain = static_cast<float>(v); break;        
         }
     }
     
@@ -209,120 +188,44 @@ template <int NV> struct amp: public data::base, public cable_manager_t
             oversamp.setDefaultValue(1.0);
             data.add(std::move(oversamp));
         }
-        
-        // Clean Mode Parameters
+
+        // Amp Parameters
         {
-            parameter::data inputGain("Clean Input Gain", { -60.0, 60.0 });
+            parameter::data inputGain("Input Gain", { -100.0, 100.0 });
             registerCallback<2>(inputGain);
             inputGain.setDefaultValue(0.0);
             data.add(std::move(inputGain));
         }
         {
-            parameter::data low("Clean Low", { -15.0, 15.0 });
+            parameter::data low("Low", { -12.0, 12.0 });
             registerCallback<3>(low);
             low.setDefaultValue(0.0);
             data.add(std::move(low));
         }
         {
-            parameter::data mid("Clean Mid", { -15.0, 15.0 });
+            parameter::data mid("Mid", { -12.0, 12.0 });
             registerCallback<4>(mid);
             mid.setDefaultValue(0.0);
             data.add(std::move(mid));
         }
         {
-            parameter::data high("Clean High", { -15.0, 15.0 });
+            parameter::data high("High", { -12.0, 12.0 });
             registerCallback<5>(high);
             high.setDefaultValue(0.0);
             data.add(std::move(high));
         }
         {
-            parameter::data presence("Clean Presence", { -15.0, 15.0 });
+            parameter::data presence("Presence", { -12.0, 12.0 });
             registerCallback<6>(presence);
             presence.setDefaultValue(0.0);
             data.add(std::move(presence));
         }
         {
-            parameter::data outputGain("Clean Output Gain", { -20.0, 20.0 });
+            parameter::data outputGain("Output Gain", { -100.0, 100.0 });
             registerCallback<7>(outputGain);
             outputGain.setDefaultValue(0.0);
             data.add(std::move(outputGain));
-        }
-        
-        // Dirty Mode Parameters
-        {
-            parameter::data inputGain("Dirty Input Gain", { -60.0, 60.0 });
-            registerCallback<8>(inputGain);
-            inputGain.setDefaultValue(0.0);
-            data.add(std::move(inputGain));
-        }
-        {
-            parameter::data low("Dirty Low", { -15.0, 15.0 });
-            registerCallback<9>(low);
-            low.setDefaultValue(0.0);
-            data.add(std::move(low));
-        }
-        {
-            parameter::data mid("Dirty Mid", { -15.0, 15.0 });
-            registerCallback<10>(mid);
-            mid.setDefaultValue(0.0);
-            data.add(std::move(mid));
-        }
-        {
-            parameter::data high("Dirty High", { -15.0, 15.0 });
-            registerCallback<11>(high);
-            high.setDefaultValue(0.0);
-            data.add(std::move(high));
-        }
-        {
-            parameter::data presence("Dirty Presence", { -15.0, 15.0 });
-            registerCallback<12>(presence);
-            presence.setDefaultValue(0.0);
-            data.add(std::move(presence));
-        }
-        {
-            parameter::data outputGain("Dirty Output Gain", { -20.0, 20.0 });
-            registerCallback<13>(outputGain);
-            outputGain.setDefaultValue(0.0);
-            data.add(std::move(outputGain));
-        }
-        
-        // NAM Mode Parameters
-        {
-            parameter::data inputGain("NAM Input Gain", { -60.0, 60.0 });
-            registerCallback<14>(inputGain);
-            inputGain.setDefaultValue(0.0);
-            data.add(std::move(inputGain));
-        }
-        {
-            parameter::data low("NAM Low", { -15.0, 15.0 });
-            registerCallback<15>(low);
-            low.setDefaultValue(0.0);
-            data.add(std::move(low));
-        }
-        {
-            parameter::data mid("NAM Mid", { -15.0, 15.0 });
-            registerCallback<16>(mid);
-            mid.setDefaultValue(0.0);
-            data.add(std::move(mid));
-        }
-        {
-            parameter::data high("NAM High", { -15.0, 15.0 });
-            registerCallback<17>(high);
-            high.setDefaultValue(0.0);
-            data.add(std::move(high));
-        }
-        {
-            parameter::data presence("NAM Presence", { -15.0, 15.0 });
-            registerCallback<18>(presence);
-            presence.setDefaultValue(0.0);
-            data.add(std::move(presence));
-        }
-        {
-            parameter::data outputGain("NAM Output Gain", { -20.0, 20.0 });
-            registerCallback<19>(outputGain);
-            outputGain.setDefaultValue(0.0);
-            data.add(std::move(outputGain));
-        }
+        }            
     }
     
     // Public method to load NAM models
@@ -387,30 +290,14 @@ private:
     static const int numPreSculptStates = 4;
     static const int numPostSculptStates = 6;
     static const int numToneStackStates = 4;
-    
-    // Clean Mode Parameters
-    float cleanInputGain = 0.0f;
-    float cleanLow = 0.0f;
-    float cleanMid = 0.0f;
-    float cleanHigh = 0.0f;
-    float cleanPresence = 0.0f;
-    float cleanOutputGain = 0.0f;
-    
-    // Dirty Mode Parameters
-    float dirtyInputGain = 0.0f;
-    float dirtyLow = 0.0f;
-    float dirtyMid = 0.0f;
-    float dirtyHigh = 0.0f;
-    float dirtyPresence = 0.0f;
-    float dirtyOutputGain = 0.0f;
-    
-    // NAM Mode Parameters
-    float namInputGain = 0.0f;
-    float namLow = 0.0f;
-    float namMid = 0.0f;
-    float namHigh = 0.0f;
-    float namPresence = 0.0f;
-    float namOutputGain = 0.0f;
+
+    // Amp Parameters
+    float inputGain = 0.0f;
+    float low = 0.0f;
+    float mid = 0.0f;
+    float high = 0.0f;
+    float presence = 0.0f;
+    float outputGain = 0.0f;
     
     // Biquad Filter State
     struct BiquadState
@@ -440,10 +327,8 @@ private:
     
     // Filter states [channel][filter]
     BiquadState preSculptStates[2][numPreSculptStates];      // 4 filters
-    BiquadState postSculptStates[2][numPostSculptStates];     // 6 filters
-    BiquadState cleanToneStackStates[2][numToneStackStates]; // 4 filters
-    BiquadState dirtyToneStackStates[2][numToneStackStates]; // 4 filters
-    BiquadState namToneStackStates[2][numToneStackStates];   // 4 filters
+    BiquadState postSculptStates[2][numPostSculptStates];     // 6 filters    
+    BiquadState toneStackStates[2][numToneStackStates];
 
     void loadNAMModelFromJSON(const var& jsonData)
     {
@@ -589,12 +474,12 @@ private:
                 
                 // Tone stack
                 for (int f = 0; f < 4; ++f)
-                    sample = cleanToneStackStates[ch][f].process(sample);
+                    sample = toneStackStates[ch][f].process(sample);
                 
-                // Input gain and clean processing
-                sample *= Decibels::decibelsToGain(cleanInputGain);
+                // Input gain and clean processing                
+                sample *= Decibels::decibelsToGain(inputGain);
                 sample = getCleanSample(sample);
-                sample *= Decibels::decibelsToGain(cleanOutputGain);
+                sample *= Decibels::decibelsToGain(outputGain);
                 
                 // Post-sculpt
                 for (int f = 0; f < 6; ++f)
@@ -623,12 +508,12 @@ private:
                 
                 // Tone stack
                 for (int f = 0; f < 4; ++f)
-                    sample = dirtyToneStackStates[ch][f].process(sample);
+                    sample = toneStackStates[ch][f].process(sample);
                 
                 // Input gain and dirty processing
-                sample *= Decibels::decibelsToGain(dirtyInputGain);
+                sample *= Decibels::decibelsToGain(inputGain);
                 sample = getDirtySample(sample);
-                sample *= Decibels::decibelsToGain(dirtyOutputGain);
+                sample *= Decibels::decibelsToGain(outputGain);
                 
                 // Post-sculpt
                 for (int f = 0; f < 6; ++f)
@@ -651,14 +536,14 @@ private:
             // NAM processing
             if (modelLoaded)
             {
-                sample *= Decibels::decibelsToGain(namInputGain);
+                sample *= Decibels::decibelsToGain(inputGain);
                 sample = model.forward(sample);
-                sample *= Decibels::decibelsToGain(namOutputGain);
+                sample *= Decibels::decibelsToGain(outputGain);
             }
 
             // Tone stack comes after the neural model (otherwise it does nothing)
             for (int f = 0; f < 4; ++f)
-                sample = namToneStackStates[0][f].process(sample);
+                sample = toneStackStates[0][f].process(sample);
             
             channelData[s] = sample;
         }
@@ -853,33 +738,15 @@ private:
         makeLowPass(&postSculptStates[0][5], 10000.0f);
         
         // Update tone stacks
-        updateCleanToneStack();
-        updateDirtyToneStack();
-        updateNamToneStack();
+        updateToneStack();
     }
-    
-    void updateCleanToneStack()
+
+    void updateToneStack()
     {
-        makePeakFilter(&cleanToneStackStates[0][0], 160.0f, 0.6f, cleanLow);
-        makePeakFilter(&cleanToneStackStates[0][1], 600.0f, 0.8f, cleanMid);
-        makePeakFilter(&cleanToneStackStates[0][2], 2600.0f, 0.8f, cleanHigh);
-        makeHighShelf(&cleanToneStackStates[0][3], 6000.0f, 0.8f, cleanPresence);
-    }
-    
-    void updateDirtyToneStack()
-    {
-        makePeakFilter(&dirtyToneStackStates[0][0], 160.0f, 0.6f, dirtyLow);
-        makePeakFilter(&dirtyToneStackStates[0][1], 600.0f, 0.8f, dirtyMid);
-        makePeakFilter(&dirtyToneStackStates[0][2], 2600.0f, 0.8f, dirtyHigh);
-        makeHighShelf(&dirtyToneStackStates[0][3], 6000.0f, 0.8f, dirtyPresence);
-    }
-    
-    void updateNamToneStack()
-    {
-        makePeakFilter(&namToneStackStates[0][0], 160.0f, 0.6f, namLow);
-        makePeakFilter(&namToneStackStates[0][1], 600.0f, 0.8f, namMid);
-        makePeakFilter(&namToneStackStates[0][2], 2600.0f, 0.8f, namHigh);
-        makeHighShelf(&namToneStackStates[0][3], 6000.0f, 0.8f, namPresence);
-    }
+        makePeakFilter(&toneStackStates[0][0], 160.0f, 0.6f, low);
+        makePeakFilter(&toneStackStates[0][1], 600.0f, 0.8f, mid);
+        makePeakFilter(&toneStackStates[0][2], 2600.0f, 0.8f, high);
+        makeHighShelf(&toneStackStates[0][3], 6000.0f, 0.8f, presence);
+    }   
 };
 }

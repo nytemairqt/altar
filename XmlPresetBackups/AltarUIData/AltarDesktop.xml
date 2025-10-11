@@ -145,9 +145,8 @@
                tooltip="Amp mode. [CLEAN, DRIVE, NAM]"/>
     <Component type="ScriptSlider" id="knbAmpInput" x="220.0" y="170.0" stepSize="0.1000000014901161"
                min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmp"
-               defaultValue="75.0" text="amp_InputGainDirty" useUndoManager="1"
-               processorId="fxSlotB" parameterId="InputGainDirty" width="48.0"
-               tooltip="Input gain."/>
+               text="amp_InputGainDirty" useUndoManager="1" processorId="fxSlotB"
+               parameterId="InputGainDirty" width="48.0" tooltip="Input gain."/>
     <Component type="ScriptSlider" id="knbAmpOutput" x="710.0" y="170.0" stepSize="0.1000000014901161"
                min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmp"
                text="amp_OutputGainDirty" width="48.0" tooltip="Output gain."/>
@@ -165,7 +164,7 @@
                width="48.0" tooltip="Tonestack presence."/>
     <Component type="ScriptLabel" id="lblAmpDirtyInput" x="205.0" y="220.0"
                parentComponent="pnlAmp" text="Input" width="80.0"/>
-    <Component type="ScriptLabel" id="lblAmpDirty" x="470.0" y="100.0" parentComponent="pnlAmp"
+    <Component type="ScriptLabel" id="lblAmpDirty" x="450.0" y="20.0" parentComponent="pnlAmp"
                text="DIRTY"/>
     <Component type="ScriptLabel" id="lblAmpDirtyLow" x="256.0" y="329.0" parentComponent="pnlAmp"
                text="Low" width="80.0"/>
@@ -579,6 +578,7 @@
                ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
                itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: true,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
   </Component>
-  <Component type="ScriptButton" id="btnTest" x="190.0" y="400.0" enableMidiLearn="0"
-             isMomentary="1"/>
+  <Component type="ScriptPanel" id="pnlAmpNAMLoader" x="350.0" y="450.0" width="300.0"
+             height="130.0" text="Drag NAM File or Right Click to open Browser."
+             allowCallbacks="Clicks, Hover &amp; Dragging"/>
 </ContentProperties>
