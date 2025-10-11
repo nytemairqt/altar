@@ -11,6 +11,7 @@
 
 #include "amp.h"
 #include "gate.h"
+#include "overdrive.h"
 #include "postprocess.h"
 #include "preprocess.h"
 #include "rubberband.h"

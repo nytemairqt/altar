@@ -2,9 +2,14 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include <nlohmann/json.hpp>
-#include <RTNeural.h>
-#include <wavenet/wavenet_model.hpp>
+
+#define RTNEURAL_USE_EIGEN 1
+#define RTNEURAL_USE_XSIMD 0
+#define RTNEURAL_DEFAULT_ALIGNMENT 16
+
+#include "src/json/single_include/nlohmann/json.hpp"
+#include "src/RTNeural/RTNeural.h"
+#include "src/RTNeural-NAM/wavenet/wavenet_model.hpp"
 
 enum class GlobalCables
 {
