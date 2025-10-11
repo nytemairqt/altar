@@ -15,13 +15,22 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace NAMLoader
+namespace Amp
 {
     /* GLOBAL CABLE */
+    
+    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");         
+    const knbAmpMode = Content.getComponent("knbAmpMode");  
 
-    const grm = Engine.getGlobalRoutingManager();
-    const namCable = grm.getCable("nam");
-    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");            
+    inline function onknbAmpModeControl(component, value)
+    {
+    	if (value < 2)
+    		pnlAmpNAMLoader.set("visible", false);
+    	else
+    		pnlAmpNAMLoader.set("visible", true);
+    } 
+
+    knbAmpMode.setControlCallback(onknbAmpModeControl);
    
     inline function pnlAmpNAMLoaderDrop(f)
     {

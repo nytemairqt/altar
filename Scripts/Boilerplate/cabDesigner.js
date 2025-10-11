@@ -20,7 +20,6 @@ namespace CabDesigner
 	const cabDesignerFileSave = Synth.getAudioSampleProcessor("cabDesignerFileSave");
     const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");
     const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
-    const btnCab = Content.getComponent("btnCab");
     const btnCabGenerate = Content.getComponent("btnCabGenerate");    
     const btnCabSave = Content.getComponent("btnCabSave");
     const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
@@ -189,9 +188,7 @@ namespace CabDesigner
     }
 
     inline function onbtnShowCabDesignerControl(component, value)
-    {
-        btnCab.setValue(1-value);
-        btnCab.changed();   
+    {                
         pnlCabDesigner.set("visible", value);   
     }
 

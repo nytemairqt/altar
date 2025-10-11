@@ -6,7 +6,7 @@ include("Boilerplate/click.js");
 include("Boilerplate/tuner.js");
 include("Boilerplate/preferences.js");
 include("Boilerplate/cabDesigner.js");
-include("Boilerplate/namLoader.js");
+include("Boilerplate/amp.js");
 include("Boilerplate/inputChain.js");
 include("Boilerplate/modularChain.js");
 include("Boilerplate/outputChain.js");
