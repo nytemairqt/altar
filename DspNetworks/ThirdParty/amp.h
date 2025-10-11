@@ -407,60 +407,51 @@ private:
         model;
     
     // Main processing function
-    void processAudioBuffer(AudioBuffer<float>& buffer)
+
+    void processAudioBuffer(juce::AudioBuffer<float>& buffer)
     {
-        int numSamples = buffer.getNumSamples();
-        size_t numCh = buffer.getNumChannels();
-        
-        // Handle oversampling
-        AudioBuffer<float>* processingBuffer = &buffer;
-        AudioBuffer<float> oversampledBuffer;
-        bool useOversampling = false;
-        
-        if (oversamplingFactor > 0 && oversampling != nullptr && ampMode < 2)
-        {
-            dsp::AudioBlock<float> block(buffer);
-            dsp::AudioBlock<float> oversampledBlock = oversampling->processSamplesUp(block);
-            
-            oversampledBuffer.setSize(oversampledBlock.getNumChannels(), 
-                                     oversampledBlock.getNumSamples(), false, false, false);
-            
-            for (size_t ch = 0; ch < oversampledBlock.getNumChannels(); ++ch)
-            {
-                memcpy(oversampledBuffer.getWritePointer(ch), 
-                       oversampledBlock.getChannelPointer(ch),
-                       oversampledBlock.getNumSamples() * sizeof(float));
-            }
-            
-            processingBuffer = &oversampledBuffer;
-            useOversampling = true;
-        }
-        
-        int procSamples = processingBuffer->getNumSamples();
-        
-        // Process based on amp mode
-        if (ampMode == 0) // Clean
-        {
-            processCleanMode(*processingBuffer, procSamples);
-        }
-        else if (ampMode == 1) // Dirty
-        {
-            processDirtyMode(*processingBuffer, procSamples);
-        }
-        else if (ampMode == 2) // NAM
-        {
-            processNAMMode(*processingBuffer, procSamples);
-        }
-        
-        // Downsample if needed
+        // Use oversampling only for Clean/Dirty (ampMode < 2)
+        const bool useOversampling = (oversamplingFactor > 0 && oversampling != nullptr && ampMode < 2);
+        juce::dsp::AudioBlock<float> inBlock(buffer);
+
         if (useOversampling)
         {
-            dsp::AudioBlock<float> oversampledBlock(*processingBuffer);
-            dsp::AudioBlock<float> outputBlock(buffer);
-            oversampling->processSamplesDown(outputBlock);
+            // Upsample into the oversampler's internal buffer
+            auto upBlock = oversampling->processSamplesUp(inBlock);
+
+            const int upCh     = static_cast<int>(upBlock.getNumChannels());
+            const int upFrames = static_cast<int>(upBlock.getNumSamples());
+
+            juce::HeapBlock<float*> chanPtrs(upCh);
+            for (int ch = 0; ch < upCh; ++ch)
+                chanPtrs[ch] = upBlock.getChannelPointer(static_cast<size_t>(ch));
+
+            // Non-owning AudioBuffer view over the upsampled data
+            juce::AudioBuffer<float> osBuffer(chanPtrs.getData(), upCh, upFrames);
+
+            // Process based on amp mode at the upsampled rate
+            if (ampMode == 0)           // Clean
+                processCleanMode(osBuffer, osBuffer.getNumSamples());
+            else                        // Dirty
+                processDirtyMode(osBuffer, osBuffer.getNumSamples());
+
+            // Downsample back into the original buffer
+            oversampling->processSamplesDown(inBlock);
+        }
+        else
+        {
+            // No oversampling path (or NAM mode)
+            const int numSamples = buffer.getNumSamples();
+
+            if (ampMode == 0)           // Clean
+                processCleanMode(buffer, numSamples);
+            else if (ampMode == 1)      // Dirty
+                processDirtyMode(buffer, numSamples);
+            else if (ampMode == 2)      // NAM
+                processNAMMode(buffer, numSamples);
         }
     }
-    
+
     void processCleanMode(AudioBuffer<float>& buffer, int numSamples)
     {
         int numCh = juce::jmin(2, buffer.getNumChannels());

@@ -197,16 +197,16 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="1" Network="">
+        <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="0" Network="overdrive"
+                   DistortionMode="0.0" Oversampling="0.0" Drive="9.059000015258789"
+                   Tone="0.0" ToneFreq="1000.0" OutputGain="0.0" Mix="1.0" Bits="16.0"
+                   SRReduction="1.0" FoldAmount="2.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="amp"
-                   AmpMode="2.0" Oversampling="0.0" CleanInputGain="-20.0" CleanLow="1.0"
-                   CleanMid="1.0" CleanHigh="0.0" CleanPresence="0.0" CleanOutputGain="-20.0"
-                   DirtyInputGain="9.279999732971191" DirtyLow="0.0" DirtyMid="0.0"
-                   DirtyHigh="0.0" DirtyPresence="0.0" DirtyOutputGain="1.0" NAMInputGain="-20.0"
-                   NAMLow="0.0" NAMMid="0.0" NAMHigh="0.0" NAMPresence="0.0" NAMOutputGain="-20.0">
+        <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="1" Network="amp"
+                   AmpMode="2.0" Oversampling="0.0" InputGain="0.0" Low="0.0" Mid="0.0"
+                   High="0.0" Presence="0.0" OutputGain="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -349,7 +349,7 @@
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors>
-            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="235.0"
+            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="236.0"
                        CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
               <ChildProcessors/>
               <MidiFiles>
@@ -1285,8 +1285,11 @@
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>
-                <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
-                          FileName="">
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>

@@ -316,96 +316,91 @@ private:
     float wavefolderState[2] = { 0.0f, 0.0f };
     
     // Main processing function
-    void processAudioBuffer(AudioBuffer<float>& buffer)
+
+    void processAudioBuffer(juce::AudioBuffer<float>& buffer)
     {
-        int numSamples = buffer.getNumSamples();
-        size_t numCh = buffer.getNumChannels();
-        
-        // Handle oversampling
-        AudioBuffer<float>* processingBuffer = &buffer;
-        AudioBuffer<float> oversampledBuffer;
-        bool useOversampling = false;
-        
-        if (oversamplingFactor > 0 && oversampling != nullptr)
+        const bool useOversampling = (oversamplingFactor > 0 && oversampling != nullptr);
+        juce::dsp::AudioBlock<float> inBlock(buffer);
+
+        // Helper to run the existing DSP on any AudioBuffer
+        auto runDSP = [&](juce::AudioBuffer<float>& procBuf)
         {
-            dsp::AudioBlock<float> block(buffer);
-            dsp::AudioBlock<float> oversampledBlock = oversampling->processSamplesUp(block);
-            
-            oversampledBuffer.setSize(oversampledBlock.getNumChannels(), 
-                                     oversampledBlock.getNumSamples(), false, false, false);
-            
-            for (size_t ch = 0; ch < oversampledBlock.getNumChannels(); ++ch)
-            {
-                memcpy(oversampledBuffer.getWritePointer(ch), 
-                       oversampledBlock.getChannelPointer(ch),
-                       oversampledBlock.getNumSamples() * sizeof(float));
-            }
-            
-            processingBuffer = &oversampledBuffer;
-            useOversampling = true;
-        }
-        
-        int procSamples = processingBuffer->getNumSamples();
-        
-        // Set smoothed value targets
-        driveSmoothed.setTargetValue(juce::jlimit(0.1f, 20.0f, drive));
-        outputSmoothed.setTargetValue(juce::jlimit(-24.0f, 24.0f, outputGain));
-        mixSmoothed.setTargetValue(juce::jlimit(0.0f, 1.0f, mix));
-        
-        // Process input high-pass filter
-        for (int ch = 0; ch < numCh; ++ch)
-        {
-            float* channelData = processingBuffer->getWritePointer(ch);
-            for (int s = 0; s < procSamples; ++s)
-            {
-                channelData[s] = inputHPFStates[ch].process(channelData[s]);
-            }
-        }
-        
-        // Main distortion processing
-        for (int s = 0; s < procSamples; ++s)
-        {
-            float driveValue = driveSmoothed.getNextValue();
-            float outputValue = outputSmoothed.getNextValue();
-            float mixValue = mixSmoothed.getNextValue();
-            
+            const int numCh = juce::jmin(2, procBuf.getNumChannels());
+            const int procSamples = procBuf.getNumSamples();
+
+            // Set smoothed value targets
+            driveSmoothed.setTargetValue(juce::jlimit(0.1f, 20.0f, drive));
+            outputSmoothed.setTargetValue(juce::jlimit(-24.0f, 24.0f, outputGain));
+            mixSmoothed.setTargetValue(juce::jlimit(0.0f, 1.0f, mix));
+
+            // Input high-pass filter
             for (int ch = 0; ch < numCh; ++ch)
             {
-                float inputSample = processingBuffer->getSample(ch, s);
-                float drySignal = inputSample;
-                
-                // Apply distortion
-                float distortedSample = processDistortion(inputSample, driveValue, ch);
-                
-                // Apply output gain
-                distortedSample *= Decibels::decibelsToGain(outputValue);
-                
-                // Mix dry and wet signals
-                float outputSample = drySignal * (1.0f - mixValue) + distortedSample * mixValue;
-                
-                processingBuffer->setSample(ch, s, outputSample);
+                float* channelData = procBuf.getWritePointer(ch);
+                for (int s = 0; s < procSamples; ++s)
+                    channelData[s] = inputHPFStates[ch].process(channelData[s]);
             }
-        }
-        
-        // Process tone and output filters
-        for (int ch = 0; ch < numCh; ++ch)
-        {
-            float* channelData = processingBuffer->getWritePointer(ch);
+
+            // Main distortion processing
             for (int s = 0; s < procSamples; ++s)
             {
-                float sample = channelData[s];
-                sample = toneFilterStates[ch].process(sample);
-                sample = outputLPFStates[ch].process(sample);
-                channelData[s] = sample;
+                const float driveValue  = driveSmoothed.getNextValue();
+                const float outputValue = outputSmoothed.getNextValue();
+                const float mixValue    = mixSmoothed.getNextValue();
+
+                for (int ch = 0; ch < numCh; ++ch)
+                {
+                    const float inputSample = procBuf.getSample(ch, s);
+                    const float drySignal   = inputSample;
+
+                    float distortedSample = processDistortion(inputSample, driveValue, ch);
+                    distortedSample *= juce::Decibels::decibelsToGain(outputValue);
+
+                    const float outputSample = drySignal * (1.0f - mixValue) + distortedSample * mixValue;
+                    procBuf.setSample(ch, s, outputSample);
+                }
             }
-        }
-        
-        // Downsample if needed
+
+            // Tone and output filters
+            for (int ch = 0; ch < numCh; ++ch)
+            {
+                float* channelData = procBuf.getWritePointer(ch);
+                for (int s = 0; s < procSamples; ++s)
+                {
+                    float sample = channelData[s];
+                    sample = toneFilterStates[ch].process(sample);
+                    sample = outputLPFStates[ch].process(sample);
+                    channelData[s] = sample;
+                }
+            }
+        };
+
         if (useOversampling)
         {
-            dsp::AudioBlock<float> oversampledBlock(*processingBuffer);
-            dsp::AudioBlock<float> outputBlock(buffer);
-            oversampling->processSamplesDown(outputBlock);
+            // Upsample into the oversampler's internal buffer
+            auto upBlock = oversampling->processSamplesUp(inBlock);
+
+            // Create a small array of channel pointers for AudioBuffer view
+            const int upCh     = static_cast<int>(upBlock.getNumChannels());
+            const int upFrames = static_cast<int>(upBlock.getNumSamples());
+
+            juce::HeapBlock<float*> chanPtrs(upCh);
+            for (int ch = 0; ch < upCh; ++ch)
+                chanPtrs[ch] = upBlock.getChannelPointer(static_cast<size_t>(ch));
+
+            // Non-owning AudioBuffer view over the upsampled data
+            juce::AudioBuffer<float> osBuffer(chanPtrs.getData(), upCh, upFrames);
+
+            // Run your DSP on the upsampled buffer
+            runDSP(osBuffer);
+
+            // Downsample back into the original buffer
+            oversampling->processSamplesDown(inBlock);
+        }
+        else
+        {
+            // Process at native rate
+            runDSP(buffer);
         }
     }
     
