@@ -20,17 +20,8 @@ namespace Amp
     /* GLOBAL CABLE */
     
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");         
-    const knbAmpMode = Content.getComponent("knbAmpMode");  
 
-    inline function onknbAmpModeControl(component, value)
-    {
-    	if (value < 2)
-    		pnlAmpNAMLoader.set("visible", false);
-    	else
-    		pnlAmpNAMLoader.set("visible", true);
-    } 
-
-    knbAmpMode.setControlCallback(onknbAmpModeControl);
+    
    
     inline function pnlAmpNAMLoaderDrop(f)
     {

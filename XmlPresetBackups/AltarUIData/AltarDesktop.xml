@@ -91,11 +91,11 @@
                parentComponent="pnlMaster" tooltip="Snap pitch-shifter to semitones."
                text=""/>
     <Component type="ScriptPanel" id="pnlModularA" x="320.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="overdrive" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularB" x="380.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularB" x="380.0" y="310.0" parentComponent="pnlMaster"
+               width="60.0" height="40.0" text="overdrive" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
+               width="60.0" height="40.0" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularD" x="500.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlModularE" x="560.0" y="310.0" parentComponent="pnlMaster"
@@ -139,27 +139,26 @@
              height="390.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0"/>
   <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0">
+             height="390.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptSlider" id="knbAmpMode" x="50.0" y="170.0" defaultValue="1.0"
                max="2.0" stepSize="1.0" middlePosition="1.0" width="48.0" parentComponent="pnlAmp"
                tooltip="Amp mode. [CLEAN, DRIVE, NAM]"/>
     <Component type="ScriptSlider" id="knbAmpInput" x="220.0" y="170.0" stepSize="0.1000000014901161"
                min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmp"
-               text="amp_InputGainDirty" useUndoManager="1" processorId="fxSlotB"
-               parameterId="InputGainDirty" width="48.0" tooltip="Input gain."/>
+               text="amp_InputGainDirty" useUndoManager="1" processorId="amp"
+               parameterId="1" width="48.0" tooltip="Input gain."/>
     <Component type="ScriptSlider" id="knbAmpOutput" x="710.0" y="170.0" stepSize="0.1000000014901161"
                min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmp"
                text="amp_OutputGainDirty" width="48.0" tooltip="Output gain."/>
     <Component type="ScriptSlider" id="knbAmpLow" x="270.0" y="270.0" parentComponent="pnlAmp"
                min="-12.0" max="12.0" middlePosition="0.0" text="amp_DirtyLow"
-               width="48.0" tooltip="Tonestack low."/>
+               width="48.0" tooltip="Tonestack low." processorId="amp" parameterId="2"/>
     <Component type="ScriptSlider" id="knbAmpMid" x="400.0" y="270.0" parentComponent="pnlAmp"
                min="-12.0" max="12.0" middlePosition="0.0" text="amp_DirtyMid"
-               width="48.0" tooltip="Tonestack mid."/>
+               width="48.0" tooltip="Tonestack mid." processorId="amp" parameterId="3"/>
     <Component type="ScriptSlider" id="knbAmpHigh" x="530.0" y="270.0" parentComponent="pnlAmp"
                min="-12.0" max="12.0" middlePosition="0.0" text="amp_DirtyHigh"
-               width="48.0" tooltip="Tonestack high."/>
+               width="48.0" tooltip="Tonestack high." processorId="amp" parameterId="4"/>
     <Component type="ScriptSlider" id="knbAmpPresence" x="660.0" y="270.0" parentComponent="pnlAmp"
                min="-12.0" max="12.0" middlePosition="0.0" text="amp_DirtyPresence"
                width="48.0" tooltip="Tonestack presence."/>
@@ -185,68 +184,60 @@
                visible="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="351.0" width="1150.0"
-             height="390.0" itemColour2="4278190080" itemColour="4278190080">
+             height="390.0" itemColour2="4278190080" itemColour="4278190080"
+             visible="0">
     <Component type="ScriptButton" id="btnOpenCabFolder" x="700.0" y="19.0"
                parentComponent="pnlCab" isMomentary="1" tooltip="Open saved cabs folder."/>
     <Component type="ScriptButton" id="btnShowCabDesigner" x="420.0" y="19.0"
                parentComponent="pnlCab" tooltip="Open cab designer."/>
     <Component type="ScriptSlider" id="knbCabMix" x="500.0" y="319.0" parentComponent="pnlCab"
-               defaultValue="0.5" text="cab_Mix" width="48.0" processorId="modularC"
-               parameterId="0"/>
+               defaultValue="0.5" text="cab_Mix" width="48.0"/>
     <Component type="ScriptButton" id="btnCabAEnable" x="10.0" y="20.0" parentComponent="pnlCab"
-               text="cab_CabAEnable" processorId="modularC" tooltip="Enable speaker A."
-               parameterId="1"/>
+               text="cab_CabAEnable" tooltip="Enable speaker A."/>
     <Component type="ScriptSlider" id="knbCabADelay" x="190.0" y="59.0" parentComponent="pnlCab"
-               max="50.0" stepSize="0.1000000014901161" middlePosition="5.0"
-               text="cab_CabADelay" width="48.0" tooltip="Cab delay." processorId="modularC"
-               parameterId="2"/>
+               max="100.0" stepSize="0.1000000014901161" middlePosition="50.0"
+               text="cab_CabADelay" width="48.0" tooltip="Cab delay."/>
     <Component type="ScriptSlider" id="knbCabADistance" x="120.0" y="59.0" parentComponent="pnlCab"
                text="cab_CabADistance" width="48.0" tooltip="Microphone distance."
-               processorId="modularC" parameterId="4"/>
+               min="6000.0" max="20000.0" stepSize="1.0" middlePosition="12000.0"
+               defaultValue="20000.0"/>
     <Component type="ScriptSlider" id="knbCabAAxis" x="50.0" y="60.0" parentComponent="pnlCab"
-               defaultValue="1.0" text="cab_CabAAxis" width="48.0" tooltip="Microphone axis."
-               processorId="modularC" parameterId="3"/>
+               text="cab_CabAAxis" width="48.0" tooltip="Microphone axis." min="-6.0"
+               max="0.0" stepSize="0.1000000014901161" middlePosition="-3.0"/>
     <Component type="ScriptSlider" id="knbCabAPan" x="60.0" y="299.0" parentComponent="pnlCab"
-               min="-1.0" middlePosition="0.0" text="cab_CabAPan" width="48.0"
-               processorId="modularC" parameterId="6"/>
+               min="-1.0" middlePosition="0.0" text="cab_CabAPan" width="48.0"/>
     <Component type="ScriptSlider" id="knbCabAGain" x="190.0" y="299.0" parentComponent="pnlCab"
-               min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
-               defaultValue="-12.0" mode="Decibel" text="cab_CabAGain" width="48.0"
-               processorId="modularC" parameterId="7"/>
+               min="-100.0" max="12.0" middlePosition="-12.0" stepSize="0.1000000014901161"
+               mode="Decibel" text="cab_CabAGain" width="48.0"/>
     <Component type="ScriptButton" id="btnCabAPhase" x="150.0" y="19.0" parentComponent="pnlCab"
-               text="cab_CabAPhase" tooltip="Invert phase." processorId="modularC"
-               parameterId="5"/>
+               text="cab_CabAPhase" tooltip="Invert phase."/>
     <Component type="ScriptButton" id="btnCabALoadPrev" x="30.0" y="259.0" parentComponent="pnlCab"
                isMomentary="1"/>
     <Component type="ScriptButton" id="btnCabALoadNext" x="160.0" y="259.0"
                parentComponent="pnlCab" isMomentary="1"/>
     <Component type="ScriptButton" id="btnCabBEnable" x="1010.0" y="19.0" parentComponent="pnlCab"
-               text="cab_CabBEnable" tooltip="Invert phase." processorId="modularC"
-               parameterId="8"/>
+               text="cab_CabBEnable" tooltip="Invert phase."/>
     <Component type="ScriptSlider" id="knbCabBAxis" x="910.0" y="60.0" parentComponent="pnlCab"
-               defaultValue="1.0" text="cab_CabBAxis" width="48.0" tooltip="Microphone axis."
-               processorId="modularC" parameterId="10"/>
+               text="cab_CabBAxis" width="48.0" tooltip="Microphone axis." min="-6.0"
+               max="0.0" middlePosition="-3.0" stepSize="0.1000000014901161"/>
     <Component type="ScriptSlider" id="knbCabBDelay" x="1070.0" y="59.0" parentComponent="pnlCab"
-               max="50.0" stepSize="0.1000000014901161" middlePosition="5.0"
-               text="cab_CabBDelay" width="48.0" tooltip="Cab delay." processorId="modularC"
-               parameterId="9"/>
+               max="100.0" stepSize="0.1000000014901161" middlePosition="50.0"
+               text="cab_CabBDelay" width="48.0" tooltip="Cab delay."/>
     <Component type="ScriptSlider" id="knbCabBDistance" x="990.0" y="59.0" parentComponent="pnlCab"
                text="cab_CabBDistance" width="48.0" tooltip="Microphone distance."
-               processorId="modularC" parameterId="11"/>
+               min="6000.0" max="20000.0" stepSize="1.0" middlePosition="12000.0"
+               defaultValue="20000.0"/>
     <Component type="ScriptButton" id="btnCabBLoadPrev" x="870.0" y="259.0"
                parentComponent="pnlCab" isMomentary="1"/>
     <Component type="ScriptButton" id="btnCabBLoadNext" x="1000.0" y="259.0"
                parentComponent="pnlCab" isMomentary="1"/>
     <Component type="ScriptSlider" id="knbCabBPan" x="920.0" y="299.0" parentComponent="pnlCab"
-               min="-1.0" middlePosition="0.0" text="cab_CabBPan" width="48.0"
-               processorId="modularC" parameterId="13"/>
+               min="-1.0" middlePosition="0.0" text="cab_CabBPan" width="48.0"/>
     <Component type="ScriptSlider" id="knbCabBGain" x="1050.0" y="299.0" parentComponent="pnlCab"
-               min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
-               defaultValue="-12.0" mode="Decibel" text="cab_CabBGain" width="48.0"
-               processorId="modularC" parameterId="14"/>
+               min="-100.0" max="12.0" middlePosition="-12.0" stepSize="0.1000000014901161"
+               mode="Decibel" text="cab_CabBGain" width="48.0"/>
     <Component type="ScriptButton" id="btnCabBPhase" x="870.0" y="19.0" parentComponent="pnlCab"
-               text="cab_CabBPhase" tooltip="Enable speaker B." processorId="modularC"
-               parameterId="12"/>
+               text="cab_CabBPhase" tooltip="Enable speaker B."/>
     <Component type="ScriptAudioWaveform" id="awfCabA" x="40.0" y="149.0" width="220.0"
                height="100.0" parentComponent="pnlCab"/>
     <Component type="ScriptAudioWaveform" id="awfCabB" x="890.0" y="149.0" width="220.0"

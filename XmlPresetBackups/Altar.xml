@@ -11,33 +11,33 @@
           <Content>
             <Control type="ScriptSlider" id="knbInputGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbGateThreshold" value="-24.0"/>
-            <Control type="ScriptButton" id="btnGate" value="1"/>
+            <Control type="ScriptButton" id="btnGate" value="1.0"/>
             <Control type="ScriptSlider" id="knbPitch" value="0.0"/>
-            <Control type="ScriptButton" id="btnPitch" value="0"/>
+            <Control type="ScriptButton" id="btnPitch" value="0.0"/>
             <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreferences" value="0"/>
-            <Control type="ScriptButton" id="btnShowTuner" value="0"/>
-            <Control type="ScriptButton" id="btnOversampling" value="1"/>
-            <Control type="ScriptButton" id="btnLimiter" value="1"/>
-            <Control type="ScriptButton" id="btnShowPreProcess" value="0"/>
-            <Control type="ScriptButton" id="btnShowPostProcess" value="0"/>
-            <Control type="ScriptButton" id="btnLofi" value="0"/>
+            <Control type="ScriptButton" id="btnPreferences" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowTuner" value="0.0"/>
+            <Control type="ScriptButton" id="btnOversampling" value="1.0"/>
+            <Control type="ScriptButton" id="btnLimiter" value="1.0"/>
+            <Control type="ScriptButton" id="btnShowPreProcess" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowPostProcess" value="0.0"/>
+            <Control type="ScriptButton" id="btnLofi" value="0.0"/>
             <Control type="ScriptSlider" id="knbOctave" value="0.5"/>
-            <Control type="ScriptButton" id="btnOctave" value="0"/>
-            <Control type="ScriptButton" id="btnOctavePosition" value="0"/>
+            <Control type="ScriptButton" id="btnOctave" value="0.0"/>
+            <Control type="ScriptButton" id="btnOctavePosition" value="0.0"/>
             <Control type="ScriptSlider" id="knbOctaveFreq" value="300.0"/>
-            <Control type="ScriptButton" id="btnChug" value="0"/>
+            <Control type="ScriptButton" id="btnChug" value="0.0"/>
             <Control type="ScriptSlider" id="knbChugThreshold" value="0.0"/>
             <Control type="ScriptSlider" id="knbChugFreq" value="70.0"/>
-            <Control type="ScriptButton" id="btnPick" value="0"/>
+            <Control type="ScriptButton" id="btnPick" value="0.0"/>
             <Control type="ScriptSlider" id="knbPickFreq" value="2900.0"/>
             <Control type="ScriptSlider" id="knbPickThreshold" value="50.0"/>
             <Control type="ScriptSlider" id="knbGrit" value="-36.0"/>
-            <Control type="ScriptButton" id="btnGrit" value="0"/>
+            <Control type="ScriptButton" id="btnGrit" value="0.0"/>
             <Control type="ScriptSlider" id="knbEQWhistle" value="1.0"/>
-            <Control type="ScriptButton" id="btnPitchSnap" value="0"/>
-            <Control type="ScriptButton" id="btnShowClick" value="0"/>
-            <Control type="ScriptButton" id="btnShowRecorder" value="0"/>
+            <Control type="ScriptButton" id="btnPitchSnap" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowClick" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowRecorder" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMode" value="1.0"/>
             <Control type="ScriptSlider" id="knbAmpInput" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpOutput" value="0.0"/>
@@ -45,27 +45,27 @@
             <Control type="ScriptSlider" id="knbAmpMid" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpHigh" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpPresence" value="0.0"/>
-            <Control type="ScriptButton" id="btnOpenCabFolder" value="0"/>
-            <Control type="ScriptButton" id="btnShowCabDesigner" value="0"/>
+            <Control type="ScriptButton" id="btnOpenCabFolder" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowCabDesigner" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabMix" value="0.5"/>
-            <Control type="ScriptButton" id="btnCabAEnable" value="0"/>
-            <Control type="ScriptSlider" id="knbCabADelay" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabADistance" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabAAxis" value="1.0"/>
+            <Control type="ScriptButton" id="btnCabAEnable" value="0.0"/>
+            <Control type="ScriptSlider" id="knbCabADelay" value="5.400000095367432"/>
+            <Control type="ScriptSlider" id="knbCabADistance" value="20000.0"/>
+            <Control type="ScriptSlider" id="knbCabAAxis" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAPan" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabAGain" value="-12.0"/>
-            <Control type="ScriptButton" id="btnCabAPhase" value="0"/>
-            <Control type="ScriptButton" id="btnCabALoadPrev" value="0"/>
-            <Control type="ScriptButton" id="btnCabALoadNext" value="0"/>
-            <Control type="ScriptButton" id="btnCabBEnable" value="0"/>
-            <Control type="ScriptSlider" id="knbCabBAxis" value="1.0"/>
+            <Control type="ScriptSlider" id="knbCabAGain" value="1.490116119384766e-6"/>
+            <Control type="ScriptButton" id="btnCabAPhase" value="0.0"/>
+            <Control type="ScriptButton" id="btnCabALoadPrev" value="0.0"/>
+            <Control type="ScriptButton" id="btnCabALoadNext" value="0.0"/>
+            <Control type="ScriptButton" id="btnCabBEnable" value="0.0"/>
+            <Control type="ScriptSlider" id="knbCabBAxis" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabBDelay" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabBDistance" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabBLoadPrev" value="0"/>
-            <Control type="ScriptButton" id="btnCabBLoadNext" value="0"/>
+            <Control type="ScriptSlider" id="knbCabBDistance" value="0.05000000074505806"/>
+            <Control type="ScriptButton" id="btnCabBLoadPrev" value="0.0"/>
+            <Control type="ScriptButton" id="btnCabBLoadNext" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabBPan" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabBGain" value="-12.0"/>
-            <Control type="ScriptButton" id="btnCabBPhase" value="0"/>
+            <Control type="ScriptSlider" id="knbCabBGain" value="1.490116119384766e-6"/>
+            <Control type="ScriptButton" id="btnCabBPhase" value="0.0"/>
             <Control type="ScriptAudioWaveform" id="awfCabA" value="0.0" data="" rangeStart="0"
                      rangeEnd="0"/>
             <Control type="ScriptAudioWaveform" id="awfCabB" value="0.0" data="" rangeStart="0"
@@ -73,8 +73,8 @@
             <Control type="ScriptSlider" id="knbReverbMix" value="0.5"/>
             <Control type="ScriptSlider" id="knbReverbBrightness" value="0.800000011920929"/>
             <Control type="ScriptSlider" id="knbReverbFeedback" value="0.800000011920929"/>
-            <Control type="ScriptButton" id="btnReverb" value="0"/>
-            <Control type="ScriptButton" id="btnPreProcessEQFirst" value="0"/>
+            <Control type="ScriptButton" id="btnReverb" value="0.0"/>
+            <Control type="ScriptButton" id="btnPreProcessEQFirst" value="0.0"/>
             <Control type="ScriptSlider" id="knbPreprocessHpfFreq" value="40.0"/>
             <Control type="ScriptSlider" id="knbPreprocessLowShelfFreq" value="120.0"/>
             <Control type="ScriptSlider" id="knbPreprocessLowShelfGain" value="0.0"/>
@@ -100,7 +100,7 @@
             <Control type="ScriptSlider" id="knbPreprocessCompKnee" value="3.0"/>
             <Control type="ScriptSlider" id="knbPreprocessCompMakeup" value="0.0"/>
             <Control type="ScriptSlider" id="knbPreprocessClipperGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnPostProcessEQFirst" value="0"/>
+            <Control type="ScriptButton" id="btnPostProcessEQFirst" value="0.0"/>
             <Control type="ScriptSlider" id="knbPostprocessHpfFreq" value="40.0"/>
             <Control type="ScriptSlider" id="knbPostprocessLowShelfFreq" value="120.0"/>
             <Control type="ScriptSlider" id="knbPostprocessLowShelfGain" value="0.0"/>
@@ -125,600 +125,12 @@
             <Control type="ScriptSlider" id="knbPostprocessCompMix" value="1.0"/>
             <Control type="ScriptSlider" id="knbPostprocessCompKnee" value="3.0"/>
             <Control type="ScriptSlider" id="knbPostprocessCompMakeup" value="0.0"/>
-            <Control type="ScriptButton" id="btnTunerMonitor" value="0"/>
-            <Control type="ScriptButton" id="btnTuner" value="0"/>
-            <Control type="ScriptButton" id="btnClick" value="0"/>
+            <Control type="ScriptButton" id="btnTunerMonitor" value="0.0"/>
+            <Control type="ScriptButton" id="btnTuner" value="0.0"/>
+            <Control type="ScriptButton" id="btnClick" value="0.0"/>
             <Control type="ScriptSlider" id="knbClickGain" value="0.0"/>
           </Content>
-          <UIData>
-            <ContentProperties DeviceType="Desktop">
-              <Component type="ScriptPanel" id="pnlMaster" x="0.0" y="0.0" width="1150.0"
-                         height="800.0">
-                <Component type="ScriptSlider" id="knbInputGain" x="40.0" y="70.0" min="-36.0"
-                           max="36.0" middlePosition="0.0" processorId="inputGain" parameterId="Gain"
-                           parentComponent="pnlMaster" tooltip="Adjust input gain." width="48.0"/>
-                <Component type="ScriptSlider" id="knbGateThreshold" x="140.0" y="70.0"
-                           min="-100.0" max="0.0" middlePosition="-24.0" width="48.0" height="48.0"
-                           processorId="gate" parameterId="Threshold" defaultValue="-24.0"
-                           parentComponent="pnlMaster" tooltip="Gate threshold."/>
-                <Component type="ScriptButton" id="btnGate" x="200.0" y="80.0" width="28.0"
-                           processorId="gate" parameterId="Enabled" defaultValue="1.0" parentComponent="pnlMaster"
-                           tooltip="Enable gate." text=""/>
-                <Component type="ScriptSlider" id="knbPitch" x="50.0" y="190.0" middlePosition="0.0"
-                           min="-24.0" max="24.0" parentComponent="pnlMaster" tooltip="Adjust pitch-shifter amount."
-                           width="48.0"/>
-                <Component type="ScriptButton" id="btnPitch" x="40.0" y="280.0" width="28.0"
-                           processorId="pitch" parameterId="Enabled" parentComponent="pnlMaster"
-                           tooltip="Enable pitch-shifter." text=""/>
-                <Component type="ScriptSlider" id="knbOutputGain" x="960.0" y="20.0" min="-36.0"
-                           max="36.0" middlePosition="0.0" processorId="outputGain" parameterId="Gain"
-                           parentComponent="pnlMaster" tooltip="Adjust output gain." width="48.0"/>
-                <Component type="ScriptButton" id="btnPreferences" x="50.0" y="10.0" width="80.0"
-                           parentComponent="pnlMaster" tooltip="Open preferences." text="Prefs"
-                           height="28.0"/>
-                <Component type="ScriptButton" id="btnShowTuner" x="140.0" y="10.0" width="80.0"
-                           parentComponent="pnlMaster" tooltip="Open tuner panel." text="Tuner"/>
-                <Component type="ScriptButton" id="btnOversampling" x="963.0" y="105.0"
-                           width="28.0" height="28.0" defaultValue="1.0" parentComponent="pnlMaster"
-                           tooltip="Enable oversampling (4x)." text=""/>
-                <Component type="ScriptButton" id="btnLimiter" x="960.0" y="70.0" defaultValue="1.0"
-                           processorId="limiter" parameterId="Enabled" parentComponent="pnlMaster"
-                           tooltip="Enable output limiter." text="" width="28.0"/>
-                <Component type="ScriptButton" id="btnShowPreProcess" x="320.0" y="280.0"
-                           parentComponent="pnlMaster" tooltip="Show/hide preprocess panel."/>
-                <Component type="ScriptButton" id="btnShowPostProcess" x="610.0" y="280.0"
-                           parentComponent="pnlMaster" tooltip="Show/hide postprocess panel."/>
-                <Component type="ScriptButton" id="btnLofi" x="1032.0" y="279.0" width="28.0"
-                           height="28.0" processorId="lofi" parameterId="Enabled" parentComponent="pnlMaster"
-                           tooltip="Enable lofi." text=""/>
-                <Component type="ScriptSlider" id="knbOctave" x="160.0" y="200.0" middlePosition="0.5"
-                           defaultValue="0.5" parentComponent="pnlMaster" tooltip="Sub-octave blend amount."
-                           width="48.0"/>
-                <Component type="ScriptButton" id="btnOctave" x="170.0" y="280.0" width="28.0"
-                           parentComponent="pnlMaster" tooltip="Enable sub-octave blend."
-                           text=""/>
-                <Component type="ScriptButton" id="btnOctavePosition" x="210.0" y="280.0"
-                           parentComponent="pnlMaster" enabled="0" tooltip="Switch sub-octave position (pre/post fx)."
-                           width="28.0" text=""/>
-                <Component type="ScriptSlider" id="knbOctaveFreq" x="220.0" y="200.0" middlePosition="300.0"
-                           defaultValue="300.0" mode="Frequency" min="60.0" max="1000.0"
-                           stepSize="1.0" suffix=" Hz" parentComponent="pnlMaster" tooltip="Sub-octave blend filter."
-                           width="48.0"/>
-                <Component type="ScriptFloatingTile" id="fltPerformanceLabel" x="870.0"
-                           y="740.0" ContentType="PerformanceLabel" bgColour="0" itemColour="0"
-                           itemColour2="0" width="270.0" height="30.0" parentComponent="pnlMaster"/>
-                <Component type="ScriptButton" id="btnChug" x="377.0" y="177.0" width="28.0"
-                           parentComponent="pnlMaster" processorId="chug" parameterId="Enabled"
-                           tooltip="Enable chug (single-band compressor)." text=""/>
-                <Component type="ScriptSlider" id="knbChugThreshold" x="340.0" y="100.0"
-                           middlePosition="-6.0" parentComponent="pnlMaster" min="-12.0"
-                           max="0.0" stepSize="0.1000000014901161" tooltip="Adjust chug threshold."
-                           width="48.0"/>
-                <Component type="ScriptSlider" id="knbChugFreq" x="400.0" y="100.0" middlePosition="240.0"
-                           defaultValue="70.0" min="30.0" max="500.0" stepSize="1.0" suffix=" Hz"
-                           parentComponent="pnlMaster" processorId="chug" parameterId="Freq"
-                           tooltip="Adjust chug frequency." width="48.0"/>
-                <Component type="ScriptButton" id="btnPick" x="536.0" y="178.0" width="28.0"
-                           parentComponent="pnlMaster" processorId="pick" parameterId="Enabled"
-                           tooltip="Enable pick (single-band expander)." text=""/>
-                <Component type="ScriptSlider" id="knbPickFreq" x="560.0" y="100.0" middlePosition="3000.0"
-                           defaultValue="2900.0" min="2000.0" max="4000.0" stepSize="1.0"
-                           suffix=" Hz" parentComponent="pnlMaster" processorId="pick" parameterId="Freq"
-                           tooltip="Adjust pick frequency." width="48.0"/>
-                <Component type="ScriptSlider" id="knbPickThreshold" x="490.0" y="100.0"
-                           middlePosition="50.0" parentComponent="pnlMaster" max="100.0"
-                           stepSize="0.1000000014901161" processorId="pick" parameterId="Threshold"
-                           defaultValue="50.0" tooltip="Adjust pick threshold." width="48.0"/>
-                <Component type="ScriptSlider" id="knbGrit" x="680.0" y="90.0" parentComponent="pnlMaster"
-                           min="-100.0" max="0.0" middlePosition="-36.0" stepSize="0.1000000014901161"
-                           defaultValue="-36.0" processorId="grit" parameterId="Grit" tooltip="Adjust grit amount."
-                           width="48.0"/>
-                <Component type="ScriptButton" id="btnGrit" x="686.0" y="181.0" parentComponent="pnlMaster"
-                           processorId="grit" parameterId="Enabled" tooltip="Enable grit (sub-octave distortion)."
-                           width="28.0" text=""/>
-                <Component type="ScriptSlider" id="knbEQWhistle" x="770.0" y="100.0" defaultValue="1.0"
-                           parentComponent="pnlMaster" width="48.0"/>
-                <Component type="ScriptButton" id="btnPitchSnap" x="80.0" y="280.0" width="28.0"
-                           parentComponent="pnlMaster" tooltip="Snap pitch-shifter to semitones."
-                           text=""/>
-                <Component type="ScriptPanel" id="pnlModularA" x="320.0" y="310.0" parentComponent="pnlMaster"
-                           width="60.0" height="40.0" text="overdrive" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-                <Component type="ScriptPanel" id="pnlModularB" x="380.0" y="310.0" parentComponent="pnlMaster"
-                           width="60.0" height="40.0" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-                <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
-                           width="60.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-                <Component type="ScriptPanel" id="pnlModularD" x="500.0" y="310.0" parentComponent="pnlMaster"
-                           width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-                <Component type="ScriptPanel" id="pnlModularE" x="560.0" y="310.0" parentComponent="pnlMaster"
-                           width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-                <Component type="ScriptPanel" id="pnlModularF" x="620.0" y="310.0" parentComponent="pnlMaster"
-                           width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-                <Component type="ScriptPanel" id="pnlModularG" x="680.0" y="310.0" parentComponent="pnlMaster"
-                           width="60.0" height="40.0" text="" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-                <Component type="ScriptPanel" id="pnlTooltip" x="860.0" y="770.0" parentComponent="pnlMaster"
-                           width="220.0" height="30.0"/>
-                <Component type="ScriptLabel" id="lblInputGain" x="20.0" y="130.0" parentComponent="pnlMaster"
-                           text="Input Gain" width="80.0"/>
-                <Component type="ScriptLabel" id="lblGate" x="120.0" y="120.0" parentComponent="pnlMaster"
-                           text="Gate" width="80.0"/>
-                <Component type="ScriptLabel" id="lblInputGain1" x="30.0" y="240.0" parentComponent="pnlMaster"
-                           text="Transpose" width="80.0"/>
-                <Component type="ScriptLabel" id="lblOctave" x="166.0" y="248.0" parentComponent="pnlMaster"
-                           text="Octave" width="80.0"/>
-                <Component type="ScriptLabel" id="lblChug" x="350.0" y="150.0" parentComponent="pnlMaster"
-                           text="Chug" width="80.0"/>
-                <Component type="ScriptLabel" id="lblPick" x="510.0" y="150.0" parentComponent="pnlMaster"
-                           text="Pick" width="80.0"/>
-                <Component type="ScriptLabel" id="lblGrit" x="660.0" y="150.0" parentComponent="pnlMaster"
-                           text="Grit" width="80.0"/>
-                <Component type="ScriptLabel" id="lblWhistle" x="750.0" y="150.0" parentComponent="pnlMaster"
-                           text="Whistle" width="80.0"/>
-                <Component type="ScriptLabel" id="lblOutputGain" x="1020.0" y="30.0" parentComponent="pnlMaster"
-                           text="Output Gain" width="80.0"/>
-                <Component type="ScriptLabel" id="lblLimiter" x="1010.0" y="70.0" parentComponent="pnlMaster"
-                           text="Limiter" width="80.0"/>
-                <Component type="ScriptLabel" id="lblOversampling" x="1000.0" y="100.0"
-                           parentComponent="pnlMaster" text="Oversample (4X)" width="120.0"/>
-                <Component type="ScriptLabel" id="lblLofi" x="1005.0" y="251.0" parentComponent="pnlMaster"
-                           text="Lofi" width="80.0"/>
-                <Component type="ScriptButton" id="btnShowClick" x="230.0" y="10.0" width="80.0"
-                           parentComponent="pnlMaster" tooltip="Open click panel." text="Click"/>
-                <Component type="ScriptButton" id="btnShowRecorder" x="320.0" y="10.0" width="80.0"
-                           parentComponent="pnlMaster" tooltip="Open recorder panel." text="Record"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="350.0" width="1150.0"
-                         height="390.0" itemColour="4278190080" itemColour2="4278190080"
-                         visible="0"/>
-              <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="350.0" width="1150.0"
-                         height="390.0" itemColour="4278190080" itemColour2="4278190080"
-                         visible="0">
-                <Component type="ScriptSlider" id="knbAmpMode" x="50.0" y="170.0" defaultValue="1.0"
-                           max="2.0" stepSize="1.0" middlePosition="1.0" width="48.0" parentComponent="pnlAmp"
-                           tooltip="Amp mode. [CLEAN, DRIVE, NAM]"/>
-                <Component type="ScriptSlider" id="knbAmpInput" x="220.0" y="170.0" stepSize="0.1000000014901161"
-                           min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmp"
-                           text="amp_InputGainDirty" useUndoManager="1" processorId="fxSlotB"
-                           parameterId="InputGainDirty" width="48.0" tooltip="Input gain."/>
-                <Component type="ScriptSlider" id="knbAmpOutput" x="710.0" y="170.0" stepSize="0.1000000014901161"
-                           min="-100.0" max="100.0" middlePosition="0.0" parentComponent="pnlAmp"
-                           text="amp_OutputGainDirty" width="48.0" tooltip="Output gain."/>
-                <Component type="ScriptSlider" id="knbAmpLow" x="270.0" y="270.0" parentComponent="pnlAmp"
-                           min="-12.0" max="12.0" middlePosition="0.0" text="amp_DirtyLow"
-                           width="48.0" tooltip="Tonestack low."/>
-                <Component type="ScriptSlider" id="knbAmpMid" x="400.0" y="270.0" parentComponent="pnlAmp"
-                           min="-12.0" max="12.0" middlePosition="0.0" text="amp_DirtyMid"
-                           width="48.0" tooltip="Tonestack mid."/>
-                <Component type="ScriptSlider" id="knbAmpHigh" x="530.0" y="270.0" parentComponent="pnlAmp"
-                           min="-12.0" max="12.0" middlePosition="0.0" text="amp_DirtyHigh"
-                           width="48.0" tooltip="Tonestack high."/>
-                <Component type="ScriptSlider" id="knbAmpPresence" x="660.0" y="270.0" parentComponent="pnlAmp"
-                           min="-12.0" max="12.0" middlePosition="0.0" text="amp_DirtyPresence"
-                           width="48.0" tooltip="Tonestack presence."/>
-                <Component type="ScriptLabel" id="lblAmpDirtyInput" x="205.0" y="220.0"
-                           parentComponent="pnlAmp" text="Input" width="80.0"/>
-                <Component type="ScriptLabel" id="lblAmpDirty" x="450.0" y="20.0" parentComponent="pnlAmp"
-                           text="DIRTY"/>
-                <Component type="ScriptLabel" id="lblAmpDirtyLow" x="256.0" y="329.0" parentComponent="pnlAmp"
-                           text="Low" width="80.0"/>
-                <Component type="ScriptLabel" id="lblAmpDirtyMid" x="380.0" y="329.0" parentComponent="pnlAmp"
-                           text="Mid" width="80.0"/>
-                <Component type="ScriptLabel" id="lblAmpDirtyHigh" x="510.0" y="330.0" parentComponent="pnlAmp"
-                           text="High" width="80.0"/>
-                <Component type="ScriptLabel" id="lblAmpDirtyPresence" x="640.0" y="330.0"
-                           parentComponent="pnlAmp" text="Presence" width="80.0"/>
-                <Component type="ScriptLabel" id="lblAmpDirtyOutput" x="700.0" y="230.0"
-                           parentComponent="pnlAmp" text="Output" width="80.0"/>
-                <Component type="ScriptLabel" id="lblAmpMode" x="30.0" y="220.0" parentComponent="pnlAmp"
-                           text="Mode" width="80.0"/>
-                <Component type="ScriptPanel" id="pnlAmpNAMLoader" x="350.0" y="100.0" width="300.0"
-                           height="130.0" text="Drag NAM File or Right Click to open Browser."
-                           allowCallbacks="Clicks, Hover &amp; Dragging" parentComponent="pnlAmp"
-                           visible="0"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlCab" x="0.0" y="351.0" width="1150.0"
-                         height="390.0" itemColour2="4278190080" itemColour="4278190080">
-                <Component type="ScriptButton" id="btnOpenCabFolder" x="700.0" y="19.0"
-                           parentComponent="pnlCab" isMomentary="1" tooltip="Open saved cabs folder."/>
-                <Component type="ScriptButton" id="btnShowCabDesigner" x="420.0" y="19.0"
-                           parentComponent="pnlCab" tooltip="Open cab designer."/>
-                <Component type="ScriptSlider" id="knbCabMix" x="500.0" y="319.0" parentComponent="pnlCab"
-                           defaultValue="0.5" text="cab_Mix" width="48.0" processorId="modularC"
-                           parameterId="0"/>
-                <Component type="ScriptButton" id="btnCabAEnable" x="10.0" y="20.0" parentComponent="pnlCab"
-                           text="cab_CabAEnable" processorId="modularC" tooltip="Enable speaker A."
-                           parameterId="1"/>
-                <Component type="ScriptSlider" id="knbCabADelay" x="190.0" y="59.0" parentComponent="pnlCab"
-                           max="50.0" stepSize="0.1000000014901161" middlePosition="5.0"
-                           text="cab_CabADelay" width="48.0" tooltip="Cab delay." processorId="modularC"
-                           parameterId="2"/>
-                <Component type="ScriptSlider" id="knbCabADistance" x="120.0" y="59.0" parentComponent="pnlCab"
-                           text="cab_CabADistance" width="48.0" tooltip="Microphone distance."
-                           processorId="modularC" parameterId="4"/>
-                <Component type="ScriptSlider" id="knbCabAAxis" x="50.0" y="60.0" parentComponent="pnlCab"
-                           defaultValue="1.0" text="cab_CabAAxis" width="48.0" tooltip="Microphone axis."
-                           processorId="modularC" parameterId="3"/>
-                <Component type="ScriptSlider" id="knbCabAPan" x="60.0" y="299.0" parentComponent="pnlCab"
-                           min="-1.0" middlePosition="0.0" text="cab_CabAPan" width="48.0"
-                           processorId="modularC" parameterId="6"/>
-                <Component type="ScriptSlider" id="knbCabAGain" x="190.0" y="299.0" parentComponent="pnlCab"
-                           min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
-                           defaultValue="-12.0" mode="Decibel" text="cab_CabAGain" width="48.0"
-                           processorId="modularC" parameterId="7"/>
-                <Component type="ScriptButton" id="btnCabAPhase" x="150.0" y="19.0" parentComponent="pnlCab"
-                           text="cab_CabAPhase" tooltip="Invert phase." processorId="modularC"
-                           parameterId="5"/>
-                <Component type="ScriptButton" id="btnCabALoadPrev" x="30.0" y="259.0" parentComponent="pnlCab"
-                           isMomentary="1"/>
-                <Component type="ScriptButton" id="btnCabALoadNext" x="160.0" y="259.0"
-                           parentComponent="pnlCab" isMomentary="1"/>
-                <Component type="ScriptButton" id="btnCabBEnable" x="1010.0" y="19.0" parentComponent="pnlCab"
-                           text="cab_CabBEnable" tooltip="Invert phase." processorId="modularC"
-                           parameterId="8"/>
-                <Component type="ScriptSlider" id="knbCabBAxis" x="910.0" y="60.0" parentComponent="pnlCab"
-                           defaultValue="1.0" text="cab_CabBAxis" width="48.0" tooltip="Microphone axis."
-                           processorId="modularC" parameterId="10"/>
-                <Component type="ScriptSlider" id="knbCabBDelay" x="1070.0" y="59.0" parentComponent="pnlCab"
-                           max="50.0" stepSize="0.1000000014901161" middlePosition="5.0"
-                           text="cab_CabBDelay" width="48.0" tooltip="Cab delay." processorId="modularC"
-                           parameterId="9"/>
-                <Component type="ScriptSlider" id="knbCabBDistance" x="990.0" y="59.0" parentComponent="pnlCab"
-                           text="cab_CabBDistance" width="48.0" tooltip="Microphone distance."
-                           processorId="modularC" parameterId="11"/>
-                <Component type="ScriptButton" id="btnCabBLoadPrev" x="870.0" y="259.0"
-                           parentComponent="pnlCab" isMomentary="1"/>
-                <Component type="ScriptButton" id="btnCabBLoadNext" x="1000.0" y="259.0"
-                           parentComponent="pnlCab" isMomentary="1"/>
-                <Component type="ScriptSlider" id="knbCabBPan" x="920.0" y="299.0" parentComponent="pnlCab"
-                           min="-1.0" middlePosition="0.0" text="cab_CabBPan" width="48.0"
-                           processorId="modularC" parameterId="13"/>
-                <Component type="ScriptSlider" id="knbCabBGain" x="1050.0" y="299.0" parentComponent="pnlCab"
-                           min="-50.0" max="0.0" middlePosition="-12.0" stepSize="0.1000000014901161"
-                           defaultValue="-12.0" mode="Decibel" text="cab_CabBGain" width="48.0"
-                           processorId="modularC" parameterId="14"/>
-                <Component type="ScriptButton" id="btnCabBPhase" x="870.0" y="19.0" parentComponent="pnlCab"
-                           text="cab_CabBPhase" tooltip="Enable speaker B." processorId="modularC"
-                           parameterId="12"/>
-                <Component type="ScriptAudioWaveform" id="awfCabA" x="40.0" y="149.0" width="220.0"
-                           height="100.0" parentComponent="pnlCab"/>
-                <Component type="ScriptAudioWaveform" id="awfCabB" x="890.0" y="149.0" width="220.0"
-                           height="100.0" parentComponent="pnlCab"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlReverb" x="0.0" y="350.0" width="1150.0"
-                         height="390.0" itemColour="4278190080" itemColour2="4278190080"
-                         visible="0">
-                <Component type="ScriptSlider" id="knbReverbMix" x="144.0" y="114.0" defaultValue="0.5"
-                           parentComponent="pnlReverb" processorId="reverb" parameterId="Mix"
-                           width="48.0"/>
-                <Component type="ScriptSlider" id="knbReverbBrightness" x="660.0" y="116.0"
-                           defaultValue="0.800000011920929" parentComponent="pnlReverb"
-                           processorId="reverb" parameterId="Brightness" width="48.0"/>
-                <Component type="ScriptSlider" id="knbReverbFeedback" x="380.0" y="110.0"
-                           defaultValue="0.800000011920929" parentComponent="pnlReverb"
-                           processorId="reverb" parameterId="Feedback" width="48.0"/>
-                <Component type="ScriptButton" id="btnReverb" x="150.0" y="50.0" parentComponent="pnlReverb"
-                           processorId="reverb" parameterId="Enabled"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlDelay" x="0.0" y="350.0" width="1150.0"
-                         height="390.0" itemColour="4278190080" itemColour2="4278190080"
-                         visible="0"/>
-              <Component type="ScriptPanel" id="pnlChorus" x="0.0" y="350.0" width="1150.0"
-                         height="390.0" itemColour="4278190080" itemColour2="4278190080"
-                         visible="0"/>
-              <Component type="ScriptPanel" id="pnlRingmod" x="0.0" y="350.0" width="1150.0"
-                         height="390.0" itemColour="4278190080" itemColour2="4278190080"
-                         visible="0"/>
-              <Component type="ScriptPanel" id="pnlDebug" x="0.0" y="800.0" width="1150.0"
-                         height="100.0">
-                <Component type="ScriptLabel" id="SET HEIGHT TO 800" x="20.0" y="20.0" multiline="1"
-                           text="SET HEIGHT TO 800 TO HIDE" width="120.0" height="50.0"
-                           parentComponent="pnlDebug"/>
-                <Component type="ScriptFloatingTile" id="fltKeyboard" x="170.0" y="0.0"
-                           ContentType="Keyboard" bgColour="4284769380" itemColour="452984831"
-                           itemColour2="4294967295" textColour="0" Data="{&#10;  &quot;KeyWidth&quot;: 14.0,&#10;  &quot;DisplayOctaveNumber&quot;: false,&#10;  &quot;LowKey&quot;: 9,&#10;  &quot;HiKey&quot;: 127,&#10;  &quot;CustomGraphics&quot;: false,&#10;  &quot;DefaultAppearance&quot;: true,&#10;  &quot;BlackKeyRatio&quot;: 0.699999988079071,&#10;  &quot;ToggleMode&quot;: false,&#10;  &quot;MidiChannel&quot;: 1,&#10;  &quot;UseVectorGraphics&quot;: true,&#10;  &quot;UseFlatStyle&quot;: false,&#10;  &quot;MPEKeyboard&quot;: false,&#10;  &quot;MPEStartChannel&quot;: 2,&#10;  &quot;MPEEndChannel&quot;: 16&#10;}"
-                           width="870.0" height="100.0" parentComponent="pnlDebug"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlPresetBrowser" x="450.0" y="10.0" width="420.0"
-                         height="30.0"/>
-              <Component type="ScriptPanel" id="pnlQuickSelect" x="300.0" y="740.0" width="500.0"
-                         height="60.0" itemColour="4282099711" itemColour2="4282099711"/>
-              <Component type="ScriptPanel" id="pnlPreProcess" x="0.0" y="0.0" width="1150.0"
-                         height="740.0" allowCallbacks="Clicks Only" itemColour="0" itemColour2="0"
-                         visible="0.0">
-                <Component type="ScriptButton" id="btnPreProcessEQFirst" x="470.0" y="650.0"
-                           parentComponent="pnlPreProcess" text="EQ FIRST" processorId="preprocess"
-                           parameterId="EQ First"/>
-                <Component type="ScriptSlider" id="knbPreprocessHpfFreq" x="240.0" y="640.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="HPF Freq"
-                           min="20.0" max="200.0" stepSize="1.0" middlePosition="110.0"
-                           defaultValue="40.0" text="Freq"/>
-                <Component type="ScriptSlider" id="knbPreprocessLowShelfFreq" x="160.0"
-                           y="580.0" parentComponent="pnlPreProcess" processorId="preprocess"
-                           parameterId="Low Shelf Freq" min="50.0" max="500.0" stepSize="1.0"
-                           middlePosition="225.0" defaultValue="120.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessLowShelfGain" x="260.0"
-                           y="580.0" parentComponent="pnlPreProcess" processorId="preprocess"
-                           parameterId="Low Shelf Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
-                           middlePosition="0.0" text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessLowShelfQ" x="370.0" y="580.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Low Shelf Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessLowMidFreq" x="160.0" y="520.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Low Mid Freq"
-                           min="100.0" max="1000.0" stepSize="1.0" middlePosition="550.0"
-                           defaultValue="300.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessLowMidGain" x="260.0" y="520.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Low Mid Gain"
-                           min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
-                           text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessLowMidQ" x="370.0" y="520.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Low Mid Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessMidFreq" x="160.0" y="460.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Mid Freq"
-                           min="200.0" max="2000.0" stepSize="1.0" middlePosition="1100.0"
-                           defaultValue="700.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessMidGain" x="260.0" y="460.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Mid Gain"
-                           min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
-                           text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessMidQ" x="370.0" y="460.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Mid Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessHighMidFreq" x="160.0" y="400.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="High Mid Freq"
-                           min="1000.0" max="10000.0" stepSize="1.0" middlePosition="5500.0"
-                           defaultValue="3200.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessHighMidGain" x="260.0" y="400.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="High Mid Gain"
-                           min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
-                           text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessHighMidQ" x="370.0" y="400.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="High Mid Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessHighShelfFreq" x="160.0"
-                           y="330.0" parentComponent="pnlPreProcess" processorId="preprocess"
-                           parameterId="High Shelf Freq" min="2000.0" max="20000.0" stepSize="1.0"
-                           middlePosition="11000.0" defaultValue="7000.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessHighShelfGain" x="260.0"
-                           y="330.0" parentComponent="pnlPreProcess" processorId="preprocess"
-                           parameterId="High Shelf Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
-                           middlePosition="0.0" text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessHighShelfQ" x="370.0" y="330.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="High Shelf Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessLpfFreq" x="290.0" y="270.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="LPF Freq"
-                           min="5000.0" max="20000.0" stepSize="1.0" middlePosition="12500.0"
-                           defaultValue="14000.0" text="Freq"/>
-                <Component type="ScriptLabel" id="lblPreprocessHPF" x="380.0" y="650.0"
-                           parentComponent="pnlPreProcess" width="80.0" height="28.0" text="Highpass"/>
-                <Component type="ScriptLabel" id="lblPreprocessLowShelf" x="480.0" y="590.0"
-                           parentComponent="pnlPreProcess" width="80.0" height="28.0" text="Low Shelf"/>
-                <Component type="ScriptLabel" id="lblPreprocessLowMid" x="480.0" y="530.0"
-                           parentComponent="pnlPreProcess" width="80.0" height="28.0" text="Low Mid"/>
-                <Component type="ScriptLabel" id="lblPreprocessMid" x="480.0" y="470.0"
-                           parentComponent="pnlPreProcess" width="80.0" height="28.0" text="Mid"/>
-                <Component type="ScriptLabel" id="lblPreprocessHighMid" x="480.0" y="420.0"
-                           parentComponent="pnlPreProcess" width="80.0" height="28.0" text="High Mid"/>
-                <Component type="ScriptLabel" id="lblPreprocessHighShelf" x="480.0" y="340.0"
-                           parentComponent="pnlPreProcess" width="80.0" height="28.0" text="High Shelf"/>
-                <Component type="ScriptLabel" id="lblPreprocessLPF" x="440.0" y="280.0"
-                           parentComponent="pnlPreProcess" width="80.0" height="28.0" text="Lowpass"/>
-                <Component type="ScriptSlider" id="knbPreprocessCompThreshold" x="610.0"
-                           y="310.0" parentComponent="pnlPreProcess" processorId="preprocess"
-                           parameterId="Comp Threshold" min="-60.0" max="0.0" stepSize="0.1000000014901161"
-                           middlePosition="-12.0" text="Thres" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessCompRatio" x="730.0" y="310.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Ratio"
-                           min="1.0" max="20.0" stepSize="0.1000000014901161" middlePosition="10.0"
-                           defaultValue="4.0" text="Ratio" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessCompRelease" x="730.0" y="380.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Release"
-                           min="10.0" max="1000.0" stepSize="1.0" middlePosition="500.0"
-                           defaultValue="150.0" text="Release" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessCompAttack" x="610.0" y="380.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Attack"
-                           min="0.1000000014901161" max="100.0" stepSize="0.1000000014901161"
-                           middlePosition="50.0" defaultValue="2.0" text="Attack" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessCompMix" x="730.0" y="450.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Mix"
-                           middlePosition="0.5" defaultValue="1.0" text="Mix" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessCompKnee" x="610.0" y="450.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Knee"
-                           max="10.0" stepSize="0.1000000014901161" middlePosition="5.0"
-                           defaultValue="3.0" text="Knee" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessCompMakeup" x="670.0" y="520.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Makeup"
-                           min="-20.0" max="20.0" stepSize="0.1000000014901161" middlePosition="0.0"
-                           text="Makeup" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPreprocessClipperGain" x="680.0" y="630.0"
-                           parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Clipper Gain"
-                           max="2.0" middlePosition="1.0" text="Clip" width="98.0"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlPostProcess" x="0.0" y="0.0" width="1150.0"
-                         height="740.0" allowCallbacks="Clicks Only" itemColour="818991175"
-                         visible="0.0">
-                <Component type="ScriptButton" id="btnPostProcessEQFirst" x="510.0" y="640.0"
-                           parentComponent="pnlPostProcess" text="EQ FIRST" processorId="postprocess"
-                           parameterId="EQ First"/>
-                <Component type="ScriptSlider" id="knbPostprocessHpfFreq" x="280.0" y="630.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="HPF Freq"
-                           min="20.0" max="200.0" stepSize="1.0" middlePosition="110.0"
-                           defaultValue="40.0" text="Freq"/>
-                <Component type="ScriptSlider" id="knbPostprocessLowShelfFreq" x="200.0"
-                           y="570.0" parentComponent="pnlPostProcess" processorId="postprocess"
-                           parameterId="Low Shelf Freq" min="50.0" max="500.0" stepSize="1.0"
-                           middlePosition="225.0" defaultValue="120.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessLowShelfGain" x="300.0"
-                           y="570.0" parentComponent="pnlPostProcess" processorId="postprocess"
-                           parameterId="Low Shelf Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
-                           middlePosition="0.0" text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessLowShelfQ" x="410.0" y="570.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Shelf Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessLowMidFreq" x="200.0" y="510.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Mid Freq"
-                           min="100.0" max="1000.0" stepSize="1.0" middlePosition="550.0"
-                           defaultValue="300.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessLowMidGain" x="300.0" y="510.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Mid Gain"
-                           min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
-                           text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessLowMidQ" x="410.0" y="510.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Mid Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessMidFreq" x="200.0" y="450.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Mid Freq"
-                           min="200.0" max="2000.0" stepSize="1.0" middlePosition="1100.0"
-                           defaultValue="700.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessMidGain" x="300.0" y="450.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Mid Gain"
-                           min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
-                           text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessMidQ" x="410.0" y="450.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Mid Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessHighMidFreq" x="200.0"
-                           y="390.0" parentComponent="pnlPostProcess" processorId="postprocess"
-                           parameterId="High Mid Freq" min="1000.0" max="10000.0" stepSize="1.0"
-                           middlePosition="5500.0" defaultValue="3200.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessHighMidGain" x="300.0"
-                           y="390.0" parentComponent="pnlPostProcess" processorId="postprocess"
-                           parameterId="High Mid Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
-                           middlePosition="0.0" text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessHighMidQ" x="410.0" y="390.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="High Mid Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessHighShelfFreq" x="200.0"
-                           y="320.0" parentComponent="pnlPostProcess" processorId="postprocess"
-                           parameterId="High Shelf Freq" min="2000.0" max="20000.0" stepSize="1.0"
-                           middlePosition="11000.0" defaultValue="7000.0" text="Freq" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessHighShelfGain" x="300.0"
-                           y="320.0" parentComponent="pnlPostProcess" processorId="postprocess"
-                           parameterId="High Shelf Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
-                           middlePosition="0.0" text="Gain" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessHighShelfQ" x="410.0" y="320.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="High Shelf Q"
-                           min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
-                           middlePosition="1.0" defaultValue="1.0" text="Q" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessLpfFreq" x="330.0" y="260.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="LPF Freq"
-                           min="5000.0" max="20000.0" stepSize="1.0" middlePosition="12500.0"
-                           defaultValue="14000.0" text="Freq"/>
-                <Component type="ScriptLabel" id="lblPostprocessHPF" x="420.0" y="640.0"
-                           parentComponent="pnlPostProcess" width="80.0" height="28.0" text="Highpass"/>
-                <Component type="ScriptLabel" id="lblPostprocessLowShelf" x="520.0" y="580.0"
-                           parentComponent="pnlPostProcess" width="80.0" height="28.0" text="Low Shelf"/>
-                <Component type="ScriptLabel" id="lblPostprocessLowMid" x="520.0" y="520.0"
-                           parentComponent="pnlPostProcess" width="80.0" height="28.0" text="Low Mid"/>
-                <Component type="ScriptLabel" id="lblPostprocessMid" x="520.0" y="460.0"
-                           parentComponent="pnlPostProcess" width="80.0" height="28.0" text="Mid"/>
-                <Component type="ScriptLabel" id="lblPostprocessHighMid" x="520.0" y="410.0"
-                           parentComponent="pnlPostProcess" width="80.0" height="28.0" text="High Mid"/>
-                <Component type="ScriptLabel" id="lblPostprocessHighShelf" x="520.0" y="330.0"
-                           parentComponent="pnlPostProcess" width="80.0" height="28.0" text="High Shelf"/>
-                <Component type="ScriptLabel" id="lblPostprocessLPF" x="480.0" y="270.0"
-                           parentComponent="pnlPostProcess" width="80.0" height="28.0" text="Lowpass"/>
-                <Component type="ScriptSlider" id="knbPostprocessCompThreshold" x="650.0"
-                           y="300.0" parentComponent="pnlPostProcess" processorId="postprocess"
-                           parameterId="Comp Threshold" min="-60.0" max="0.0" stepSize="0.1000000014901161"
-                           middlePosition="-12.0" text="Thres" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessCompRatio" x="770.0" y="300.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Comp Ratio"
-                           min="1.0" max="20.0" stepSize="0.1000000014901161" middlePosition="10.0"
-                           defaultValue="4.0" text="Ratio" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessCompRelease" x="770.0"
-                           y="370.0" parentComponent="pnlPostProcess" processorId="postprocess"
-                           parameterId="Comp Release" min="10.0" max="1000.0" stepSize="1.0"
-                           middlePosition="500.0" defaultValue="150.0" text="Release" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessCompAttack" x="650.0" y="370.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Comp Attack"
-                           min="0.1000000014901161" max="100.0" stepSize="0.1000000014901161"
-                           middlePosition="50.0" defaultValue="2.0" text="Attack" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessCompMix" x="770.0" y="440.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Comp Mix"
-                           middlePosition="0.5" defaultValue="1.0" text="Mix" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessCompKnee" x="650.0" y="440.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Comp Knee"
-                           max="10.0" stepSize="0.1000000014901161" middlePosition="5.0"
-                           defaultValue="3.0" text="Knee" width="98.0"/>
-                <Component type="ScriptSlider" id="knbPostprocessCompMakeup" x="710.0" y="510.0"
-                           parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Comp Makeup"
-                           min="-20.0" max="20.0" stepSize="0.1000000014901161" middlePosition="0.0"
-                           text="Makeup" width="98.0"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlTuner" x="0.0" y="0.0" width="1160.0"
-                         height="740.0" itemColour="1358954496" itemColour2="1358954496"
-                         allowCallbacks="Clicks Only" visible="0.0">
-                <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="F# -9C"
-                           parentComponent="pnlTuner"/>
-                <Component type="ScriptButton" id="btnTunerMonitor" x="580.0" y="130.0"
-                           parentComponent="pnlTuner"/>
-                <Component type="ScriptPanel" id="Panel1" x="410.0" y="210.0" width="330.0"
-                           height="50.0" itemColour="4287269514" itemColour2="4287269514"
-                           parentComponent="pnlTuner"/>
-                <Component type="ScriptLabel" id="Label1" x="420.0" y="270.0" text="tuner value inside the panel paint routine"
-                           width="315.0" parentComponent="pnlTuner"/>
-                <Component type="ScriptButton" id="btnTuner" x="430.0" y="130.0" processorId="tuner"
-                           parameterId="Enabled" parentComponent="pnlTuner"/>
-                <Component type="ScriptLabel" id="lblClickDisasbled" x="20.0" y="249.0"
-                           width="290.0" height="20.0" text="Click disabled in Plugin version."
-                           visible="0" parentComponent="pnlTuner"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlCabDesigner" x="0.0" y="0.0" width="1150.0"
-                         height="800.0" itemColour="1023410176" itemColour2="1023410176"
-                         allowCallbacks="Clicks Only" visible="0.0">
-                <Component type="ScriptLabel" id="lblCabSaveName" x="824.0" y="389.0" parentComponent="pnlCabDesigner"
-                           text="derek.wav"/>
-                <Component type="ScriptButton" id="btnCabSave" x="730.0" y="389.0" isMomentary="1"
-                           parentComponent="pnlCabDesigner" text="Save" width="88.0" saveInPreset="0"/>
-                <Component type="ScriptFloatingTile" id="fltCabDesignerEQ" x="235.0" y="430.0"
-                           width="680.0" height="300.0" ContentType="DraggableFilterPanel"
-                           bgColour="4280955724" itemColour="4294967295" itemColour2="4294967295"
-                           Data="{&#10;  &quot;ProcessorId&quot;: &quot;cabDesignerEQ&quot;,&#10;  &quot;Index&quot;: -1,&#10;  &quot;FollowWorkspace&quot;: false,&#10;  &quot;AllowFilterResizing&quot;: true,&#10;  &quot;AllowDynamicSpectrumAnalyser&quot;: 0,&#10;  &quot;UseUndoManager&quot;: false,&#10;  &quot;ResetOnDoubleClick&quot;: false,&#10;  &quot;ShowLines&quot;: true,&#10;  &quot;PathMargin&quot;: 3.0,&#10;  &quot;PathType&quot;: &quot;StrokeFullWidth&quot;,&#10;  &quot;GainRange&quot;: 24.0,&#10;  &quot;AllowContextMenu&quot;: true&#10;}"
-                           parentComponent="pnlCabDesigner" itemColour3="16777215"/>
-                <Component type="ScriptButton" id="btnCabGenerate" x="730.0" y="349.0" isMomentary="1"
-                           parentComponent="pnlCabDesigner" text="Generate" width="88.0"
-                           saveInPreset="0"/>
-                <Component type="ScriptComboBox" id="cmbCabDesignerSpeaker" x="180.0" y="359.0"
-                           max="5" parentComponent="pnlCabDesigner" text="AL-30 Mod" items="AL-30 Mod&#10;AL-30&#10;AL-K100&#10;AL-65&#10;AL-77&#10;"
-                           saveInPreset="0"/>
-                <Component type="ScriptComboBox" id="cmbCabDesignerMic" x="320.0" y="359.0"
-                           max="6" parentComponent="pnlCabDesigner" text="Linear (No Mic)"
-                           items="Linear (No Mic)&#10;AL-57&#10;AL-421&#10;AL-414&#10;AL-184&#10;AL-121"
-                           saveInPreset="0"/>
-                <Component type="ScriptSlider" id="knbCabDesignerMojo" x="460.0" y="349.0"
-                           parentComponent="pnlCabDesigner" text="Mojo Strength" saveInPreset="0"/>
-                <Component type="ScriptSlider" id="knbCabDesignerAge" x="590.0" y="349.0"
-                           parentComponent="pnlCabDesigner" text="Speaker Age" saveInPreset="0"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlClick" x="0.0" y="0.0" width="1160.0"
-                         height="740.0" itemColour="1358954496" itemColour2="1358954496"
-                         allowCallbacks="Clicks Only" visible="0.0">
-                <Component type="ScriptButton" id="btnClick" x="430.0" y="130.0" parentComponent="pnlClick"/>
-                <Component type="ScriptSlider" id="knbClickGain" x="590.0" y="120.0" middlePosition="-50.0"
-                           min="-100.0" max="36.0" mode="Decibel" processorId="clickGain"
-                           parameterId="Gain" parentComponent="pnlClick"/>
-              </Component>
-              <Component type="ScriptPanel" id="pnlPreferences" x="0.0" y="0.0" width="1160.0"
-                         height="740.0" itemColour="1358954496" itemColour2="1358954496"
-                         allowCallbacks="Clicks Only" visible="0.0">
-                <Component type="ScriptFloatingTile" id="FloatingTile1" x="308.0" y="80.0"
-                           parentComponent="pnlPreferences" width="530.0" height="280.0"
-                           ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
-                           itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: true,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
-              </Component>
-            </ContentProperties>
-          </UIData>
+          <UIData Source="AltarUIData"/>
         </Processor>
       </ChildProcessors>
     </Processor>
@@ -748,8 +160,8 @@
           </ChildProcessors>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="gate" Bypassed="1" Network="gate"
-                   Threshold="-61.11999893188477">
+        <Processor Type="Hardcoded Master FX" ID="gate" Bypassed="0" Network="gate"
+                   Threshold="-24.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -762,10 +174,10 @@
                    HPFFreq="40.0" LowShelfFreq="120.0" LowShelfGain="0.0" LowShelfQ="1.0"
                    LowMidFreq="300.0" LowMidGain="0.0" LowMidQ="1.0" MidFreq="700.0"
                    MidGain="0.0" MidQ="1.0" HighMidFreq="3200.0" HighMidGain="0.0"
-                   HighMidQ="1.0" HighShelfFreq="7000.0" HighShelfGain="1.788139343261719e-7"
-                   HighShelfQ="1.0" LPFFreq="14000.0" CompThreshold="0.0" CompRatio="4.0"
-                   CompAttack="2.0" CompRelease="150.0" CompKnee="3.0" CompMix="1.0"
-                   CompMakeup="2.980232238769531e-7" ClipperGain="0.0" EQFirst="1.0">
+                   HighMidQ="1.0" HighShelfFreq="7000.0" HighShelfGain="0.0" HighShelfQ="1.0"
+                   LPFFreq="14000.0" CompThreshold="0.0" CompRatio="4.0" CompAttack="2.0"
+                   CompRelease="150.0" CompKnee="3.0" CompMix="1.0" CompMakeup="0.0"
+                   ClipperGain="0.0" EQFirst="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -782,23 +194,10 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="0" Network="overdrive"
-                   DistortionMode="0.0" Oversampling="0.0" Drive="9.059000015258789"
-                   Tone="0.0" ToneFreq="1000.0" OutputGain="0.0" Mix="1.0" Bits="16.0"
-                   SRReduction="1.0" FoldAmount="2.0">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
-        </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="amp"
-                   AmpMode="1.0" Oversampling="1.0" InputGain="69.59999847412109"
-                   Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="-39.20000076293945">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
-        </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularC" Bypassed="0" Network="cab"
-                   Mix="0.0" CabAEnable="0.1879999935626984" CabADelay="0.0" CabAAxis="0.0"
-                   CabADistance="6000.0" CabAPhase="0.0" CabAPan="0.0" CabAGain="1.490116119384766e-6"
-                   CabBEnable="0.0" CabBDelay="0.0" CabBAxis="0.0" CabBDistance="6000.0"
+        <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="0" Network="cab"
+                   Mix="0.5" CabAEnable="0.0" CabADelay="5.400000095367432" CabAAxis="0.0"
+                   CabADistance="20000.0" CabAPhase="0.0" CabAPan="0.0" CabAGain="1.490116119384766e-6"
+                   CabBEnable="0.0" CabBDelay="0.0" CabBAxis="0.0" CabBDistance="0.05000000074505806"
                    CabBPhase="0.0" CabBPan="0.0" CabBGain="1.490116119384766e-6">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
@@ -806,6 +205,19 @@
             <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
             <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
           </AudioFiles>
+        </Processor>
+        <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="overdrive"
+                   DistortionMode="0.0" Oversampling="0.0" Drive="9.059000015258789"
+                   Tone="0.0" ToneFreq="1000.0" OutputGain="0.0" Mix="1.0" Bits="16.0"
+                   SRReduction="1.0" FoldAmount="2.0">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Hardcoded Master FX" ID="modularC" Bypassed="0" Network="amp"
+                   AmpMode="1.0" Oversampling="1.0" InputGain="69.59999847412109"
+                   Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="-39.20000076293945">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularD" Bypassed="1" Network="">
           <ChildProcessors/>
@@ -851,14 +263,13 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="postprocess" Bypassed="1" Network="postprocess"
-                   HPFFreq="40.0" LowShelfFreq="120.0" LowShelfGain="1.788139343261719e-7"
-                   LowShelfQ="1.0" LowMidFreq="300.0" LowMidGain="1.788139343261719e-7"
-                   LowMidQ="1.0" MidFreq="700.0" MidGain="1.788139343261719e-7"
-                   MidQ="1.0" HighMidFreq="3200.0" HighMidGain="1.788139343261719e-7"
-                   HighMidQ="1.0" HighShelfFreq="7000.0" HighShelfGain="1.788139343261719e-7"
-                   HighShelfQ="1.0" LPFFreq="14000.0" CompThreshold="0.0" CompRatio="4.0"
-                   CompAttack="2.0" CompRelease="150.0" CompKnee="3.0" CompMix="1.0"
-                   CompMakeup="2.980232238769531e-7" EQFirst="0.0">
+                   HPFFreq="40.0" LowShelfFreq="120.0" LowShelfGain="0.0" LowShelfQ="1.0"
+                   LowMidFreq="300.0" LowMidGain="0.0" LowMidQ="1.0" MidFreq="700.0"
+                   MidGain="0.0" MidQ="1.0" HighMidFreq="3200.0" HighMidGain="0.0"
+                   HighMidQ="1.0" HighShelfFreq="7000.0" HighShelfGain="0.0" HighShelfQ="1.0"
+                   LPFFreq="14000.0" CompThreshold="0.0" CompRatio="4.0" CompAttack="2.0"
+                   CompRelease="150.0" CompKnee="3.0" CompMix="1.0" CompMakeup="0.0"
+                   EQFirst="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -942,7 +353,7 @@
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors>
-            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="252.0"
+            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="272.0"
                        CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
               <ChildProcessors/>
               <MidiFiles>
@@ -1951,6 +1362,88 @@
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>
                 <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                          FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                          FileName="">
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>

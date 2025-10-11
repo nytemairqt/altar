@@ -276,7 +276,7 @@
         </Connections>
       </Parameter>
       <Parameter ID="CabADistance" MinValue="6000.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                 ExternalModulation="Disabled" DefaultValue="" TextToValueConverter="Frequency"
+                 ExternalModulation="Disabled" TextToValueConverter="Frequency"
                  Value="6000.0">
         <Connections>
           <Connection NodeId="svf_eq1" ParameterId="Frequency"/>
@@ -294,7 +294,7 @@
       </Parameter>
       <Parameter ID="CabAGain" MinValue="-100.0" MaxValue="12.0" StepSize="0.1000000014901161"
                  SkewFactor="5.422270774841309" ExternalModulation="Disabled"
-                 DefaultValue="" Value="1.490116119384766e-6">
+                 DefaultValue="" Value="1.490116105173911e-6">
         <Connections>
           <Connection NodeId="gain2" ParameterId="Gain"/>
         </Connections>
@@ -334,7 +334,7 @@
       </Parameter>
       <Parameter ID="CabBGain" MinValue="-100.0" MaxValue="12.0" StepSize="0.1000000014901161"
                  SkewFactor="5.422270774841309" ExternalModulation="Disabled"
-                 DefaultValue="" Value="1.490116119384766e-6">
+                 DefaultValue="" Value="1.490116105173911e-6">
         <Connections>
           <Connection NodeId="gain4" ParameterId="Gain"/>
         </Connections>

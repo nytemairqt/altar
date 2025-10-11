@@ -270,109 +270,37 @@ namespace ModularChain
         p.setMouseCallback(dragMouseCallback);
 
     // ---------------------------
-    // Effect-to-slot map and UI bindings
+    // Bind Parameters
     // ---------------------------
 
-    // Effect type to current slot index map, rebuilt on demand
-    reg effectToSlot = {};
-
-    // Parameter index maps (update as required to match your DSP)
-    const OVERDRIVE_PARAMS = { Gain: 0, Tone: 1, Mix: 2 };
-    const AMP_PARAMS       = { Mode: 0, Input: 1, Low: 2, Mid: 3, High: 4, Presence: 5, Output: 6 };
-    const CAB_PARAMS       = {
-        Mix: 0,
-        CabAEnable: 1, CabADelay: 2, CabAAxis: 3, CabADistance: 4, CabAPhase: 5, CabAPan: 6, CabAGain: 7,
-        CabBEnable: 8, CabBDelay: 9, CabBAxis: 10, CabBDistance: 11, CabBPhase: 12, CabBPan: 13, CabBGain: 14
-    };
-
-    inline function safeGetComponent(id)
+    const knbAmpControl = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
+    const knbCabControl = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
+    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
+    
+    inline function onknbModularControl(component, value)
     {
-        // Guard to avoid errors if a component is missing
-        local c = Content.getComponent(id);
-        return isDefined(c) ? c : undefined;
-    }
+		local text = component.get("text");
+		local idx = text.indexOf("_");
+		local mod = text.substring(0, idx);
+		local param = text.substring(idx + 1, text.length);        
+		
+		for (slot in fxSlots)
+			if (slot.getCurrentEffectId() == mod)
+			{
+				local effect = slot.getCurrentEffect();
+				local index = effect.getAttributeIndex(param);
+				effect.setAttribute(index, value);				
+			}
 
-    inline function bindPanelToEffect(effectId, componentPairs)
-    {
-        // Binds a list of components to the processor / parameter ids of the current slot for an effect
-        if (!isDefined(effectToSlot[effectId])) return;
-
-        local slotIndex = effectToSlot[effectId];
-        local procId = fxSlots[slotIndex].getCurrentEffectId(); // the effect module id currently in that slot
-
-        for (pair in componentPairs)
+        // Additional per-component logic goes here
+        if (component == knbAmpControl[0]) // amp mode
         {
-            if (!isDefined(pair) || !isDefined(pair.comp)) continue;
-            pair.comp.set("processorId", procId);
-            pair.comp.set("parameterId", pair.param);
+            if (value < 2) { pnlAmpNAMLoader.set("visible", false); }
+            else { pnlAmpNAMLoader.set("visible", true); }
         }
-    }
+    }    
 
-    inline function bindOverdrivePanel()
-    {
-        // Only bind if components exist
-        bindPanelToEffect("overdrive", [
-            { comp: safeGetComponent("knbODGain"), param: OVERDRIVE_PARAMS.Gain },
-            { comp: safeGetComponent("knbODTone"), param: OVERDRIVE_PARAMS.Tone },
-            { comp: safeGetComponent("knbODMix"),  param: OVERDRIVE_PARAMS.Mix }
-        ]);
-    }
+    for (k in knbAmpControl) { k.setControlCallback(onknbModularControl); }
+    for (k in knbCabControl) { k.setControlCallback(onknbModularControl); }
 
-    inline function bindAmpPanel()
-    {
-        bindPanelToEffect("amp", [
-            { comp: safeGetComponent("cmbAmpMode"),  param: AMP_PARAMS.Mode },
-            { comp: safeGetComponent("knbAmpInput"), param: AMP_PARAMS.Input },
-            { comp: safeGetComponent("knbAmpLow"),   param: AMP_PARAMS.Low },
-            { comp: safeGetComponent("knbAmpMid"),   param: AMP_PARAMS.Mid },
-            { comp: safeGetComponent("knbAmpHigh"),  param: AMP_PARAMS.High },
-            { comp: safeGetComponent("knbAmpPres"),  param: AMP_PARAMS.Presence },
-            { comp: safeGetComponent("knbAmpOut"),   param: AMP_PARAMS.Output }
-        ]);
-    }
-
-    inline function bindCabPanel()
-    {
-        bindPanelToEffect("cab", [
-            { comp: safeGetComponent("knbCabMix"),        param: CAB_PARAMS.Mix },
-            { comp: safeGetComponent("btnCabAEnable"),    param: CAB_PARAMS.CabAEnable },
-            { comp: safeGetComponent("knbCabADelay"),     param: CAB_PARAMS.CabADelay },
-            { comp: safeGetComponent("knbCabAAxis"),      param: CAB_PARAMS.CabAAxis },
-            { comp: safeGetComponent("knbCabADistance"),  param: CAB_PARAMS.CabADistance },
-            { comp: safeGetComponent("btnCabAPhase"),     param: CAB_PARAMS.CabAPhase },
-            { comp: safeGetComponent("knbCabAPan"),       param: CAB_PARAMS.CabAPan },
-            { comp: safeGetComponent("knbCabAGain"),      param: CAB_PARAMS.CabAGain },
-
-            { comp: safeGetComponent("btnCabBEnable"),    param: CAB_PARAMS.CabBEnable },
-            { comp: safeGetComponent("knbCabBDelay"),     param: CAB_PARAMS.CabBDelay },
-            { comp: safeGetComponent("knbCabBAxis"),      param: CAB_PARAMS.CabBAxis },
-            { comp: safeGetComponent("knbCabBDistance"),  param: CAB_PARAMS.CabBDistance },
-            { comp: safeGetComponent("btnCabBPhase"),     param: CAB_PARAMS.CabBPhase },
-            { comp: safeGetComponent("knbCabBPan"),       param: CAB_PARAMS.CabBPan },
-            { comp: safeGetComponent("knbCabBGain"),      param: CAB_PARAMS.CabBGain }
-        ]);
-    }
-
-    inline function rebindParameters()
-    {
-        // Reconnect UI elements to the effect instance in its current slot
-        bindOverdrivePanel();
-        bindAmpPanel();
-        bindCabPanel();
-
-        // Add additional binders (reverb, delay, chorus, ringmod) similarly if needed.
-    }
-
-    inline function rebuildEffectMap()
-    {
-        // Build a map of effectId -> slotIndex, then rebind UI
-        effectToSlot = {};
-        for (i = 0; i < fxSlots.length; i++)
-            effectToSlot[fxSlots[i].getCurrentEffectId()] = i;
-
-        rebindParameters();
-    }
-
-    // Initial binding pass (uncomment if you'd like to bind on load)
-    // rebuildEffectMap();
 }
