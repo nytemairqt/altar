@@ -220,10 +220,7 @@ namespace ModularChain
         applyStatesByMapping(states, mapping);
 
         // 4) Refresh UI (texts, target highlights)
-        repaintAllSlots();
-
-        // 5) Update effect-to-slot map and rebind UI controls
-        rebuildEffectMap();
+        repaintAllSlots();        
     }
 
     // ---------------------------
