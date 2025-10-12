@@ -77,10 +77,7 @@ namespace InputChain
     }
 
     knbPitch.setControlCallback(onknbPitchControl);
-    btnPitchSnap.setControlCallback(onbtnPitchSnapControl);
-
-    // Grit
-    const grit = Synth.getEffect("grit");
+    btnPitchSnap.setControlCallback(onbtnPitchSnapControl);    
 
     // Octave
     const octave = Synth.getEffect("octave");

@@ -92,7 +92,6 @@ namespace LookAndFeel
 	                            Content.getComponent("knbOctave"),
 	                            Content.getComponent("knbChugStrength"),
 	                            Content.getComponent("knbPickStrength"),
-	                            Content.getComponent("knbGrit"),
 	                            Content.getComponent("knbEQWhistle"),
 	                            Content.getComponent("knbOutputGain"),  
 	                            Content.getComponent("knbAmpMode"),

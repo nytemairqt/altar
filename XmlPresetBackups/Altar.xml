@@ -28,13 +28,12 @@
             <Control type="ScriptSlider" id="knbChugStrength" value="0.0"/>
             <Control type="ScriptButton" id="btnPick" value="1.0"/>
             <Control type="ScriptSlider" id="knbPickStrength" value="0.0"/>
-            <Control type="ScriptSlider" id="knbGrit" value="-36.0"/>
-            <Control type="ScriptButton" id="btnGrit" value="0.0"/>
             <Control type="ScriptSlider" id="knbEQWhistle" value="1.0"/>
             <Control type="ScriptButton" id="btnPitchSnap" value="0.0"/>
             <Control type="ScriptButton" id="btnShowClick" value="0.0"/>
             <Control type="ScriptButton" id="btnShowRecorder" value="0.0"/>
             <Control type="ScriptButton" id="btnPitchHQ" value="0.0"/>
+            <Control type="ScriptButton" id="btnWhistle" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMode" value="1.0"/>
             <Control type="ScriptSlider" id="knbAmpInput" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpOutput" value="0.0"/>
@@ -244,22 +243,10 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Convolution" ID="Convolution Reverb1" Bypassed="1" DryGain="-100.0"
-                   WetGain="0.0" Latency="0.0" ImpulseLength="1.0" ProcessInput="1.0"
-                   UseBackgroundThread="0.0" Predelay="0.0" HiCut="20000.0" Damping="0.0"
-                   FFTType="5.0" FileName="{PROJECT_FOLDER}TSE IMPULSE.wav" min="0"
-                   max="5512" loopStart="0" loopEnd="5512">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
-        </Processor>
         <Processor Type="CurveEq" ID="whistle" Bypassed="1" NumFilters="2" Band0="-5.0"
                    Band1="2600.0" Band2="4.539204120635986" Band3="1.0" Band4="4.0"
                    Band5="-8.0" Band6="4000.0" Band7="4.406803607940674" Band8="1.0"
                    Band9="4.0" FFTEnabled="0">
-          <ChildProcessors/>
-          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
-        </Processor>
-        <Processor Type="Hardcoded Master FX" ID="grit" Bypassed="1" Network="">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -359,7 +346,7 @@
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors>
-            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="301.0"
+            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="304.0"
                        CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
               <ChildProcessors/>
               <MidiFiles>
@@ -1560,6 +1547,20 @@
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>
                 <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                          FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
+                          FileName="">
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>

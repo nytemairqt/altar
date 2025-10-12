@@ -63,13 +63,6 @@
                middlePosition="5.0" parentComponent="pnlMaster" max="10.0" stepSize="0.1000000014901161"
                processorId="pick" parameterId="Strength" tooltip="Adjust pick threshold."
                width="48.0"/>
-    <Component type="ScriptSlider" id="knbGrit" x="680.0" y="90.0" parentComponent="pnlMaster"
-               min="-100.0" max="0.0" middlePosition="-36.0" stepSize="0.1000000014901161"
-               defaultValue="-36.0" processorId="grit" parameterId="Grit" tooltip="Adjust grit amount."
-               width="48.0"/>
-    <Component type="ScriptButton" id="btnGrit" x="686.0" y="181.0" parentComponent="pnlMaster"
-               processorId="grit" parameterId="Enabled" tooltip="Enable grit (sub-octave distortion)."
-               width="28.0" text=""/>
     <Component type="ScriptSlider" id="knbEQWhistle" x="770.0" y="100.0" defaultValue="1.0"
                parentComponent="pnlMaster" width="48.0"/>
     <Component type="ScriptButton" id="btnPitchSnap" x="80.0" y="280.0" width="28.0"
@@ -103,8 +96,6 @@
                text="Chug" width="80.0"/>
     <Component type="ScriptLabel" id="lblPick" x="510.0" y="150.0" parentComponent="pnlMaster"
                text="Pick" width="80.0"/>
-    <Component type="ScriptLabel" id="lblGrit" x="660.0" y="150.0" parentComponent="pnlMaster"
-               text="Grit" width="80.0"/>
     <Component type="ScriptLabel" id="lblWhistle" x="750.0" y="150.0" parentComponent="pnlMaster"
                text="Whistle" width="80.0"/>
     <Component type="ScriptLabel" id="lblOutputGain" x="1020.0" y="30.0" parentComponent="pnlMaster"
@@ -121,6 +112,9 @@
                parentComponent="pnlMaster" tooltip="Open recorder panel." text="Record"/>
     <Component type="ScriptButton" id="btnPitchHQ" x="90.0" y="320.0" parentComponent="pnlMaster"
                text="High Quality" tooltip="Switch to High Quality Pitch &amp; Octave Modules"/>
+    <Component type="ScriptButton" id="btnWhistle" x="770.0" y="180.0" width="28.0"
+               parentComponent="pnlMaster" processorId="whistle" parameterId="Enabled"
+               tooltip="Enable pick (single-band expander)." text=""/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="350.0" width="1150.0"
              height="390.0" itemColour="4278190080" itemColour2="4278190080"
