@@ -18,4 +18,27 @@
 namespace Oversampling
 {
 	
+	const fxSlots = [
+	        Synth.getSlotFX("modularA"),
+	        Synth.getSlotFX("modularB"),
+	        Synth.getSlotFX("modularC"),
+	        Synth.getSlotFX("modularD"),
+	        Synth.getSlotFX("modularE"),
+	        Synth.getSlotFX("modularF"),
+	        Synth.getSlotFX("modularG")
+	    ];
+
+	const cmbOversampling = Content.getComponent("cmbOversampling");
+	
+	inline function oncmbOversamplingControl(component, value)
+	{
+		for (slot in fxSlots)
+			if (slot.getCurrentEffectId() == "amp" || slot.getCurrentEffectId() == "overdrive")
+			{
+				local effect = slot.getCurrentEffect();
+				effect.setAttribute(effect.Oversampling, value-1.0);				
+			}		
+	}
+	
+	cmbOversampling.setControlCallback(oncmbOversamplingControl);
 }
