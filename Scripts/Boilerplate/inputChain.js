@@ -60,24 +60,24 @@ namespace InputChain
     });
 
     // Pitch-Shifter
-    const pitch = Synth.getEffect("pitch");
-    const knbPitch = Content.getComponent("knbPitch");
-    const btnPitch = Content.getComponent("btnPitch");
-    const btnPitchSnap = Content.getComponent("btnPitchSnap");
+    const transpose = Synth.getEffect("transpose");
+    const knbTranspose = Content.getComponent("knbTranspose");
+    const btnTranspose = Content.getComponent("btnTranspose");
+    const btnTransposeSnap = Content.getComponent("btnTransposeSnap");
 
-    inline function onknbPitchControl(component, value)
+    inline function onknbTransposeControl(component, value)
     {                    
         local newPitch = Math.pow(2.0, value / 12.0);               
-        pitch.setAttribute(pitch.FreqRatio, newPitch);
+        transpose.setAttribute(transpose.FreqRatio, newPitch);
     }
 
-    inline function onbtnPitchSnapControl(component, value)
+    inline function onbtnTransposeSnapControl(component, value)
     {
-        knbPitch.set("stepSize", value ? 1.0 : 0.01);
+        knbTranspose.set("stepSize", value ? 1.0 : 0.01);
     }
 
-    knbPitch.setControlCallback(onknbPitchControl);
-    btnPitchSnap.setControlCallback(onbtnPitchSnapControl);    
+    knbTranspose.setControlCallback(onknbTransposeControl);
+    btnTransposeSnap.setControlCallback(onbtnTransposeSnapControl);    
 
     // Octave
     const octave = Synth.getEffect("octave");

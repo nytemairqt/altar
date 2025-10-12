@@ -88,7 +88,7 @@ namespace LookAndFeel
 	// Look And Feel Assignment
 	const var knbLookAndFeel = [Content.getComponent("knbInputGain"),
 	                            Content.getComponent("knbGateThreshold"),
-	                            Content.getComponent("knbPitch"),
+	                            Content.getComponent("knbTranspose"),
 	                            Content.getComponent("knbOctave"),
 	                            Content.getComponent("knbChugStrength"),
 	                            Content.getComponent("knbPickStrength"),

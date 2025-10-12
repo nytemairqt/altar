@@ -24,15 +24,15 @@ using namespace scriptnode;
 
 // ==========================| The node class with all required callbacks |==========================
 
-template <int NV> struct rubberband: public data::base
+template <int NV> struct transpose: public data::base
 {
 	// Metadata Definitions ------------------------------------------------------------------------
 	
-	SNEX_NODE(rubberband);
+	SNEX_NODE(transpose);
 	
 	struct MetadataClass
 	{
-		SN_NODE_ID("rubberband");
+		SN_NODE_ID("transpose");
 	};
 	
 	// set to true if you want this node to have a modulation dragger
@@ -54,7 +54,7 @@ template <int NV> struct rubberband: public data::base
 
 	// declare a unique_ptr to store our shifter
 	std::unique_ptr<RubberBand::RubberBandStretcher> rb;
-	const int numChannels = 1;
+	const int numChannels = 1; // mono
 	
 	// Scriptnode Callbacks ------------------------------------------------------------------------
 	
@@ -74,17 +74,13 @@ template <int NV> struct rubberband: public data::base
 		
 		int numSamples = data.getNumSamples();
 		auto ptrs = data.getRawDataPointers(); // RB needs pointers
-
-		rb->process(ptrs, numSamples, false); // 
-
+		rb->process(ptrs, numSamples, false);  
 		int available = rb->available();
 
 		if (available >= numSamples)
 		{
-			// We have enough output, retrieve it directly
 			rb->retrieve(ptrs, numSamples);
-
-			std::memcpy(ptrs[1], ptrs[0], sizeof(float) * numSamples);
+			std::memcpy(ptrs[1], ptrs[0], sizeof(float) * numSamples); // mono
 		}
 	}
 	
@@ -105,7 +101,7 @@ template <int NV> struct rubberband: public data::base
 	{
 		if (P == 0)
 		{
-			if (!rb) return; // Safety check in case the Parameter is triggered before the rb object is constructed
+			if (!rb) return;
 			rb->setPitchScale(v); 
 		}
 		
@@ -114,9 +110,7 @@ template <int NV> struct rubberband: public data::base
 	void createParameters(ParameterDataList& data)
 	{
 		{
-			// Create a parameter like this
 			parameter::data p("FreqRatio", { 0.25, 4.0 });
-			// The template parameter (<0>) will be forwarded to setParameter<P>()
 			registerCallback<0>(p);
 			p.setDefaultValue(1.0);
 			data.add(std::move(p));

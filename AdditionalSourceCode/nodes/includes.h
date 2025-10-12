@@ -13,18 +13,20 @@
 #include "chorus.h"
 #include "delay.h"
 #include "gate.h"
+#include "octave_faust.h"
 #include "overdrive.h"
 #include "postprocess.h"
 #include "preprocess.h"
 #include "reverb.h"
 #include "ringmod.h"
-#include "rubberband.h"
+#include "transpose.h"
 #include "tuner.h"
 
 // Include compiled network files ------------------
 
 #include "cab.h"
 #include "chug.h"
+#include "octave.h"
 #include "pick.h"
 #include "tuner_networkdata.h"
 

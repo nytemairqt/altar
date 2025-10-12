@@ -13,11 +13,11 @@
     <Component type="ScriptButton" id="btnGate" x="200.0" y="80.0" width="28.0"
                processorId="gate" parameterId="Enabled" defaultValue="1.0" parentComponent="pnlMaster"
                tooltip="Enable gate." text=""/>
-    <Component type="ScriptSlider" id="knbPitch" x="50.0" y="190.0" middlePosition="0.0"
-               min="-24.0" max="24.0" parentComponent="pnlMaster" tooltip="Adjust pitch-shifter amount."
+    <Component type="ScriptSlider" id="knbTranspose" x="50.0" y="190.0" middlePosition="0.0"
+               min="-24.0" max="24.0" parentComponent="pnlMaster" tooltip="Adjust transpose amount."
                width="48.0"/>
-    <Component type="ScriptButton" id="btnPitch" x="40.0" y="280.0" width="28.0"
-               processorId="pitch" parameterId="Enabled" parentComponent="pnlMaster"
+    <Component type="ScriptButton" id="btnTranspose" x="40.0" y="280.0" width="28.0"
+               processorId="transpose" parameterId="Enabled" parentComponent="pnlMaster"
                tooltip="Enable pitch-shifter." text=""/>
     <Component type="ScriptSlider" id="knbOutputGain" x="960.0" y="20.0" min="-36.0"
                max="36.0" middlePosition="0.0" processorId="outputGain" parameterId="Gain"
@@ -38,8 +38,8 @@
                height="28.0" processorId="lofi" parameterId="Enabled" parentComponent="pnlMaster"
                tooltip="Enable lofi." text=""/>
     <Component type="ScriptSlider" id="knbOctave" x="185.0" y="200.0" middlePosition="0.5"
-               defaultValue="0.5" parentComponent="pnlMaster" tooltip="Sub-octave blend amount."
-               width="48.0"/>
+               parentComponent="pnlMaster" tooltip="Sub-octave blend amount."
+               width="48.0" processorId="octave" parameterId="Octave"/>
     <Component type="ScriptButton" id="btnOctave" x="190.0" y="280.0" width="28.0"
                parentComponent="pnlMaster" tooltip="Enable sub-octave blend."
                text="" processorId="octave" parameterId="Enabled"/>
@@ -62,8 +62,8 @@
                width="48.0"/>
     <Component type="ScriptSlider" id="knbEQWhistle" x="770.0" y="100.0" defaultValue="1.0"
                parentComponent="pnlMaster" width="48.0"/>
-    <Component type="ScriptButton" id="btnPitchSnap" x="80.0" y="280.0" width="28.0"
-               parentComponent="pnlMaster" tooltip="Snap pitch-shifter to semitones."
+    <Component type="ScriptButton" id="btnTransposeSnap" x="80.0" y="280.0"
+               width="28.0" parentComponent="pnlMaster" tooltip="Snap pitch-shifter to semitones."
                text=""/>
     <Component type="ScriptPanel" id="pnlModularA" x="320.0" y="310.0" parentComponent="pnlMaster"
                width="60.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
@@ -499,7 +499,7 @@
   <Component type="ScriptPanel" id="pnlTuner" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
              allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="F# -9C"
+    <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="D# -25C"
                parentComponent="pnlTuner"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="580.0" y="130.0"
                parentComponent="pnlTuner"/>
@@ -552,9 +552,9 @@
   <Component type="ScriptPanel" id="pnlPreferences" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
              allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptFloatingTile" id="FloatingTile1" x="308.0" y="80.0"
-               parentComponent="pnlPreferences" width="530.0" height="280.0"
+    <Component type="ScriptFloatingTile" id="FloatingTile1" x="318.0" y="110.0"
+               parentComponent="pnlPreferences" width="430.0" height="227.0"
                ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
-               itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: true,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
+               itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: false,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
   </Component>
 </ContentProperties>

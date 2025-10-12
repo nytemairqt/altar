@@ -28,18 +28,20 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		// Node registrations ----------------------------------------------------------------------
 		
 		registerPolyNode<project::tuner<1>, scriptnode::wrap::illegal_poly<project::tuner<1>>>();
-		registerPolyNode<project::rubberband<1>, scriptnode::wrap::illegal_poly<project::rubberband<1>>>();
+		registerPolyNode<project::transpose<1>, scriptnode::wrap::illegal_poly<project::transpose<1>>>();
 		registerPolyNode<project::ringmod<1>, scriptnode::wrap::illegal_poly<project::ringmod<1>>>();
 		registerPolyNode<project::reverb<1>, scriptnode::wrap::illegal_poly<project::reverb<1>>>();
 		registerPolyNode<project::preprocess<1>, scriptnode::wrap::illegal_poly<project::preprocess<1>>>();
 		registerPolyNode<project::postprocess<1>, scriptnode::wrap::illegal_poly<project::postprocess<1>>>();
 		registerPolyNode<project::overdrive<1>, scriptnode::wrap::illegal_poly<project::overdrive<1>>>();
+		registerPolyNode<project::octave_faust<1>, scriptnode::wrap::illegal_poly<project::octave_faust<1>>>();
 		registerPolyNode<project::gate<1>, scriptnode::wrap::illegal_poly<project::gate<1>>>();
 		registerPolyNode<project::delay<1>, scriptnode::wrap::illegal_poly<project::delay<1>>>();
 		registerPolyNode<project::chorus<1>, scriptnode::wrap::illegal_poly<project::chorus<1>>>();
 		registerPolyNode<project::amp<1>, scriptnode::wrap::illegal_poly<project::amp<1>>>();
 		registerPolyNode<project::cab<1>, wrap::illegal_poly<project::cab<1>>>();
 		registerPolyNode<project::chug<1>, wrap::illegal_poly<project::chug<1>>>();
+		registerPolyNode<project::octave<1>, wrap::illegal_poly<project::octave<1>>>();
 		registerPolyNode<project::pick<1>, wrap::illegal_poly<project::pick<1>>>();
 		registerDataNode<project::tuner_networkdata>();
 	}
