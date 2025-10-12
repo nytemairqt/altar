@@ -68,18 +68,6 @@ namespace OutputChain
         whistle.setAttribute(B, scaledB); 
     };
 
-    knbEQWhistle.setControlCallback(onknbEQWhistleControl);
-
-    // Chug
-    const chug = Synth.getEffect("chug");
-    const btnChug = Content.getComponent("btnChug");
-    const knbChugThreshold = Content.getComponent("knbChugThreshold");
-    const knbChugFreq = Content.getComponent("knbChugFreq");
-
-    inline function onknbChugControl(component, value)
-    {
-        //chug.setAttribute(chug.Threshold, 1-value);
-    }
-
-    knbChugThreshold.setControlCallback(onknbChugControl);
+    knbEQWhistle.setControlCallback(onknbEQWhistleControl);    
+    
 }

@@ -24,6 +24,8 @@
 // Include compiled network files ------------------
 
 #include "cab.h"
+#include "chug.h"
+#include "pick.h"
 #include "tuner_networkdata.h"
 
 #if (defined (_WIN32) || defined (_WIN64))
