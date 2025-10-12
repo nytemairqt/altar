@@ -30,9 +30,9 @@
     <Component type="ScriptButton" id="btnLimiter" x="960.0" y="70.0" defaultValue="1.0"
                processorId="limiter" parameterId="Enabled" parentComponent="pnlMaster"
                tooltip="Enable output limiter." text="" width="28.0"/>
-    <Component type="ScriptButton" id="btnShowPreProcess" x="320.0" y="280.0"
+    <Component type="ScriptButton" id="btnShowPreProcess" x="320.0" y="250.0"
                parentComponent="pnlMaster" tooltip="Show/hide preprocess panel."/>
-    <Component type="ScriptButton" id="btnShowPostProcess" x="610.0" y="280.0"
+    <Component type="ScriptButton" id="btnShowPostProcess" x="610.0" y="250.0"
                parentComponent="pnlMaster" tooltip="Show/hide postprocess panel."/>
     <Component type="ScriptButton" id="btnLofi" x="1032.0" y="279.0" width="28.0"
                height="28.0" processorId="lofi" parameterId="Enabled" parentComponent="pnlMaster"
@@ -65,20 +65,20 @@
     <Component type="ScriptButton" id="btnTransposeSnap" x="80.0" y="280.0"
                width="28.0" parentComponent="pnlMaster" tooltip="Snap pitch-shifter to semitones."
                text=""/>
-    <Component type="ScriptPanel" id="pnlModularA" x="320.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularB" x="380.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="chorus" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularC" x="440.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="reverb" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularD" x="500.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularE" x="560.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="delay" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularF" x="620.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="ringmod" allowCallbacks="Clicks, Hover &amp; Dragging"/>
-    <Component type="ScriptPanel" id="pnlModularG" x="680.0" y="310.0" parentComponent="pnlMaster"
-               width="60.0" height="40.0" text="overdrive" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularA" x="300" y="305" parentComponent="pnlMaster"
+               width="80.0" height="40.0" text="overdrive" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularB" x="378" y="305" parentComponent="pnlMaster"
+               width="80.0" height="40.0" text="amp" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularC" x="456" y="305" parentComponent="pnlMaster"
+               width="80.0" height="40.0" text="cab" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularD" x="535" y="305" parentComponent="pnlMaster"
+               width="80.0" height="40.0" text="reverb" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularE" x="613" y="305" parentComponent="pnlMaster"
+               width="80.0" height="40.0" text="chorus" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularF" x="691" y="305" parentComponent="pnlMaster"
+               width="80.0" height="40.0" text="delay" allowCallbacks="Clicks, Hover &amp; Dragging"/>
+    <Component type="ScriptPanel" id="pnlModularG" x="769" y="305" parentComponent="pnlMaster"
+               width="80.0" height="40.0" text="ringmod" allowCallbacks="Clicks, Hover &amp; Dragging"/>
     <Component type="ScriptPanel" id="pnlTooltip" x="860.0" y="770.0" parentComponent="pnlMaster"
                width="220.0" height="30.0"/>
     <Component type="ScriptLabel" id="lblInputGain" x="20.0" y="130.0" parentComponent="pnlMaster"
@@ -107,16 +107,36 @@
                parentComponent="pnlMaster" tooltip="Open click panel." text="Click"/>
     <Component type="ScriptButton" id="btnShowRecorder" x="320.0" y="10.0" width="80.0"
                parentComponent="pnlMaster" tooltip="Open recorder panel." text="Record"/>
-    <Component type="ScriptButton" id="btnPitchHQ" x="90.0" y="320.0" parentComponent="pnlMaster"
-               text="High Quality" tooltip="Switch to High Quality Pitch &amp; Octave Modules"/>
     <Component type="ScriptButton" id="btnWhistle" x="770.0" y="180.0" width="28.0"
                parentComponent="pnlMaster" processorId="whistle" parameterId="Enabled"
                tooltip="Enable pick (single-band expander)." text=""/>
     <Component type="ScriptComboBox" id="cmbOversampling" x="980.0" y="160.0"
                max="4" parentComponent="pnlMaster" items="Off&#10;2x&#10;4x&#10;8x"/>
+    <Component type="ScriptButton" id="btnModularABypass" x="320.0" y="240.0"
+               parentComponent="pnlMaster" width="60" height="30" visible="0"
+               text="overdrive"/>
+    <Component type="ScriptButton" id="btnModularBBypass" x="380" y="240.0"
+               parentComponent="pnlMaster" width="60" height="30" visible="0"
+               text="amp"/>
+    <Component type="ScriptButton" id="btnModularCBypass" x="440" y="240.0"
+               parentComponent="pnlMaster" width="60" height="30" visible="0"
+               text="cab"/>
+    <Component type="ScriptButton" id="btnModularDBypass" x="500" y="240.0"
+               parentComponent="pnlMaster" width="60" height="30" visible="0"
+               text="chorus"/>
+    <Component type="ScriptButton" id="btnModularEBypass" x="560" y="240.0"
+               parentComponent="pnlMaster" width="60" height="30" visible="0"
+               text="reverb"/>
+    <Component type="ScriptButton" id="btnModularFBypass" x="620" y="240.0"
+               parentComponent="pnlMaster" width="60" height="30" visible="0"
+               text="delay"/>
+    <Component type="ScriptButton" id="btnModularGBypass" x="680" y="240.0"
+               parentComponent="pnlMaster" width="60" height="30" visible="0"
+               text="ringmod"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080"/>
+             height="390.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0"/>
   <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="350.0" width="1150.0"
              height="390.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0">
@@ -242,8 +262,7 @@
              height="390.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0"/>
   <Component type="ScriptPanel" id="pnlChorus" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0"/>
+             height="390.0" itemColour="4278190080" itemColour2="4278190080"/>
   <Component type="ScriptPanel" id="pnlRingmod" x="0.0" y="350.0" width="1150.0"
              height="390.0" itemColour="4278190080" itemColour2="4278190080"
              visible="0"/>

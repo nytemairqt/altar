@@ -21,48 +21,22 @@ namespace ModularChain
     // Slots / Modules / UI Panels
     // ---------------------------
 
-    const fxSlots = [
-        Synth.getSlotFX("modularA"),
-        Synth.getSlotFX("modularB"),
-        Synth.getSlotFX("modularC"),
-        Synth.getSlotFX("modularD"),
-        Synth.getSlotFX("modularE"),
-        Synth.getSlotFX("modularF"),
-        Synth.getSlotFX("modularG")
-    ];
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];
 
     // These are the slot containers (not the inner effects)
-    const fxModules = [
-        Synth.getEffect("modularA"),
-        Synth.getEffect("modularB"),
-        Synth.getEffect("modularC"),
-        Synth.getEffect("modularD"),
-        Synth.getEffect("modularE"),
-        Synth.getEffect("modularF"),
-        Synth.getEffect("modularG")
-    ];
+    const fxModules = [Synth.getEffect("modularA"), Synth.getEffect("modularB"), Synth.getEffect("modularC"), Synth.getEffect("modularD"), Synth.getEffect("modularE"), Synth.getEffect("modularF"), Synth.getEffect("modularG")];
 
     // Draggable slot panels (one per slot position)
-    const pnlFxSlots = [
-        Content.getComponent("pnlModularA"),
-        Content.getComponent("pnlModularB"),
-        Content.getComponent("pnlModularC"),
-        Content.getComponent("pnlModularD"),
-        Content.getComponent("pnlModularE"),
-        Content.getComponent("pnlModularF"),
-        Content.getComponent("pnlModularG")
-    ];
+    const pnlFxSlots = [ Content.getComponent("pnlModularA"), Content.getComponent("pnlModularB"), Content.getComponent("pnlModularC"), Content.getComponent("pnlModularD"), Content.getComponent("pnlModularE"), Content.getComponent("pnlModularF"), Content.getComponent("pnlModularG")];
 
     // Effect control panels (one per effect type)
-    const pnlFx = [
-        Content.getComponent("pnlOverdrive"),
-        Content.getComponent("pnlAmp"),
-        Content.getComponent("pnlCab"),
-        Content.getComponent("pnlReverb"),
-        Content.getComponent("pnlDelay"),
-        Content.getComponent("pnlChorus"),
-        Content.getComponent("pnlRingmod")
-    ];
+    const pnlFx = [Content.getComponent("pnlOverdrive"), Content.getComponent("pnlAmp"), Content.getComponent("pnlCab"), Content.getComponent("pnlReverb"), Content.getComponent("pnlDelay"), Content.getComponent("pnlChorus"), Content.getComponent("pnlRingmod")];    
+    
+    // UI Controls
+    const bypassButtons = [Content.getComponent("btnModularABypass"), Content.getComponent("btnModularBBypass"), Content.getComponent("btnModularCBypass"), Content.getComponent("btnModularDBypass"), Content.getComponent("btnModularEBypass"), Content.getComponent("btnModularFBypass"), Content.getComponent("btnModularGBypass")];            
+    const knbAmpControl = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
+    const knbCabControl = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
+    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
 
     // Ensure slot states are stored with user presets
     for (m in fxModules)
@@ -79,7 +53,12 @@ namespace ModularChain
             pnlFxSlots[i].set("text", fxSlots[i].getCurrentEffectId());
 
         local area = [0, 0, this.getWidth(), this.getHeight()];
-        g.setColour(Colours.white);
+
+        // FIX: determine bypass state by slot index, not effect name
+        local slotIndex = pnlFxSlots.indexOf(this);
+        local btn = slotIndex != -1 ? bypassButtons[slotIndex] : 0;
+
+        g.setColour(btn && btn.getValue() ? Colours.white : Colours.grey);
         g.drawRoundedRectangle(area, 1.0, 1.0);
         g.drawAlignedText(this.get("text"), area, "centred");
 
@@ -129,11 +108,7 @@ namespace ModularChain
     inline function checkValidPnlFxSlot(targetId)
     {
         // Only allow drops onto these panels
-        local names = [
-            "pnlModularA", "pnlModularB", "pnlModularC",
-            "pnlModularD", "pnlModularE", "pnlModularF", "pnlModularG"
-        ];
-
+        local names = ["pnlModularA", "pnlModularB", "pnlModularC", "pnlModularD", "pnlModularE", "pnlModularF", "pnlModularG"];
         Content.refreshDragImage();
         return names.contains(targetId);
     }
@@ -259,7 +234,15 @@ namespace ModularChain
         }
         else if (event.clicked && event.rightClick)
         {
-            // Reserved for context menu or quick actions
+            // FIX: toggle bypass for the button that belongs to THIS SLOT, not by effect name
+            local slotIndex = pnlFxSlots.indexOf(this);
+            if (slotIndex != -1)
+            {
+                local btn = bypassButtons[slotIndex];
+                btn.setValue(1 - btn.getValue());
+                btn.changed();
+            }
+            this.repaint();
         }
     }
 
@@ -270,24 +253,22 @@ namespace ModularChain
     // Bind Parameters
     // ---------------------------
 
-    const knbAmpControl = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
-    const knbCabControl = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
-    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
+
     
     inline function onknbModularControl(component, value)
     {
-		local text = component.get("text");
-		local idx = text.indexOf("_");
-		local mod = text.substring(0, idx);
-		local param = text.substring(idx + 1, text.length);        
-		
-		for (slot in fxSlots)
-			if (slot.getCurrentEffectId() == mod)
-			{
-				local effect = slot.getCurrentEffect();
-				local index = effect.getAttributeIndex(param);
-				effect.setAttribute(index, value);				
-			}
+        local text = component.get("text");
+        local idx = text.indexOf("_");
+        local mod = text.substring(0, idx);
+        local param = text.substring(idx + 1, text.length);        
+        
+        for (slot in fxSlots)
+            if (slot.getCurrentEffectId() == mod)
+            {
+                local effect = slot.getCurrentEffect();
+                local index = effect.getAttributeIndex(param);
+                effect.setAttribute(index, value);                
+            }
 
         // Additional per-component logic goes here
         if (component == knbAmpControl[0]) // amp mode
@@ -299,5 +280,19 @@ namespace ModularChain
 
     for (k in knbAmpControl) { k.setControlCallback(onknbModularControl); }
     for (k in knbCabControl) { k.setControlCallback(onknbModularControl); }
+    
+    inline function onbtnModularBypassControl(component, value)
+    {
+        // FIX: map button -> slot index -> effect in that slot
+        local idx = bypassButtons.indexOf(component);
+        if (idx != -1)
+        {
+            local effect = fxSlots[idx].getCurrentEffect();
+            effect.setBypassed(1 - value);
+        }
+    }
+            
+    for (b in bypassButtons)
+        b.setControlCallback(onbtnModularBypassControl);
 
 }
