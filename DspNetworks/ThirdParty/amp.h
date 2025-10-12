@@ -180,7 +180,7 @@ template <int NV> struct amp: public data::base, public cable_manager_t
     {       
         // Amp Mode
         {
-            parameter::data mode("Amp Mode", { 0.0, 2.0 });
+            parameter::data mode("Mode", { 0.0, 2.0 });
             registerCallback<0>(mode);
             mode.setDefaultValue(1.0);
             data.add(std::move(mode));
@@ -196,7 +196,7 @@ template <int NV> struct amp: public data::base, public cable_manager_t
 
         // Amp Parameters
         {
-            parameter::data inputGain("Input Gain", { -100.0, 100.0 });
+            parameter::data inputGain("InputGain", { -100.0, 100.0 });
             registerCallback<2>(inputGain);
             inputGain.setDefaultValue(0.0);
             data.add(std::move(inputGain));
@@ -226,7 +226,7 @@ template <int NV> struct amp: public data::base, public cable_manager_t
             data.add(std::move(presence));
         }
         {
-            parameter::data outputGain("Output Gain", { -100.0, 100.0 });
+            parameter::data outputGain("OutputGain", { -100.0, 100.0 });
             registerCallback<7>(outputGain);
             outputGain.setDefaultValue(0.0);
             data.add(std::move(outputGain));

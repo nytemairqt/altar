@@ -279,13 +279,13 @@ template <int NV> struct chorus: public data::base
             data.add(std::move(feedback_param));
         }
         {
-            parameter::data delaytime_param("Delay Time", { 5.0, 30.0 });
+            parameter::data delaytime_param("DelayTime", { 5.0, 30.0 });
             registerCallback<4>(delaytime_param);
             delaytime_param.setDefaultValue(15.0);
             data.add(std::move(delaytime_param));
         }
         {
-            parameter::data predelay_param("Pre Delay", { 0.0, 10.0 });
+            parameter::data predelay_param("PreDelay", { 0.0, 10.0 });
             registerCallback<5>(predelay_param);
             predelay_param.setDefaultValue(2.0);
             data.add(std::move(predelay_param));
@@ -303,7 +303,7 @@ template <int NV> struct chorus: public data::base
             data.add(std::move(voices_param));
         }
         {
-            parameter::data sync_param("Tempo Sync", { 0.0, 1.0 });
+            parameter::data sync_param("TempoSync", { 0.0, 1.0 });
             registerCallback<8>(sync_param);
             sync_param.setDefaultValue(0.0);
             data.add(std::move(sync_param));

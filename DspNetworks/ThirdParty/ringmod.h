@@ -227,31 +227,31 @@ template <int NV> struct ringmod: public data::base
             data.add(std::move(mode_param));
         }
         {
-            parameter::data lfo_rate_param("LFO Rate", { 0.1, 10.0 });
+            parameter::data lfo_rate_param("LFORate", { 0.1, 10.0 });
             registerCallback<4>(lfo_rate_param);
             lfo_rate_param.setDefaultValue(2.0);
             data.add(std::move(lfo_rate_param));
         }
         {
-            parameter::data lfo_depth_param("LFO Depth", { 0.0, 1.0 });
+            parameter::data lfo_depth_param("LFODepth", { 0.0, 1.0 });
             registerCallback<5>(lfo_depth_param);
             lfo_depth_param.setDefaultValue(0.2);
             data.add(std::move(lfo_depth_param));
         }
         {
-            parameter::data filter_param("Filter Frequency", { 200.0, 12000.0 });
+            parameter::data filter_param("FilterFrequency", { 200.0, 12000.0 });
             registerCallback<6>(filter_param);
             filter_param.setDefaultValue(8000.0);
             data.add(std::move(filter_param));
         }
         {
-            parameter::data stereo_param("Stereo Mode", { 0.0, 1.0 });
+            parameter::data stereo_param("StereoMode", { 0.0, 1.0 });
             registerCallback<7>(stereo_param);
             stereo_param.setDefaultValue(1.0);
             data.add(std::move(stereo_param));
         }
         {
-            parameter::data tempo_param("Tempo Sync", { 0.0, 1.0 });
+            parameter::data tempo_param("TempoSync", { 0.0, 1.0 });
             registerCallback<8>(tempo_param);
             tempo_param.setDefaultValue(0.0);
             data.add(std::move(tempo_param));

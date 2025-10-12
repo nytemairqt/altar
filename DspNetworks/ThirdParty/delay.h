@@ -256,7 +256,7 @@ template <int NV> struct delay: public data::base
             data.add(std::move(mix_param));
         }
         {
-            parameter::data time_param("Delay Time", { 0.01, 4.0 });
+            parameter::data time_param("DelayTime", { 0.01, 4.0 });
             registerCallback<1>(time_param);
             time_param.setDefaultValue(0.5);
             data.add(std::move(time_param));
@@ -280,19 +280,19 @@ template <int NV> struct delay: public data::base
             data.add(std::move(modulation_param));
         }
         {
-            parameter::data width_param("Stereo Width", { 0.0, 1.0 });
+            parameter::data width_param("StereoWidth", { 0.0, 1.0 });
             registerCallback<5>(width_param);
             width_param.setDefaultValue(0.3);
             data.add(std::move(width_param));
         }
         {
-            parameter::data sync_param("Tempo Sync", { 0.0, 1.0 });
+            parameter::data sync_param("TempoSync", { 0.0, 1.0 });
             registerCallback<6>(sync_param);
             sync_param.setDefaultValue(0.0);
             data.add(std::move(sync_param));
         }
         {
-            parameter::data mode_param("Delay Mode", { 0.0, 2.0 });
+            parameter::data mode_param("DelayMode", { 0.0, 2.0 });
             registerCallback<7>(mode_param);
             mode_param.setDefaultValue(0.0);
             data.add(std::move(mode_param));

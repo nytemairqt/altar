@@ -248,13 +248,13 @@ template <int NV> struct reverb: public data::base
             data.add(std::move(mix_param));
         }
         {
-            parameter::data predelay_param("Pre Delay", { 0.0, 0.2 });
+            parameter::data predelay_param("PreDelay", { 0.0, 0.2 });
             registerCallback<1>(predelay_param);
             predelay_param.setDefaultValue(0.03);
             data.add(std::move(predelay_param));
         }
         {
-            parameter::data roomsize_param("Room Size", { 0.0, 1.0 });
+            parameter::data roomsize_param("RoomSize", { 0.0, 1.0 });
             registerCallback<2>(roomsize_param);
             roomsize_param.setDefaultValue(0.7);
             data.add(std::move(roomsize_param));
@@ -266,13 +266,13 @@ template <int NV> struct reverb: public data::base
             data.add(std::move(decay_param));
         }
         {
-            parameter::data damping_param("Damping Frequency", { 500.0, 20000.0 });
+            parameter::data damping_param("DampingFrequency", { 500.0, 20000.0 });
             registerCallback<4>(damping_param);
             damping_param.setDefaultValue(3000.0);
             data.add(std::move(damping_param));
         }
         {
-            parameter::data chorus_param("Chorus Depth", { 0.0, 1.0 });
+            parameter::data chorus_param("ChorusDepth", { 0.0, 1.0 });
             registerCallback<5>(chorus_param);
             chorus_param.setDefaultValue(0.3);
             data.add(std::move(chorus_param));

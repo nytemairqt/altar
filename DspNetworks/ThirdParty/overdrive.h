@@ -163,7 +163,7 @@ template <int NV> struct overdrive: public data::base
     {       
         // Distortion Mode
         {
-            parameter::data mode("Distortion Mode", { 0.0, 5.0 });
+            parameter::data mode("Mode", { 0.0, 5.0 });
             registerCallback<0>(mode);
             mode.setDefaultValue(0.0);
             data.add(std::move(mode));
@@ -195,7 +195,7 @@ template <int NV> struct overdrive: public data::base
         
         // Tone Frequency
         {
-            parameter::data toneFreqParam("Tone Freq", { 200.0, 5000.0 });
+            parameter::data toneFreqParam("ToneFreq", { 200.0, 5000.0 });
             registerCallback<4>(toneFreqParam);
             toneFreqParam.setDefaultValue(1000.0);
             data.add(std::move(toneFreqParam));
@@ -203,7 +203,7 @@ template <int NV> struct overdrive: public data::base
         
         // Output Gain
         {
-            parameter::data outputParam("Output Gain", { -24.0, 24.0 });
+            parameter::data outputParam("OutputGain", { -24.0, 24.0 });
             registerCallback<5>(outputParam);
             outputParam.setDefaultValue(0.0);
             data.add(std::move(outputParam));
@@ -227,7 +227,7 @@ template <int NV> struct overdrive: public data::base
         
         // Sample Rate Reduction
         {
-            parameter::data srReductionParam("SR Reduction", { 1.0, 32.0 });
+            parameter::data srReductionParam("SRReduction", { 1.0, 32.0 });
             registerCallback<8>(srReductionParam);
             srReductionParam.setDefaultValue(1.0);
             data.add(std::move(srReductionParam));
@@ -235,7 +235,7 @@ template <int NV> struct overdrive: public data::base
         
         // Fold Amount (for wavefolder)
         {
-            parameter::data foldParam("Fold Amount", { 1.0, 8.0 });
+            parameter::data foldParam("FoldAmount", { 1.0, 8.0 });
             registerCallback<9>(foldParam);
             foldParam.setDefaultValue(2.0);
             data.add(std::move(foldParam));

@@ -34,8 +34,14 @@ namespace ModularChain
     
     // UI Controls
     const bypassButtons = [Content.getComponent("btnModularABypass"), Content.getComponent("btnModularBBypass"), Content.getComponent("btnModularCBypass"), Content.getComponent("btnModularDBypass"), Content.getComponent("btnModularEBypass"), Content.getComponent("btnModularFBypass"), Content.getComponent("btnModularGBypass")];            
-    const knbAmpControl = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
-    const knbCabControl = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
+    const overdriveControl = [Content.getComponent("knbOverdriveMode"), Content.getComponent("knbOverdriveDrive"), Content.getComponent("knbOverdriveTone"), Content.getComponent("knbOverdriveBits"), Content.getComponent("knbOverdriveSRReduction"), Content.getComponent("knbOverdriveFoldAmount"), Content.getComponent("knbOverdriveMix"), Content.getComponent("knbOverdriveOutputGain")];    
+    const ampControl = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
+    const cabControl = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
+    const reverbControl = [Content.getComponent("knbReverbMix"), Content.getComponent("knbReverbPreDelay"), Content.getComponent("knbReverbRoomSize"), Content.getComponent("knbReverbDecay"), Content.getComponent("knbReverbDampingFrequency"), Content.getComponent("knbReverbChorusDepth")];
+    const delayControl = [Content.getComponent("knbDelayMix"), Content.getComponent("btnDelayTempoSync"), Content.getComponent("knbDelayMode"), Content.getComponent("knbDelayDelayTime"), Content.getComponent("knbDelayFeedback"), Content.getComponent("knbDelayModulation"), Content.getComponent("knbDelayStereoWidth"), Content.getComponent("knbDelayDamping")];    
+    const chorusControl = [Content.getComponent("knbChorusMix"), Content.getComponent("knbChorusRate"), Content.getComponent("knbChorusDepth"), Content.getComponent("knbChorusTone"), Content.getComponent("knbChorusVoices"), Content.getComponent("knbChorusFeedback"), Content.getComponent("knbChorusDelayTime"), Content.getComponent("btnChorusTempoSync")];
+    const ringmodControl = [Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")];
+    
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
 
     // Ensure slot states are stored with user presets
@@ -278,8 +284,13 @@ namespace ModularChain
         }
     }    
 
-    for (k in knbAmpControl) { k.setControlCallback(onknbModularControl); }
-    for (k in knbCabControl) { k.setControlCallback(onknbModularControl); }
+	for (c in overdriveControl) { c.setControlCallback(onknbModularControl); }
+    for (c in ampControl) { c.setControlCallback(onknbModularControl); }
+    for (c in cabControl) { c.setControlCallback(onknbModularControl); }    
+    for (c in reverbControl) { c.setControlCallback(onknbModularControl); }    
+    for (c in delayControl) { c.setControlCallback(onknbModularControl); }    
+    for (c in chorusControl) { c.setControlCallback(onknbModularControl); }    
+    for (c in ringmodControl) { c.setControlCallback(onknbModularControl); }
     
     inline function onbtnModularBypassControl(component, value)
     {
