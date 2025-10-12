@@ -19,7 +19,9 @@ namespace Amp
 {
     /* GLOBAL CABLE */
     
-    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");         
+    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
+    const grm = Engine.getGlobalRoutingManager();  
+    const namCable = grm.getCable("nam");     
        
     inline function pnlAmpNAMLoaderDrop(f)
     {

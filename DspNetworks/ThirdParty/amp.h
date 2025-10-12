@@ -11,10 +11,11 @@
 #include "src/RTNeural/RTNeural.h"
 #include "src/RTNeural-NAM/wavenet/wavenet_model.hpp"
 
-enum class GlobalCables
+enum class GlobalCablesAmp
 {
     pitch = 0,
     nam = 1,
+    tempo = 2
 };
 
 namespace project
@@ -23,7 +24,9 @@ using namespace juce;
 using namespace hise;
 using namespace scriptnode;
 using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056),
-                                                          SN_GLOBAL_CABLE(108826)>; 
+                                                          SN_GLOBAL_CABLE(77050),
+                                                          SN_GLOBAL_CABLE(110245659)>; 
+
 
 // ==========================| The node class with all required callbacks |==========================
 
@@ -56,7 +59,7 @@ template <int NV> struct amp: public data::base, public cable_manager_t
 
     amp()
     {        
-        this->registerDataCallback<GlobalCables::nam>([this](const var& data)
+        this->registerDataCallback<GlobalCablesAmp::nam>([this](const var& data)
         {
             // thread: https://forum.hise.audio/post/103680
             this->loadNAMModelFromJSON(data);

@@ -105,8 +105,6 @@
                text="Lofi" width="80.0"/>
     <Component type="ScriptButton" id="btnShowClick" x="230.0" y="10.0" width="80.0"
                parentComponent="pnlMaster" tooltip="Open click panel." text="Click"/>
-    <Component type="ScriptButton" id="btnShowRecorder" x="320.0" y="10.0" width="80.0"
-               parentComponent="pnlMaster" tooltip="Open recorder panel." text="Record"/>
     <Component type="ScriptButton" id="btnWhistle" x="770.0" y="180.0" width="28.0"
                parentComponent="pnlMaster" processorId="whistle" parameterId="Enabled"
                tooltip="Enable pick (single-band expander)." text=""/>
@@ -179,7 +177,8 @@
                text="Output Gain" width="100.0" parentComponent="pnlOverdrive"/>
   </Component>
   <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080">
+             height="390.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0">
     <Component type="ScriptSlider" id="knbAmpMode" x="50.0" y="170.0" defaultValue="1.0"
                max="2.0" stepSize="1.0" middlePosition="1.0" width="48.0" parentComponent="pnlAmp"
                tooltip="Amp mode. [CLEAN, DRIVE, NAM]" text="amp_Mode"/>
@@ -407,8 +406,6 @@
     <Component type="ScriptSlider" id="knbChorusVoices" x="870.0" y="60.0" max="4.0"
                min="1.0" stepSize="1.0" defaultValue="2.0" text="chorus_Voices"
                width="48.0" parentComponent="pnlChorus"/>
-    <Component type="ScriptButton" id="btnChorusTempoSync" x="780.0" y="190.0"
-               text="chorus_TempoSync" parentComponent="pnlChorus"/>
     <Component type="ScriptLabel" id="lblChorusMix" x="72.0" y="104.0" width="80.0"
                text="Mix" parentComponent="pnlChorus"/>
     <Component type="ScriptLabel" id="lblChorusRate" x="240.0" y="100.0" width="80.0"
@@ -423,12 +420,9 @@
                text="Tone" parentComponent="pnlChorus"/>
     <Component type="ScriptLabel" id="lblChorusVoices" x="860.0" y="110.0" width="80.0"
                text="Voices" parentComponent="pnlChorus"/>
-    <Component type="ScriptLabel" id="lblChorusTempoSync" x="800.0" y="220.0"
-               width="80.0" text="Tempo Sync" parentComponent="pnlChorus"/>
   </Component>
   <Component type="ScriptPanel" id="pnlRingmod" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0">
+             height="390.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptSlider" id="knbRingmodMix" x="117.0" y="84.0" middlePosition="0.5"
                text="ringmod_Mix" width="48.0" parentComponent="pnlRingmod"
                defaultValue="0.5"/>
@@ -727,7 +721,7 @@
   <Component type="ScriptPanel" id="pnlTuner" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
              allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="D# -25C"
+    <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="F# +2C"
                parentComponent="pnlTuner"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="580.0" y="130.0"
                parentComponent="pnlTuner"/>
@@ -779,10 +773,10 @@
   </Component>
   <Component type="ScriptPanel" id="pnlPreferences" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
-             allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptFloatingTile" id="FloatingTile1" x="318.0" y="110.0"
-               parentComponent="pnlPreferences" width="430.0" height="227.0"
+             allowCallbacks="Clicks Only">
+    <Component type="ScriptFloatingTile" id="FloatingTile1" x="318.0" y="80.0"
+               parentComponent="pnlPreferences" width="430.0" height="257.0"
                ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
-               itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: false,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
+               itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: true,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
   </Component>
 </ContentProperties>

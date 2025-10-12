@@ -3,19 +3,23 @@
 #pragma once
 #include <JuceHeader.h>
 
+enum class GlobalCablesTuner
+{
+    pitch = 0,
+    NAM = 1,
+    tempo = 2
+}; 
+
 namespace project
 {
 using namespace juce;
 using namespace hise;
 using namespace scriptnode;
 using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056),
-    SN_GLOBAL_CABLE(108826)>;
+                                                          SN_GLOBAL_CABLE(77050),
+                                                          SN_GLOBAL_CABLE(110245659)>; 
 
-enum class GlobalCables
-{
-	pitch = 0,
-    nam = 1,
-};
+
 
 // ==========================| The node class with all required callbacks |==========================
 
@@ -141,7 +145,7 @@ template <int NV> struct tuner: public data::base, public cable_manager_t, publi
             performPitchDetection();
             samplesSinceLastDetection = 0;
             float normalizedPitch = normalizePitchForCable(lastDetectedPitch.load());
-            setGlobalCableValue<GlobalCables::pitch>(normalizedPitch);
+            setGlobalCableValue<GlobalCablesTuner::pitch>(normalizedPitch);
         }
     }
 

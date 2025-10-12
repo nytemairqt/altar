@@ -3,15 +3,25 @@
 #pragma once
 #include <JuceHeader.h>
 
+enum class GlobalCablesDelay
+{
+    pitch = 0,
+    nam = 1,
+    tempo = 2
+};    
+
 namespace project
 {
 using namespace juce;
 using namespace hise;
 using namespace scriptnode;
-
+using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056),
+                                                          SN_GLOBAL_CABLE(77050),
+                                                          SN_GLOBAL_CABLE(110245659)>; 
+                                                    
 // ==========================| The node class with all required callbacks |==========================
 
-template <int NV> struct delay: public data::base
+template <int NV> struct delay: public data::base, public cable_manager_t
 {
     SNEX_NODE(delay);        
     
@@ -41,6 +51,12 @@ template <int NV> struct delay: public data::base
         // Ensure outer vectors are sized before any indexing
         delayLines.resize(2);
         delayIndices.assign(2, 0);
+
+        this->registerDataCallback<GlobalCablesDelay::tempo>([this](const var& data)
+        {
+            // set global tempo here
+            currentBPM = data;
+        });
     }
     
     void prepare(PrepareSpecs specs) 
@@ -99,7 +115,6 @@ template <int NV> struct delay: public data::base
             }
         }
 
-        currentBPM = 120.0f;
         reset();
     }       
 
