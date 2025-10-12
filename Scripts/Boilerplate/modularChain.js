@@ -149,6 +149,31 @@ namespace ModularChain
         }
     }
 
+    // NEW: snapshot/apply bypass states so they move with modules
+    inline function snapshotBypassValues()
+    {
+        local vals = [];
+        for (i = 0; i < bypassButtons.length; i++)
+            vals.push(bypassButtons[i].getValue()); // 1 = active, 0 = bypassed
+        return vals;
+    }
+
+    inline function applyBypassValuesByMapping(vals, indexMapping)
+    {
+        for (newIndex = 0; newIndex < bypassButtons.length; newIndex++)
+        {
+            local oldIndex = indexMapping[newIndex];
+            local v = vals[oldIndex];
+
+            // Update the button value for the new slot position
+            bypassButtons[newIndex].setValue(v);
+
+            // Propagate to the actual effect in this slot
+            // onbtnModularBypassControl uses 1 - value to call setBypassed()
+            bypassButtons[newIndex].changed();
+        }
+    }
+
     inline function computeInsertMapping(fromIndex, toIndex, length)
     {
         // Returns an array map: map[newIndex] = oldIndex
@@ -161,9 +186,6 @@ namespace ModularChain
 
         // Insert semantics: drop takes the target's position, pushing target (and following) right.
         // Therefore we always insert at 'toIndex' in the reduced array.
-        // Example: moving forward from 1 -> 6
-        //   after removal: [0,2,3,4,5,6] (length 6)
-        //   insert at index 6 => append => dragged item becomes last.
         local insertIndex = toIndex;
 
         // Clamp for safety
@@ -191,8 +213,9 @@ namespace ModularChain
         var toIndex = pnlFxSlots.indexOf(target);
         if (fromIndex == -1 || toIndex == -1 || fromIndex == toIndex) return;
 
-        // 1) Snapshot all slot container states before changes
+        // 1) Snapshot all slot container states and current bypass UI values
         var states = snapshotStates();
+        var bypassVals = snapshotBypassValues();
 
         // 2) Build the new mapping using "insert" semantics
         var mapping = computeInsertMapping(fromIndex, toIndex, fxModules.length);
@@ -200,7 +223,10 @@ namespace ModularChain
         // 3) Apply states by mapping in one restore pass
         applyStatesByMapping(states, mapping);
 
-        // 4) Refresh UI (texts, target highlights)
+        // 4) Apply bypass values with the same mapping and propagate to effects
+        applyBypassValuesByMapping(bypassVals, mapping);
+
+        // 5) Refresh UI (texts, target highlights)
         repaintAllSlots();        
     }
 
@@ -282,7 +308,7 @@ namespace ModularChain
         }
     }    
 
-	for (c in overdriveControl) { c.setControlCallback(onknbModularControl); }
+    for (c in overdriveControl) { c.setControlCallback(onknbModularControl); }
     for (c in ampControl) { c.setControlCallback(onknbModularControl); }
     for (c in cabControl) { c.setControlCallback(onknbModularControl); }    
     for (c in reverbControl) { c.setControlCallback(onknbModularControl); }    
