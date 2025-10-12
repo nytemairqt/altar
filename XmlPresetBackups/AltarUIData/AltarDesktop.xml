@@ -779,8 +779,8 @@
                ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
                itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: false,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
   </Component>
-  <Component type="ScriptPanel" id="pnlCabALoader" x="30.0" y="500.0" width="240"
-             height="100" text="TSE IMPULSE.wav" allowCallbacks="All Callbacks"/>
-  <Component type="ScriptPanel" id="pnlCabBLoader" x="870.0" y="500.0" width="240"
-             height="100" text="Drag IR or Right Click to Browse." allowCallbacks="All Callbacks"/>
+  <Component type="ScriptPanel" id="pnlCabALoader" x="30.0" y="500.0" width="240.0"
+             height="100.0" text="myCab.wav" allowCallbacks="All Callbacks"/>
+  <Component type="ScriptPanel" id="pnlCabBLoader" x="870.0" y="500.0" width="240.0"
+             height="100.0" text="TSE IMPULSE.wav" allowCallbacks="All Callbacks"/>
 </ContentProperties>

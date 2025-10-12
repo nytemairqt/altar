@@ -26,54 +26,81 @@ namespace Cab
 	inline function pnlCabALoaderDrop(f)
     {
 	    if(f.drop)
-	    {
-			local file = FileSystem.fromAbsolutePath(f.fileName);
-			switch (this)
+	    {			
+			for (slot in fxSlots)
 			{
-				case pnlCabALoader:
-					for (slot in fxSlots)
-					{
-						local effectId = slot.getCurrentEffectId();
-						
-						if (effectId == "cab")
-						{
-							local id = slot.getCurrentEffect().getId();
-							local ref = Synth.getAudioSampleProcessor(id);
-							ref.setFile(f.fileName);							
-						}
-					}
-						
-					break;
-				case pnlCabBLoader:
-					break;
-			}
-		    //local json = file.loadAsObject();	
-		    //namCable.sendData(json);	    
+				local effectId = slot.getCurrentEffectId();
+				if (effectId == "cab")
+				{
+					local id = slot.getCurrentEffect().getId();
+					local ref = Synth.getAudioSampleProcessor(id);	
+					local irSlot = this == pnlCabALoader ? ref.getAudioFile(0) : ref.getAudioFile(1);
+					irSlot.loadFile(f.fileName);
+				}
+			}					    
+		    local file = FileSystem.fromAbsolutePath(f.fileName);
 		    this.set("text", file.toString(3));
 		    this.repaint();
 	    }
     }
     
     pnlCabALoader.setFileDropCallback("All Callbacks", "*.wav", pnlCabALoaderDrop);
-    pnlCabBLoader.setFileDropCallback("All Callbacks", "*.wav", pnlCabALoaderDrop);
+    pnlCabBLoader.setFileDropCallback("All Callbacks", "*.wav", pnlCabALoaderDrop);   
     
-    // Right Click
-    inline function pnlCabLoaderClick(event)
+    // Right Click (2 separate ones cause i can't figure out lambdas lol)    
+    inline function pnlCabALoaderClick(event)
+    {
+	    if (event.clicked && event.rightClick)
+		{
+		    FileSystem.browse(FileSystem.AudioFiles, false, "*.wav", function(result)
+			{
+				if (!result)
+					return;
+				for (slot in fxSlots)
+				{
+					var effectId = slot.getCurrentEffectId();
+					if (effectId == "cab")
+					{
+						var id = slot.getCurrentEffect().getId();
+						var ref = Synth.getAudioSampleProcessor(id);	
+						var irSlot = ref.getAudioFile(0);
+						irSlot.loadFile(result.toString(0));
+					}
+				}					    
+				pnlCabALoader.set("text", result.toString(3));
+				pnlCabALoader.repaint();
+			});
+		}
+    }       
+    
+    inline function pnlCabBLoaderClick(event)
     {
 		if (event.clicked && event.rightClick)
 		{
-			// open file browser
-			FileSystem.browse(FileSystem.AudioFiles, false, "*.wav", function(result)
+		    FileSystem.browse(FileSystem.AudioFiles, false, "*.wav", function(result)
 			{
-				// "result" is the file
-				this.set("text", result.toString(3));
-				this.repaint();
+				if (!result)
+					return;
+				for (slot in fxSlots)
+				{
+					var effectId = slot.getCurrentEffectId();
+					if (effectId == "cab")
+					{
+						var id = slot.getCurrentEffect().getId();
+						var ref = Synth.getAudioSampleProcessor(id);	
+						var irSlot = ref.getAudioFile(1);
+						irSlot.loadFile(result.toString(0));
+					}
+				}		
+				pnlCabBLoader.set("text", result.toString(3));
+				pnlCabBLoader.repaint();			    				
 			});
-		}        
-    }
+			
+		}
+    }       
     
-    pnlCabALoader.setMouseCallback(pnlCabLoaderClick);
-    pnlCabBLoader.setMouseCallback(pnlCabLoaderClick);
+    pnlCabALoader.setMouseCallback(pnlCabALoaderClick);
+    pnlCabBLoader.setMouseCallback(pnlCabBLoaderClick);
     
     inline function pnlCabLoaderPaintRoutine(g)
     {
