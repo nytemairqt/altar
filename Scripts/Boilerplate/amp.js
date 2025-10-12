@@ -20,9 +20,7 @@ namespace Amp
     /* GLOBAL CABLE */
     
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");         
-
-    
-   
+       
     inline function pnlAmpNAMLoaderDrop(f)
     {
 	    if(f.drop)

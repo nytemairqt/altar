@@ -258,8 +258,6 @@ namespace ModularChain
     // ---------------------------
     // Bind Parameters
     // ---------------------------
-
-
     
     inline function onknbModularControl(component, value)
     {
@@ -277,7 +275,7 @@ namespace ModularChain
             }
 
         // Additional per-component logic goes here
-        if (component == knbAmpControl[0]) // amp mode
+        if (component == ampControl[0]) // amp mode
         {
             if (value < 2) { pnlAmpNAMLoader.set("visible", false); }
             else { pnlAmpNAMLoader.set("visible", true); }
