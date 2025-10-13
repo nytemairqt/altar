@@ -207,7 +207,7 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="preprocess" Bypassed="1" Network="preprocess"
+        <Processor Type="Hardcoded Master FX" ID="preprocess" Bypassed="0" Network="preprocess"
                    HPFFreq="40.0" LowShelfFreq="120.0" LowShelfGain="0.0" LowShelfQ="1.0"
                    LowMidFreq="300.0" LowMidGain="0.0" LowMidQ="1.0" MidFreq="700.0"
                    MidGain="0.0" MidQ="1.0" HighMidFreq="3200.0" HighMidGain="0.0"
@@ -296,7 +296,7 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="postprocess" Bypassed="1" Network="postprocess"
+        <Processor Type="Hardcoded Master FX" ID="postprocess" Bypassed="0" Network="postprocess"
                    HPFFreq="40.0" LowShelfFreq="120.0" LowShelfGain="0.0" LowShelfQ="1.0"
                    LowMidFreq="300.0" LowMidGain="0.0" LowMidQ="1.0" MidFreq="700.0"
                    MidGain="0.0" MidQ="1.0" HighMidFreq="3200.0" HighMidGain="0.0"
@@ -382,7 +382,7 @@
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors>
-            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="478.0"
+            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="480.0"
                        CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
               <ChildProcessors/>
               <MidiFiles>
@@ -2286,8 +2286,15 @@
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>
-                <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
-                          FileName="">
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>
