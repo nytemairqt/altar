@@ -23,36 +23,36 @@ namespace Amp
        
     inline function pnlAmpNAMLoaderDrop(f)
     {
-	    if(f.drop)
-	    {
-			local file = FileSystem.fromAbsolutePath(f.fileName);
-		    local json = file.loadAsObject();
-		    namCable.sendData(json);
-		    pnlAmpNAMLoader.set("text", file.toString(3));
-		    pnlAmpNAMLoader.repaint();
-	    }
+        if(f.drop)
+        {
+            local file = FileSystem.fromAbsolutePath(f.fileName);
+            local json = file.loadAsObject();
+            namCable.sendData(json);
+            pnlAmpNAMLoader.set("text", file.toString(3));
+            pnlAmpNAMLoader.repaint();
+        }
     }        
     
     inline function pnlAmpNAMLoaderClick(event)
     {
-		if (event.clicked && event.rightClick)
-		{
-			// open file browser
-			FileSystem.browse(FileSystem.Documents, false, "*.nam, *.json", function(result)
-			{
-				var json = result.loadAsObject();								
-				namCable.sendData(json);
-				pnlAmpNAMLoader.set("text", result.toString(3));
-				pnlAmpNAMLoader.repaint();
-			});
-		}        
+        if (event.clicked && event.rightClick)
+        {
+            // open file browser
+            FileSystem.browse(FileSystem.Documents, false, "*.nam, *.json", function(result)
+            {
+                var json = result.loadAsObject();                               
+                namCable.sendData(json);
+                pnlAmpNAMLoader.set("text", result.toString(3));
+                pnlAmpNAMLoader.repaint();
+            });
+        }        
     }
             
     pnlAmpNAMLoader.setPaintRoutine(function(g)
     {
-	   g.setColour(Colours.white);
+       g.setColour(Colours.white);
        g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 0.0, 1.0);
-	   g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred") ;
+       g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred") ;
     });
     
     pnlAmpNAMLoader.setFileDropCallback("All Callbacks", "*.nam, *.json", pnlAmpNAMLoaderDrop);

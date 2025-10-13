@@ -3,13 +3,19 @@
 #pragma once
 #include <JuceHeader.h>
 
-#define RTNEURAL_USE_EIGEN 1
-#define RTNEURAL_USE_XSIMD 0
+// Switch RTNeural backend to xsimd to avoid Eigen crashes
+#define RTNEURAL_USE_EIGEN 0
+#define RTNEURAL_USE_XSIMD 1
 #define RTNEURAL_DEFAULT_ALIGNMENT 16
+
+#include <atomic>
+#include <memory>
+#include <thread>
 
 #include "src/json/single_include/nlohmann/json.hpp"
 #include "src/RTNeural/RTNeural.h"
 #include "src/RTNeural-NAM/wavenet/wavenet_model.hpp"
+#include "src/math_approx/math_approx.hpp"
 
 // Use this enum to refer to the cables, eg. this->setGlobalCableValue<GlobalCables::tempo>(0.4)
 enum class GlobalCablesAmp
@@ -35,7 +41,7 @@ using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(110245
 
 template <int NV> struct amp: public data::base, public cable_manager_t
 {
-    SNEX_NODE(amp);        
+    SNEX_NODE(amp);
     
     struct MetadataClass
     {
@@ -60,33 +66,35 @@ template <int NV> struct amp: public data::base, public cable_manager_t
 
     amp()
     {        
+        // Load NAM from global cable asynchronously and atomically swap the model when ready
         this->registerDataCallback<GlobalCablesAmp::nam>([this](const var& data)
         {
-            // thread: https://forum.hise.audio/post/103680
-            this->loadNAMModelFromJSON(data);
+            this->loadNAMModelFromJSONAsync(data);
         });
-        
     }
     
     void prepare(PrepareSpecs specs) 
     {
-        sampleRate = static_cast<float>(specs.sampleRate);
-        numChannels = specs.numChannels;
+        sampleRate   = static_cast<float>(specs.sampleRate);
+        numChannels  = specs.numChannels;
         maxBlockSize = specs.blockSize;
         
         // Store specs for later use
-        lastSpecs.sampleRate = specs.sampleRate;
-        lastSpecs.numChannels = specs.numChannels;
-        lastSpecs.maximumBlockSize = specs.blockSize;
+        lastSpecs.sampleRate        = specs.sampleRate;
+        lastSpecs.numChannels       = specs.numChannels;
+        lastSpecs.maximumBlockSize  = specs.blockSize;
         
         // Initialize oversampling
         updateOversampling();
         
-        // Prepare NAM model if loaded
-        if (modelLoaded)
+        // Prepare current NAM model (host not running audio here)
+        if (auto m = std::atomic_load(&modelShared))
         {
-            model.prepare(specs.blockSize);
-            model.prewarm();
+            m->prepare(static_cast<int>(lastSpecs.maximumBlockSize));
+            // Safe warmup using forward() calls (no Eigen prewarm)
+            safeWarmup(*m);
+            needsWarmup.store(false, std::memory_order_release);
+            modelLoaded = true;
         }        
         
         // Reset all filters
@@ -119,12 +127,12 @@ template <int NV> struct amp: public data::base, public cable_manager_t
         size_t numCh = juce::jmin(2, (int)data.getNumChannels());
         
         // Convert to AudioBuffer for easier manipulation
-        AudioBuffer<float> buffer(numCh, numSamples);
+        AudioBuffer<float> buffer((int)numCh, numSamples);
         
         int channelIndex = 0;
         for(auto ch: data)
         {
-            if (channelIndex >= numCh) break;
+            if (channelIndex >= (int)numCh) break;
             dyn<float> channel = data.toChannelData(ch);
             for (int s = 0; s < numSamples; ++s)
             {
@@ -140,7 +148,7 @@ template <int NV> struct amp: public data::base, public cable_manager_t
         channelIndex = 0;
         for(auto ch: data)
         {
-            if (channelIndex >= numCh) break;
+            if (channelIndex >= (int)numCh) break;
             dyn<float> channel = data.toChannelData(ch);
             for (int s = 0; s < numSamples; ++s)
             {
@@ -160,7 +168,7 @@ template <int NV> struct amp: public data::base, public cable_manager_t
         switch (P)
         {
         // Amp Mode & Oversampling
-        case 0: ampMode = static_cast<int>(v); break;
+        case 0: ampMode = static_cast<int>(v); break;                 // 0=clean, 1=dirty, 2=NAM
         case 1: 
         {
             int oldFactor = oversamplingFactor;
@@ -237,7 +245,7 @@ template <int NV> struct amp: public data::base, public cable_manager_t
         }            
     }
     
-    // Public method to load NAM models
+    // Public method to load NAM models from file (async and safe)
     void loadNAMModel(const juce::File& file)
     {
         if (!file.existsAsFile())
@@ -245,26 +253,45 @@ template <int NV> struct amp: public data::base, public cable_manager_t
             DBG("Invalid file for NAM loader.");
             return;
         }
+        if (isLoading.exchange(true))
+            return; // already loading
 
-        try
-        {
-            nlohmann::json modelJson{};
-            modelPath = file.getFullPathName();
-            std::string pathRaw = modelPath.toStdString();
-            std::ifstream{ pathRaw, std::ifstream::binary } >> modelJson;
-            model.load_weights(modelJson);
-            modelLoaded = true;
+        const std::string path = file.getFullPathName().toStdString();
 
-            DBG("Loaded model successfully.");
-        }
-        catch (const std::exception& e)
+        std::thread([this, path]()
         {
-            DBG("Exception: " << e.what());
-        }
-        catch (...)
-        {
-            DBG("Unknown exception caught");
-        }
+            try
+            {
+                nlohmann::json modelJson{};
+                std::ifstream{ path, std::ifstream::binary } >> modelJson;
+
+                auto newModel = std::make_shared<Model>();
+                newModel->load_weights(modelJson);
+                // Prepare now (safe off-thread)
+                newModel->prepare(static_cast<int>(lastSpecs.maximumBlockSize));
+
+                std::atomic_store(&modelShared, std::move(newModel));
+                modelLoaded = true;
+                modelPath = juce::String(path);
+
+                // Request a warmup on next cycle (will run via forward())
+                needsWarmup.store(true, std::memory_order_release);
+
+                DBG("Loaded NAM model from file successfully.");
+            }
+            catch (const std::exception& e)
+            {
+                DBG("Exception: " << e.what());
+                modelLoaded = false;
+            }
+            catch (...)
+            {
+                DBG("Unknown exception caught");
+                modelLoaded = false;
+            }
+
+            isLoading.store(false);
+        }).detach();
     }
     
     juce::String returnModelPath()
@@ -339,49 +366,69 @@ private:
     BiquadState postSculptStates[2][numPostSculptStates];     // 6 filters    
     BiquadState toneStackStates[2][numToneStackStates];
 
-    void loadNAMModelFromJSON(const var& jsonData)
+    // Async JSON loader (thread-safe). Builds a new model off-thread, then atomically swaps it in.
+    void loadNAMModelFromJSONAsync(const var& jsonData)
     {
-        try
+        // Serialize JUCE var to string on this thread (UI callback)
+        juce::String jsonString;
+        if (jsonData.isObject())
         {
-            // Convert JUCE var to nlohmann::json
-            nlohmann::json modelJson;
-        
-            if (jsonData.isObject())
-            {
-                // Convert JUCE DynamicObject to JSON string, then parse
-                String jsonString = JSON::toString(jsonData);
-                modelJson = nlohmann::json::parse(jsonString.toStdString());
-            }
-            else if (jsonData.isString())
-            {
-                // If it's already a JSON string
-                modelJson = nlohmann::json::parse(jsonData.toString().toStdString());
-            }
-            else
-            {
-                DBG("Invalid JSON data format for NAM loader.");
-                return;
-            }
-        
-            model.load_weights(modelJson);
-            modelLoaded = true;
-            modelPath = ""; // Clear file path since we're loading from memory
-        
-            DBG("Loaded NAM model from JSON successfully.");
+            jsonString = juce::JSON::toString(jsonData);
         }
-        catch (const std::exception& e)
+        else if (jsonData.isString())
         {
-            DBG("Exception loading NAM model: " << e.what());
-            modelLoaded = false;
+            jsonString = jsonData.toString();
         }
-        catch (...)
+        else
         {
-            DBG("Unknown exception loading NAM model");
-            modelLoaded = false;
+            DBG("Invalid JSON data format for NAM loader.");
+            return;
         }
+
+        if (jsonString.isEmpty())
+            return;
+
+        if (isLoading.exchange(true))
+            return; // already loading
+
+        const std::string jsonCopy = jsonString.toStdString();
+
+        std::thread([this, jsonCopy]()
+        {
+            try
+            {
+                nlohmann::json modelJson = nlohmann::json::parse(jsonCopy);
+
+                auto newModel = std::make_shared<Model>();
+                newModel->load_weights(modelJson);
+                // Prepare now (safe off-thread)
+                newModel->prepare(static_cast<int>(lastSpecs.maximumBlockSize));
+
+                std::atomic_store(&modelShared, std::move(newModel));
+                modelLoaded = true;
+                modelPath = {}; // memory-loaded
+
+                // Request a warmup on next cycle (will run via forward())
+                needsWarmup.store(true, std::memory_order_release);
+
+                DBG("Loaded NAM model from JSON successfully.");
+            }
+            catch (const std::exception& e)
+            {
+                DBG("Exception loading NAM model: " << e.what());
+                modelLoaded = false;
+            }
+            catch (...)
+            {
+                DBG("Unknown exception loading NAM model");
+                modelLoaded = false;
+            }
+
+            isLoading.store(false);
+        }).detach();
     }
     
-    // NAM Model
+    // NAM Math provider
     struct NAMMathsProvider
     {
         #if RTNEURAL_USE_EIGEN
@@ -404,17 +451,22 @@ private:
     bool modelLoaded = false;
     juce::String modelPath = "";
     
-    wavenet::Wavenet_Model<float,
+    using Model = wavenet::Wavenet_Model<float,
         1,
         wavenet::Layer_Array<float, 1, 1, 8, 16, 3, Dilations, false, NAMMathsProvider>,
-        wavenet::Layer_Array<float, 16, 1, 1, 8, 3, Dilations, true, NAMMathsProvider>>
-        model;
+        wavenet::Layer_Array<float, 16, 1, 1, 8, 3, Dilations, true, NAMMathsProvider>>;
+
+    // Atomically swappable model instance
+    std::shared_ptr<Model> modelShared;
+    std::atomic<bool> isLoading { false };
+
+    std::atomic<bool> needsWarmup { false }; // run warmup via forward() at next opportunity
     
     // Main processing function
 
     void processAudioBuffer(juce::AudioBuffer<float>& buffer)
     {
-        // Use oversampling only for Clean/Dirty (ampMode < 2)
+        // Use oversampling only for Clean/Dirty (ampMode < 2). NAM (2) is processed at native rate.
         const bool useOversampling = (oversamplingFactor > 0 && oversampling != nullptr && ampMode < 2);
         juce::dsp::AudioBlock<float> inBlock(buffer);
 
@@ -528,16 +580,25 @@ private:
     {
         // NAM processes mono only
         float* channelData = buffer.getWritePointer(0);
+        auto m = std::atomic_load(&modelShared);
+
+        // If a model was just swapped in, warm it once via forward() calls
+        if (m && needsWarmup.load(std::memory_order_acquire))
+        {
+            bool expected = true;
+            if (needsWarmup.compare_exchange_strong(expected, false, std::memory_order_acq_rel))
+                safeWarmup(*m);
+        }
         
         for (int s = 0; s < numSamples; ++s)
         {
             float sample = channelData[s];
                                 
             // NAM processing
-            if (modelLoaded)
+            if (m)
             {
                 sample *= Decibels::decibelsToGain(inputGain);
-                sample = model.forward(sample);
+                sample = m->forward(sample);
                 sample *= Decibels::decibelsToGain(outputGain);
             }
 
@@ -552,8 +613,15 @@ private:
         if (buffer.getNumChannels() > 1)
         {
             memcpy(buffer.getWritePointer(1), buffer.getReadPointer(0), 
-                   numSamples * sizeof(float));
+                   (size_t)numSamples * sizeof(float));
         }
+    }
+
+    // Warmup helper using forward() to avoid Eigen internals
+    void safeWarmup(Model& m)
+    {
+        for (int i = 0; i < 2048; ++i)
+            (void)m.forward(0.0f);
     }
     
     // Amp algorithms
