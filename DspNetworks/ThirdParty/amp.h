@@ -613,8 +613,17 @@ private:
         state.a1 = a1 / a0;
         state.a2 = a2 / a0;
     }
-    
-    void makePeakFilter(BiquadState states[2], float freq, float Q, float gainDB)
+
+    // Stereo-safe helpers (apply same coeffs to Left and Right)
+    void setBiquadCoeffsStereo(BiquadState& L, BiquadState& R,
+                               float b0, float b1, float b2,
+                               float a0, float a1, float a2)
+    {
+        setBiquadCoeffs(L, b0, b1, b2, a0, a1, a2);
+        setBiquadCoeffs(R, b0, b1, b2, a0, a1, a2);
+    }
+
+    void makePeakFilterStereo(BiquadState& L, BiquadState& R, float freq, float Q, float gainDB)
     {
         float omega = 2.0f * juce::MathConstants<float>::pi * freq / scaledSampleRate;
         float cosOmega = std::cos(omega);
@@ -629,11 +638,10 @@ private:
         float a1 = -2.0f * cosOmega;
         float a2 = 1.0f - alpha / A;
         
-        setBiquadCoeffs(states[0], b0, b1, b2, a0, a1, a2);
-        setBiquadCoeffs(states[1], b0, b1, b2, a0, a1, a2);
+        setBiquadCoeffsStereo(L, R, b0, b1, b2, a0, a1, a2);
     }
     
-    void makeHighShelf(BiquadState states[2], float freq, float Q, float gainDB)
+    void makeHighShelfStereo(BiquadState& L, BiquadState& R, float freq, float Q, float gainDB)
     {
         float omega = 2.0f * juce::MathConstants<float>::pi * freq / scaledSampleRate;
         float cosOmega = std::cos(omega);
@@ -648,11 +656,10 @@ private:
         float a1 = 2.0f * ((A - 1.0f) - (A + 1.0f) * cosOmega);
         float a2 = (A + 1.0f) - (A - 1.0f) * cosOmega - beta * sinOmega;
         
-        setBiquadCoeffs(states[0], b0, b1, b2, a0, a1, a2);
-        setBiquadCoeffs(states[1], b0, b1, b2, a0, a1, a2);
+        setBiquadCoeffsStereo(L, R, b0, b1, b2, a0, a1, a2);
     }
     
-    void makeHighPass(BiquadState states[2], float freq)
+    void makeHighPassStereo(BiquadState& L, BiquadState& R, float freq)
     {
         float omega = 2.0f * juce::MathConstants<float>::pi * freq / scaledSampleRate;
         float cosOmega = std::cos(omega);
@@ -666,11 +673,10 @@ private:
         float a1 = -2.0f * cosOmega;
         float a2 = 1.0f - alpha;
         
-        setBiquadCoeffs(states[0], b0, b1, b2, a0, a1, a2);
-        setBiquadCoeffs(states[1], b0, b1, b2, a0, a1, a2);
+        setBiquadCoeffsStereo(L, R, b0, b1, b2, a0, a1, a2);
     }
     
-    void makeLowPass(BiquadState states[2], float freq)
+    void makeLowPassStereo(BiquadState& L, BiquadState& R, float freq)
     {
         float omega = 2.0f * juce::MathConstants<float>::pi * freq / scaledSampleRate;
         float cosOmega = std::cos(omega);
@@ -684,8 +690,7 @@ private:
         float a1 = -2.0f * cosOmega;
         float a2 = 1.0f - alpha;
         
-        setBiquadCoeffs(states[0], b0, b1, b2, a0, a1, a2);
-        setBiquadCoeffs(states[1], b0, b1, b2, a0, a1, a2);
+        setBiquadCoeffsStereo(L, R, b0, b1, b2, a0, a1, a2);
     }
     
     void updateOversampling()
@@ -710,11 +715,11 @@ private:
             specsOversampling.sampleRate = lastSpecs.sampleRate * (1 << oversamplingFactor);
             specsOversampling.maximumBlockSize = lastSpecs.maximumBlockSize * (1 << oversamplingFactor);
             
-            scaledSampleRate = specsOversampling.sampleRate;
+            scaledSampleRate = static_cast<float>(specsOversampling.sampleRate);
         }
         else
         {
-            scaledSampleRate = lastSpecs.sampleRate;
+            scaledSampleRate = static_cast<float>(lastSpecs.sampleRate);
         }
         
         oversampling.swap(newOversampling);
@@ -723,30 +728,30 @@ private:
     
     void updateFilterCoefficients()
     {
-        // Pre-sculpt
-        makeHighPass(&preSculptStates[0][0], 55.0f);
-        makePeakFilter(&preSculptStates[0][1], 870.0f, 0.4f, 4.0f);
-        makePeakFilter(&preSculptStates[0][2], 3700.0f, 0.32f, 7.0f);
-        makeHighShelf(&preSculptStates[0][3], 6000.0f, 0.7f, 16.0f);
+        // Pre-sculpt (apply identical coeffs to L/R for each filter index)
+        makeHighPassStereo (preSculptStates[0][0], preSculptStates[1][0], 55.0f);
+        makePeakFilterStereo(preSculptStates[0][1], preSculptStates[1][1], 870.0f, 0.4f, 4.0f);
+        makePeakFilterStereo(preSculptStates[0][2], preSculptStates[1][2], 3700.0f, 0.32f, 7.0f);
+        makeHighShelfStereo(preSculptStates[0][3], preSculptStates[1][3], 6000.0f, 0.7f, 16.0f);
         
         // Post-sculpt
-        makeHighPass(&postSculptStates[0][0], 60.0f);
-        makePeakFilter(&postSculptStates[0][1], 140.0f, 2.4f, -3.5f);
-        makePeakFilter(&postSculptStates[0][2], 2200.0f, 0.3f, 4.0f);
-        makePeakFilter(&postSculptStates[0][3], 2600.0f, 5.8f, -5.1f);
-        makePeakFilter(&postSculptStates[0][4], 6400.0f, 1.0f, 4.8f);
-        makeLowPass(&postSculptStates[0][5], 10000.0f);
+        makeHighPassStereo (postSculptStates[0][0], postSculptStates[1][0], 60.0f);
+        makePeakFilterStereo(postSculptStates[0][1], postSculptStates[1][1], 140.0f, 2.4f, -3.5f);
+        makePeakFilterStereo(postSculptStates[0][2], postSculptStates[1][2], 2200.0f, 0.3f, 4.0f);
+        makePeakFilterStereo(postSculptStates[0][3], postSculptStates[1][3], 2600.0f, 5.8f, -5.1f);
+        makePeakFilterStereo(postSculptStates[0][4], postSculptStates[1][4], 6400.0f, 1.0f, 4.8f);
+        makeLowPassStereo  (postSculptStates[0][5], postSculptStates[1][5], 10000.0f);
         
-        // Update tone stacks
+        // Update tone stacks last (depends on user params)
         updateToneStack();
     }
 
     void updateToneStack()
     {
-        makePeakFilter(&toneStackStates[0][0], 160.0f, 0.6f, low);
-        makePeakFilter(&toneStackStates[0][1], 600.0f, 0.8f, mid);
-        makePeakFilter(&toneStackStates[0][2], 2600.0f, 0.8f, high);
-        makeHighShelf(&toneStackStates[0][3], 6000.0f, 0.8f, presence);
+        makePeakFilterStereo(toneStackStates[0][0], toneStackStates[1][0], 160.0f, 0.6f, low);
+        makePeakFilterStereo(toneStackStates[0][1], toneStackStates[1][1], 600.0f, 0.8f, mid);
+        makePeakFilterStereo(toneStackStates[0][2], toneStackStates[1][2], 2600.0f, 0.8f, high);
+        makeHighShelfStereo(toneStackStates[0][3], toneStackStates[1][3], 6000.0f, 0.8f, presence);
     }   
 };
 }
