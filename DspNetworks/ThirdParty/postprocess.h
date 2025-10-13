@@ -101,13 +101,13 @@ template <int NV> struct postprocess: public data::base
                 // Process based on eqFirst flag
                 if (eqFirst)
                 {
-                    sampleData = processEQ(sampleData, channelIndex);
-                    sampleData = processComp(sampleData, channelIndex, s);
+                    if (eqEnable) { sampleData = processEQ(sampleData, channelIndex); }
+                    if (compEnable) { sampleData = processComp(sampleData, channelIndex, s); }
                 }
                 else
                 {
-                    sampleData = processComp(sampleData, channelIndex, s);
-                    sampleData = processEQ(sampleData, channelIndex);
+                    if (compEnable) { sampleData = processComp(sampleData, channelIndex, s); }
+                    if (eqEnable) { sampleData = processEQ(sampleData, channelIndex); }
                 }
                 
                 channel[s] = sampleData;
@@ -150,6 +150,10 @@ template <int NV> struct postprocess: public data::base
         
         // Processing Order (24)
         case 24: eqFirst = v > 0.5; break;
+
+        // Bypass States
+        case 25: eqEnable = v > 0.5; break;
+        case 26: compEnable = v > 0.5; break;
         }
     }
     
@@ -310,12 +314,28 @@ template <int NV> struct postprocess: public data::base
             processingOrder.setDefaultValue(1.0);
             data.add(std::move(processingOrder));
         }
+
+        // Bypass States
+        {
+            parameter::data processingOrder("EQ Enable", { 0.0, 1.0 });
+            registerCallback<25>(processingOrder);
+            processingOrder.setDefaultValue(1.0);
+            data.add(std::move(processingOrder));
+        }
+        {
+            parameter::data processingOrder("Comp Enable", { 0.0, 1.0 });
+            registerCallback<26>(processingOrder);
+            processingOrder.setDefaultValue(1.0);
+            data.add(std::move(processingOrder));
+        }
     }
 
 private:
     float sampleRate = 44100.0f;
     int numChannels = 2;
     bool eqFirst = true;
+    bool eqEnable = true;
+    bool compEnable = true;
     
     // EQ Parameters
     float hpfFrequency = 40.0f;

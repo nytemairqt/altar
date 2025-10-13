@@ -101,17 +101,17 @@ template <int NV> struct preprocess: public data::base
                 // Process based on eqFirst flag
                 if (eqFirst)
                 {
-                    sampleData = processEQ(sampleData, channelIndex);
-                    sampleData = processComp(sampleData, channelIndex, s);
+                    if (eqEnable) { sampleData = processEQ(sampleData, channelIndex); }
+                    if (compEnable) { sampleData = processComp(sampleData, channelIndex, s); }
                 }
                 else
                 {
-                    sampleData = processComp(sampleData, channelIndex, s);
-                    sampleData = processEQ(sampleData, channelIndex);
+                    if (compEnable) { sampleData = processComp(sampleData, channelIndex, s); }
+                    if (eqEnable) { sampleData = processEQ(sampleData, channelIndex); }
                 }
                 
                 // Always clip last
-                sampleData = processClipper(sampleData);
+                if (clipperEnable) { sampleData = processClipper(sampleData); }
                 
                 channel[s] = sampleData;
             }
@@ -156,6 +156,11 @@ template <int NV> struct preprocess: public data::base
         
         // Processing Order (25)
         case 25: eqFirst = v > 0.5; break;
+
+        // Bypass States
+        case 26: eqEnable = v > 0.5; break;
+        case 27: compEnable = v > 0.5; break;
+        case 28: clipperEnable = v > 0.5; break;
         }
     }
     
@@ -324,12 +329,34 @@ template <int NV> struct preprocess: public data::base
             processingOrder.setDefaultValue(1.0);
             data.add(std::move(processingOrder));
         }
+        {
+            parameter::data processingOrder("EQ Enable", { 0.0, 1.0 });
+            registerCallback<26>(processingOrder);
+            processingOrder.setDefaultValue(1.0);
+            data.add(std::move(processingOrder));
+        }
+        {
+            parameter::data processingOrder("Comp Enable", { 0.0, 1.0 });
+            registerCallback<27>(processingOrder);
+            processingOrder.setDefaultValue(1.0);
+            data.add(std::move(processingOrder));
+        }
+        {
+            parameter::data processingOrder("Clipper Enable", { 0.0, 1.0 });
+            registerCallback<28>(processingOrder);
+            processingOrder.setDefaultValue(1.0);
+            data.add(std::move(processingOrder));
+        }
     }
 
 private:
     float sampleRate = 44100.0f;
     int numChannels = 2;
     bool eqFirst = true;
+
+    bool eqEnable = true;
+    bool compEnable = true;
+    bool clipperEnable = true;
     
     // EQ Parameters
     float hpfFrequency = 40.0f;

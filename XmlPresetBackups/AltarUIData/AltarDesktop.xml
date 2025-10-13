@@ -177,8 +177,7 @@
                text="Output Gain" width="100.0" parentComponent="pnlOverdrive"/>
   </Component>
   <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0">
+             height="390.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptSlider" id="knbAmpMode" x="50.0" y="170.0" defaultValue="1.0"
                max="2.0" stepSize="1.0" middlePosition="1.0" width="48.0" parentComponent="pnlAmp"
                tooltip="Amp mode. [CLEAN, DRIVE, NAM]" text="amp_Mode"/>
@@ -344,7 +343,8 @@
                width="80.0" parentComponent="pnlReverb"/>
   </Component>
   <Component type="ScriptPanel" id="pnlDelay" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080">
+             height="390.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0">
     <Component type="ScriptSlider" id="knbDelayMix" x="90.0" y="80.0" text="delay_Mix"
                width="48.0" middlePosition="0.5" defaultValue="0.5" parentComponent="pnlDelay"/>
     <Component type="ScriptSlider" id="knbDelayDelayTime" x="370.0" y="60.0"
@@ -382,7 +382,7 @@
                width="80.0" text="Width" parentComponent="pnlDelay"/>
     <Component type="ScriptLabel" id="lblDelayDamping" x="850.0" y="200.0" width="80.0"
                text="Damping" parentComponent="pnlDelay"/>
-    <Component type="ScriptSlider" id="knbDelayDelayTimeSynced" x="460" y="60.0"
+    <Component type="ScriptSlider" id="knbDelayDelayTimeSynced" x="460.0" y="60.0"
                text="delay_DelayTimeSynced" width="48.0" max="18.0" middlePosition="9.0"
                defaultValue="5.0" parentComponent="pnlDelay" stepSize="1.0"/>
     <Component type="ScriptLabel" id="lblDelayDelayTimeSynced" x="450.0" y="110.0"
@@ -606,6 +606,15 @@
     <Component type="ScriptSlider" id="knbPreprocessClipperGain" x="680.0" y="630.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Clipper Gain"
                max="2.0" middlePosition="1.0" text="Clip" width="98.0"/>
+    <Component type="ScriptButton" id="btnPreProcessEQEnable" x="170.0" y="270.0"
+               parentComponent="pnlPreProcess" text="EQ" width="90.0" height="30.0"
+               processorId="preprocess" parameterId="EQ Enable"/>
+    <Component type="ScriptButton" id="btnPreProcessCompEnable" x="720.0" y="270.0"
+               parentComponent="pnlPreProcess" text="Comp" width="90.0" height="30.0"
+               processorId="preprocess" parameterId="Comp Enable"/>
+    <Component type="ScriptButton" id="btnPreProcessClipperEnable" x="730.0"
+               y="680.0" parentComponent="pnlPreProcess" text="Clip" width="90.0"
+               height="30.0" processorId="preprocess" parameterId="Clipper Enable"/>
   </Component>
   <Component type="ScriptPanel" id="pnlPostProcess" x="0.0" y="0.0" width="1150.0"
              height="740.0" allowCallbacks="Clicks Only" itemColour="818991175"
@@ -722,6 +731,12 @@
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Comp Makeup"
                min="-20.0" max="20.0" stepSize="0.1000000014901161" middlePosition="0.0"
                text="Makeup" width="98.0"/>
+    <Component type="ScriptButton" id="btnPostProcessEQEnable" x="160.0" y="270.0"
+               parentComponent="pnlPostProcess" text="EQ" processorId="postprocess"
+               parameterId="EQ Enable"/>
+    <Component type="ScriptButton" id="btnPostProcessCompEnable" x="740.0" y="270.0"
+               parentComponent="pnlPostProcess" text="Comp" processorId="postprocess"
+               parameterId="Comp Enable"/>
   </Component>
   <Component type="ScriptPanel" id="pnlTuner" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
