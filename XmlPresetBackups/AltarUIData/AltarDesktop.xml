@@ -7,8 +7,8 @@
                max="36.0" middlePosition="0.0" processorId="inputGain" parameterId="Gain"
                parentComponent="pnlMaster" tooltip="Adjust input gain." width="48.0"/>
     <Component type="ScriptSlider" id="knbGateThreshold" x="140.0" y="70.0"
-               min="-100.0" max="0.0" middlePosition="-24.0" width="48.0" height="48.0"
-               processorId="gate" parameterId="Threshold" defaultValue="-24.0"
+               min="-100.0" max="0.0" middlePosition="-36.0" width="48.0" height="48.0"
+               processorId="gate" parameterId="Threshold" defaultValue="-36.0"
                parentComponent="pnlMaster" tooltip="Gate threshold."/>
     <Component type="ScriptButton" id="btnGate" x="200.0" y="80.0" width="28.0"
                processorId="gate" parameterId="Enabled" defaultValue="1.0" parentComponent="pnlMaster"
