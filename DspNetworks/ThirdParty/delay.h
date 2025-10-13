@@ -187,11 +187,13 @@ template <int NV> struct delay: public data::base, public cable_manager_t
         for (int s = 0; s < numSamples; ++s)
         {
             float actualDelayTime = delayTimeValue;
+
             if (tempoSyncEnabled && currentBPM > 0.0f)
             {
-                float noteValues[] = { 4.0f, 2.0f, 1.0f, 0.5f, 0.25f, 0.125f, 0.0625f };
-                int noteIndex = juce::jlimit(0, 6, static_cast<int>(delayTimeValue * 6.0f));
-                actualDelayTime = (60.0f / currentBPM) * noteValues[noteIndex];
+                // Map DelayTimeSynced [0..18] to musical durations, then to seconds
+                const int idx = juce::jlimit(0, 18, (int)std::round(delayTimeSynced));
+                float beats = getBeatsForSyncedIndex(idx); // in quarter-note beats
+                actualDelayTime = (60.0f / currentBPM) * beats;
             }
 
             float delayTimeL = actualDelayTime;
@@ -252,13 +254,14 @@ template <int NV> struct delay: public data::base, public cable_manager_t
         switch (P)
         {
         case 0: mix = static_cast<float>(v); break;
-        case 1: delayTime = static_cast<float>(v); break;
+        case 1: delayTime = static_cast<float>(v); break;                 // Free (seconds) mode
         case 2: feedback = static_cast<float>(v); break;
         case 3: damping = static_cast<float>(v); break;
         case 4: modulation = static_cast<float>(v); break;
         case 5: stereoWidth = static_cast<float>(v); break;
         case 6: tempoSync = v > 0.5f; break;
         case 7: delayMode = static_cast<float>(v); reset(); break;
+        case 8: delayTimeSynced = static_cast<float>(v); break;           // Synced mode (index 0..18)
         }
     }
     
@@ -271,10 +274,19 @@ template <int NV> struct delay: public data::base, public cable_manager_t
             data.add(std::move(mix_param));
         }
         {
+            // Free delay time in seconds
             parameter::data time_param("DelayTime", { 0.01, 4.0 });
             registerCallback<1>(time_param);
             time_param.setDefaultValue(0.5);
             data.add(std::move(time_param));
+        }
+        {
+            // Synced delay time selector: 19 discrete steps [0..18]
+            // Order: 1/1, 1/2D, 1/2, 1/2T, 1/4D, 1/4, 1/4T, 1/8D, 1/8, 1/8T, 1/16D, 1/16, 1/16T, 1/32D, 1/32, 1/32T, 1/64D, 1/64, 1/64T
+            parameter::data time_sync_param("DelayTimeSynced", { 0.0, 18.0 });
+            registerCallback<8>(time_sync_param);
+            time_sync_param.setDefaultValue(5.0); // default to 1/4
+            data.add(std::move(time_sync_param));
         }
         {
             parameter::data feedback_param("Feedback", { 0.0, 0.98 });
@@ -322,7 +334,8 @@ private:
 
     // Parameters
     float mix = 0.5f;
-    float delayTime = 0.5f;
+    float delayTime = 0.5f;         // free (seconds) mode
+    float delayTimeSynced = 5.0f;   // synced (index 0..18), default 1/4
     float feedback = 0.7f;
     float damping = 2000.0f;
     float modulation = 0.4f;
@@ -404,6 +417,24 @@ private:
     int glitchStutterLength[2] = { 0, 0 };
     float glitchRandomPhase = 0.0f;
     int glitchMode = 0;
+
+    // Map synced index [0..18] to beats (quarter-note = 1 beat)
+    float getBeatsForSyncedIndex(int idx) const
+    {
+        if (idx <= 0) return 4.0f; // 1/1
+
+        static constexpr int denoms[6] = { 2, 4, 8, 16, 32, 64 };
+        const int i = idx - 1;
+        const int group = i / 3;          // 0..5 => which denominator
+        const int posInGroup = i % 3;     // 0=D, 1=plain, 2=T
+
+        const float baseBeats = 4.0f / (float)denoms[group];
+        const float mult = (posInGroup == 0) ? 1.5f    // dotted
+                          : (posInGroup == 1) ? 1.0f   // straight
+                          : (2.0f / 3.0f);            // triplet
+
+        return baseBeats * mult;
+    }
 
     void updateDampingFilter()
     {

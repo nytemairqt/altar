@@ -15,16 +15,7 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace TransportHandler
-{        
-    const grm = Engine.getGlobalRoutingManager();  
-    const tempoCable = grm.getCable("tempo");     
-    const transportHandler = Engine.createTransportHandler();
-
-    inline function tempoChange(newTempo)
-    {
-        tempoCable.sendData(newTempo);
-    }
-
-    transportHandler.setOnTempoChange(SyncNotification, tempoChange); // defer to UI thread else bad juju
+namespace Delay
+{
+    const delayTimes = ["1/1", "1/2D", "1/2", "1/2T", "1/4D", "1/4", "1/4T", "1/8D", "1/8", "1/8T", "1/16D", "1/16", "1/16T", "1/32D", "1/32", "1/32T", "1/64D", "1/64", "1/64T"];    
 }

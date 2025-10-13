@@ -129,6 +129,7 @@ namespace LookAndFeel
 	                            Content.getComponent("knbDelayMix"), 
 	                            Content.getComponent("knbDelayMode"), 
 	                            Content.getComponent("knbDelayDelayTime"), 
+	                            Content.getComponent("knbDelayDelayTimeSynced"), 
 	                            Content.getComponent("knbDelayFeedback"), 
 	                            Content.getComponent("knbDelayModulation"), 
 	                            Content.getComponent("knbDelayStereoWidth"), 
