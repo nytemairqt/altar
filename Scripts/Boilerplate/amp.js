@@ -20,6 +20,23 @@ namespace Amp
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
     const grm = Engine.getGlobalRoutingManager();  
     const namCable = grm.getCable("nam");     
+    const knbAmpMode = Content.getComponent("knbAmpMode");
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];
+
+    inline function onknbAmpModeControl(component, value)
+    {
+        for (slot in fxSlots)
+            if (slot.getCurrentEffectId() == "amp")
+            {
+                local effect = slot.getCurrentEffect();
+                effect.setAttribute(effect.Mode, value);
+            }
+        
+        if (value < 2) { pnlAmpNAMLoader.set("visible", false); }
+        else { pnlAmpNAMLoader.set("visible", true); }        
+    }  
+
+    knbAmpMode.setControlCallback(onknbAmpModeControl);
        
     inline function pnlAmpNAMLoaderDrop(f)
     {

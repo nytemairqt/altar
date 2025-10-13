@@ -15,6 +15,10 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
+include("Boilerplate/amp.js");
+include("Boilerplate/cab.js");
+include("Boilerplate/delay.js");
+
 namespace ModularChain
 {
     // ---------------------------
@@ -32,17 +36,15 @@ namespace ModularChain
     // Effect control panels (one per effect type)
     const pnlFx = [Content.getComponent("pnlOverdrive"), Content.getComponent("pnlAmp"), Content.getComponent("pnlCab"), Content.getComponent("pnlReverb"), Content.getComponent("pnlDelay"), Content.getComponent("pnlChorus"), Content.getComponent("pnlRingmod")];    
     
-    // UI Controls
+    // UI Controls (skip any that have individual logic in their respective namespaces)
     const bypassButtons = [Content.getComponent("btnModularABypass"), Content.getComponent("btnModularBBypass"), Content.getComponent("btnModularCBypass"), Content.getComponent("btnModularDBypass"), Content.getComponent("btnModularEBypass"), Content.getComponent("btnModularFBypass"), Content.getComponent("btnModularGBypass")];            
     const overdriveControl = [Content.getComponent("knbOverdriveMode"), Content.getComponent("knbOverdriveDrive"), Content.getComponent("knbOverdriveTone"), Content.getComponent("knbOverdriveBits"), Content.getComponent("knbOverdriveSRReduction"), Content.getComponent("knbOverdriveFoldAmount"), Content.getComponent("knbOverdriveMix"), Content.getComponent("knbOverdriveOutputGain")];    
-    const ampControl = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
+    const ampControl = [Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
     const cabControl = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
     const reverbControl = [Content.getComponent("knbReverbMix"), Content.getComponent("knbReverbPreDelay"), Content.getComponent("knbReverbRoomSize"), Content.getComponent("knbReverbDecay"), Content.getComponent("knbReverbDampingFrequency"), Content.getComponent("knbReverbChorusDepth")];
     const delayControl = [Content.getComponent("knbDelayMix"), Content.getComponent("btnDelayTempoSync"), Content.getComponent("knbDelayMode"), Content.getComponent("knbDelayDelayTime"), Content.getComponent("knbDelayDelayTimeSynced"), Content.getComponent("knbDelayFeedback"), Content.getComponent("knbDelayModulation"), Content.getComponent("knbDelayStereoWidth"), Content.getComponent("knbDelayDamping")];    
     const chorusControl = [Content.getComponent("knbChorusMix"), Content.getComponent("knbChorusRate"), Content.getComponent("knbChorusDepth"), Content.getComponent("knbChorusTone"), Content.getComponent("knbChorusVoices"), Content.getComponent("knbChorusFeedback"), Content.getComponent("knbChorusDelayTime")];
-    const ringmodControl = [Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")];
-    
-    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
+    const ringmodControl = [Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")]; 
 
     // Ensure slot states are stored with user presets
     for (m in fxModules)
@@ -299,13 +301,6 @@ namespace ModularChain
                 local index = effect.getAttributeIndex(param);
                 effect.setAttribute(index, value);                
             }
-
-        // Additional per-component logic goes here
-        if (component == ampControl[0]) // amp mode
-        {
-            if (value < 2) { pnlAmpNAMLoader.set("visible", false); }
-            else { pnlAmpNAMLoader.set("visible", true); }
-        }
     }    
 
     for (c in overdriveControl) { c.setControlCallback(onknbModularControl); }

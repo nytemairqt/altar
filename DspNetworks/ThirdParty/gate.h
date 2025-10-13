@@ -161,7 +161,7 @@ private:
     bool gateState = false;
 
     float attack = 2.0f;
-    float release = 120.0f;
+    float release = 30.0f;
 
     float thresholdParameter = -24.0f;
     float sensitivity = 0.7f;
