@@ -50,14 +50,14 @@
                parentComponent="pnlMaster" processorId="chug" parameterId="Enabled"
                tooltip="Enable chug (single-band compressor)." text=""/>
     <Component type="ScriptSlider" id="knbChugStrength" x="370.0" y="100.0"
-               middlePosition="5.0" parentComponent="pnlMaster" max="10.0" stepSize="0.1000000014901161"
+               middlePosition="2.5" parentComponent="pnlMaster" max="5.0" stepSize="0.1000000014901161"
                tooltip="Adjust chug strength." width="48.0" processorId="chug"
                parameterId="Strength"/>
     <Component type="ScriptButton" id="btnPick" x="536.0" y="178.0" width="28.0"
                parentComponent="pnlMaster" processorId="pick" parameterId="Enabled"
                tooltip="Enable pick (single-band expander)." text=""/>
     <Component type="ScriptSlider" id="knbPickStrength" x="520.0" y="100.0"
-               middlePosition="5.0" parentComponent="pnlMaster" max="10.0" stepSize="0.1000000014901161"
+               middlePosition="2.5" parentComponent="pnlMaster" max="5.0" stepSize="0.1000000014901161"
                processorId="pick" parameterId="Strength" tooltip="Adjust pick threshold."
                width="48.0"/>
     <Component type="ScriptSlider" id="knbEQWhistle" x="770.0" y="100.0" defaultValue="1.0"
