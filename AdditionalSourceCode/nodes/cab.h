@@ -13,12 +13,12 @@ using namespace snex::Types;
 
 namespace cab_impl
 {
-// ============================| Node & Parameter type declarations |============================
+// ==============================| Node & Parameter type declarations |==============================
 
 DECLARE_PARAMETER_RANGE_SKEW(xfader_c0Range, 
                              -100., 
                              0., 
-                             5.42227);
+                             10.8445);
 
 template <int NV>
 using xfader_c0 = parameter::from0To1<core::gain<NV>, 
@@ -42,12 +42,16 @@ using soft_bypass_t_ = container::chain<parameter::empty,
                                         filters::svf_eq<NV>, 
                                         filters::svf_eq<NV>, 
                                         math::inv<NV>, 
-                                        jdsp::jpanner<NV>, 
-                                        core::gain<NV>, 
-                                        core::gain<NV>>;
+                                        jdsp::jpanner<NV>>;
 
 template <int NV>
 using soft_bypass_t = bypass::smoothed<20, soft_bypass_t_<NV>>;
+
+template <int NV>
+using chain_t = container::chain<parameter::empty, 
+                                 wrap::fix<2, soft_bypass_t<NV>>, 
+                                 core::gain<NV>, 
+                                 core::gain<NV>>;
 using convolution2_t = wrap::data<filters::convolution, 
                                   data::external::audiofile<1>>;
 
@@ -58,21 +62,25 @@ using soft_bypass1_t_ = container::chain<parameter::empty,
                                          filters::svf_eq<NV>, 
                                          filters::svf_eq<NV>, 
                                          math::inv<NV>, 
-                                         jdsp::jpanner<NV>, 
-                                         core::gain<NV>, 
-                                         core::gain<NV>>;
+                                         jdsp::jpanner<NV>>;
 
 template <int NV>
 using soft_bypass1_t = bypass::smoothed<20, soft_bypass1_t_<NV>>;
 
 template <int NV>
+using chain1_t = container::chain<parameter::empty, 
+                                  wrap::fix<2, soft_bypass1_t<NV>>, 
+                                  core::gain<NV>, 
+                                  core::gain<NV>>;
+
+template <int NV>
 using split_t = container::split<parameter::empty, 
-                                 wrap::fix<2, soft_bypass_t<NV>>, 
-                                 soft_bypass1_t<NV>>;
+                                 wrap::fix<2, chain_t<NV>>, 
+                                 chain1_t<NV>>;
 
 namespace cab_t_parameters
 {
-// Parameter list for cab_impl::cab_t -----------------------------------------------------------
+// Parameter list for cab_impl::cab_t --------------------------------------------------------------
 
 template <int NV>
 using CabAEnable = parameter::bypass<cab_impl::soft_bypass_t<NV>>;
@@ -122,7 +130,7 @@ using cab_t_ = container::chain<cab_t_parameters::cab_t_plist<NV>,
                                 wrap::fix<2, xfader_t<NV>>, 
                                 split_t<NV>>;
 
-// ================================| Root node initialiser class |================================
+// =================================| Root node initialiser class |=================================
 
 template <int NV> struct instance: public cab_impl::cab_t_<NV>
 {
@@ -140,10 +148,10 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		SNEX_METADATA_ENCODED_PARAMETERS(276)
 		{
 			0x005C, 0x0000, 0x0000, 0x694D, 0x0078, 0x0000, 0x0000, 0x0000, 
-            0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5C00, 
+            0x8000, 0x003F, 0x0000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5C00, 
             0x0100, 0x0000, 0x4300, 0x6261, 0x4541, 0x616E, 0x6C62, 0x0065, 
-            0x0000, 0x0000, 0x0000, 0x8000, 0x123F, 0x4083, 0x003E, 0x8000, 
-            0x003F, 0x0000, 0x5C00, 0x0200, 0x0000, 0x4300, 0x6261, 0x4441, 
+            0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 
+            0x003F, 0x8000, 0x5C3F, 0x0200, 0x0000, 0x4300, 0x6261, 0x4441, 
             0x6C65, 0x7961, 0x0000, 0x0000, 0x0000, 0x0000, 0x42C8, 0x0000, 
             0x0000, 0x209B, 0x3E9A, 0xCCCD, 0x3DCC, 0x005C, 0x0003, 0x0000, 
             0x6143, 0x4162, 0x7841, 0x7369, 0x0000, 0x0000, 0xC0C0, 0x0000, 
@@ -159,7 +167,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
             0xC2C8, 0x0000, 0x4140, 0x0000, 0x35C8, 0x833E, 0x40AD, 0xCCCD, 
             0x3DCC, 0x005C, 0x0008, 0x0000, 0x6143, 0x4262, 0x6E45, 0x6261, 
             0x656C, 0x0000, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 0x0009, 0x0000, 0x6143, 
+            0x0000, 0x3F80, 0x0000, 0x3F80, 0x005C, 0x0009, 0x0000, 0x6143, 
             0x4262, 0x6544, 0x616C, 0x0079, 0x0000, 0x0000, 0x0000, 0xC800, 
             0x0042, 0x0000, 0x9B00, 0x9A20, 0xCD3E, 0xCCCC, 0x5C3D, 0x0A00, 
             0x0000, 0x4300, 0x6261, 0x4142, 0x6978, 0x0073, 0x0000, 0xC000, 
@@ -185,30 +193,32 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 	
 	instance()
 	{
-		// Node References ----------------------------------------------------------------------
+		// Node References -------------------------------------------------------------------------
 		
-		auto& xfader = this->getT(0);                       // cab_impl::xfader_t<NV>
-		auto& split = this->getT(1);                        // cab_impl::split_t<NV>
-		auto& soft_bypass = this->getT(1).getT(0);          // cab_impl::soft_bypass_t<NV>
-		auto& fix_delay = this->getT(1).getT(0).getT(0);    // core::fix_delay
-		auto& convolution = this->getT(1).getT(0).getT(1);  // cab_impl::convolution_t
-		auto& svf_eq3 = this->getT(1).getT(0).getT(2);      // filters::svf_eq<NV>
-		auto& svf_eq1 = this->getT(1).getT(0).getT(3);      // filters::svf_eq<NV>
-		auto& inv = this->getT(1).getT(0).getT(4);          // math::inv<NV>
-		auto& jpanner = this->getT(1).getT(0).getT(5);      // jdsp::jpanner<NV>
-		auto& gain2 = this->getT(1).getT(0).getT(6);        // core::gain<NV>
-		auto& gain = this->getT(1).getT(0).getT(7);         // core::gain<NV>
-		auto& soft_bypass1 = this->getT(1).getT(1);         // cab_impl::soft_bypass1_t<NV>
-		auto& fix_delay2 = this->getT(1).getT(1).getT(0);   // core::fix_delay
-		auto& convolution2 = this->getT(1).getT(1).getT(1); // cab_impl::convolution2_t
-		auto& svf_eq4 = this->getT(1).getT(1).getT(2);      // filters::svf_eq<NV>
-		auto& svf_eq5 = this->getT(1).getT(1).getT(3);      // filters::svf_eq<NV>
-		auto& inv1 = this->getT(1).getT(1).getT(4);         // math::inv<NV>
-		auto& jpanner1 = this->getT(1).getT(1).getT(5);     // jdsp::jpanner<NV>
-		auto& gain4 = this->getT(1).getT(1).getT(6);        // core::gain<NV>
-		auto& gain5 = this->getT(1).getT(1).getT(7);        // core::gain<NV>
+		auto& xfader = this->getT(0);                               // cab_impl::xfader_t<NV>
+		auto& split = this->getT(1);                                // cab_impl::split_t<NV>
+		auto& chain = this->getT(1).getT(0);                        // cab_impl::chain_t<NV>
+		auto& soft_bypass = this->getT(1).getT(0).getT(0);          // cab_impl::soft_bypass_t<NV>
+		auto& fix_delay = this->getT(1).getT(0).getT(0).getT(0);    // core::fix_delay
+		auto& convolution = this->getT(1).getT(0).getT(0).getT(1);  // cab_impl::convolution_t
+		auto& svf_eq3 = this->getT(1).getT(0).getT(0).getT(2);      // filters::svf_eq<NV>
+		auto& svf_eq1 = this->getT(1).getT(0).getT(0).getT(3);      // filters::svf_eq<NV>
+		auto& inv = this->getT(1).getT(0).getT(0).getT(4);          // math::inv<NV>
+		auto& jpanner = this->getT(1).getT(0).getT(0).getT(5);      // jdsp::jpanner<NV>
+		auto& gain2 = this->getT(1).getT(0).getT(1);                // core::gain<NV>
+		auto& gain = this->getT(1).getT(0).getT(2);                 // core::gain<NV>
+		auto& chain1 = this->getT(1).getT(1);                       // cab_impl::chain1_t<NV>
+		auto& soft_bypass1 = this->getT(1).getT(1).getT(0);         // cab_impl::soft_bypass1_t<NV>
+		auto& fix_delay2 = this->getT(1).getT(1).getT(0).getT(0);   // core::fix_delay
+		auto& convolution2 = this->getT(1).getT(1).getT(0).getT(1); // cab_impl::convolution2_t
+		auto& svf_eq4 = this->getT(1).getT(1).getT(0).getT(2);      // filters::svf_eq<NV>
+		auto& svf_eq5 = this->getT(1).getT(1).getT(0).getT(3);      // filters::svf_eq<NV>
+		auto& inv1 = this->getT(1).getT(1).getT(0).getT(4);         // math::inv<NV>
+		auto& jpanner1 = this->getT(1).getT(1).getT(0).getT(5);     // jdsp::jpanner<NV>
+		auto& gain4 = this->getT(1).getT(1).getT(1);                // core::gain<NV>
+		auto& gain5 = this->getT(1).getT(1).getT(2);                // core::gain<NV>
 		
-		// Parameter Connections ----------------------------------------------------------------
+		// Parameter Connections -------------------------------------------------------------------
 		
 		this->getParameterT(0).connectT(0, xfader); // Mix -> xfader::Value
 		
@@ -240,13 +250,13 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		
 		this->getParameterT(14).connectT(0, gain4); // CabBGain -> gain4::Gain
 		
-		// Modulation Connections ---------------------------------------------------------------
+		// Modulation Connections ------------------------------------------------------------------
 		
 		auto& xfader_p = xfader.getWrappedObject().getParameter();
 		xfader_p.getParameterT(0).connectT(0, gain);  // xfader -> gain::Gain
 		xfader_p.getParameterT(1).connectT(0, gain5); // xfader -> gain5::Gain
 		
-		// Default Values -----------------------------------------------------------------------
+		// Default Values --------------------------------------------------------------------------
 		
 		; // xfader::Value is automated
 		
@@ -322,8 +332,8 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		gain5.setParameterT(1, 20.); // core::gain::Smoothing
 		gain5.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		this->setParameterT(0, 0.);
-		this->setParameterT(1, 0.188);
+		this->setParameterT(0, 0.5);
+		this->setParameterT(1, 1.);
 		this->setParameterT(2, 0.);
 		this->setParameterT(3, 0.);
 		this->setParameterT(4, 6000.);
@@ -341,7 +351,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 	}
 	~instance() override
 	{
-		// Cleanup external data references -----------------------------------------------------
+		// Cleanup external data references --------------------------------------------------------
 		
 		this->setExternalData({}, -1);
 	}
@@ -354,10 +364,10 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 	
 	void setExternalData(const ExternalData& b, int index)
 	{
-		// External Data Connections ------------------------------------------------------------
+		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(1).getT(0).getT(1).setExternalData(b, index); // cab_impl::convolution_t
-		this->getT(1).getT(1).getT(1).setExternalData(b, index); // cab_impl::convolution2_t
+		this->getT(1).getT(0).getT(0).getT(1).setExternalData(b, index); // cab_impl::convolution_t
+		this->getT(1).getT(1).getT(0).getT(1).setExternalData(b, index); // cab_impl::convolution2_t
 	}
 };
 }
@@ -367,7 +377,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 #undef setParameterT
 #undef setParameterWT
 #undef getParameterT
-// =====================================| Public Definition |=====================================
+// ======================================| Public Definition |======================================
 
 namespace project
 {

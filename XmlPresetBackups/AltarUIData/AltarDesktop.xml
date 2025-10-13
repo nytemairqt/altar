@@ -177,7 +177,8 @@
                text="Output Gain" width="100.0" parentComponent="pnlOverdrive"/>
   </Component>
   <Component type="ScriptPanel" id="pnlAmp" x="0.0" y="350.0" width="1150.0"
-             height="390.0" itemColour="4278190080" itemColour2="4278190080">
+             height="390.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0">
     <Component type="ScriptSlider" id="knbAmpMode" x="50.0" y="170.0" defaultValue="1.0"
                max="2.0" stepSize="1.0" middlePosition="1.0" width="48.0" parentComponent="pnlAmp"
                tooltip="Amp mode. [CLEAN, DRIVE, NAM]" text="amp_Mode"/>
@@ -219,11 +220,10 @@
     <Component type="ScriptPanel" id="pnlAmpNAMLoader" x="350.0" y="100.0" width="300.0"
                height="130.0" text="C:\Users\iamla\Desktop\14a Marshall JCM800 2203X RATT Rhythm.nam"
                allowCallbacks="Clicks, Hover &amp; Dragging" parentComponent="pnlAmp"
-               saveInPreset="1"/>
+               saveInPreset="1" visible="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="351.0" width="1150.0"
-             height="390.0" itemColour2="4278190080" itemColour="4278190080"
-             visible="0">
+             height="390.0" itemColour2="4278190080" itemColour="4278190080">
     <Component type="ScriptPanel" id="pnlCabALoader" x="30.0" y="149.0" width="240.0"
                height="100.0" text="TSE IMPULSE.wav" allowCallbacks="All Callbacks"
                parentComponent="pnlCab"/>
