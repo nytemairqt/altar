@@ -16,9 +16,7 @@
 */
 
 namespace Amp
-{
-    /* GLOBAL CABLE */
-    
+{    
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
     const grm = Engine.getGlobalRoutingManager();  
     const namCable = grm.getCable("nam");     
@@ -28,14 +26,12 @@ namespace Amp
 	    if(f.drop)
 	    {
 			local file = FileSystem.fromAbsolutePath(f.fileName);
-		    local json = file.loadAsObject();	
-		    namCable.sendData(json);	    
+		    local json = file.loadAsObject();
+		    namCable.sendData(json);
 		    pnlAmpNAMLoader.set("text", file.toString(3));
 		    pnlAmpNAMLoader.repaint();
 	    }
-    }
-    
-    pnlAmpNAMLoader.setFileDropCallback("All Callbacks", "*.nam, *.json", pnlAmpNAMLoaderDrop);
+    }        
     
     inline function pnlAmpNAMLoaderClick(event)
     {
@@ -44,21 +40,21 @@ namespace Amp
 			// open file browser
 			FileSystem.browse(FileSystem.Documents, false, "*.nam, *.json", function(result)
 			{
-				var json = result.loadAsObject();
+				var json = result.loadAsObject();								
 				namCable.sendData(json);
 				pnlAmpNAMLoader.set("text", result.toString(3));
 				pnlAmpNAMLoader.repaint();
 			});
 		}        
     }
-    
-    pnlAmpNAMLoader.setMouseCallback(pnlAmpNAMLoaderClick);
-    
+            
     pnlAmpNAMLoader.setPaintRoutine(function(g)
     {
 	   g.setColour(Colours.white);
        g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 0.0, 1.0);
 	   g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred") ;
     });
-        
+    
+    pnlAmpNAMLoader.setFileDropCallback("All Callbacks", "*.nam, *.json", pnlAmpNAMLoaderDrop);
+    pnlAmpNAMLoader.setMouseCallback(pnlAmpNAMLoaderClick);
 }

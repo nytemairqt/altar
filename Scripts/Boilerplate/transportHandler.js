@@ -19,12 +19,13 @@ namespace TransportHandler
 {        
     const grm = Engine.getGlobalRoutingManager();  
     const tempoCable = grm.getCable("tempo");     
+    tempoCable.setRange(20.0, 260.0);
     const transportHandler = Engine.createTransportHandler();
 
     inline function tempoChange(newTempo)
     {
-        tempoCable.sendData(newTempo);
+        tempoCable.sendData(newTempo);        
     }
 
-    transportHandler.setOnTempoChange(SyncNotification, tempoChange); // defer to UI thread else bad juju
+    transportHandler.setOnTempoChange(SyncNotification, tempoChange); // defer to UI thread else bad juju       
 }

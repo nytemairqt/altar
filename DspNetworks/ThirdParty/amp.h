@@ -11,11 +11,12 @@
 #include "src/RTNeural/RTNeural.h"
 #include "src/RTNeural-NAM/wavenet/wavenet_model.hpp"
 
+// Use this enum to refer to the cables, eg. this->setGlobalCableValue<GlobalCables::tempo>(0.4)
 enum class GlobalCablesAmp
 {
-    pitch = 0,
-    nam = 1,
-    tempo = 2
+    tempo = 0,
+    pitch = 1,
+    nam = 2
 };
 
 namespace project
@@ -23,9 +24,9 @@ namespace project
 using namespace juce;
 using namespace hise;
 using namespace scriptnode;
-using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(106677056),
-                                                          SN_GLOBAL_CABLE(77050),
-                                                          SN_GLOBAL_CABLE(110245659)>; 
+using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(110245659),
+                                                          SN_GLOBAL_CABLE(106677056),
+                                                          SN_GLOBAL_CABLE(108826)>;
 
 
 // ==========================| The node class with all required callbacks |==========================

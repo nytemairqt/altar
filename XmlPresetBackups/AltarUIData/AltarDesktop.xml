@@ -217,7 +217,7 @@
     <Component type="ScriptLabel" id="lblAmpMode" x="30.0" y="220.0" parentComponent="pnlAmp"
                text="Mode" width="80.0"/>
     <Component type="ScriptPanel" id="pnlAmpNAMLoader" x="350.0" y="100.0" width="300.0"
-               height="130.0" text="Drag NAM File or Right Click to open Browser."
+               height="130.0" text="14a Marshall JCM800 2203X RATT Rhythm.nam"
                allowCallbacks="Clicks, Hover &amp; Dragging" parentComponent="pnlAmp"
                visible="0"/>
   </Component>
@@ -225,7 +225,7 @@
              height="390.0" itemColour2="4278190080" itemColour="4278190080"
              visible="0">
     <Component type="ScriptPanel" id="pnlCabALoader" x="30.0" y="149.0" width="240.0"
-               height="100.0" text="myCab.wav" allowCallbacks="All Callbacks"
+               height="100.0" text="TSE IMPULSE.wav" allowCallbacks="All Callbacks"
                parentComponent="pnlCab"/>
     <Component type="ScriptPanel" id="pnlCabBLoader" x="870.0" y="149.0" width="240.0"
                height="100.0" text="TSE IMPULSE.wav" allowCallbacks="All Callbacks"
@@ -741,7 +741,7 @@
   <Component type="ScriptPanel" id="pnlTuner" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
              allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="F# +2C"
+    <Component type="ScriptLabel" id="lblTuner" x="510.0" y="170.0" text="E +4C"
                parentComponent="pnlTuner"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="580.0" y="130.0"
                parentComponent="pnlTuner"/>
