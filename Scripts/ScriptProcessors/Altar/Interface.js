@@ -11,7 +11,6 @@ include("Boilerplate/inputChain.js");
 include("Boilerplate/modularChain.js");
 include("Boilerplate/outputChain.js");
 include("Boilerplate/oversampling.js");
-
 function onNoteOn()
 {
 	

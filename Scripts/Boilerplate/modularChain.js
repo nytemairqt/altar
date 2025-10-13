@@ -227,6 +227,9 @@ namespace ModularChain
 
         // 4) Apply bypass values with the same mapping and propagate to effects
         applyBypassValuesByMapping(bypassVals, mapping);
+        
+        // restore NAM model
+        Amp.sendNAMCableData();
 
         // 5) Refresh UI (texts, target highlights)
         repaintAllSlots();        

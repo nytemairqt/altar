@@ -217,9 +217,9 @@
     <Component type="ScriptLabel" id="lblAmpMode" x="30.0" y="220.0" parentComponent="pnlAmp"
                text="Mode" width="80.0"/>
     <Component type="ScriptPanel" id="pnlAmpNAMLoader" x="350.0" y="100.0" width="300.0"
-               height="130.0" text="14a Marshall JCM800 2203X RATT Rhythm.nam"
+               height="130.0" text="C:\Users\iamla\Desktop\14a Marshall JCM800 2203X RATT Rhythm.nam"
                allowCallbacks="Clicks, Hover &amp; Dragging" parentComponent="pnlAmp"
-               visible="0"/>
+               saveInPreset="1"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="0.0" y="351.0" width="1150.0"
              height="390.0" itemColour2="4278190080" itemColour="4278190080"

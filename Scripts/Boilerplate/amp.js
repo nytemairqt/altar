@@ -42,10 +42,8 @@ namespace Amp
     {
         if(f.drop)
         {
-            local file = FileSystem.fromAbsolutePath(f.fileName);
-            local json = file.loadAsObject();
-            namCable.sendData(json);
-            pnlAmpNAMLoader.set("text", file.toString(3));
+            pnlAmpNAMLoader.set("text", f.fileName);
+            sendNAMCableData();
             pnlAmpNAMLoader.repaint();
         }
     }        
@@ -57,9 +55,8 @@ namespace Amp
             // open file browser
             FileSystem.browse(FileSystem.Documents, false, "*.nam, *.json", function(result)
             {
-                var json = result.loadAsObject();                               
-                namCable.sendData(json);
-                pnlAmpNAMLoader.set("text", result.toString(3));
+                pnlAmpNAMLoader.set("text", result.toString(0));
+                sendNAMCableData();
                 pnlAmpNAMLoader.repaint();
             });
         }        
@@ -69,9 +66,27 @@ namespace Amp
     {
        g.setColour(Colours.white);
        g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 0.0, 1.0);
-       g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred") ;
+       var text = this.get("text");      
+       var index = text.lastIndexOf("\\") + 1;
+       var substring = text.substring(index, text.length);
+       g.drawAlignedText(substring, [0, 0, this.getWidth(), this.getHeight()], "centred") ;
     });
+
+    inline function sendNAMCableData()
+    {
+		local path = pnlAmpNAMLoader.get("text");
+        local file = FileSystem.fromAbsolutePath(path);
+        local json = file.loadAsObject();
+        namCable.sendData(json);
+    }
+    
+    inline function onpnlAmpNAMLoaderCallback(component, value)
+    {
+	    sendNAMCableData();
+    }
     
     pnlAmpNAMLoader.setFileDropCallback("All Callbacks", "*.nam, *.json", pnlAmpNAMLoaderDrop);
     pnlAmpNAMLoader.setMouseCallback(pnlAmpNAMLoaderClick);
+    pnlAmpNAMLoader.setControlCallback(onpnlAmpNAMLoaderCallback);
+        
 }
