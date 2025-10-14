@@ -21,7 +21,12 @@ namespace Click
     const btnShowClick = Content.getComponent("btnShowClick");
     const btnClick = Content.getComponent("btnClick");
     const knbClickGain = Content.getComponent("knbClickGain");
+    const knbClickTempo = Content.getComponent("knbClickTempo");
     const pnlClick = Content.getComponent("pnlClick");
+    const isPlugin = Engine.isPlugin();
+    const isHISE = Engine.isHISE();
+    
+    knbClickTempo.set("enabled", !isPlugin);
     
 
     inline function onbtnShowClickControl(component, value)
@@ -52,5 +57,12 @@ namespace Click
             btnShowClick.setValue(0);
             btnShowClick.changed();
         }   
-    });           
+    });     
+    
+    inline function onknbClickTempoControl(component, value)
+    {		
+	    Engine.setHostBpm(value);
+    }   
+    
+    knbClickTempo.setControlCallback(onknbClickTempoControl);   
 }

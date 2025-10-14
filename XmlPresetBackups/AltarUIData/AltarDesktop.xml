@@ -785,12 +785,15 @@
   </Component>
   <Component type="ScriptPanel" id="pnlClick" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
-             allowCallbacks="Clicks Only" visible="0.0">
+             allowCallbacks="Clicks Only">
     <Component type="ScriptButton" id="btnClick" x="430.0" y="130.0" parentComponent="pnlClick"
-               processorId="click" parameterId="Enabled"/>
+               processorId="click" parameterId="Enabled" saveInPreset="0"/>
     <Component type="ScriptSlider" id="knbClickGain" x="590.0" y="120.0" middlePosition="-50.0"
                min="-100.0" max="12.0" mode="Decibel" processorId="click" parameterId="Gain"
-               parentComponent="pnlClick"/>
+               parentComponent="pnlClick" saveInPreset="0"/>
+    <Component type="ScriptSlider" id="knbClickTempo" x="590.0" y="190" middlePosition="120.0"
+               min="20.0" max="260.0" parentComponent="pnlClick" stepSize="1.0"
+               defaultValue="120.0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlPreferences" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
