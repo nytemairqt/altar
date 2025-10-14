@@ -12,7 +12,7 @@
 #include <memory>
 #include <thread>
 
-#include "src/json/single_include/nlohmann/json.hpp"
+#include "src/nlohmann/json.hpp"
 #include "src/RTNeural/RTNeural.h"
 #include "src/RTNeural-NAM/wavenet/wavenet_model.hpp"
 #include "src/math_approx/math_approx.hpp"
