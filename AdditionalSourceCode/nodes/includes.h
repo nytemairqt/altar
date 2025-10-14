@@ -7,6 +7,9 @@
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
 
+// Include embedded audio data ---------------------
+
+#include "embedded_audiodata.h"
 // Include third party header files ----------------
 
 #include "amp.h"
@@ -26,6 +29,7 @@
 
 #include "cab.h"
 #include "chug.h"
+#include "click.h"
 #include "octave.h"
 #include "pick.h"
 #include "tuner_networkdata.h"
