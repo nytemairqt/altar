@@ -484,8 +484,6 @@
                itemColour2="4294967295" textColour="0" Data="{&#10;  &quot;KeyWidth&quot;: 14.0,&#10;  &quot;DisplayOctaveNumber&quot;: false,&#10;  &quot;LowKey&quot;: 9,&#10;  &quot;HiKey&quot;: 127,&#10;  &quot;CustomGraphics&quot;: false,&#10;  &quot;DefaultAppearance&quot;: true,&#10;  &quot;BlackKeyRatio&quot;: 0.699999988079071,&#10;  &quot;ToggleMode&quot;: false,&#10;  &quot;MidiChannel&quot;: 1,&#10;  &quot;UseVectorGraphics&quot;: true,&#10;  &quot;UseFlatStyle&quot;: false,&#10;  &quot;MPEKeyboard&quot;: false,&#10;  &quot;MPEStartChannel&quot;: 2,&#10;  &quot;MPEEndChannel&quot;: 16&#10;}"
                width="870.0" height="100.0" parentComponent="pnlDebug"/>
   </Component>
-  <Component type="ScriptPanel" id="pnlPresetBrowser" x="450.0" y="10.0" width="420.0"
-             height="30.0"/>
   <Component type="ScriptPanel" id="pnlQuickSelect" x="300.0" y="740.0" width="500.0"
              height="60.0" itemColour="4282099711" itemColour2="4282099711"/>
   <Component type="ScriptPanel" id="pnlPreProcess" x="0.0" y="0.0" width="1150.0"
@@ -785,13 +783,13 @@
   </Component>
   <Component type="ScriptPanel" id="pnlClick" x="0.0" y="0.0" width="1160.0"
              height="740.0" itemColour="1358954496" itemColour2="1358954496"
-             allowCallbacks="Clicks Only">
+             allowCallbacks="Clicks Only" visible="0.0">
     <Component type="ScriptButton" id="btnClick" x="430.0" y="130.0" parentComponent="pnlClick"
                processorId="click" parameterId="Enabled" saveInPreset="0"/>
     <Component type="ScriptSlider" id="knbClickGain" x="590.0" y="120.0" middlePosition="-50.0"
                min="-100.0" max="12.0" mode="Decibel" processorId="click" parameterId="Gain"
                parentComponent="pnlClick" saveInPreset="0"/>
-    <Component type="ScriptSlider" id="knbClickTempo" x="590.0" y="190" middlePosition="120.0"
+    <Component type="ScriptSlider" id="knbClickTempo" x="590.0" y="190.0" middlePosition="120.0"
                min="20.0" max="260.0" parentComponent="pnlClick" stepSize="1.0"
                defaultValue="120.0"/>
   </Component>
@@ -802,5 +800,18 @@
                parentComponent="pnlPreferences" width="430.0" height="257.0"
                ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
                itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: true,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
+  </Component>
+  <Component type="ScriptPanel" id="pnlPresetBrowser" x="0.0" y="0.0" width="1150"
+             height="740">
+    <Component type="ScriptButton" id="btnShowPresetBrowser" x="380.0" y="10.0"
+               parentComponent="pnlPresetBrowser" width="370" height="40" saveInPreset="0"/>
+    <Component type="ScriptButton" id="btnPresetPrev" x="760.0" y="10.0" parentComponent="pnlPresetBrowser"
+               width="60" height="40" text="&lt;" isMomentary="1" saveInPreset="0"/>
+    <Component type="ScriptButton" id="btnPresetNext" x="830.0" y="10.0" parentComponent="pnlPresetBrowser"
+               width="60" height="40" text="&gt;" isMomentary="1" saveInPreset="0"/>
+    <Component type="ScriptFloatingTile" id="fltPresetBrowser" x="0.0" y="50.0"
+               parentComponent="pnlPresetBrowser" width="1150" height="690"
+               ContentType="PresetBrowser" bgColour="4143972352" itemColour="4287692721"
+               itemColour2="0" Data="{&#10;  &quot;ShowSaveButton&quot;: true,&#10;  &quot;ShowExpansionsAsColumn&quot;: false,&#10;  &quot;ShowFolderButton&quot;: true,&#10;  &quot;ShowNotes&quot;: true,&#10;  &quot;ShowEditButtons&quot;: true,&#10;  &quot;EditButtonOffset&quot;: 10,&#10;  &quot;ShowAddButton&quot;: true,&#10;  &quot;ShowRenameButton&quot;: true,&#10;  &quot;ShowDeleteButton&quot;: true,&#10;  &quot;ShowSearchBar&quot;: true,&#10;  &quot;FavoriteIconOffset&quot;: 0,&#10;  &quot;ShowFavoriteIcon&quot;: true,&#10;  &quot;FullPathFavorites&quot;: false,&#10;  &quot;ButtonsInsideBorder&quot;: false,&#10;  &quot;NumColumns&quot;: 2,&#10;  &quot;ColumnWidthRatio&quot;: [&#10;    0.5,&#10;    0.5&#10;  ],&#10;  &quot;ListAreaOffset&quot;: [&#10;    0,&#10;    0,&#10;    0,&#10;    0&#10;  ],&#10;  &quot;ColumnRowPadding&quot;: [&#10;    0,&#10;    0,&#10;    0,&#10;    0&#10;  ],&#10;  &quot;SearchBarBounds&quot;: [],&#10;  &quot;MoreButtonBounds&quot;: [],&#10;  &quot;SaveButtonBounds&quot;: [],&#10;  &quot;FavoriteButtonBounds&quot;: []&#10;}"/>
   </Component>
 </ContentProperties>
