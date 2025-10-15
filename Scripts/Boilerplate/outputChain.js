@@ -70,4 +70,27 @@ namespace OutputChain
 
     knbEQWhistle.setControlCallback(onknbEQWhistleControl);    
     
+    // Lofi
+    const lofi = Synth.getEffect("lofi");
+    const knbLofiStrength = Content.getComponent("knbLofiStrength");
+    
+    inline function expLerp(minF, maxF, t)
+    {
+        return minF * Math.pow(maxF / minF, t);
+    }
+    
+    inline function onknbLofiStrengthControl(component, value)
+    {
+	    local A = 0 * lofi.BandOffset + lofi.Freq;
+	    local B = 1 * lofi.BandOffset + lofi.Freq;
+	    local fHP = expLerp(20.0, 800.0, value);
+	    local fLP = expLerp(20000.0, 2000.0, value);
+	    
+	    lofi.setAttribute(A, fHP);
+	    lofi.setAttribute(B, fLP);
+	    
+    }
+    
+    knbLofiStrength.setControlCallback(onknbLofiStrengthControl);
+    
 }
