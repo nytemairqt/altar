@@ -17,15 +17,15 @@
 
 namespace Preferences
 {
-	const btnPreferences = Content.getComponent("btnPreferences");
+	const btnShowPreferences = Content.getComponent("btnShowPreferences");
 	const pnlPreferences = Content.getComponent("pnlPreferences");		
 	
-	inline function onbtnPreferencesControl(component, value)
+	inline function onbtnShowPreferencesControl(component, value)
 	{
 		pnlPreferences.set("visible", value);
 	};
 	
-	btnPreferences.setControlCallback(onbtnPreferencesControl);
+	btnShowPreferences.setControlCallback(onbtnShowPreferencesControl);
 	
 	pnlPreferences.setPaintRoutine(function(g)
     {
@@ -44,8 +44,8 @@ namespace Preferences
         
         if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
         {
-            btnPreferences.setValue(0);
-            btnPreferences.changed();
+            btnShowPreferences.setValue(0);
+            btnShowPreferences.changed();
         }   
     });
 	

@@ -56,7 +56,7 @@ namespace OutputChain
     
     // Whistle
     const whistle = Synth.getEffect("whistle");
-    const knbEQWhistle = Content.getComponent("knbEQWhistle");
+    const knbWhistle = Content.getComponent("knbWhistle");
 
     inline function onknbEQWhistleControl(component, value)
     {
@@ -68,18 +68,18 @@ namespace OutputChain
         whistle.setAttribute(B, scaledB); 
     };
 
-    knbEQWhistle.setControlCallback(onknbEQWhistleControl);    
+    knbWhistle.setControlCallback(onknbEQWhistleControl);    
     
     // Lofi
     const lofi = Synth.getEffect("lofi");
-    const knbLofiStrength = Content.getComponent("knbLofiStrength");
+    const knbLofi = Content.getComponent("knbLofi");
     
-    inline function expLerp(minF, maxF, t)
+    inline function expLerp(minF, maxF, t) // helper function to scale freq
     {
         return minF * Math.pow(maxF / minF, t);
     }
     
-    inline function onknbLofiStrengthControl(component, value)
+    inline function onknbLofiControl(component, value)
     {
 	    local A = 0 * lofi.BandOffset + lofi.Freq;
 	    local B = 1 * lofi.BandOffset + lofi.Freq;
@@ -91,6 +91,6 @@ namespace OutputChain
 	    
     }
     
-    knbLofiStrength.setControlCallback(onknbLofiStrengthControl);
+    knbLofi.setControlCallback(onknbLofiControl);
     
 }

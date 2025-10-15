@@ -16,14 +16,12 @@
 */
 
 namespace LookAndFeel
-{
-	
-	
+{		
 	const LAFSlider = Content.createLocalLookAndFeel();
 	const LAFButtonToggle = Content.createLocalLookAndFeel();
+	const LAFButtonMenu = Content.createLocalLookAndFeel();	
 	
 	
-	/* Colours & Path */
 	var path = Content.createPath();
 	
 	const clrRhapsodyBlue = 0xFF1D1D21;
@@ -41,14 +39,9 @@ namespace LookAndFeel
 	const clrLightblue = 0xFFADD8E6;
 	const clrBlack = 0xFF000000;  
 	const clrKeyPurple = 0xFFCC96FF;
-	const start = -Math.PI * 0.75;
+	const start = -Math.PI * 0.75;	
 	
-	/* Utility Functions */
-	
-	inline function reduced(obj, amount)
-	{
-	    return [amount, amount, obj.area[2] - 2*amount, obj.area[3] - 2* amount];
-	}
+	inline function reduced(obj, amount) { return [amount, amount, obj.area[2] - 2 * amount, obj.area[3] - 2 * amount]; }
 	
 	// Main Slider	
 	
@@ -110,32 +103,46 @@ namespace LookAndFeel
 	// Main Toggle Button
 	
 	LAFButtonToggle.registerFunction("drawToggleButton", function(g, obj)
-		{
-		    var x = obj.area[0];
-		    var y = obj.area[1];
-		    var w = obj.area[2];
-		    var h = obj.area[3];
-		    var r = 2; // reduce amount in px
-
-		    g.setColour(0x33000000);		    
-		    g.fillEllipse(obj.area);
+	{
+	    var x = obj.area[0];
+	    var y = obj.area[1];
+	    var w = obj.area[2];
+	    var h = obj.area[3];
+	    var r = 2; // reduce amount in px
+	    g.setColour(0x33000000);		    
+	    g.fillEllipse(obj.area);
+		
+		if (obj.value)
+		    g.setColour(obj.over ? clrWhite : clrLightgrey);
+		else
+			g.setColour(obj.over ? clrGrey : clrMidgrey);
+		g.fillEllipse([x + r, y + r, w - (2*r), h - (2*r)]);
+		
+	});	
+	
+	// Menu Buttons
+	
+	LAFButtonMenu.registerFunction("drawToggleButton", function(g, obj)
+	{
+		if (obj.value)
+		    g.setColour(obj.over ? clrWhite : clrLightgrey);
+		else
+			g.setColour(obj.over ? clrLightgrey : clrGrey);
+			//g.setColour(obj.over ? clrGrey : clrMidgrey);
 			
-			if (obj.value)
-			    g.setColour(obj.over ? clrWhite : clrLightgrey);
-			else
-				g.setColour(obj.over ? clrGrey : clrMidgrey);
-
-			g.fillEllipse([x + r, y + r, w - (2*r), h - (2*r)]);
-			
-		});	
+		g.drawAlignedText(obj.text, obj.area, "centred");
+	});
+		
+		
 	
 	
 	// Look And Feel Assignment
-	const knbLookAndFeel = [Content.getComponent("knbInputGain"), Content.getComponent("knbGateThreshold"), Content.getComponent("knbTranspose"), Content.getComponent("knbOctave"), Content.getComponent("knbChugStrength"), Content.getComponent("knbPickStrength"), Content.getComponent("knbEQWhistle"), Content.getComponent("knbOutputGain"), Content.getComponent("knbLofiStrength"), Content.getComponent("knbOverdriveMode"),  Content.getComponent("knbOverdriveDrive"),  Content.getComponent("knbOverdriveTone"),  Content.getComponent("knbOverdriveBits"),  Content.getComponent("knbOverdriveSRReduction"),  Content.getComponent("knbOverdriveFoldAmount"),  Content.getComponent("knbOverdriveMix"),  Content.getComponent("knbOverdriveOutputGain"), Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain"), Content.getComponent("knbCabMix"),	    Content.getComponent("knbReverbMix"),  Content.getComponent("knbReverbPreDelay"),  Content.getComponent("knbReverbRoomSize"),  Content.getComponent("knbReverbDecay"),  Content.getComponent("knbReverbDampingFrequency"),  Content.getComponent("knbReverbChorusDepth"),      Content.getComponent("knbDelayMix"),  Content.getComponent("knbDelayMode"),  Content.getComponent("knbDelayDelayTime"),  Content.getComponent("knbDelayDelayTimeSynced"),  Content.getComponent("knbDelayFeedback"),  Content.getComponent("knbDelayModulation"),  Content.getComponent("knbDelayStereoWidth"),  Content.getComponent("knbDelayDamping"), Content.getComponent("knbChorusMix"),  Content.getComponent("knbChorusRate"),  Content.getComponent("knbChorusDepth"),  Content.getComponent("knbChorusTone"),  Content.getComponent("knbChorusVoices"),  Content.getComponent("knbChorusFeedback"),  Content.getComponent("knbChorusDelayTime"), 	                             Content.getComponent("knbRingmodMix"),  Content.getComponent("knbRingmodFrequency"),  Content.getComponent("knbRingmodDepth"),  Content.getComponent("knbRingmodMode"),  Content.getComponent("knbRingmodLFORate"),  Content.getComponent("knbRingmodLFODepth"),  Content.getComponent("knbRingmodFilterFrequency"), ];	
+	const knbLookAndFeel = [Content.getComponent("knbInputGain"), Content.getComponent("knbGateThreshold"), Content.getComponent("knbTranspose"), Content.getComponent("knbOctave"), Content.getComponent("knbChugStrength"), Content.getComponent("knbPickStrength"), Content.getComponent("knbWhistle"), Content.getComponent("knbOutputGain"), Content.getComponent("knbLofi"), Content.getComponent("knbOverdriveMode"),  Content.getComponent("knbOverdriveDrive"),  Content.getComponent("knbOverdriveTone"),  Content.getComponent("knbOverdriveBits"),  Content.getComponent("knbOverdriveSRReduction"),  Content.getComponent("knbOverdriveFoldAmount"),  Content.getComponent("knbOverdriveMix"),  Content.getComponent("knbOverdriveOutputGain"), Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain"), Content.getComponent("knbCabMix"),	    Content.getComponent("knbReverbMix"),  Content.getComponent("knbReverbPreDelay"),  Content.getComponent("knbReverbRoomSize"),  Content.getComponent("knbReverbDecay"),  Content.getComponent("knbReverbDampingFrequency"),  Content.getComponent("knbReverbChorusDepth"),      Content.getComponent("knbDelayMix"),  Content.getComponent("knbDelayMode"),  Content.getComponent("knbDelayDelayTime"),  Content.getComponent("knbDelayDelayTimeSynced"),  Content.getComponent("knbDelayFeedback"),  Content.getComponent("knbDelayModulation"),  Content.getComponent("knbDelayStereoWidth"),  Content.getComponent("knbDelayDamping"), Content.getComponent("knbChorusMix"),  Content.getComponent("knbChorusRate"),  Content.getComponent("knbChorusDepth"),  Content.getComponent("knbChorusTone"),  Content.getComponent("knbChorusVoices"),  Content.getComponent("knbChorusFeedback"),  Content.getComponent("knbChorusDelayTime"), 	                             Content.getComponent("knbRingmodMix"),  Content.getComponent("knbRingmodFrequency"),  Content.getComponent("knbRingmodDepth"),  Content.getComponent("knbRingmodMode"),  Content.getComponent("knbRingmodLFORate"),  Content.getComponent("knbRingmodLFODepth"),  Content.getComponent("knbRingmodFilterFrequency"), ];	
 	const btnToggleLookAndFeel = [Content.getComponent("btnGate"), Content.getComponent("btnTranspose"), Content.getComponent("btnTransposeSnap"), Content.getComponent("btnOctave"), Content.getComponent("btnChug"), Content.getComponent("btnPick"), Content.getComponent("btnWhistle"), Content.getComponent("btnLimiter"), Content.getComponent("btnLofi")];
+	const btnMenu = [Content.getComponent("btnShowPreferences"), Content.getComponent("btnShowTuner"), Content.getComponent("btnShowClick"), Content.getComponent("btnShowPresetBrowser"), Content.getComponent("btnPresetPrev"), Content.getComponent("btnPresetNext"), ];
 	
 	for (k in knbLookAndFeel) { k.setLocalLookAndFeel(LAFSlider); }	    
-
 	for (b in btnToggleLookAndFeel) { b.setLocalLookAndFeel(LAFButtonToggle); }
+	for (b in btnMenu) { b.setLocalLookAndFeel(LAFButtonMenu); }
 
 }
