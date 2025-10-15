@@ -30,7 +30,7 @@ namespace InputChain
     const pnlPreProcess = Content.getComponent("pnlPreProcess");
     const btnShowPreProcess = Content.getComponent("btnShowPreProcess");    
     
-   	const bounds = [150, 250, 800, 450];
+   	const bounds = [150, 260, 850, 450];
 
     inline function onbtnShowPreProcessControl(component, value)
     {

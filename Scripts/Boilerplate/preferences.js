@@ -48,5 +48,17 @@ namespace Preferences
             btnShowPreferences.changed();
         }   
     });
+    
+    // CPU USAGE TIMER
+    
+    const cpuUsageTimer = Engine.createTimerObject();
+    const lblCpuUsage = Content.getComponent("lblCpuUsage");        
+    
+    cpuUsageTimer.setTimerCallback(function()
+    {
+	    lblCpuUsage.set("text", "CPU Usage: " + Math.round(Engine.getCpuUsage()) + "%");
+    });
+    
+    cpuUsageTimer.startTimer(300);
 	
 }
