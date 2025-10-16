@@ -32,9 +32,15 @@ namespace Amp
                 effect.setAttribute(effect.Mode, value);
             }
         
-        if (value < 2) { pnlAmpNAMLoader.set("visible", false); }
-        else { pnlAmpNAMLoader.set("visible", true); }        
+        //if (value < 2) { pnlAmpNAMLoader.set("visible", false); }
+        //else { pnlAmpNAMLoader.set("visible", true); }        
+        
+        if (value < 2) { pnlAmpNAMLoader.set("enabled", false); }
+        else { pnlAmpNAMLoader.set("enabled", true); }        
+        
     }  
+        
+        
 
     knbAmpMode.setControlCallback(onknbAmpModeControl);
        
