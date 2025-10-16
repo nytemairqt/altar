@@ -15,13 +15,18 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
+include("Boilerplate/pathData.js");
+
 namespace LookAndFeel
 {		
-	const LAFSlider = Content.createLocalLookAndFeel();
+	const LAFKnob = Content.createLocalLookAndFeel();
 	const LAFButtonToggle = Content.createLocalLookAndFeel();
-	const LAFButtonMenu = Content.createLocalLookAndFeel();	
-	
-	
+	const LAFButtonBypass = Content.createLocalLookAndFeel();
+	const LAFButtonMenu = Content.createLocalLookAndFeel();
+	const LAFButtonPrev = Content.createLocalLookAndFeel();	
+	const LAFButtonNext = Content.createLocalLookAndFeel();
+	const LAFButtonInvertPhase = Content.createLocalLookAndFeel();	
+		
 	var path = Content.createPath();
 	
 	const clrRhapsodyBlue = 0xFF1D1D21;
@@ -43,39 +48,32 @@ namespace LookAndFeel
 	
 	inline function reduced(obj, amount) { return [amount, amount, obj.area[2] - 2 * amount, obj.area[3] - 2 * amount]; }
 	
-	// Main Slider	
-	
-	LAFSlider.registerFunction("drawRotarySlider", function(g, obj)
+	inline function basicSlider(g, obj, text)
 	{
-	    var x = obj.area[0];
-	    var y = obj.area[1];
-	    var w = obj.area[2];
-	    var h = obj.area[3];
-	
-	    // Knob rect (48x48), centered horizontally at the top
-	    var wKnb = 48;
-	    var hKnb = 48;
-	    var xKnb = Math.round((w - wKnb) / 2); // center horizontally
-	    var yKnb = 8;                           // top padding
-	
-	    var areaKnob = [xKnb, yKnb, wKnb, hKnb];	
-	    var ringWidth = wKnb / 16;
-	    
-	
+		local x = obj.area[0];
+	    local y = obj.area[1];
+	    local w = obj.area[2];
+	    local h = obj.area[3];	
+	    local wKnb = 48;
+	    local hKnb = 48;
+	    local xKnb = Math.round((w - wKnb) / 2);
+	    local yKnb = 8;	
+	    local areaKnob = [xKnb, yKnb, wKnb, hKnb];	
+	    local ringWidth = wKnb / 16;
+	    	
 	    // Background
 	    g.setColour(0x33000000);
 	    g.fillEllipse(areaKnob);
 	
-	    // Unfilled Ring
-	    
-	    var unfilled = Content.createPath();	    
+	    // Unfilled Ring	    
+	    local unfilled = Content.createPath();	    
 	    unfilled.startNewSubPath(0.5, 1.0);
 	    unfilled.addArc([0.0, 0.0, 1.0, 1.0], -Math.PI * 0.75, Math.PI * 0.75);	    	    
 	    g.setColour(obj.hover ? 0xFF292929 : 0xFF262626);
 	    g.drawPath(unfilled, areaKnob, ringWidth * 2);
 	    
 	    // Filled Ring
-	    var filled = Content.createPath();
+	    local filled = Content.createPath();
 	    filled.startNewSubPath(0.0, 0.0);
 	   	filled.startNewSubPath(1.0, 1.0);
 	    filled.addArc([0.0, 0.0, 1.0, 1.0], start, Math.max(start, start + Math.PI * 1.5 * obj.valueNormalized));
@@ -83,14 +81,15 @@ namespace LookAndFeel
 	    g.drawPath(filled, areaKnob, ringWidth * 1.50);
 		    
 		// Value Text (Before Rotating)
-	    g.drawAlignedText(obj.valueSuffixString, [0, hKnb + 30, w, 20], "centred");
+		if (text == [""]) { g.drawAlignedText(obj.valueSuffixString, [0, hKnb + 30, w, 20], "centred"); }
+		else { g.drawAlignedText(text[obj.value], [0, hKnb + 30, w, 20], "centred"); }	    
 	
 	    // Value Line (Rotated)
-	    var angle = (1.0 - (obj.valueNormalized - 0.02)) * -1.5 * Math.PI;
-	    var pivot = [xKnb + wKnb / 2, yKnb + hKnb / 2];
+	    local angle = (1.0 - (obj.valueNormalized - 0.02)) * -1.5 * Math.PI;
+	    local pivot = [xKnb + wKnb / 2, yKnb + hKnb / 2];
 	    g.rotate(angle, pivot);		   
-	    var lineX = .63;
-	    var lineY = .83; 
+	    local lineX = .63;
+	    local lineY = .83; 
 	    g.drawLine(
 	        xKnb + wKnb * lineX,	        
 	        xKnb + wKnb * lineY,
@@ -98,7 +97,21 @@ namespace LookAndFeel
 	        yKnb + hKnb * lineY,
 	        4
 	    );
-	});	
+	}
+	
+	// Main Slider	
+	LAFKnob.registerFunction("drawRotarySlider", function(g, obj)
+	{
+		switch (obj.id)
+		{
+			case "knbOverdriveMode": return basicSlider(g, obj, ["Fuzz", "Screamer", "RAT", "Bitcrusher", "Glitch", "Wavefolder"]); break;
+			case "knbAmpMode": return basicSlider(g, obj, ["Clean", "Drive", "NAM"]); break;
+			case "knbDelayMode": return basicSlider(g, obj, ["Normal", "Reverse", "Glitch"]); break;
+			// FIX ME: ADD DELAY GLITCH MODES (AFTER FIXING MODULATION)
+			default: return basicSlider(g, obj, [""]); break;
+		}
+	});
+	
 	
 	// Main Toggle Button
 	
@@ -112,37 +125,74 @@ namespace LookAndFeel
 	    g.setColour(0x33000000);		    
 	    g.fillEllipse(obj.area);
 		
-		if (obj.value)
-		    g.setColour(obj.over ? clrWhite : clrLightgrey);
-		else
-			g.setColour(obj.over ? clrGrey : clrMidgrey);
+		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
 		g.fillEllipse([x + r, y + r, w - (2*r), h - (2*r)]);
 		
 	});	
+
+	// Bypass Button
+	LAFButtonBypass.registerFunction("drawToggleButton", function(g, obj)
+	{
+		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		path.clear();
+		path.loadFromData(pathBypassButton);
+		g.drawPath(path, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4], 2);
+		g.drawLine(obj.area[2] / 2, obj.area[2] / 2, 0, obj.area[3] / 2, 2.0); 
+	});
+
+	// Next & Prev
+	LAFButtonPrev.registerFunction("drawToggleButton", function(g, obj)
+	{	
+		g.setColour(obj.over ? Colours.white : Colours.lightgrey);
+	    g.fillTriangle(obj.area, Math.toRadians(270));  
+	});
+	
+	LAFButtonNext.registerFunction("drawToggleButton", function(g, obj)
+	{	
+		g.setColour(obj.over ? Colours.white : Colours.lightgrey);
+		g.fillTriangle(obj.area, Math.toRadians(90));   
+	});
 	
 	// Menu Buttons
 	
 	LAFButtonMenu.registerFunction("drawToggleButton", function(g, obj)
 	{
-		if (obj.value)
-		    g.setColour(obj.over ? clrWhite : clrLightgrey);
-		else
-			g.setColour(obj.over ? clrLightgrey : clrGrey);
-			//g.setColour(obj.over ? clrGrey : clrMidgrey);
+		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
 			
 		g.drawAlignedText(obj.text, obj.area, "centred");
 	});
 		
-		
+	// Invert Phase
+
+	LAFButtonInvertPhase.registerFunction("drawToggleButton", function(g, obj)
+	{
+		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+
+		g.drawEllipse([1, 1, obj.area[2] -2 , obj.area[3] - 2], 2.0);
+		g.drawLine(0, obj.area[2], obj.area[3], 0, 2.0);
+
+	});
 	
 	
 	// Look And Feel Assignment
-	const knbLookAndFeel = [Content.getComponent("knbInputGain"), Content.getComponent("knbGateThreshold"), Content.getComponent("knbTranspose"), Content.getComponent("knbOctave"), Content.getComponent("knbChugStrength"), Content.getComponent("knbPickStrength"), Content.getComponent("knbWhistle"), Content.getComponent("knbOutputGain"), Content.getComponent("knbLofi"), Content.getComponent("knbOverdriveMode"),  Content.getComponent("knbOverdriveDrive"),  Content.getComponent("knbOverdriveTone"),  Content.getComponent("knbOverdriveBits"),  Content.getComponent("knbOverdriveSRReduction"),  Content.getComponent("knbOverdriveFoldAmount"),  Content.getComponent("knbOverdriveMix"),  Content.getComponent("knbOverdriveOutputGain"), Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain"), Content.getComponent("knbCabMix"),	    Content.getComponent("knbReverbMix"),  Content.getComponent("knbReverbPreDelay"),  Content.getComponent("knbReverbRoomSize"),  Content.getComponent("knbReverbDecay"),  Content.getComponent("knbReverbDampingFrequency"),  Content.getComponent("knbReverbChorusDepth"),      Content.getComponent("knbDelayMix"),  Content.getComponent("knbDelayMode"),  Content.getComponent("knbDelayDelayTime"),  Content.getComponent("knbDelayDelayTimeSynced"),  Content.getComponent("knbDelayFeedback"),  Content.getComponent("knbDelayModulation"),  Content.getComponent("knbDelayStereoWidth"),  Content.getComponent("knbDelayDamping"), Content.getComponent("knbChorusMix"),  Content.getComponent("knbChorusRate"),  Content.getComponent("knbChorusDepth"),  Content.getComponent("knbChorusTone"),  Content.getComponent("knbChorusVoices"),  Content.getComponent("knbChorusFeedback"),  Content.getComponent("knbChorusDelayTime"), 	                             Content.getComponent("knbRingmodMix"),  Content.getComponent("knbRingmodFrequency"),  Content.getComponent("knbRingmodDepth"),  Content.getComponent("knbRingmodMode"),  Content.getComponent("knbRingmodLFORate"),  Content.getComponent("knbRingmodLFODepth"),  Content.getComponent("knbRingmodFilterFrequency"), ];	
-	const btnToggleLookAndFeel = [Content.getComponent("btnGate"), Content.getComponent("btnTranspose"), Content.getComponent("btnTransposeSnap"), Content.getComponent("btnOctave"), Content.getComponent("btnChug"), Content.getComponent("btnPick"), Content.getComponent("btnWhistle"), Content.getComponent("btnLimiter"), Content.getComponent("btnLofi")];
-	const btnMenu = [Content.getComponent("btnShowPreferences"), Content.getComponent("btnShowTuner"), Content.getComponent("btnShowClick"), Content.getComponent("btnShowPresetBrowser"), Content.getComponent("btnPresetPrev"), Content.getComponent("btnPresetNext"), ];
-	
-	for (k in knbLookAndFeel) { k.setLocalLookAndFeel(LAFSlider); }	    
-	for (b in btnToggleLookAndFeel) { b.setLocalLookAndFeel(LAFButtonToggle); }
-	for (b in btnMenu) { b.setLocalLookAndFeel(LAFButtonMenu); }
+	const knbMainLAF = [Content.getComponent("knbInputGain"), Content.getComponent("knbGateThreshold"), Content.getComponent("knbTranspose"), Content.getComponent("knbOctave"), Content.getComponent("knbChugStrength"), Content.getComponent("knbPickStrength"), Content.getComponent("knbWhistle"), Content.getComponent("knbOutputGain"), Content.getComponent("knbLofi"), Content.getComponent("knbOverdriveMode"),  Content.getComponent("knbOverdriveDrive"),  Content.getComponent("knbOverdriveTone"),  Content.getComponent("knbOverdriveBits"),  Content.getComponent("knbOverdriveSRReduction"),  Content.getComponent("knbOverdriveFoldAmount"),  Content.getComponent("knbOverdriveMix"),  Content.getComponent("knbOverdriveOutputGain"), Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain"), Content.getComponent("knbCabMix"),	    Content.getComponent("knbReverbMix"),  Content.getComponent("knbReverbPreDelay"),  Content.getComponent("knbReverbRoomSize"),  Content.getComponent("knbReverbDecay"),  Content.getComponent("knbReverbDampingFrequency"),  Content.getComponent("knbReverbChorusDepth"),      Content.getComponent("knbDelayMix"),  Content.getComponent("knbDelayMode"),  Content.getComponent("knbDelayDelayTime"),  Content.getComponent("knbDelayDelayTimeSynced"),  Content.getComponent("knbDelayFeedback"),  Content.getComponent("knbDelayModulation"),  Content.getComponent("knbDelayStereoWidth"),  Content.getComponent("knbDelayDamping"), Content.getComponent("knbChorusMix"),  Content.getComponent("knbChorusRate"),  Content.getComponent("knbChorusDepth"),  Content.getComponent("knbChorusTone"),  Content.getComponent("knbChorusVoices"),  Content.getComponent("knbChorusFeedback"),  Content.getComponent("knbChorusDelayTime"), 	                             Content.getComponent("knbRingmodMix"),  Content.getComponent("knbRingmodFrequency"),  Content.getComponent("knbRingmodDepth"),  Content.getComponent("knbRingmodMode"),  Content.getComponent("knbRingmodLFORate"),  Content.getComponent("knbRingmodLFODepth"),  Content.getComponent("knbRingmodFilterFrequency"), ];	
+	const btnToggleLAF = [Content.getComponent("btnTransposeSnap"), ];
+	const btnMenuLAF = [Content.getComponent("btnShowPreferences"), Content.getComponent("btnShowTuner"), Content.getComponent("btnShowClick"), Content.getComponent("btnShowPresetBrowser"), Content.getComponent("btnPresetPrev"), Content.getComponent("btnPresetNext"), ];
+	const btnBypassLAF = [Content.getComponent("btnGate"), Content.getComponent("btnTranspose"), Content.getComponent("btnOctave"), Content.getComponent("btnChug"), Content.getComponent("btnPick"), Content.getComponent("btnWhistle"), Content.getComponent("btnLimiter"), Content.getComponent("btnLofi"), Content.getComponent("btnCabAEnable"), Content.getComponent("btnCabBEnable")];
+	const btnPrevLAF = [Content.getComponent("btnPresetPrev"), Content.getComponent("btnCabALoadPrev"), Content.getComponent("btnCabBLoadPrev")];	
+	const btnNextLAF = [Content.getComponent("btnPresetNext"), Content.getComponent("btnCabALoadNext"), Content.getComponent("btnCabBLoadNext")];
+	const btnInvertPhaseLAF = [Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase")];
+
+	for (k in knbMainLAF) { k.setLocalLookAndFeel(LAFKnob); }	    
+	for (b in btnToggleLAF) { b.setLocalLookAndFeel(LAFButtonToggle); }
+	for (b in btnMenuLAF) { b.setLocalLookAndFeel(LAFButtonMenu); }
+	for (b in btnBypassLAF) { b.setLocalLookAndFeel(LAFButtonBypass); }
+	for (b in btnPrevLAF) { b.setLocalLookAndFeel(LAFButtonPrev); }
+	for (b in btnNextLAF) { b.setLocalLookAndFeel(LAFButtonNext); }
+	for (b in btnInvertPhaseLAF) { b.setLocalLookAndFeel(LAFButtonInvertPhase); }
 
 }

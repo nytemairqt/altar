@@ -1,4 +1,4 @@
-Content.makeFrontInterface(1150, 900);
+Content.makeFrontInterface(1150, 700);
 
 include("Boilerplate/transportHandler.js");
 include("Boilerplate/presetBrowser.js");
