@@ -163,7 +163,7 @@
     <Component type="ScriptPanel" id="Panel3" x="1000.0" y="200.0" parentComponent="pnlMaster"
                width="150.0" height="450.0"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="980.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 10%" width="150.0" fontStyle="Bold" height="30.0"
+               text="CPU Usage: 11%" width="150.0" fontStyle="Bold" height="30.0"
                alignment="left" editable="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="150.0" y="250.0" width="850.0"

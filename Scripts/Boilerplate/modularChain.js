@@ -271,10 +271,12 @@ namespace ModularChain
     inline function mouseCallback(event)
     {
 		dragging = false;		
+		this.setMouseCursor("NormalCursor", Colours.white, [0, 0]);
 
         if (event.drag && !event.rightClick)
         {
 			dragging = true;
+			this.setMouseCursor("DraggingHandCursor", Colours.white, [0, 0]);
 
             if (event.dragX > 10 || event.dragY > 10 || event.dragX < -10 || event.dragY < -10)
             {				
