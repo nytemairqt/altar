@@ -30,7 +30,7 @@ namespace InputChain
     const pnlPreProcess = Content.getComponent("pnlPreProcess");
     const btnShowPreProcess = Content.getComponent("btnShowPreProcess");    
     
-   	const bounds = [150, 260, 850, 450];
+   	const bounds = [295, 40, 700, 530];
 
     inline function onbtnShowPreProcessControl(component, value)
     {
@@ -41,8 +41,11 @@ namespace InputChain
 
     pnlPreProcess.setPaintRoutine(function(g)
     {
+		//g.setColour();
+		g.fillAll(Colours.withAlpha(Colours.black, 0.5));
+
         g.setColour(Colours.withAlpha(Colours.black, 1.0));
-        g.fillRoundedRectangle(bounds, 2.0);
+        g.fillRoundedRectangle(bounds, 16.0);
     });
 
     pnlPreProcess.setMouseCallback(function(event)

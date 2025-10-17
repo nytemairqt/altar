@@ -21,6 +21,8 @@ include("Boilerplate/delay.js");
 
 namespace ModularChain
 {
+	
+
     // ---------------------------
     // Slots / Modules / UI Panels
     // ---------------------------
@@ -49,29 +51,69 @@ namespace ModularChain
     // Ensure slot states are stored with user presets
     for (m in fxModules)
         Engine.addModuleStateToUserPreset(m.getId());
+        
+    // Panel shenanigans
+    reg dragging = false;
+   	reg target; 
 
     // ---------------------------
     // Painting & Repaint Utilities
     // ---------------------------
 
     inline function paintRoutine(g)
-    {
-        // Keep panel labels in sync with current effect id
-        for (i = 0; i < pnlFxSlots.length; i++)
-            pnlFxSlots[i].set("text", fxSlots[i].getCurrentEffectId());
-
+    {               
         local area = [0, 0, this.getWidth(), this.getHeight()];
 
         // FIX: determine bypass state by slot index, not effect name
         local slotIndex = pnlFxSlots.indexOf(this);
         local btn = slotIndex != -1 ? bypassButtons[slotIndex] : 0;
 
-        g.setColour(btn && btn.getValue() ? Colours.white : Colours.grey);
-        g.drawRoundedRectangle(area, 1.0, 1.0);
-        g.drawAlignedText(this.get("text"), area, "centred");
-
-        if (this.data.isTarget)
-            g.drawLine(5, area[2] - 5, area[3] - 5, area[3] - 5, 1.0);
+		// Text 
+        g.setColour(btn && btn.getValue() ? Colours.white : Colours.grey);                
+        switch (this.get("text"))
+        {
+	        case "overdrive": 
+	        	g.drawAlignedText("Overdrive", area, "centred");
+	        	if (pnlFx[0].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+	        	break;
+	        case "amp": 
+	        	g.drawAlignedText("Amp", area, "centred"); 
+	        	if (pnlFx[1].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+	        	break;
+	        case "cab": 
+		        g.drawAlignedText("Cab", area, "centred"); 
+		        if (pnlFx[2].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        break;
+	        case "reverb": 
+		        g.drawAlignedText("Reverb", area, "centred"); 
+		        if (pnlFx[3].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        break;
+	        case "delay": 
+		        g.drawAlignedText("Delay", area, "centred"); 
+		        if (pnlFx[4].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        break;
+	        case "chorus": 
+		        g.drawAlignedText("Chorus", area, "centred"); 
+		        if (pnlFx[5].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        break;
+	        case "ringmod": 
+		        g.drawAlignedText("Ringmod", area, "centred"); 
+		        if (pnlFx[6].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        break;	        
+        }                
+        	
+        // Hover Highlight
+        if (dragging)
+        {
+			if (this == target) { g.setColour(Colours.withAlpha(Colours.green, 0.3)); }	        	
+	        else { g.setColour(Colours.withAlpha(Colours.green, 0.1)); }	        	
+	        g.fillRoundedRectangle(area, 4.0);
+       	}  
+       	else if (this.data.hover && !dragging)
+       	{
+	       	g.setColour(Colours.withAlpha(Colours.white, 0.05));
+	       	g.fillRoundedRectangle(area, 4.0);
+       	}
     }
 
     for (p in pnlFxSlots)
@@ -79,11 +121,8 @@ namespace ModularChain
 
     inline function repaintAllSlots()
     {
-        for (p in pnlFxSlots)
-        {
-            p.data.isTarget = false;
-            p.repaint();
-        }
+		for (i = 0; i < pnlFxSlots.length; i++) { pnlFxSlots[i].set("text", fxSlots[i].getCurrentEffectId()); }                             
+        for (p in pnlFxSlots) { p.repaint(); }
     }
 
     // ---------------------------
@@ -91,34 +130,24 @@ namespace ModularChain
     // ---------------------------
 
     function dragPaintRoutine(g, obj)
-    {
-        // Visual affordance while dragging
-        var isValid = false;
-        isValid = obj.valid;
-        isValid |= obj.target == "";
-        isValid |= obj.target.length == 0;
-        isValid |= obj.target == obj.source;
-
-        if (isValid && obj.target != "" && obj.target != obj.source)
-        {
-            repaintAllSlots();
-            var component = Content.getComponent(obj.target);
-            component.data.isTarget = true;
-            component.repaint();
-        }
-
-        g.setColour(Colours.withAlpha(Colours.white, 0.20));
-        g.fillRoundedRectangle(obj.area, 2.0);
+    {        		
+		// Little square that pops up when dragging
         g.setColour(Colours.withAlpha(Colours.white, 0.60));
         g.fillRoundedRectangle(obj.area, 2.0, 2.0);
     }
 
-    inline function checkValidPnlFxSlot(targetId)
+    inline function checkValid(targetId)
     {
         // Only allow drops onto these panels
         local names = ["pnlModularA", "pnlModularB", "pnlModularC", "pnlModularD", "pnlModularE", "pnlModularF", "pnlModularG"];
-        Content.refreshDragImage();
-        return names.contains(targetId);
+        Content.refreshDragImage();     
+        if (names.contains(targetId))
+        {
+			target = Content.getComponent(targetId);
+			repaintAllSlots();
+	    	return true;  
+        }        
+        else { return false; }
     }
 
     inline function hideFXPanels()
@@ -203,12 +232,15 @@ namespace ModularChain
 
     function insertDragCallback(isValid, targetName)
     {
+		dragging = false;
+		repaintAllSlots();
+		
         // Called when we drag a module panel onto another module panel
         if (!isValid || targetName == "") return;
 
         var target = Content.getComponent(targetName);
         if (!pnlFxSlots.contains(target)) return;
-        if (target == this) return;
+        if (target == this) return;  
 
         // Compute indices
         var fromIndex = pnlFxSlots.indexOf(this);
@@ -229,27 +261,28 @@ namespace ModularChain
         applyBypassValuesByMapping(bypassVals, mapping);
         
         // restore NAM model
-        Amp.sendNAMCableData();
-
-        // 5) Refresh UI (texts, target highlights)
-        repaintAllSlots();        
+        Amp.sendNAMCableData();                
     }
 
     // ---------------------------
     // Mouse interaction
     // ---------------------------
 
-    inline function dragMouseCallback(event)
+    inline function mouseCallback(event)
     {
+		dragging = false;		
+
         if (event.drag && !event.rightClick)
         {
+			dragging = true;
+
             if (event.dragX > 10 || event.dragY > 10 || event.dragX < -10 || event.dragY < -10)
-            {
+            {				
                 this.startInternalDrag({
                     area: [0, 0, 25, 25],
                     paintRoutine: dragPaintRoutine,
                     dragCallback: insertDragCallback,
-                    isValid: checkValidPnlFxSlot
+                    isValid: checkValid,
                 });
             }
         }
@@ -257,7 +290,6 @@ namespace ModularChain
         {
             // Show the UI panel for the effect under this slot
             hideFXPanels();
-
             switch (this.get("text"))
             {
                 case "overdrive": pnlFx[0].set("visible", true); break;
@@ -267,7 +299,8 @@ namespace ModularChain
                 case "delay":     pnlFx[4].set("visible", true); break;
                 case "chorus":    pnlFx[5].set("visible", true); break;
                 case "ringmod":   pnlFx[6].set("visible", true); break;
-            }
+            }            
+            repaintAllSlots();
         }
         else if (event.clicked && event.rightClick)
         {
@@ -278,13 +311,15 @@ namespace ModularChain
                 local btn = bypassButtons[slotIndex];
                 btn.setValue(1 - btn.getValue());
                 btn.changed();
-            }
-            this.repaint();
+            }            
         }
+
+        this.data.hover = event.hover;    
+        this.repaint();
     }
 
     for (p in pnlFxSlots)
-        p.setMouseCallback(dragMouseCallback);
+        p.setMouseCallback(mouseCallback);
 
     // ---------------------------
     // Bind Parameters
