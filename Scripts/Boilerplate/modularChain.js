@@ -15,13 +15,16 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
+include("Boilerplate/overdrive.js");
 include("Boilerplate/amp.js");
 include("Boilerplate/cab.js");
+include("Boilerplate/reverb.js");
 include("Boilerplate/delay.js");
+include("Boilerplate/chorus.js");
+include("Boilerplate/ringmod.js");
 
 namespace ModularChain
-{
-	
+{	
 
     // ---------------------------
     // Slots / Modules / UI Panels

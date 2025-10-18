@@ -17,6 +17,14 @@
 
 namespace Amp
 {    
+	const clrDarkgrey = 0xFF252525;   
+    const clrWhite = 0xFFFFFFFF;
+    const clrExtradarkgrey = 0xFF171717;
+    const clrGrey = 0xFF808080;   
+    const pad = 8;
+    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
+	
+	const pnlAmp = Content.getComponent("pnlAmp");
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
     const grm = Engine.getGlobalRoutingManager();  
     const namCable = grm.getCable("nam");     
@@ -31,17 +39,12 @@ namespace Amp
                 local effect = slot.getCurrentEffect();
                 effect.setAttribute(effect.Mode, value);
             }
-        
-        //if (value < 2) { pnlAmpNAMLoader.set("visible", false); }
-        //else { pnlAmpNAMLoader.set("visible", true); }        
-        
+            
         if (value < 2) { pnlAmpNAMLoader.set("enabled", false); }
         else { pnlAmpNAMLoader.set("enabled", true); }        
         
     }  
-        
-        
-
+                
     knbAmpMode.setControlCallback(onknbAmpModeControl);
        
     inline function pnlAmpNAMLoaderDrop(f)
@@ -94,5 +97,13 @@ namespace Amp
     pnlAmpNAMLoader.setFileDropCallback("All Callbacks", "*.nam, *.json", pnlAmpNAMLoaderDrop);
     pnlAmpNAMLoader.setMouseCallback(pnlAmpNAMLoaderClick);
     pnlAmpNAMLoader.setControlCallback(onpnlAmpNAMLoaderCallback);
+    
+    pnlAmp.setPaintRoutine(function(g)
+    {
+	    g.setColour(clrExtradarkgrey);
+        g.fillRoundedRectangle(bounds, 32.0);
+        g.setColour(clrDarkgrey);
+        g.drawRoundedRectangle(bounds, 32.0, 3.0);
+    });
         
 }

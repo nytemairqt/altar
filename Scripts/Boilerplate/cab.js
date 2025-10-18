@@ -20,7 +20,15 @@ namespace Cab
 	const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];
 	const pnlCabALoader = Content.getComponent("pnlCabALoader");
 	const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
+	const pnlCab = Content.getComponent("pnlCab");
 	Engine.loadAudioFilesIntoPool();
+
+	const clrDarkgrey = 0xFF252525;   
+    const clrWhite = 0xFFFFFFFF;
+    const clrExtradarkgrey = 0xFF171717;
+    const clrGrey = 0xFF808080;   
+    const pad = 8;
+    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
 		
 	// Drop
 	inline function pnlCabALoaderDrop(f)
@@ -111,4 +119,12 @@ namespace Cab
     
     pnlCabALoader.setPaintRoutine(pnlCabLoaderPaintRoutine);
    	pnlCabBLoader.setPaintRoutine(pnlCabLoaderPaintRoutine);
+
+   	pnlCab.setPaintRoutine(function(g)
+    {
+        g.setColour(clrExtradarkgrey);
+        g.fillRoundedRectangle(bounds, 32.0);
+        g.setColour(clrDarkgrey);
+        g.drawRoundedRectangle(bounds, 32.0, 3.0);
+    });
 }

@@ -16,14 +16,21 @@
 */
 
 namespace Tuner
-{	
-
+{		
 	const tuner = Synth.getEffect("tuner");
     const btnShowTuner = Content.getComponent("btnShowTuner");
-    const btnTunerMonitor = Content.getComponent("btnTunerMonitor");
-    const lblTuner = Content.getComponent("lblTuner");
+    const btnTunerMonitor = Content.getComponent("btnTunerMonitor");   
+    const lblTunerNote = Content.getComponent("lblTunerNote");
+    const lblTunerDeviation = Content.getComponent("lblTunerDeviation");
     const pnlTuner = Content.getComponent("pnlTuner");
-
+    const pnlTunerDisplay = Content.getComponent("pnlTunerDisplay");     
+    
+    reg note = "";
+	reg deviation = 0.0;
+	reg unit = "C";
+	reg inTune = false;
+	reg direction = "";
+   	
     inline function onbtnShowTunerControl(component, value) { pnlTuner.set("visible", value); }    
     inline function onbtnTunerMonitorControl(component, value) {} //{ tuner.setAttribute(tuner.Monitor, 1-value); }
     btnShowTuner.setControlCallback(onbtnShowTunerControl);
@@ -31,7 +38,10 @@ namespace Tuner
     
     const bounds = [165, 50, 340, 240];
     const clrGrey = 0xFF808080;       
+    const clrWhite = 0xFFFFFFFF;
     const clrExtradarkgrey = 0xFF171717;
+    const clrLightgrey = 0xFFD3D3D3; 
+    const clrLightblue = 0xFFADD8E6;
 
     pnlTuner.setPaintRoutine(function(g)
     {        		
@@ -54,6 +64,33 @@ namespace Tuner
             btnShowTuner.changed();
         }   
     });
+    
+    inline function pnlTunerDisplayPaint(g)
+    {
+	    local lX = 10;	  
+	    local pW = 5;  
+	    local lH = this.getHeight() / 2;	    	    
+	    local targetRect = [this.getWidth() / 2 - lX, this.getHeight() / 2 - lX, lX * 2, lX * 2];
+	    local devRect = this.getWidth() * Math.abs(deviation / 100);
+	    local pitchRect = [];
+	    
+	    if (deviation > 0)
+	    	pitchRect = [(this.getWidth() / 2 + devRect) - pW, this.getHeight() / 2 - pW, pW * 2, pW * 2];	    	   
+	    else
+	    	pitchRect = [(this.getWidth() / 2 - devRect) - pW, this.getHeight() / 2 - pW, pW * 2, pW * 2];	    	   	
+	    	       
+   	    g.setColour(clrLightgrey);
+   	    g.drawLine(lX, this.getWidth() - lX, lH, lH, 2.0);   
+   	    g.setColour(clrExtradarkgrey);   	    
+   	    g.fillRoundedRectangle(targetRect, 2.0);
+   	    g.setColour(clrLightgrey);
+   	    g.drawRoundedRectangle(targetRect, 2.0, 2.0);
+   	       	    
+   	    g.setColour(detectedInTune ? clrLightblue : clrLightgrey);
+   	    g.fillRoundedRectangle(pitchRect, 2.0);   	       	    
+    }
+    
+    pnlTunerDisplay.setPaintRoutine(pnlTunerDisplayPaint);
 
     // Pitch Detection
     const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
@@ -93,16 +130,16 @@ namespace Tuner
         // get deviation in Hz if needed
         local distanceHz = freq - targetFreq;
 
-        local note = noteName;
-        local deviation = tuningMode == "cents" ? Math.round(distanceCents) : Math.round(distanceHz);
-        local unit = tuningMode == "cents" ? "C" : "Hz";
-        local inTune = Math.abs(distanceCents) < 5; // use cents either way since it's just a bool        
-        local direction = deviation > 0 ? "+" : "-";
+        note = noteName;
+        deviation = tuningMode == "cents" ? Math.round(distanceCents) : Math.round(distanceHz);
+        unit = tuningMode == "cents" ? "C" : "Hz";
+        inTune = Math.abs(distanceCents) < 5; // use cents either way since it's just a bool        
+        direction = deviation > 0 ? "+" : "-";
 
-        // need a panel to set paint routine here
-        lblTuner.set("text", note + " " + direction + Math.round(Math.abs(deviation)) + unit);
-
-        return [note, deviation, unit, freq, targetFreq];
+		// repaint UI        
+        lblTunerNote.set("text", note);
+        lblTunerDeviation.set("text", direction + Math.round(Math.abs(deviation)) + unit);        
+        pnlTunerDisplay.repaint();
     }
 
     /* GLOBAL CABLE */
@@ -119,9 +156,9 @@ namespace Tuner
         var logMax = Math.log(400.0);
         var logFreq = logMin + data * (logMax - logMin);
         var pitch = Math.exp(logFreq);  
+                
+        analyzePitch(pitch);
         
-        //Console.print(Math.round(pitch) + "hz");
-        var analyzed = analyzePitch(pitch);
     }, false);
     
 }

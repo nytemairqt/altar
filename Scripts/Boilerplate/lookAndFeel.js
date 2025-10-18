@@ -202,12 +202,11 @@ namespace LookAndFeel
 	
 	// Preprocess/Postprocess EQ First Button
 	LAFButtonEQFirst.registerFunction("drawToggleButton", function(g, obj)
-	{
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+	{				
+		g.setColour(obj.over ? clrWhite : clrLightgrey);
 
-		if (obj.value) { g.drawAlignedText("EQ First", obj.area, "centred"); }
-		else { g.drawAlignedText("Comp First", obj.area, "centred"); }
+		if (obj.value) { g.drawAlignedText("EQ > Comp", obj.area, "centred"); }
+		else { g.drawAlignedText("EQ < Comp", obj.area, "centred"); }
 	});
 	
 	// VU Meters

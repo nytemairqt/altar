@@ -167,14 +167,14 @@
     <Component type="ScriptSlider" id="knbLofi" x="760.0" y="70.0" defaultValue="1.0"
                parentComponent="pnlMaster" width="96.0" height="96.0" tooltip="Lofi effect strength."
                suffix="%">
+      <Component type="ScriptLabel" id="lblLofi" x="0.0" y="54.0" parentComponent="knbLofi"
+                 text="Lofi" width="96.0" height="30.0" fontStyle="Bold" editable="0"/>
       <Component type="ScriptButton" id="btnLofi" x="80.0" y="0.0" width="16.0"
                  parentComponent="knbLofi" processorId="lofi" parameterId="Enabled"
                  tooltip="Enable pick (single-band expander)." text="" height="16.0"/>
-      <Component type="ScriptLabel" id="lblLofi" x="0.0" y="54.0" parentComponent="knbLofi"
-                 text="Lofi" width="96.0" height="30.0" fontStyle="Bold" editable="0"/>
     </Component>
     <Component type="ScriptLabel" id="lblCpuUsage" x="980.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 12%" width="150.0" fontStyle="Bold" height="30.0"
+               text="CPU Usage: 14%" width="150.0" fontStyle="Bold" height="30.0"
                alignment="left" editable="0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="30.0" y="250.0"
                parentComponent="pnlMaster" width="90.0" height="400.0" ContentType="MatrixPeakMeter"
@@ -311,17 +311,17 @@
                height="100.0" text="TSE IMPULSE.wav" allowCallbacks="All Callbacks"
                parentComponent="pnlCab">
       <Component type="ScriptButton" id="btnCabALoadPrev" x="216.0" y="80.0" parentComponent="pnlCabALoader"
-                 isMomentary="1" text="PREV" width="8.0" height="12.0"/>
+                 isMomentary="1" text="PREV" width="8.0" height="12.0" tooltip="Load previous IR."/>
       <Component type="ScriptButton" id="btnCabALoadNext" x="227.0" y="80.0" parentComponent="pnlCabALoader"
-                 isMomentary="1" text="NEXT" width="8.0" height="12.0"/>
+                 isMomentary="1" text="NEXT" width="8.0" height="12.0" tooltip="Load next IR."/>
     </Component>
     <Component type="ScriptPanel" id="pnlCabBLoader" x="580.0" y="169.0" width="240.0"
                height="100.0" text="TSE IMPULSE.wav" allowCallbacks="All Callbacks"
                parentComponent="pnlCab">
       <Component type="ScriptButton" id="btnCabBLoadPrev" x="216.0" y="80.0" parentComponent="pnlCabBLoader"
-                 isMomentary="1" text="PREV" width="8.0" height="12.0"/>
+                 isMomentary="1" text="PREV" width="8.0" height="12.0" tooltip="Load previous IR."/>
       <Component type="ScriptButton" id="btnCabBLoadNext" x="227.0" y="80.0" parentComponent="pnlCabBLoader"
-                 isMomentary="1" text="NEXT" width="8.0" height="12.0"/>
+                 isMomentary="1" text="NEXT" width="8.0" height="12.0" tooltip="Load next IR."/>
     </Component>
     <Component type="ScriptButton" id="btnOpenCabFolder" x="393.0" y="190.0"
                parentComponent="pnlCab" isMomentary="1" tooltip="Open saved cabs folder."
@@ -677,134 +677,137 @@
   <Component type="ScriptPanel" id="pnlPreProcess" x="0.0" y="0.0" width="1150.0"
              height="650.0" allowCallbacks="Clicks Only" itemColour="0" itemColour2="0"
              visible="0.0">
-    <Component type="ScriptButton" id="btnPreProcessEQFirst" x="330.0" y="220.0"
+    <Component type="ScriptLabel" id="lblPreprocess" x="580.0" y="45.0" parentComponent="pnlPreProcess"
+               text="PREPROCESS" width="96.0" height="30.0" fontStyle="Bold"
+               editable="0"/>
+    <Component type="ScriptButton" id="btnPreProcessEQFirst" x="330.0" y="280.0"
                parentComponent="pnlPreProcess" text="EQ FIRST" processorId="preprocess"
-               parameterId="EQ First" width="80.0" height="40.0"/>
-    <Component type="ScriptSlider" id="knbPreprocessHpfFreq" x="345.0" y="130.0"
+               parameterId="EQ First" width="80.0" height="40.0" defaultValue="1.0"/>
+    <Component type="ScriptSlider" id="knbPreprocessHpfFreq" x="345.0" y="190.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="HPF Freq"
                min="20.0" max="200.0" stepSize="1.0" middlePosition="110.0"
                defaultValue="40.0" text="processControl" width="66.0" height="67.0"
                suffix=" Hz"/>
     <Component type="ScriptSlider" id="knbPreprocessLowShelfFreq" x="435.0"
-               y="50.0" parentComponent="pnlPreProcess" processorId="preprocess"
+               y="110.0" parentComponent="pnlPreProcess" processorId="preprocess"
                parameterId="Low Shelf Freq" min="50.0" max="500.0" stepSize="1.0"
                middlePosition="225.0" defaultValue="120.0" text="processControl"
                width="66.0" height="67.0" suffix=" Hz"/>
     <Component type="ScriptSlider" id="knbPreprocessLowShelfGain" x="435.0"
-               y="130.0" parentComponent="pnlPreProcess" processorId="preprocess"
+               y="190.0" parentComponent="pnlPreProcess" processorId="preprocess"
                parameterId="Low Shelf Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
                middlePosition="0.0" text="processControl" width="66.0" height="67.0"
                suffix=" dB"/>
-    <Component type="ScriptSlider" id="knbPreprocessLowShelfQ" x="435.0" y="220.0"
+    <Component type="ScriptSlider" id="knbPreprocessLowShelfQ" x="435.0" y="280.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Low Shelf Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
                width="66.0" height="67.0" suffix=" Q"/>
-    <Component type="ScriptSlider" id="knbPreprocessLowMidFreq" x="525.0" y="50.0"
+    <Component type="ScriptSlider" id="knbPreprocessLowMidFreq" x="525.0" y="110.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Low Mid Freq"
                min="100.0" max="1000.0" stepSize="1.0" middlePosition="550.0"
                defaultValue="300.0" text="processControl" width="66.0" height="67.0"
                suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPreprocessLowMidGain" x="525.0" y="130.0"
+    <Component type="ScriptSlider" id="knbPreprocessLowMidGain" x="525.0" y="190.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Low Mid Gain"
                min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
                text="processControl" width="66.0" height="67.0" suffix=" dB"/>
-    <Component type="ScriptSlider" id="knbPreprocessLowMidQ" x="525.0" y="220.0"
+    <Component type="ScriptSlider" id="knbPreprocessLowMidQ" x="525.0" y="280.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Low Mid Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
                width="66.0" height="67.0" suffix=" Q"/>
-    <Component type="ScriptSlider" id="knbPreprocessMidFreq" x="615.0" y="50.0"
+    <Component type="ScriptSlider" id="knbPreprocessMidFreq" x="615.0" y="110.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Mid Freq"
                min="200.0" max="2000.0" stepSize="1.0" middlePosition="1100.0"
                defaultValue="700.0" text="processControl" width="66.0" height="67.0"
                suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPreprocessMidGain" x="615.0" y="130.0"
+    <Component type="ScriptSlider" id="knbPreprocessMidGain" x="615.0" y="190.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Mid Gain"
                min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
                text="processControl" width="66.0" height="67.0" suffix=" dB"/>
-    <Component type="ScriptSlider" id="knbPreprocessMidQ" x="615.0" y="220.0"
+    <Component type="ScriptSlider" id="knbPreprocessMidQ" x="615.0" y="280.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Mid Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
                width="66.0" height="67.0" suffix=" Q"/>
-    <Component type="ScriptSlider" id="knbPreprocessHighMidFreq" x="705.0" y="50.0"
+    <Component type="ScriptSlider" id="knbPreprocessHighMidFreq" x="705.0" y="110.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="High Mid Freq"
                min="1000.0" max="10000.0" stepSize="1.0" middlePosition="5500.0"
                defaultValue="3200.0" text="processControl" width="66.0" height="67.0"
                suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPreprocessHighMidGain" x="705.0" y="130.0"
+    <Component type="ScriptSlider" id="knbPreprocessHighMidGain" x="705.0" y="190.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="High Mid Gain"
                min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
                text="processControl" width="66.0" height="67.0" suffix=" dB"/>
-    <Component type="ScriptSlider" id="knbPreprocessHighMidQ" x="705.0" y="220.0"
+    <Component type="ScriptSlider" id="knbPreprocessHighMidQ" x="705.0" y="280.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="High Mid Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
                width="66.0" height="67.0" suffix=" Q"/>
     <Component type="ScriptSlider" id="knbPreprocessHighShelfFreq" x="795.0"
-               y="50.0" parentComponent="pnlPreProcess" processorId="preprocess"
+               y="110.0" parentComponent="pnlPreProcess" processorId="preprocess"
                parameterId="High Shelf Freq" min="2000.0" max="20000.0" stepSize="1.0"
                middlePosition="11000.0" defaultValue="7000.0" text="processControl"
                width="66.0" height="67.0" suffix=" Hz"/>
     <Component type="ScriptSlider" id="knbPreprocessHighShelfGain" x="795.0"
-               y="130.0" parentComponent="pnlPreProcess" processorId="preprocess"
+               y="190.0" parentComponent="pnlPreProcess" processorId="preprocess"
                parameterId="High Shelf Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
                middlePosition="0.0" text="processControl" width="66.0" height="67.0"
                suffix=" dB"/>
-    <Component type="ScriptSlider" id="knbPreprocessHighShelfQ" x="795.0" y="220.0"
+    <Component type="ScriptSlider" id="knbPreprocessHighShelfQ" x="795.0" y="280.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="High Shelf Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
                width="66.0" height="67.0" suffix=" Q"/>
-    <Component type="ScriptSlider" id="knbPreprocessLpfFreq" x="885.0" y="130.0"
+    <Component type="ScriptSlider" id="knbPreprocessLpfFreq" x="885.0" y="190.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="LPF Freq"
                min="5000.0" max="20000.0" stepSize="1.0" middlePosition="12500.0"
                defaultValue="14000.0" text="processControl" width="60.0" height="67.0"
                suffix=" Hz"/>
     <Component type="ScriptSlider" id="knbPreprocessCompThreshold" x="400.0"
-               y="380.0" parentComponent="pnlPreProcess" processorId="preprocess"
+               y="390.0" parentComponent="pnlPreProcess" processorId="preprocess"
                parameterId="Comp Threshold" min="-60.0" max="0.0" stepSize="0.1000000014901161"
                middlePosition="-12.0" text="processControl" width="68.0" height="67.0"
                suffix=" dB"/>
-    <Component type="ScriptSlider" id="knbPreprocessCompRatio" x="470.0" y="380.0"
+    <Component type="ScriptSlider" id="knbPreprocessCompRatio" x="470.0" y="390.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Ratio"
                min="1.0" max="20.0" stepSize="0.1000000014901161" middlePosition="10.0"
                defaultValue="4.0" text="processControl" width="68.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPreprocessCompRelease" x="470.0" y="460.0"
+    <Component type="ScriptSlider" id="knbPreprocessCompRelease" x="470.0" y="470.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Release"
                min="10.0" max="1000.0" stepSize="1.0" middlePosition="500.0"
                defaultValue="150.0" text="processControl" width="68.0" height="67.0"
                suffix=" ms"/>
-    <Component type="ScriptSlider" id="knbPreprocessCompAttack" x="400.0" y="460.0"
+    <Component type="ScriptSlider" id="knbPreprocessCompAttack" x="400.0" y="470.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Attack"
                min="0.1000000014901161" max="100.0" stepSize="0.1000000014901161"
                middlePosition="50.0" defaultValue="2.0" text="processControl"
                width="68.0" height="67.0" suffix=" ms"/>
-    <Component type="ScriptSlider" id="knbPreprocessCompMix" x="540.0" y="380.0"
+    <Component type="ScriptSlider" id="knbPreprocessCompMix" x="540.0" y="390.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Mix"
                middlePosition="0.5" defaultValue="1.0" text="processControl"
                width="68.0" height="67.0" suffix="%"/>
-    <Component type="ScriptSlider" id="knbPreprocessCompKnee" x="540.0" y="460.0"
+    <Component type="ScriptSlider" id="knbPreprocessCompKnee" x="540.0" y="470.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Knee"
                max="10.0" stepSize="0.1000000014901161" middlePosition="5.0"
                defaultValue="3.0" text="processControl" width="68.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPreprocessCompMakeup" x="610.0" y="380"
+    <Component type="ScriptSlider" id="knbPreprocessCompMakeup" x="610.0" y="390.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Comp Makeup"
                min="-20.0" max="20.0" stepSize="0.1000000014901161" middlePosition="0.0"
                text="processControl" width="68.0" height="67.0" suffix=" dB"/>
-    <Component type="ScriptSlider" id="knbPreprocessClipperGain" x="780.0" y="380"
+    <Component type="ScriptSlider" id="knbPreprocessClipperGain" x="780.0" y="390.0"
                parentComponent="pnlPreProcess" processorId="preprocess" parameterId="Clipper Gain"
                max="2.0" middlePosition="1.0" text="processControl" width="68.0"
                height="67.0"/>
-    <Component type="ScriptButton" id="btnPreProcessEQEnable" x="310.0" y="58.0"
+    <Component type="ScriptButton" id="btnPreProcessEQEnable" x="310.0" y="118.0"
                parentComponent="pnlPreProcess" text="EQ" width="16.0" height="16.0"
                processorId="preprocess" parameterId="EQ Enable"/>
-    <Component type="ScriptButton" id="btnPreProcessCompEnable" x="310.0" y="388"
+    <Component type="ScriptButton" id="btnPreProcessCompEnable" x="310.0" y="398.0"
                parentComponent="pnlPreProcess" text="Comp" width="16.0" height="16.0"
                processorId="preprocess" parameterId="Comp Enable"/>
     <Component type="ScriptButton" id="btnPreProcessClipperEnable" x="750.0"
-               y="388" parentComponent="pnlPreProcess" text="Clip" width="16.0"
+               y="398.0" parentComponent="pnlPreProcess" text="Clip" width="16.0"
                height="16.0" processorId="preprocess" parameterId="Clipper Enable"/>
   </Component>
   <Component type="ScriptPanel" id="pnlPostProcess" x="0.0" y="0.0" width="1150.0"
@@ -812,77 +815,78 @@
              visible="0.0">
     <Component type="ScriptButton" id="btnPostProcessEQFirst" x="540.0" y="440.0"
                parentComponent="pnlPostProcess" text="EQ FIRST" processorId="postprocess"
-               parameterId="EQ First"/>
-    <Component type="ScriptSlider" id="knbPostprocessHpfFreq" x="195.0" y="130"
+               parameterId="EQ First" defaultValue="1.0"/>
+    <Component type="ScriptSlider" id="knbPostprocessHpfFreq" x="195.0" y="130.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="HPF Freq"
                min="20.0" max="200.0" stepSize="1.0" middlePosition="110.0"
                defaultValue="40.0" text="processControl" width="66.0" height="67.0"
                suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPostprocessLowShelfFreq" x="285" y="50.0"
-               parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Shelf Freq"
-               min="50.0" max="500.0" stepSize="1.0" middlePosition="225.0"
-               defaultValue="120.0" text="processControl" width="66.0" height="67.0"
-               suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPostprocessLowShelfGain" x="285" y="130"
-               parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Shelf Gain"
-               min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
-               text="processControl" width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessLowShelfQ" x="285" y="220"
+    <Component type="ScriptSlider" id="knbPostprocessLowShelfFreq" x="285.0"
+               y="50.0" parentComponent="pnlPostProcess" processorId="postprocess"
+               parameterId="Low Shelf Freq" min="50.0" max="500.0" stepSize="1.0"
+               middlePosition="225.0" defaultValue="120.0" text="processControl"
+               width="66.0" height="67.0" suffix=" Hz"/>
+    <Component type="ScriptSlider" id="knbPostprocessLowShelfGain" x="285.0"
+               y="130.0" parentComponent="pnlPostProcess" processorId="postprocess"
+               parameterId="Low Shelf Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
+               middlePosition="0.0" text="processControl" width="66.0" height="67.0"/>
+    <Component type="ScriptSlider" id="knbPostprocessLowShelfQ" x="285.0" y="220.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Shelf Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
                width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessLowMidFreq" x="375" y="50.0"
+    <Component type="ScriptSlider" id="knbPostprocessLowMidFreq" x="375.0" y="50.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Mid Freq"
                min="100.0" max="1000.0" stepSize="1.0" middlePosition="550.0"
                defaultValue="300.0" text="processControl" width="66.0" height="67.0"
                suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPostprocessLowMidGain" x="375" y="130"
+    <Component type="ScriptSlider" id="knbPostprocessLowMidGain" x="375.0" y="130.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Mid Gain"
                min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
                text="processControl" width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessLowMidQ" x="375" y="220"
+    <Component type="ScriptSlider" id="knbPostprocessLowMidQ" x="375.0" y="220.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Low Mid Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
                width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessMidFreq" x="465" y="50.0"
+    <Component type="ScriptSlider" id="knbPostprocessMidFreq" x="465.0" y="50.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Mid Freq"
                min="200.0" max="2000.0" stepSize="1.0" middlePosition="1100.0"
                defaultValue="700.0" text="processControl" width="66.0" height="67.0"
                suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPostprocessMidGain" x="465" y="130"
+    <Component type="ScriptSlider" id="knbPostprocessMidGain" x="465.0" y="130.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Mid Gain"
                min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
                text="processControl" width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessMidQ" x="465" y="220" parentComponent="pnlPostProcess"
-               processorId="postprocess" parameterId="Mid Q" min="0.1000000014901161"
-               max="5.0" stepSize="0.1000000014901161" middlePosition="1.0"
-               defaultValue="1.0" text="processControl" width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessHighMidFreq" x="555" y="50.0"
-               parentComponent="pnlPostProcess" processorId="postprocess" parameterId="High Mid Freq"
-               min="1000.0" max="10000.0" stepSize="1.0" middlePosition="5500.0"
-               defaultValue="3200.0" text="processControl" width="66.0" height="67.0"
-               suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPostprocessHighMidGain" x="555" y="130"
-               parentComponent="pnlPostProcess" processorId="postprocess" parameterId="High Mid Gain"
-               min="-12.0" max="12.0" stepSize="0.1000000014901161" middlePosition="0.0"
-               text="processControl" width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessHighMidQ" x="555" y="220"
+    <Component type="ScriptSlider" id="knbPostprocessMidQ" x="465.0" y="220.0"
+               parentComponent="pnlPostProcess" processorId="postprocess" parameterId="Mid Q"
+               min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
+               middlePosition="1.0" defaultValue="1.0" text="processControl"
+               width="66.0" height="67.0"/>
+    <Component type="ScriptSlider" id="knbPostprocessHighMidFreq" x="555.0"
+               y="50.0" parentComponent="pnlPostProcess" processorId="postprocess"
+               parameterId="High Mid Freq" min="1000.0" max="10000.0" stepSize="1.0"
+               middlePosition="5500.0" defaultValue="3200.0" text="processControl"
+               width="66.0" height="67.0" suffix=" Hz"/>
+    <Component type="ScriptSlider" id="knbPostprocessHighMidGain" x="555.0"
+               y="130.0" parentComponent="pnlPostProcess" processorId="postprocess"
+               parameterId="High Mid Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
+               middlePosition="0.0" text="processControl" width="66.0" height="67.0"/>
+    <Component type="ScriptSlider" id="knbPostprocessHighMidQ" x="555.0" y="220.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="High Mid Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
                width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessHighShelfFreq" x="645"
+    <Component type="ScriptSlider" id="knbPostprocessHighShelfFreq" x="645.0"
                y="50.0" parentComponent="pnlPostProcess" processorId="postprocess"
                parameterId="High Shelf Freq" min="2000.0" max="20000.0" stepSize="1.0"
                middlePosition="11000.0" defaultValue="7000.0" text="processControl"
                width="66.0" height="67.0" suffix=" Hz"/>
-    <Component type="ScriptSlider" id="knbPostprocessHighShelfGain" x="645"
-               y="130" parentComponent="pnlPostProcess" processorId="postprocess"
+    <Component type="ScriptSlider" id="knbPostprocessHighShelfGain" x="645.0"
+               y="130.0" parentComponent="pnlPostProcess" processorId="postprocess"
                parameterId="High Shelf Gain" min="-12.0" max="12.0" stepSize="0.1000000014901161"
                middlePosition="0.0" text="processControl" width="66.0" height="67.0"/>
-    <Component type="ScriptSlider" id="knbPostprocessHighShelfQ" x="645" y="220"
+    <Component type="ScriptSlider" id="knbPostprocessHighShelfQ" x="645.0" y="220.0"
                parentComponent="pnlPostProcess" processorId="postprocess" parameterId="High Shelf Q"
                min="0.1000000014901161" max="5.0" stepSize="0.1000000014901161"
                middlePosition="1.0" defaultValue="1.0" text="processControl"
@@ -931,17 +935,23 @@
   </Component>
   <Component type="ScriptPanel" id="pnlTuner" x="0.0" y="0.0" width="1150.0"
              height="700.0" itemColour="1358954496" itemColour2="1358954496"
-             allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptLabel" id="lblTuner" x="270.0" y="150.0" text="E +4C"
-               parentComponent="pnlTuner"/>
+             allowCallbacks="Clicks Only">
+    <Component type="ScriptLabel" id="lblTuner" x="270.0" y="60.0" text="TUNER"
+               parentComponent="pnlTuner" editable="0" fontStyle="Bold"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="194.0" y="59.0" parentComponent="pnlTuner"
                width="16.0" height="16.0" tooltip="Enable tuner monitoring."/>
-    <Component type="ScriptButton" id="btnTuner" x="174" y="59.0" processorId="tuner"
+    <Component type="ScriptButton" id="btnTuner" x="174.0" y="59.0" processorId="tuner"
                parameterId="Enabled" parentComponent="pnlTuner" width="16.0"
                height="16.0" tooltip="Enable tuner."/>
     <Component type="ScriptLabel" id="lblClickDisasbled" x="20.0" y="249.0"
                width="290.0" height="20.0" text="Click disabled in Plugin version."
                visible="0" parentComponent="pnlTuner"/>
+    <Component type="ScriptPanel" id="pnlTunerDisplay" x="184.0" y="100.0" parentComponent="pnlTuner"
+               width="302.0" height="100.0"/>
+    <Component type="ScriptLabel" id="lblTunerNote" x="270.0" y="180.0" text="D#"
+               parentComponent="pnlTuner" fontSize="20.0" fontStyle="Bold" editable="0"/>
+    <Component type="ScriptLabel" id="lblTunerDeviation" x="270.0" y="210.0"
+               text="+49C" parentComponent="pnlTuner" editable="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCabDesigner" x="0.0" y="0.0" width="1150.0"
              height="800.0" itemColour="1023410176" itemColour2="1023410176"
@@ -983,11 +993,11 @@
       <Component type="ScriptLabel" id="lblClickTempo" x="0.0" y="54.0" text="Tempo"
                  width="96.0" height="30.0" fontStyle="Bold" editable="0" parentComponent="knbClickTempo"/>
     </Component>
-    <Component type="ScriptSlider" id="knbClickGain" x="385.0" y="59" middlePosition="-50.0"
+    <Component type="ScriptSlider" id="knbClickGain" x="385.0" y="59.0" middlePosition="-50.0"
                min="-100.0" max="12.0" mode="Decibel" processorId="click" parameterId="Gain"
                parentComponent="pnlClick" saveInPreset="0" width="96.0" height="96.0"
                suffix=" dB" tooltip="Click gain.">
-      <Component type="ScriptLabel" id="lblClickGain" x="0" y="54.0" text="Gain"
+      <Component type="ScriptLabel" id="lblClickGain" x="0.0" y="54.0" text="Gain"
                  width="96.0" height="30.0" fontStyle="Bold" editable="0" parentComponent="knbClickGain"/>
     </Component>
   </Component>
@@ -999,7 +1009,7 @@
                ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
                itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: false,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
   </Component>
-  <Component type="ScriptPanel" id="pnlPresetBrowser" x="0.0" y="0" width="1150.0"
+  <Component type="ScriptPanel" id="pnlPresetBrowser" x="0.0" y="0.0" width="1150.0"
              height="700.0" allowCallbacks="Clicks Only" visible="0.0">
     <Component type="ScriptFloatingTile" id="fltPresetBrowser" x="0.0" y="50.0"
                width="1150.0" height="650.0" ContentType="PresetBrowser" bgColour="4143972352"
