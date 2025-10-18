@@ -18,7 +18,7 @@
 include("Boilerplate/pathData.js");
 
 namespace LookAndFeel
-{		
+{			
 	const LAFKnob = Content.createLocalLookAndFeel();
 	const LAFKnobProcess = Content.createLocalLookAndFeel();
 	const LAFButtonToggle = Content.createLocalLookAndFeel();
@@ -26,11 +26,13 @@ namespace LookAndFeel
 	const LAFButtonMenu = Content.createLocalLookAndFeel();
 	const LAFButtonPrev = Content.createLocalLookAndFeel();	
 	const LAFButtonNext = Content.createLocalLookAndFeel();
-	const LAFButtonInvertPhase = Content.createLocalLookAndFeel();		
+	const LAFButtonTunerMonitor = Content.createLocalLookAndFeel();      
+	const LAFButtonInvertPhase = Content.createLocalLookAndFeel();
+	const LAFButtonOpenCabDesigner = Content.createLocalLookAndFeel();
+	const LAFButtonOpenCabFolder = Content.createLocalLookAndFeel();
 	const LAFButtonEQFirst = Content.createLocalLookAndFeel();
-	const LAFVuMeter = Content.createLocalLookAndFeel();
-		
-	var path = Content.createPath();
+	const LAFVuMeter = Content.createLocalLookAndFeel();	
+	const LAFButtonTransposeSnap = Content.createLocalLookAndFeel();
 	
 	const clrRhapsodyBlue = 0xFF1D1D21;
 	const clrExtradarkblue = 0xFF191933;
@@ -49,7 +51,7 @@ namespace LookAndFeel
 	const clrKeyPurple = 0xFFCC96FF;
 	const start = -Math.PI * 0.75;	
 	
-	inline function reduced(obj, amount) { return [amount, amount, obj.area[2] - 2 * amount, obj.area[3] - 2 * amount]; }
+	inline function reduced(obj, amount) { return [amount, amount, obj.area[2] - 2 * amount, obj.area[3] - 2 * amount]; }		
 	
 	inline function basicSlider(g, obj, text)
 	{
@@ -147,9 +149,9 @@ namespace LookAndFeel
 	{
 		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
 		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
-		path.clear();
-		path.loadFromData(pathBypassButton);
-		g.drawPath(path, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4], 2);
+		var p = Content.createPath();		
+		p.loadFromData(pathBypassButton);
+		g.drawPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4], 2);
 		g.drawLine(obj.area[2] / 2, obj.area[2] / 2, 0, obj.area[3] / 2, 2.0); 
 	});
 
@@ -188,17 +190,7 @@ namespace LookAndFeel
 		}
 	});
 		
-	// Invert Phase
-
-	LAFButtonInvertPhase.registerFunction("drawToggleButton", function(g, obj)
-	{
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
-
-		g.drawEllipse([1, 1, obj.area[2] -2 , obj.area[3] - 2], 2.0);
-		g.drawLine(0, obj.area[2], obj.area[3], 0, 2.0);
-
-	});
+	
 	
 	// Preprocess/Postprocess EQ First Button
 	LAFButtonEQFirst.registerFunction("drawToggleButton", function(g, obj)
@@ -207,6 +199,20 @@ namespace LookAndFeel
 
 		if (obj.value) { g.drawAlignedText("EQ > Comp", obj.area, "centred"); }
 		else { g.drawAlignedText("EQ < Comp", obj.area, "centred"); }
+	});
+	
+	
+	
+	// Transpose Snape	
+	LAFButtonTransposeSnap.registerFunction("drawToggleButton", function(g, obj)
+	{
+		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		
+		var p = Content.createPath();
+		p.loadFromData(pathChain);
+		g.fillPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4]);						
+		
 	});
 	
 	// VU Meters
@@ -233,6 +239,60 @@ namespace LookAndFeel
 		g.fillRoundedRectangle(a2, 0);				
 
 	});
+
+	// Tuner Monitor Button
+    LAFButtonTunerMonitor.registerFunction("drawToggleButton", function(g, obj)
+    {
+        if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+        else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+        
+        var p = Content.createPath();
+        p.loadFromData(pathHeadphones);
+        g.fillPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4]);                        
+        
+    });
+
+    // Invert Phase
+	LAFButtonInvertPhase.registerFunction("drawToggleButton", function(g, obj)
+	{
+		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+
+		g.drawEllipse([4, 4, obj.area[2] - 8, obj.area[3] - 8], 2.0);
+		g.drawLine(2, obj.area[2] - 2, obj.area[3] - 2, 2, 2.0);
+
+	});
+	
+	// Open Cab Designer
+	LAFButtonOpenCabDesigner.registerFunction("drawToggleButton", function(g, obj)
+	{
+		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+
+		var p = Content.createPath();
+        p.loadFromData(pathToolbox);
+        
+        // 64 x 64
+        var padPath = Math.round(obj.area[2] * 0.03);
+        var padBlock = Math.round(obj.area[2] * 0.078);
+        var blockSize = Math.round(obj.area[2] * 0.1875);
+        
+        g.fillPath(p, [obj.area[0] + padPath, obj.area[1] + padPath, obj.area[2] - padPath * 2, obj.area[3] - padPath * 2]);          
+        g.fillRoundedRectangle([obj.area[2] / 2 - padBlock, obj.area[3] / 2 - padBlock, blockSize, blockSize], 2.0);
+	});
+	
+	// Open Cab Folder
+	LAFButtonOpenCabFolder.registerFunction("drawToggleButton", function(g, obj)
+	{
+		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
+		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+
+		var p = Content.createPath();
+        p.loadFromData(pathFolder);
+        var padX = Math.round(obj.area[2] * 0.093);
+        var padY = Math.round(obj.area[2] * 0.1875);
+        g.fillPath(p, [obj.area[0] + padX, obj.area[1] + padY, obj.area[2] - padX * 2, obj.area[3] - padY * 2]);                  
+	});
 	
 	
 	
@@ -242,14 +302,17 @@ namespace LookAndFeel
 	const btnMenuLAF = [Content.getComponent("btnShowPreferences"), Content.getComponent("btnShowTuner"), Content.getComponent("btnShowClick"), Content.getComponent("btnShowPresetBrowser"), Content.getComponent("btnPresetPrev"), Content.getComponent("btnPresetNext"), Content.getComponent("btnShowPreProcess"), Content.getComponent("btnShowPostProcess"),];
 	const btnBypassLAF = [Content.getComponent("btnGate"), Content.getComponent("btnTranspose"), Content.getComponent("btnOctave"), Content.getComponent("btnChug"), Content.getComponent("btnPick"), Content.getComponent("btnWhistle"), Content.getComponent("btnLimiter"), Content.getComponent("btnLofi"), Content.getComponent("btnCabAEnable"), Content.getComponent("btnCabBEnable"), Content.getComponent("btnPreProcessEQEnable"), Content.getComponent("btnPreProcessCompEnable"), Content.getComponent("btnPreProcessClipperEnable"), Content.getComponent("btnPostProcessEQEnable"), Content.getComponent("btnPostProcessCompEnable"), Content.getComponent("btnTuner"), Content.getComponent("btnClick")];
 	const btnPrevLAF = [Content.getComponent("btnPresetPrev"), Content.getComponent("btnCabALoadPrev"), Content.getComponent("btnCabBLoadPrev")];	
-	const btnNextLAF = [Content.getComponent("btnPresetNext"), Content.getComponent("btnCabALoadNext"), Content.getComponent("btnCabBLoadNext")];
-	const btnInvertPhaseLAF = [Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase")];
+	const btnNextLAF = [Content.getComponent("btnPresetNext"), Content.getComponent("btnCabALoadNext"), Content.getComponent("btnCabBLoadNext")];	
 	const fltVuMeterLAF = [Content.getComponent("fltVuMeterInput"), Content.getComponent("fltVuMeterOutput")];
 	
+	const btnTransposeSnap = [Content.getComponent("btnTransposeSnap")];
+	const btnInvertPhaseLAF = [Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase")];
 	const knbPreprocessLAF = [Content.getComponent("btnPreProcessEQFirst"), Content.getComponent("knbPreprocessHpfFreq"), Content.getComponent("knbPreprocessLowShelfFreq"), Content.getComponent("knbPreprocessLowShelfGain"), Content.getComponent("knbPreprocessLowShelfQ"), Content.getComponent("knbPreprocessLowMidFreq"), Content.getComponent("knbPreprocessLowMidGain"), Content.getComponent("knbPreprocessLowMidQ"), Content.getComponent("knbPreprocessMidFreq"), Content.getComponent("knbPreprocessMidGain"), Content.getComponent("knbPreprocessMidQ"), Content.getComponent("knbPreprocessHighMidFreq"), Content.getComponent("knbPreprocessHighMidGain"), Content.getComponent("knbPreprocessHighMidQ"), Content.getComponent("knbPreprocessHighShelfFreq"), Content.getComponent("knbPreprocessHighShelfGain"), Content.getComponent("knbPreprocessHighShelfQ"), Content.getComponent("knbPreprocessLpfFreq"), Content.getComponent("knbPreprocessCompThreshold"), Content.getComponent("knbPreprocessCompRatio"), Content.getComponent("knbPreprocessCompRelease"), Content.getComponent("knbPreprocessCompAttack"), Content.getComponent("knbPreprocessCompMix"), Content.getComponent("knbPreprocessCompKnee"), Content.getComponent("knbPreprocessCompMakeup"), Content.getComponent("knbPreprocessClipperGain")];
 	const knbPostprocessLAF = [Content.getComponent("btnPostProcessEQFirst"), Content.getComponent("knbPostprocessHpfFreq"), Content.getComponent("knbPostprocessLowShelfFreq"), Content.getComponent("knbPostprocessLowShelfGain"), Content.getComponent("knbPostprocessLowShelfQ"), Content.getComponent("knbPostprocessLowMidFreq"), Content.getComponent("knbPostprocessLowMidGain"), Content.getComponent("knbPostprocessLowMidQ"), Content.getComponent("knbPostprocessMidFreq"), Content.getComponent("knbPostprocessMidGain"), Content.getComponent("knbPostprocessMidQ"), Content.getComponent("knbPostprocessHighMidFreq"), Content.getComponent("knbPostprocessHighMidGain"), Content.getComponent("knbPostprocessHighMidQ"), Content.getComponent("knbPostprocessHighShelfFreq"), Content.getComponent("knbPostprocessHighShelfGain"), Content.getComponent("knbPostprocessHighShelfQ"), Content.getComponent("knbPostprocessLpfFreq"), Content.getComponent("knbPostprocessCompThreshold"), Content.getComponent("knbPostprocessCompRatio"), Content.getComponent("knbPostprocessCompRelease"), Content.getComponent("knbPostprocessCompAttack"), Content.getComponent("knbPostprocessCompMix"), Content.getComponent("knbPostprocessCompKnee"), Content.getComponent("knbPostprocessCompMakeup")];
 	const btnEQFirstLAF = [Content.getComponent("btnPreProcessEQFirst"), Content.getComponent("btnPostProcessEQFirst")];
-	
+	const btnTunerMonitorLAF = [Content.getComponent("btnTunerMonitor")];  
+	const btnShowCabDesignerLAF = [Content.getComponent("btnShowCabDesigner")];
+	const btnOpenCabFolderLAF = [Content.getComponent("btnOpenCabFolder")];
 
 	for (k in knbMainLAF) { k.setLocalLookAndFeel(LAFKnob); }	  
 	for (k in knbPreprocessLAF) { k.setLocalLookAndFeel(LAFKnob); }  
@@ -258,9 +321,12 @@ namespace LookAndFeel
 	for (b in btnMenuLAF) { b.setLocalLookAndFeel(LAFButtonMenu); }
 	for (b in btnBypassLAF) { b.setLocalLookAndFeel(LAFButtonBypass); }
 	for (b in btnPrevLAF) { b.setLocalLookAndFeel(LAFButtonPrev); }
-	for (b in btnNextLAF) { b.setLocalLookAndFeel(LAFButtonNext); }
-	for (b in btnInvertPhaseLAF) { b.setLocalLookAndFeel(LAFButtonInvertPhase); }
+	for (b in btnNextLAF) { b.setLocalLookAndFeel(LAFButtonNext); }	
 	for (b in btnEQFirstLAF) { b.setLocalLookAndFeel(LAFButtonEQFirst); }
-	for (f in fltVuMeterLAF) { f.setLocalLookAndFeel(LAFVuMeter); }
-
+	for (b in btnTunerMonitorLAF) { b.setLocalLookAndFeel(LAFButtonTunerMonitor); }
+	for (b in btnTransposeSnap) { b.setLocalLookAndFeel(LAFButtonTransposeSnap); }
+	for (b in btnInvertPhaseLAF) { b.setLocalLookAndFeel(LAFButtonInvertPhase); }
+	for (b in btnShowCabDesignerLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabDesigner); }
+	for (b in btnOpenCabFolderLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabFolder); }
+	for (f in fltVuMeterLAF) { f.setLocalLookAndFeel(LAFVuMeter); }	
 }

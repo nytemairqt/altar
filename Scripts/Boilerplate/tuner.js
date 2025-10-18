@@ -23,7 +23,7 @@ namespace Tuner
     const lblTunerNote = Content.getComponent("lblTunerNote");
     const lblTunerDeviation = Content.getComponent("lblTunerDeviation");
     const pnlTuner = Content.getComponent("pnlTuner");
-    const pnlTunerDisplay = Content.getComponent("pnlTunerDisplay");     
+    const pnlTunerDisplay = Content.getComponent("pnlTunerDisplay");          
     
     reg note = "";
 	reg deviation = 0.0;
@@ -160,5 +160,12 @@ namespace Tuner
         analyzePitch(pitch);
         
     }, false);
+    
+    lblTunerNote.set("text", "C");
+    lblTunerDeviation.set("text", "+0c");
+
+    
+
+    
     
 }

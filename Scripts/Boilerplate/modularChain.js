@@ -344,6 +344,14 @@ namespace ModularChain
                 local index = effect.getAttributeIndex(param);
                 effect.setAttribute(index, value);                
             }
+            
+        // conditional UI changes
+        if (text == "overdrive_Mode")
+        {	
+	        if (value == 3 || value == 4) {overdriveControl[3].set("visible", true); overdriveControl[4].set("visible", true); overdriveControl[5].set("visible", false); }
+	        else if (value == 5) {overdriveControl[3].set("visible", false); overdriveControl[4].set("visible", false); overdriveControl[5].set("visible", true); }
+	        else {overdriveControl[3].set("visible", false); overdriveControl[4].set("visible", false); overdriveControl[5].set("visible", false); }
+        }
     }    
 
     for (c in overdriveControl) { c.setControlCallback(onknbModularControl); }

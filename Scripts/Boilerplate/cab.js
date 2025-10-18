@@ -17,10 +17,11 @@
 
 namespace Cab
 {   
-	const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];
+	const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];	
 	const pnlCabALoader = Content.getComponent("pnlCabALoader");
 	const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
 	const pnlCab = Content.getComponent("pnlCab");
+	
 	Engine.loadAudioFilesIntoPool();
 
 	const clrDarkgrey = 0xFF252525;   
@@ -112,8 +113,11 @@ namespace Cab
     
     inline function pnlCabLoaderPaintRoutine(g)
     {
-	    g.setColour(Colours.white);
-        g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 0.0, 1.0);
+	    //g.setColour(Colours.white);
+	    g.setColour(clrDarkgrey);
+	    g.fillRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 4.0);
+        //g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 0.0, 1.0);
+        g.setColour(clrWhite);
  	   	g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred") ;
     }
     
@@ -127,4 +131,8 @@ namespace Cab
         g.setColour(clrDarkgrey);
         g.drawRoundedRectangle(bounds, 32.0, 3.0);
     });
+
+    
+
+
 }
