@@ -37,12 +37,16 @@ namespace Click
     
     btnShowClick.setControlCallback(onbtnShowClickControl);
 
-	const bounds = [310, 80, 530, 310];
+	const bounds = [255, 50, 240, 120];
+	const clrGrey = 0xFF808080;       
+	const clrExtradarkgrey = 0xFF171717;
 	
     pnlClick.setPaintRoutine(function(g)
-    {
-        g.setColour(Colours.withAlpha(Colours.black, 1.0));
+    {		
+        g.setColour(clrExtradarkgrey);
         g.fillRoundedRectangle(bounds, 2.0);
+        g.setColour(clrGrey);
+        g.drawRoundedRectangle(bounds, 2.0, 2.0);        
     });
 
     pnlClick.setMouseCallback(function(event)

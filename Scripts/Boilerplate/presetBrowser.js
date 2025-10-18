@@ -20,11 +20,28 @@ namespace PresetBrowser
     const btnShowPresetBrowser = Content.getComponent("btnShowPresetBrowser");
 	const btnPresetPrev = Content.getComponent("btnPresetPrev");
     const btnPresetNext = Content.getComponent("btnPresetNext");
+    const pnlPresetBrowser = Content.getComponent("pnlPresetBrowser");
     const fltPresetBrowser = Content.getComponent("fltPresetBrowser");
+    
+    const bounds = [0, 50, 1150, 650];
+    
+	pnlPresetBrowser.setMouseCallback(function(event)
+    {
+        var x = bounds[0];
+        var y = bounds[1];
+        var w = bounds[2];
+        var h = bounds[3];
+        
+        if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
+        {
+            btnShowPresetBrowser.setValue(0);
+            btnShowPresetBrowser.changed();
+        }   
+    });
     
     inline function onbtnShowPresetBrowserControl(component, value)
     {
-	    fltPresetBrowser.set("visible", value);
+	    pnlPresetBrowser.set("visible", value);
     }
     
     btnShowPresetBrowser.setControlCallback(onbtnShowPresetBrowserControl);

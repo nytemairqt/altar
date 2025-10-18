@@ -25,7 +25,7 @@ namespace OutputChain
     const btnShowPostProcess = Content.getComponent("btnShowPostProcess");
     const pnlPostProcess = Content.getComponent("pnlPostProcess");
     
-    const bounds = [150, 250, 800, 450];
+    const bounds = [150, 40, 700, 530];
 
     inline function onbtnShowPostProcessControl(component, value)
     {
@@ -36,6 +36,7 @@ namespace OutputChain
 
     pnlPostProcess.setPaintRoutine(function(g)
     {
+		g.fillAll(Colours.withAlpha(Colours.black, 0.5));
         g.setColour(Colours.withAlpha(Colours.black, 1.0));
         g.fillRoundedRectangle(bounds, 2.0);
     });

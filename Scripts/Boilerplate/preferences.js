@@ -18,7 +18,18 @@
 namespace Preferences
 {
 	const btnShowPreferences = Content.getComponent("btnShowPreferences");
-	const pnlPreferences = Content.getComponent("pnlPreferences");		
+	const pnlPreferences = Content.getComponent("pnlPreferences");
+	const fltPreferences = Content.getComponent("fltPreferences");	
+	const fltPreferencesLAF = Content.createLocalLookAndFeel();
+	
+	const bounds = [75, 50, 440, 250];		
+	
+	const clrDarkgrey = 0xFF252525;   
+	const clrWhite = 0xFFFFFFFF;
+	const clrExtradarkgrey = 0xFF171717;
+	const clrGrey = 0xFF808080;   
+	
+	const start = -Math.PI * 0.75;	
 	
 	inline function onbtnShowPreferencesControl(component, value)
 	{
@@ -28,19 +39,19 @@ namespace Preferences
 	btnShowPreferences.setControlCallback(onbtnShowPreferencesControl);
 	
 	pnlPreferences.setPaintRoutine(function(g)
-    {
-        var bounds = [310, 80, 530, 310];
-
-        g.setColour(Colours.withAlpha(Colours.black, 1.0));
+    {        
+        g.setColour(clrExtradarkgrey);
         g.fillRoundedRectangle(bounds, 2.0);
+        g.setColour(clrGrey);
+        g.drawRoundedRectangle(bounds, 2.0, 2.0);
     });
 
     pnlPreferences.setMouseCallback(function(event)
     {
-        var x = 310;
-        var y = 80;
-        var w = 530;
-        var h = 310;
+        var x = bounds[0];
+        var y = bounds[1];
+        var w = bounds[2];
+        var h = bounds[3];
         
         if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
         {
@@ -48,6 +59,27 @@ namespace Preferences
             btnShowPreferences.changed();
         }   
     });
+    
+    fltPreferencesLAF.registerFunction("drawComboBox", function(g, obj)
+    {	        	
+	    // BG & Text
+	    g.setColour(obj.hover ? 0xFF2C2C2C : clrDarkgrey);
+	    g.fillRoundedRectangle(obj.area, 4.0);	    
+	    g.setColour(clrWhite);
+	    g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");	    
+	    
+	    // Triangle
+	    var tXPad = 24;
+       	var tYPad = 12;
+   		var tX = obj.area[2] - tXPad;
+   		var tY = 8;
+   		var tW = 16;
+   		var tH = tY;	    
+	    var tA = [tX, tYPad, tW, tH];
+	    g.fillTriangle(tA, Math.toRadians(180));
+    });
+    
+    fltPreferences.setLocalLookAndFeel(fltPreferencesLAF);
     
     // CPU USAGE TIMER
     

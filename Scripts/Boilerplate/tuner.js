@@ -28,21 +28,25 @@ namespace Tuner
     inline function onbtnTunerMonitorControl(component, value) {} //{ tuner.setAttribute(tuner.Monitor, 1-value); }
     btnShowTuner.setControlCallback(onbtnShowTunerControl);
     btnTunerMonitor.setControlCallback(onbtnTunerMonitorControl);
+    
+    const bounds = [165, 50, 340, 240];
+    const clrGrey = 0xFF808080;       
+    const clrExtradarkgrey = 0xFF171717;
 
     pnlTuner.setPaintRoutine(function(g)
-    {
-        var bounds = [310, 80, 530, 310];
-
-        g.setColour(Colours.withAlpha(Colours.black, 1.0));
+    {        		
+        g.setColour(clrExtradarkgrey);
         g.fillRoundedRectangle(bounds, 2.0);
+        g.setColour(clrGrey);
+        g.drawRoundedRectangle(bounds, 2.0, 2.0);
     });
 
     pnlTuner.setMouseCallback(function(event)
     {
-        var x = 310;
-        var y = 80;
-        var w = 530;
-        var h = 310;
+        var x = bounds[0];
+        var y = bounds[1];
+        var w = bounds[2];
+        var h = bounds[3];
         
         if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
         {

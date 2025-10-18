@@ -12,8 +12,8 @@
   <AdditionalDspLibraries value=""/>
   <OSXStaticLibs value=""/>
   <WindowsStaticLibFolder value=""/>
-  <ExtraDefinitionsWindows value=""/>
-  <ExtraDefinitionsOSX value=""/>
+  <ExtraDefinitionsWindows value="ENABLE_ALL_PEAK_METERS=1"/>
+  <ExtraDefinitionsOSX value="ENABLE_ALL_PEAK_METERS=1"/>
   <ExtraDefinitionsIOS value=""/>
   <ExtraDefinitionsLinux value=""/>
   <ExtraDefinitionsNetworkDll value=""/>

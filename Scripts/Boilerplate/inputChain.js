@@ -41,9 +41,7 @@ namespace InputChain
 
     pnlPreProcess.setPaintRoutine(function(g)
     {
-		//g.setColour();
 		g.fillAll(Colours.withAlpha(Colours.black, 0.5));
-
         g.setColour(Colours.withAlpha(Colours.black, 1.0));
         g.fillRoundedRectangle(bounds, 16.0);
     });
