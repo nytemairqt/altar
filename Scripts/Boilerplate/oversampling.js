@@ -17,6 +17,8 @@
 
 namespace Oversampling
 {
+	const clrDarkgrey = 0xFF252525; 
+	const clrWhite = 0xFFFFFFFF;	
 	
 	const fxSlots = [
 	        Synth.getSlotFX("modularA"),
@@ -29,6 +31,7 @@ namespace Oversampling
 	    ];
 
 	const cmbOversampling = Content.getComponent("cmbOversampling");
+	const cmbOversamplingLAF = Content.createLocalLookAndFeel();
 	
 	inline function oncmbOversamplingControl(component, value)
 	{
@@ -41,4 +44,25 @@ namespace Oversampling
 	}
 	
 	cmbOversampling.setControlCallback(oncmbOversamplingControl);
+	
+	cmbOversamplingLAF.registerFunction("drawComboBox", function(g, obj)
+    {	        	
+	    // BG & Text
+	    g.setColour(obj.hover ? 0xFF2C2C2C : clrDarkgrey);
+	    g.fillRoundedRectangle(obj.area, 4.0);	    
+	    g.setColour(clrWhite);
+	    g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");	    
+	    
+	    // Triangle
+	    var tXPad = 24;
+       	var tYPad = 12;
+   		var tX = obj.area[2] - tXPad;
+   		var tY = 8;
+   		var tW = 16;
+   		var tH = tY;	    
+	    var tA = [tX, tYPad, tW, tH];
+	    g.fillTriangle(tA, Math.toRadians(180));
+    });
+    
+    cmbOversampling.setLocalLookAndFeel(cmbOversamplingLAF);
 }

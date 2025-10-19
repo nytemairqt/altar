@@ -15,7 +15,7 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
-include("Boilerplate/pathData.js");
+
 
 namespace LookAndFeel
 {			
@@ -59,10 +59,10 @@ namespace LookAndFeel
 	    local y = obj.area[1];
 	    local w = obj.area[2];
 	    local h = obj.area[3];	
-	    local wKnb = text == ["processControl"] ? 36 : 48;
-	    local hKnb = text == ["processControl"] ? 36 : 48;
+	    local wKnb = text == ["processEQ"] || text == ["processComp"] ? 36 : 48;
+	    local hKnb = text == ["processEQ"] || text == ["processComp"] ? 36 : 48;
 	    local xKnb = Math.round((w - wKnb) / 2);
-	    local yKnb = text == ["processControl"] ? 4 : 8;
+	    local yKnb = text == ["processEQ"] || text == ["processComp"] ? 4 : 8;
 	    local areaKnob = [xKnb, yKnb, wKnb, hKnb];	
 	    local ringWidth = wKnb / 16;
 	    	
@@ -86,9 +86,12 @@ namespace LookAndFeel
 	    g.drawPath(filled, areaKnob, ringWidth * 1.50);
 		    
 		// Value Text (Before Rotating)
-		local textToDisplay = "";
-		local textOffset = text == ["processControl"] ? 10 : 30;
-		if (text == ["processControl"]) { textToDisplay = obj.suffix == "%" ? Math.round(obj.value * 100) + "%" : obj.valueSuffixString; }
+		local textToDisplay = "";			
+		local textOffset = 30;		
+		if (text == ["processEQ"]) { textOffset = 10; }		
+		
+		if (text == ["processEQ"]) { textToDisplay = obj.suffix == "%" ? Math.round(obj.value * 100) + "%" : obj.valueSuffixString; }
+		else if (text == ["processComp"]) { textToDisplay = obj.suffix == "%" ? Math.round(obj.value * 100) + "%" : obj.valueSuffixString; }
 		else if (text == [""]) { textToDisplay = obj.suffix == "%" ? Math.round(obj.value * 100) + "%" : obj.valueSuffixString;}
 		else { textToDisplay = text[obj.value]; }		
 		g.drawAlignedText(textToDisplay, [0, hKnb + textOffset, w, 20], "centred");
@@ -111,10 +114,10 @@ namespace LookAndFeel
 	// Main Slider	
 	LAFKnob.registerFunction("drawRotarySlider", function(g, obj)
 	{
-		if (obj.text == "processControl")
+		if (obj.text == "processEQ" || obj.text == "processComp")
 		{
 			return basicSlider(g, obj, [obj.text]); break;
-		}
+		}		
 		else
 			switch (obj.id)
 			{
@@ -150,7 +153,7 @@ namespace LookAndFeel
 		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
 		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
 		var p = Content.createPath();		
-		p.loadFromData(pathBypassButton);
+		p.loadFromData(PathData.pathBypassButton);
 		g.drawPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4], 2);
 		g.drawLine(obj.area[2] / 2, obj.area[2] / 2, 0, obj.area[3] / 2, 2.0); 
 	});
@@ -210,7 +213,7 @@ namespace LookAndFeel
 		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
 		
 		var p = Content.createPath();
-		p.loadFromData(pathChain);
+		p.loadFromData(PathData.pathChain);
 		g.fillPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4]);						
 		
 	});
@@ -247,7 +250,7 @@ namespace LookAndFeel
         else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
         
         var p = Content.createPath();
-        p.loadFromData(pathHeadphones);
+        p.loadFromData(PathData.pathHeadphones);
         g.fillPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4]);                        
         
     });
@@ -270,7 +273,7 @@ namespace LookAndFeel
 		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
 
 		var p = Content.createPath();
-        p.loadFromData(pathToolbox);
+        p.loadFromData(PathData.pathToolbox);
         
         // 64 x 64
         var padPath = Math.round(obj.area[2] * 0.03);
@@ -288,7 +291,7 @@ namespace LookAndFeel
 		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
 
 		var p = Content.createPath();
-        p.loadFromData(pathFolder);
+        p.loadFromData(PathData.pathFolder);
         var padX = Math.round(obj.area[2] * 0.093);
         var padY = Math.round(obj.area[2] * 0.1875);
         g.fillPath(p, [obj.area[0] + padX, obj.area[1] + padY, obj.area[2] - padX * 2, obj.area[3] - padY * 2]);                  

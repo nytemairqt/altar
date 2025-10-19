@@ -25,20 +25,40 @@ namespace OutputChain
     const btnShowPostProcess = Content.getComponent("btnShowPostProcess");
     const pnlPostProcess = Content.getComponent("pnlPostProcess");
     
-    const bounds = [150, 40, 700, 530];
+    const bounds = [190, 190, 700, 452];
+    const clrGrey = 0xFF808080;       
+   	const clrWhite = 0xFFFFFFFF;
+   	const clrExtradarkgrey = 0xFF171717;
+   	const clrLightgrey = 0xFFD3D3D3; 
+   	const p = Content.createPath();   	
 
     inline function onbtnShowPostProcessControl(component, value)
     {
         pnlPostProcess.set("visible", value);
     }
 
-    btnShowPostProcess.setControlCallback(onbtnShowPostProcessControl);
-
+    btnShowPostProcess.setControlCallback(onbtnShowPostProcessControl);   
+    
     pnlPostProcess.setPaintRoutine(function(g)
     {
-		g.fillAll(Colours.withAlpha(Colours.black, 0.5));
-        g.setColour(Colours.withAlpha(Colours.black, 1.0));
+        g.setColour(clrExtradarkgrey);
         g.fillRoundedRectangle(bounds, 2.0);
+        g.setColour(clrGrey);
+        g.drawRoundedRectangle(bounds, 2.0, 2.0);
+        
+        var y = Content.getComponent("knbPostprocessHpfFreq").get("y") + 80; // inline yuckiness
+        var paths = [PathData.pathHPF, PathData.pathLowShelf, PathData.pathPeak, PathData.pathPeak, PathData.pathPeak, PathData.pathHighShelf, PathData.pathLPF];
+        var knbs = [Content.getComponent("knbPostprocessHpfFreq"), Content.getComponent("knbPostprocessLowShelfFreq"), Content.getComponent("knbPostprocessLowMidFreq"), Content.getComponent("knbPostprocessMidFreq"), Content.getComponent("knbPostprocessHighMidFreq"), Content.getComponent("knbPostprocessHighShelfFreq"), Content.getComponent("knbPostprocessLpfFreq")];
+        var offset = 23;
+        
+        g.setColour(clrLightgrey);
+        
+        for (i=0; i<knbs.length; i++)
+        {
+	        p.clear();
+	        p.loadFromData(paths[i]);
+	        g.drawPath(p, [knbs[i].get("x") + offset, y, 20, 10], 3.0);
+        }                
     });
 
     pnlPostProcess.setMouseCallback(function(event)

@@ -17,6 +17,13 @@
 
 namespace InputChain
 {
+	const clrGrey = 0xFF808080;       
+	const clrWhite = 0xFFFFFFFF;
+	const clrExtradarkgrey = 0xFF171717;
+	const clrLightgrey = 0xFFD3D3D3; 
+	
+	const p = Content.createPath();
+
     // Input Gain
     const inputGain = Synth.getEffect("inputGain");
     const knbInputGain = Content.getComponent("knbInputGain");
@@ -30,7 +37,7 @@ namespace InputChain
     const pnlPreProcess = Content.getComponent("pnlPreProcess");
     const btnShowPreProcess = Content.getComponent("btnShowPreProcess");    
     
-   	const bounds = [295, 40, 700, 530];
+   	const bounds = [260, 190, 700, 452];
 
     inline function onbtnShowPreProcessControl(component, value)
     {
@@ -41,9 +48,24 @@ namespace InputChain
 
     pnlPreProcess.setPaintRoutine(function(g)
     {
-		g.fillAll(Colours.withAlpha(Colours.black, 0.5));
-        g.setColour(Colours.withAlpha(Colours.black, 1.0));
-        g.fillRoundedRectangle(bounds, 16.0);
+        g.setColour(clrExtradarkgrey);
+        g.fillRoundedRectangle(bounds, 2.0);
+        g.setColour(clrGrey);
+        g.drawRoundedRectangle(bounds, 2.0, 2.0);
+        
+        var y = Content.getComponent("knbPreprocessHpfFreq").get("y") + 80; // inline yuckiness
+        var paths = [PathData.pathHPF, PathData.pathLowShelf, PathData.pathPeak, PathData.pathPeak, PathData.pathPeak, PathData.pathHighShelf, PathData.pathLPF];
+        var knbs = [Content.getComponent("knbPreprocessHpfFreq"), Content.getComponent("knbPreprocessLowShelfFreq"), Content.getComponent("knbPreprocessLowMidFreq"), Content.getComponent("knbPreprocessMidFreq"), Content.getComponent("knbPreprocessHighMidFreq"), Content.getComponent("knbPreprocessHighShelfFreq"), Content.getComponent("knbPreprocessLpfFreq")];
+        var offset = 23;
+        
+        g.setColour(clrLightgrey);
+        
+        for (i=0; i<knbs.length; i++)
+        {
+	        p.clear();
+	        p.loadFromData(paths[i]);
+	        g.drawPath(p, [knbs[i].get("x") + offset, y, 20, 10], 3.0);
+        }                
     });
 
     pnlPreProcess.setMouseCallback(function(event)
