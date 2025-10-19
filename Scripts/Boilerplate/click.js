@@ -24,10 +24,7 @@ namespace Click
     const knbClickTempo = Content.getComponent("knbClickTempo");
     const pnlClick = Content.getComponent("pnlClick");
     const isPlugin = Engine.isPlugin();
-    const isHISE = Engine.isHISE();
-    
-    knbClickTempo.set("enabled", !isPlugin);
-    
+    const isHISE = Engine.isHISE();        
 
     inline function onbtnShowClickControl(component, value)
     {
