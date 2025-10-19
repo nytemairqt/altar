@@ -24,10 +24,6 @@ namespace Cab
 	
 	Engine.loadAudioFilesIntoPool();
 
-	const clrDarkgrey = 0xFF252525;   
-    const clrWhite = 0xFFFFFFFF;
-    const clrExtradarkgrey = 0xFF171717;
-    const clrGrey = 0xFF808080;   
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
 		
@@ -113,23 +109,27 @@ namespace Cab
     
     inline function pnlCabLoaderPaintRoutine(g)
     {
-	    //g.setColour(Colours.white);
-	    g.setColour(clrDarkgrey);
-	    g.fillRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 4.0);
-        //g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 0.0, 1.0);
-        g.setColour(clrWhite);
+	    g.setColour(ColourData.clrDarkgrey);
+	    g.fillRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 4.0);        
+        g.setColour(ColourData.clrWhite);
  	   	g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred") ;
     }
     
     pnlCabALoader.setPaintRoutine(pnlCabLoaderPaintRoutine);
    	pnlCabBLoader.setPaintRoutine(pnlCabLoaderPaintRoutine);
 
-   	pnlCab.setPaintRoutine(function(g)
-    {
-        g.setColour(clrExtradarkgrey);
-        g.fillRoundedRectangle(bounds, 32.0);
-        g.setColour(clrDarkgrey);
-        g.drawRoundedRectangle(bounds, 32.0, 3.0);
+	pnlCab.loadImage("{PROJECT_FOLDER}bgCab.jpg", "bg");
+    pnlCab.loadImage("{PROJECT_FOLDER}trim.png", "trim");
+    pnlCab.setPaintRoutine(function(g)
+    {               
+        var stripHeight = 140;
+        g.drawImage("bg", bounds, 0, 0);
+        g.drawImage("trim", bounds, 0, 0);
+        g.setColour(ColourData.clrComponentBGGrey);
+        g.fillRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0);
+        g.setColour(ColourData.clrDarkgrey);
+        g.drawRoundedRectangle(bounds, 0.0, 3.0);                
+        g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
 
     

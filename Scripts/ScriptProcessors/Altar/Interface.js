@@ -1,6 +1,7 @@
 Content.makeFrontInterface(1150, 700); // 700 or 900 for keyboard
 
 include("Boilerplate/pathData.js");
+include("Boilerplate/colourData.js");
 include("Boilerplate/transportHandler.js");
 include("Boilerplate/presetBrowser.js");
 include("Boilerplate/lookAndFeel.js");

@@ -17,10 +17,6 @@
 
 namespace Amp
 {    
-	const clrDarkgrey = 0xFF252525;   
-    const clrWhite = 0xFFFFFFFF;
-    const clrExtradarkgrey = 0xFF171717;
-    const clrGrey = 0xFF808080;   
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
 	
@@ -29,7 +25,7 @@ namespace Amp
     const grm = Engine.getGlobalRoutingManager();  
     const namCable = grm.getCable("nam");     
     const knbAmpMode = Content.getComponent("knbAmpMode");
-    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];    
 
     inline function onknbAmpModeControl(component, value)
     {
@@ -73,7 +69,7 @@ namespace Amp
             
     pnlAmpNAMLoader.setPaintRoutine(function(g)
     {
-       g.setColour(Colours.white);
+       g.setColour(ColourData.clrWhite);
        g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 0.0, 1.0);
        var text = this.get("text");      
        var index = text.lastIndexOf("\\") + 1;
@@ -98,12 +94,19 @@ namespace Amp
     pnlAmpNAMLoader.setMouseCallback(pnlAmpNAMLoaderClick);
     pnlAmpNAMLoader.setControlCallback(onpnlAmpNAMLoaderCallback);
     
+    pnlAmp.loadImage("{PROJECT_FOLDER}bgAmp.jpg", "bg");   
+    pnlAmp.loadImage("{PROJECT_FOLDER}trim.png", "trim");
+    
     pnlAmp.setPaintRoutine(function(g)
-    {
-	    g.setColour(clrExtradarkgrey);
-        g.fillRoundedRectangle(bounds, 32.0);
-        g.setColour(clrDarkgrey);
-        g.drawRoundedRectangle(bounds, 32.0, 3.0);
+    {	    
+        var stripHeight = 140;
+        g.drawImage("bg", bounds, 0, 0);
+        g.drawImage("trim", bounds, 0, 0);
+        g.setColour(ColourData.clrComponentBGGrey);
+        g.fillRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0);
+        g.setColour(ColourData.clrDarkgrey);
+        g.drawRoundedRectangle(bounds, 0.0, 3.0);                
+        g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
-        
+                
 }

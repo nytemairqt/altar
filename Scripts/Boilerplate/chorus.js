@@ -17,19 +17,21 @@
 
 namespace Chorus
 {        
-    const clrDarkgrey = 0xFF252525;   
-    const clrWhite = 0xFFFFFFFF;
-    const clrExtradarkgrey = 0xFF171717;
-    const clrGrey = 0xFF808080;   
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
     const pnlChorus = Content.getComponent("pnlChorus");
 
+    pnlChorus.loadImage("{PROJECT_FOLDER}bgChorus.jpg", "bg");
+    pnlChorus.loadImage("{PROJECT_FOLDER}trim.png", "trim");
     pnlChorus.setPaintRoutine(function(g)
-    {
-        g.setColour(clrExtradarkgrey);
-        g.fillRoundedRectangle(bounds, 32.0);
-        g.setColour(clrDarkgrey);
-        g.drawRoundedRectangle(bounds, 32.0, 3.0);
+    {               
+        var stripHeight = 140;
+        g.drawImage("bg", bounds, 0, 0);
+        g.drawImage("trim", bounds, 0, 0);
+        g.setColour(ColourData.clrComponentBGGrey);
+        g.fillRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0);
+        g.setColour(ColourData.clrDarkgrey);
+        g.drawRoundedRectangle(bounds, 0.0, 3.0);                
+        g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
 }

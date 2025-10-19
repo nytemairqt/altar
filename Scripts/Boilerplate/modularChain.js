@@ -77,31 +77,31 @@ namespace ModularChain
         {
 	        case "overdrive": 
 	        	g.drawAlignedText("Overdrive", area, "centred");
-	        	if (pnlFx[0].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+	        	if (pnlFx[0].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
 	        	break;
 	        case "amp": 
 	        	g.drawAlignedText("Amp", area, "centred"); 
-	        	if (pnlFx[1].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+	        	if (pnlFx[1].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
 	        	break;
 	        case "cab": 
 		        g.drawAlignedText("Cab", area, "centred"); 
-		        if (pnlFx[2].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        if (pnlFx[2].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
 		        break;
 	        case "reverb": 
 		        g.drawAlignedText("Reverb", area, "centred"); 
-		        if (pnlFx[3].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        if (pnlFx[3].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
 		        break;
 	        case "delay": 
 		        g.drawAlignedText("Delay", area, "centred"); 
-		        if (pnlFx[4].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        if (pnlFx[4].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
 		        break;
 	        case "chorus": 
 		        g.drawAlignedText("Chorus", area, "centred"); 
-		        if (pnlFx[5].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        if (pnlFx[5].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
 		        break;
 	        case "ringmod": 
 		        g.drawAlignedText("Ringmod", area, "centred"); 
-		        if (pnlFx[6].get("visible")) { g.setColour(Colours.white); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+		        if (pnlFx[6].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
 		        break;	        
         }                
         	

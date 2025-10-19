@@ -33,22 +33,7 @@ namespace LookAndFeel
 	const LAFButtonEQFirst = Content.createLocalLookAndFeel();
 	const LAFVuMeter = Content.createLocalLookAndFeel();	
 	const LAFButtonTransposeSnap = Content.createLocalLookAndFeel();
-	
-	const clrRhapsodyBlue = 0xFF1D1D21;
-	const clrExtradarkblue = 0xFF191933;
-	const clrOffWhite = 0xFFEDEDED;
-	
-	// Old NEAT Player Colours
-	const clrBggrey = 0xFF121212;    
-	const clrExtradarkgrey = 0xFF171717;
-	const clrDarkgrey = 0xFF252525;   
-	const clrMidgrey = 0xFF555555;
-	const clrGrey = 0xFF808080;        
-	const clrLightgrey = 0xFFD3D3D3;    
-	const clrWhite = 0xFFFFFFFF;
-	const clrLightblue = 0xFFADD8E6;
-	const clrBlack = 0xFF000000;  
-	const clrKeyPurple = 0xFFCC96FF;
+		
 	const start = -Math.PI * 0.75;	
 	
 	inline function reduced(obj, amount) { return [amount, amount, obj.area[2] - 2 * amount, obj.area[3] - 2 * amount]; }		
@@ -67,14 +52,14 @@ namespace LookAndFeel
 	    local ringWidth = wKnb / 16;
 	    	
 	    // Background
-	    g.setColour(0x33000000);
+	    g.setColour(ColourData.clrExtradarkgrey);
 	    g.fillEllipse(areaKnob);
 	
 	    // Unfilled Ring	    
 	    local unfilled = Content.createPath();	    
 	    unfilled.startNewSubPath(0.5, 1.0);
 	    unfilled.addArc([0.0, 0.0, 1.0, 1.0], -Math.PI * 0.75, Math.PI * 0.75);	    	    
-	    g.setColour(obj.hover ? 0xFF292929 : 0xFF262626);
+	    g.setColour(obj.hover ? ColourData.clrDarkgrey : ColourData.clrExtradarkgrey);
 	    g.drawPath(unfilled, areaKnob, ringWidth * 2);
 	    
 	    // Filled Ring
@@ -82,7 +67,7 @@ namespace LookAndFeel
 	    filled.startNewSubPath(0.0, 0.0);
 	   	filled.startNewSubPath(1.0, 1.0);
 	    filled.addArc([0.0, 0.0, 1.0, 1.0], start, Math.max(start, start + Math.PI * 1.5 * obj.valueNormalized));
-	    g.setColour(obj.hover ? clrOffWhite : Colours.lightgrey);
+	    g.setColour(obj.hover ? ColourData.clrOffWhite : ColourData.clrLightgrey);
 	    g.drawPath(filled, areaKnob, ringWidth * 1.50);
 		    
 		// Value Text (Before Rotating)
@@ -138,11 +123,11 @@ namespace LookAndFeel
 	    var w = obj.area[2];
 	    var h = obj.area[3];
 	    var r = 2; // reduce amount in px
-	    g.setColour(0x33000000);		    
+	    g.setColour(ColourData.clrSliderBG);		    
 	    g.fillEllipse(obj.area);
 		
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
 		g.fillEllipse([x + r, y + r, w - (2*r), h - (2*r)]);
 		
 	});	
@@ -150,8 +135,8 @@ namespace LookAndFeel
 	// Bypass Button
 	LAFButtonBypass.registerFunction("drawToggleButton", function(g, obj)
 	{
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
 		var p = Content.createPath();		
 		p.loadFromData(PathData.pathBypassButton);
 		g.drawPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4], 2);
@@ -161,13 +146,13 @@ namespace LookAndFeel
 	// Next & Prev
 	LAFButtonPrev.registerFunction("drawToggleButton", function(g, obj)
 	{	
-		g.setColour(obj.over ? Colours.white : Colours.lightgrey);
+		g.setColour(obj.over ? ColourData.clrWhite : Colours.lightgrey);
 	    g.fillTriangle(obj.area, Math.toRadians(270));  
 	});
 	
 	LAFButtonNext.registerFunction("drawToggleButton", function(g, obj)
 	{	
-		g.setColour(obj.over ? Colours.white : Colours.lightgrey);
+		g.setColour(obj.over ? ColourData.clrWhite : Colours.lightgrey);
 		g.fillTriangle(obj.area, Math.toRadians(90));   
 	});
 	
@@ -178,8 +163,8 @@ namespace LookAndFeel
 		var linePad = 26;
 		var lineY = 26;
 		
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
 			
 		g.drawAlignedText(obj.text, obj.area, "centred");	
 		
@@ -198,7 +183,7 @@ namespace LookAndFeel
 	// Preprocess/Postprocess EQ First Button
 	LAFButtonEQFirst.registerFunction("drawToggleButton", function(g, obj)
 	{				
-		g.setColour(obj.over ? clrWhite : clrLightgrey);
+		g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey);
 
 		if (obj.value) { g.drawAlignedText("EQ > Comp", obj.area, "centred"); }
 		else { g.drawAlignedText("EQ < Comp", obj.area, "centred"); }
@@ -209,8 +194,8 @@ namespace LookAndFeel
 	// Transpose Snape	
 	LAFButtonTransposeSnap.registerFunction("drawToggleButton", function(g, obj)
 	{
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
 		
 		var p = Content.createPath();
 		p.loadFromData(PathData.pathChain);
@@ -226,9 +211,9 @@ namespace LookAndFeel
 		var thickness = a[2] / 2 - (padL * 2);
 		var center = a[2] / 2;
 				
-		g.setColour(clrExtradarkgrey);		
+		g.setColour(ColourData.clrExtradarkgrey);		
 		g.fillRect(a);
-		g.setColour(clrDarkgrey);
+		g.setColour(ColourData.clrDarkgrey);
 		g.drawRect(a, 2.0);
 		
 		// left channel				
@@ -246,8 +231,8 @@ namespace LookAndFeel
 	// Tuner Monitor Button
     LAFButtonTunerMonitor.registerFunction("drawToggleButton", function(g, obj)
     {
-        if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-        else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+        if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+        else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
         
         var p = Content.createPath();
         p.loadFromData(PathData.pathHeadphones);
@@ -258,8 +243,8 @@ namespace LookAndFeel
     // Invert Phase
 	LAFButtonInvertPhase.registerFunction("drawToggleButton", function(g, obj)
 	{
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
 
 		g.drawEllipse([4, 4, obj.area[2] - 8, obj.area[3] - 8], 2.0);
 		g.drawLine(2, obj.area[2] - 2, obj.area[3] - 2, 2, 2.0);
@@ -269,8 +254,8 @@ namespace LookAndFeel
 	// Open Cab Designer
 	LAFButtonOpenCabDesigner.registerFunction("drawToggleButton", function(g, obj)
 	{
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
 
 		var p = Content.createPath();
         p.loadFromData(PathData.pathToolbox);
@@ -287,8 +272,8 @@ namespace LookAndFeel
 	// Open Cab Folder
 	LAFButtonOpenCabFolder.registerFunction("drawToggleButton", function(g, obj)
 	{
-		if (obj.value) { g.setColour(obj.over ? clrWhite : clrLightgrey); }
-		else { g.setColour(obj.over ? clrLightgrey : clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
 
 		var p = Content.createPath();
         p.loadFromData(PathData.pathFolder);

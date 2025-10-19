@@ -15,24 +15,15 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace Tooltip
-{
-    const pnlTooltip = Content.getComponent("pnlTooltip");
-
-    pnlTooltip.setPaintRoutine(function(g)
-    {
-        var tooltip = Content.getCurrentTooltip();
-        g.setColour(ColourData.clrWhite);
-        g.setFont("Arial", 14);
-        
-        g.drawAlignedText(tooltip, [0, 0, this.getWidth(), this.getHeight()], "centred");
-    });
-
-    pnlTooltip.setTimerCallback(function()
-    {
-         this.repaint();
-    });
-
-    pnlTooltip.startTimer(17);
+namespace ColourData
+{            
+    const clrComponentBGGrey = 0xFF121212;
+    const clrOffWhite = 0xFFEDEDED;    
+    const clrBggrey = 0xFF121212;    
+    const clrExtradarkgrey = 0xFF171717;
+    const clrDarkgrey = 0xFF252525;   
+    const clrGrey = 0xFF808080;        
+    const clrLightgrey = 0xFFD3D3D3;    
+    const clrWhite = 0xFFFFFFFF;
+    const clrBlack = 0xFF000000;  
 }
-

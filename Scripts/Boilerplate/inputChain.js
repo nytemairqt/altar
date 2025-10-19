@@ -17,11 +17,6 @@
 
 namespace InputChain
 {
-	const clrGrey = 0xFF808080;       
-	const clrWhite = 0xFFFFFFFF;
-	const clrExtradarkgrey = 0xFF171717;
-	const clrLightgrey = 0xFFD3D3D3; 
-	
 	const p = Content.createPath();
 
     // Input Gain
@@ -48,9 +43,9 @@ namespace InputChain
 
     pnlPreProcess.setPaintRoutine(function(g)
     {
-        g.setColour(clrExtradarkgrey);
+        g.setColour(ColourData.clrExtradarkgrey);
         g.fillRoundedRectangle(bounds, 2.0);
-        g.setColour(clrGrey);
+        g.setColour(ColourData.clrGrey);
         g.drawRoundedRectangle(bounds, 2.0, 2.0);
         
         var y = Content.getComponent("knbPreprocessHpfFreq").get("y") + 80; // inline yuckiness
@@ -58,7 +53,7 @@ namespace InputChain
         var knbs = [Content.getComponent("knbPreprocessHpfFreq"), Content.getComponent("knbPreprocessLowShelfFreq"), Content.getComponent("knbPreprocessLowMidFreq"), Content.getComponent("knbPreprocessMidFreq"), Content.getComponent("knbPreprocessHighMidFreq"), Content.getComponent("knbPreprocessHighShelfFreq"), Content.getComponent("knbPreprocessLpfFreq")];
         var offset = 23;
         
-        g.setColour(clrLightgrey);
+        g.setColour(ColourData.clrLightgrey);
         
         for (i=0; i<knbs.length; i++)
         {

@@ -16,20 +16,23 @@
 */
 
 namespace Reverb
-{        
-    const clrDarkgrey = 0xFF252525;   
-    const clrWhite = 0xFFFFFFFF;
-    const clrExtradarkgrey = 0xFF171717;
-    const clrGrey = 0xFF808080;   
+{            
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
-    const pnlReverb = Content.getComponent("pnlReverb");
+    const pnlReverb = Content.getComponent("pnlReverb");        
+    
+    pnlReverb.loadImage("{PROJECT_FOLDER}bgReverb.jpg", "bg");
+    pnlReverb.loadImage("{PROJECT_FOLDER}trim.png", "trim");
 
     pnlReverb.setPaintRoutine(function(g)
-    {
-        g.setColour(clrExtradarkgrey);
-        g.fillRoundedRectangle(bounds, 32.0);
-        g.setColour(clrDarkgrey);
-        g.drawRoundedRectangle(bounds, 32.0, 3.0);
+    {               
+        var stripHeight = 140;
+        g.drawImage("bg", bounds, 0, 0);
+        g.drawImage("trim", bounds, 0, 0);
+        g.setColour(ColourData.clrComponentBGGrey);
+        g.fillRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0);
+        g.setColour(ColourData.clrDarkgrey);
+        g.drawRoundedRectangle(bounds, 0.0, 3.0);                
+        g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
 }

@@ -24,7 +24,8 @@ namespace Click
     const knbClickTempo = Content.getComponent("knbClickTempo");
     const pnlClick = Content.getComponent("pnlClick");
     const isPlugin = Engine.isPlugin();
-    const isHISE = Engine.isHISE();        
+    const isHISE = Engine.isHISE();     
+    const bounds = [255, 50, 240, 120];   
 
     inline function onbtnShowClickControl(component, value)
     {
@@ -33,16 +34,12 @@ namespace Click
     }
     
     btnShowClick.setControlCallback(onbtnShowClickControl);
-
-	const bounds = [255, 50, 240, 120];
-	const clrGrey = 0xFF808080;       
-	const clrExtradarkgrey = 0xFF171717;
 	
     pnlClick.setPaintRoutine(function(g)
     {		
-        g.setColour(clrExtradarkgrey);
+        g.setColour(ColourData.clrExtradarkgrey);
         g.fillRoundedRectangle(bounds, 2.0);
-        g.setColour(clrGrey);
+        g.setColour(ColourData.clrGrey);
         g.drawRoundedRectangle(bounds, 2.0, 2.0);        
     });
 
