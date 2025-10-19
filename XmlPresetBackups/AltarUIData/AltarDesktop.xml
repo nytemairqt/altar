@@ -174,7 +174,7 @@
                  tooltip="Enable lofi (bandpass filter)." text="" height="16.0"/>
     </Component>
     <Component type="ScriptLabel" id="lblCpuUsage" x="980.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 9%" width="150.0" fontStyle="Bold" height="30.0"
+               text="CPU Usage: 10%" width="150.0" fontStyle="Bold" height="30.0"
                alignment="left" editable="0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="30.0" y="250.0"
                parentComponent="pnlMaster" width="100.0" height="400.0" ContentType="MatrixPeakMeter"
