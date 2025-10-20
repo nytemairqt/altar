@@ -51,6 +51,7 @@ namespace ModularChain
     const chorusControl = [Content.getComponent("knbChorusMix"), Content.getComponent("knbChorusRate"), Content.getComponent("knbChorusDepth"), Content.getComponent("knbChorusTone"), Content.getComponent("knbChorusVoices"), Content.getComponent("knbChorusFeedback"), Content.getComponent("knbChorusDelayTime")];
     const ringmodControl = [Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")]; 
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");
+    const btnAmpBrowseNAMTones = Content.getComponent("btnAmpBrowseNAMTones");    
 
     // Ensure slot states are stored with user presets
     for (m in fxModules)
@@ -355,8 +356,8 @@ namespace ModularChain
         }
         if (text == "amp_Mode")
         {
-	        if (value == 2) {pnlAmpNAMLoader.set("visible", true); }
-	        else { pnlAmpNAMLoader.set("visible", false); }
+	        if (value == 2) {pnlAmpNAMLoader.set("visible", true); btnAmpBrowseNAMTones.set("visible", true); }
+	        else { pnlAmpNAMLoader.set("visible", false); btnAmpBrowseNAMTones.set("visible", false); }
         }
     }    
 

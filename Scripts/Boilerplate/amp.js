@@ -26,7 +26,8 @@ namespace Amp
     const namCable = grm.getCable("nam");     
     const knbAmpMode = Content.getComponent("knbAmpMode");
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];    
-    const pnlTooltip = Content.getComponent("pnlTooltip");
+    const pnlTooltip = Content.getComponent("pnlTooltip"); 
+    const btnAmpBrowseNAMTones = Content.getComponent("btnAmpBrowseNAMTones");
        
     inline function pnlAmpNAMLoaderDrop(f)
     {
@@ -99,5 +100,12 @@ namespace Amp
         g.drawRoundedRectangle(bounds, 0.0, 3.0);                
         g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
+    
+    inline function onbtnAmpBrowseNAMTonesControl(component, value)
+    {
+	    if (value) { Engine.openWebsite("https://www.tone3000.com/"); }	    
+    }
+    
+    btnAmpBrowseNAMTones.setControlCallback(onbtnAmpBrowseNAMTonesControl);
                 
 }
