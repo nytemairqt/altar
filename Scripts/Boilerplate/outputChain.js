@@ -39,12 +39,14 @@ namespace OutputChain
 
     btnShowPostProcess.setControlCallback(onbtnShowPostProcessControl);   
     
+    pnlPostProcess.loadImage("{PROJECT_FOLDER}bgPostprocess.png", "bg");    
     pnlPostProcess.setPaintRoutine(function(g)
     {
-        g.setColour(clrExtradarkgrey);
+        g.drawImage("bg", [0, 0, this.getWidth(), this.getHeight()], 0, 0);
+        g.setColour(Colours.withAlpha(ColourData.clrComponentBGGrey, .8));
         g.fillRoundedRectangle(bounds, 2.0);
-        g.setColour(clrGrey);
-        g.drawRoundedRectangle(bounds, 2.0, 2.0);
+        g.setColour(ColourData.clrMidgrey);
+        g.drawRoundedRectangle(bounds, 2.0, 3.0);
         
         var y = Content.getComponent("knbPostprocessHpfFreq").get("y") + 80; // inline yuckiness
         var paths = [PathData.pathHPF, PathData.pathLowShelf, PathData.pathPeak, PathData.pathPeak, PathData.pathPeak, PathData.pathHighShelf, PathData.pathLPF];

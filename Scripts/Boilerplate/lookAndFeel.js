@@ -52,14 +52,15 @@ namespace LookAndFeel
 	    local ringWidth = wKnb / 16;
 	    	
 	    // Background
-	    g.setColour(ColourData.clrExtradarkgrey);
+	    //g.setColour(ColourData.clrExtradarkgrey);
+	    g.setColour(ColourData.clrDarkgrey);
 	    g.fillEllipse(areaKnob);
 	
 	    // Unfilled Ring	    
 	    local unfilled = Content.createPath();	    
 	    unfilled.startNewSubPath(0.5, 1.0);
 	    unfilled.addArc([0.0, 0.0, 1.0, 1.0], -Math.PI * 0.75, Math.PI * 0.75);	    	    
-	    g.setColour(obj.hover ? ColourData.clrDarkgrey : ColourData.clrExtradarkgrey);
+	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
 	    g.drawPath(unfilled, areaKnob, ringWidth * 2);
 	    
 	    // Filled Ring
@@ -184,9 +185,19 @@ namespace LookAndFeel
 	LAFButtonEQFirst.registerFunction("drawToggleButton", function(g, obj)
 	{				
 		g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey);
-
-		if (obj.value) { g.drawAlignedText("EQ > Comp", obj.area, "centred"); }
-		else { g.drawAlignedText("EQ < Comp", obj.area, "centred"); }
+		g.setFont("Arial Bold", 14.0);
+		if (obj.value)
+		{
+			g.drawAlignedText("EQ", [0, 0, obj.area[2], 20], "centred");
+			g.drawAlignedText("COMP", [0, 60, obj.area[2], 20], "centred");
+		}
+		else
+		{
+			g.drawAlignedText("COMP", [0, 0, obj.area[2], 20], "centred");
+			g.drawAlignedText("EQ", [0, 60, obj.area[2], 20], "centred");
+		}
+		var tPad = 30;				
+		g.fillTriangle([tPad, tPad, obj.area[2] - tPad * 2, obj.area[3] - tPad * 2], Math.toRadians(180));
 	});
 	
 	
@@ -214,16 +225,16 @@ namespace LookAndFeel
 		g.setColour(ColourData.clrExtradarkgrey);		
 		g.fillRect(a);
 		g.setColour(ColourData.clrDarkgrey);
-		g.drawRect(a, 2.0);
+		g.drawRect(a, 2.0);		
 		
 		// left channel				
 		var a1 = [padL + (center * 0), a[3] * (1 - obj.peaks[0]), thickness + (padL / 2), a[3] - a[3] * (1 - obj.peaks[0])];
-		g.setGradientFill([clrGrey, 0, a[3], clrWhite, 0, a[3] - thickness - (a[3] - thickness) * obj.peaks[0]]);			
+		g.setGradientFill([ColourData.clrGrey, 0, a[3], ColourData.clrWhite, 0, a[3] - thickness - (a[3] - thickness) * obj.peaks[0]]);			
 		g.fillRoundedRectangle(a1, 0);
 		
 		// right channel
 		var a2 = [padL + (center * 1) - (padL / 2), a[3] * (1 - obj.peaks[1]), thickness + (padL / 2), a[3] - a[3] * (1 - obj.peaks[1])];
-		g.setGradientFill([clrGrey, 0, a[3], clrWhite, 0, a[3] - thickness - (a[3] - thickness) * obj.peaks[0]]);			
+		g.setGradientFill([ColourData.clrGrey, 0, a[3], ColourData.clrWhite, 0, a[3] - thickness - (a[3] - thickness) * obj.peaks[0]]);			
 		g.fillRoundedRectangle(a2, 0);				
 
 	});
@@ -300,7 +311,7 @@ namespace LookAndFeel
 	const btnEQFirstLAF = [Content.getComponent("btnPreProcessEQFirst"), Content.getComponent("btnPostProcessEQFirst")];
 	const btnTunerMonitorLAF = [Content.getComponent("btnTunerMonitor")];  
 	const btnShowCabDesignerLAF = [Content.getComponent("btnShowCabDesigner")];
-	const btnOpenCabFolderLAF = [Content.getComponent("btnOpenCabFolder")];
+	const btnOpenCabFolderLAF = [Content.getComponent("btnOpenCabFolder")];	
 
 	for (k in knbMainLAF) { k.setLocalLookAndFeel(LAFKnob); }	  
 	for (k in knbPreprocessLAF) { k.setLocalLookAndFeel(LAFKnob); }  
@@ -317,4 +328,28 @@ namespace LookAndFeel
 	for (b in btnShowCabDesignerLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabDesigner); }
 	for (b in btnOpenCabFolderLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabFolder); }
 	for (f in fltVuMeterLAF) { f.setLocalLookAndFeel(LAFVuMeter); }	
+	
+	// Top Bar
+	
+	const pnlTopBar = Content.getComponent("pnlTopBar");
+	pnlTopBar.loadImage("{PROJECT_FOLDER}bgTopBar.jpg", "bg");
+	pnlTopBar.setPaintRoutine(function(g)
+	{
+		var area = [0, 0, this.getWidth(), this.getHeight()];
+
+		g.drawImage("bg", area, 0, 0);
+		
+		g.setColour(ColourData.clrBggrey);
+		g.fillRoundedRectangle([0, 14, this.getWidth(), this.getHeight()-28], 2.0);
+		
+		g.setColour(ColourData.clrDarkgrey);
+		g.drawRoundedRectangle(area, 2.0, 4.0);
+		
+	});
+	
+	const pnlMaster = Content.getComponent("pnlMaster");
+	pnlMaster.setPaintRoutine(function(g)
+	{
+		g.fillAll(ColourData.clrComponentBGGrey);
+	});
 }

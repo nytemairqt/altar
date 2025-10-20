@@ -20,7 +20,7 @@ namespace Preferences
 	const btnShowPreferences = Content.getComponent("btnShowPreferences");
 	const pnlPreferences = Content.getComponent("pnlPreferences");
 	const fltPreferences = Content.getComponent("fltPreferences");	
-	const fltPreferencesLAF = Content.createLocalLookAndFeel();
+	const fltPreferencesLAF = Content.createLocalLookAndFeel();	
 	
 	const bounds = [75, 50, 440, 250];		
 	

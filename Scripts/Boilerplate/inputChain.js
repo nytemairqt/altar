@@ -40,21 +40,21 @@ namespace InputChain
     }
     
     btnShowPreProcess.setControlCallback(onbtnShowPreProcessControl);
-
+    pnlPreProcess.loadImage("{PROJECT_FOLDER}bgPreprocess.png", "bg");    
     pnlPreProcess.setPaintRoutine(function(g)
     {
-        g.setColour(ColourData.clrExtradarkgrey);
+        g.drawImage("bg", [0, 0, this.getWidth(), this.getHeight()], 0, 0);
+        g.setColour(Colours.withAlpha(ColourData.clrComponentBGGrey, .8));
         g.fillRoundedRectangle(bounds, 2.0);
-        g.setColour(ColourData.clrGrey);
-        g.drawRoundedRectangle(bounds, 2.0, 2.0);
-        
+        g.setColour(ColourData.clrMidgrey);
+        g.drawRoundedRectangle(bounds, 2.0, 3.0);
+                
+        // EQ Band Icons
         var y = Content.getComponent("knbPreprocessHpfFreq").get("y") + 80; // inline yuckiness
         var paths = [PathData.pathHPF, PathData.pathLowShelf, PathData.pathPeak, PathData.pathPeak, PathData.pathPeak, PathData.pathHighShelf, PathData.pathLPF];
         var knbs = [Content.getComponent("knbPreprocessHpfFreq"), Content.getComponent("knbPreprocessLowShelfFreq"), Content.getComponent("knbPreprocessLowMidFreq"), Content.getComponent("knbPreprocessMidFreq"), Content.getComponent("knbPreprocessHighMidFreq"), Content.getComponent("knbPreprocessHighShelfFreq"), Content.getComponent("knbPreprocessLpfFreq")];
         var offset = 23;
-        
-        g.setColour(ColourData.clrLightgrey);
-        
+        g.setColour(ColourData.clrLightgrey);        
         for (i=0; i<knbs.length; i++)
         {
 	        p.clear();
@@ -62,7 +62,7 @@ namespace InputChain
 	        g.drawPath(p, [knbs[i].get("x") + offset, y, 20, 10], 3.0);
         }                
     });
-
+    
     pnlPreProcess.setMouseCallback(function(event)
     {
         var x = bounds[0];

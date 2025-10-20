@@ -21,6 +21,7 @@ namespace Cab
 	const pnlCabALoader = Content.getComponent("pnlCabALoader");
 	const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
 	const pnlCab = Content.getComponent("pnlCab");
+	const pnlTooltip = Content.getComponent("pnlTooltip");
 	
 	Engine.loadAudioFilesIntoPool();
 
@@ -76,6 +77,7 @@ namespace Cab
 				pnlCabALoader.repaint();
 			});
 		}
+		else if (event.hover) { pnlTooltip.set("text", this.get("tooltip")); }
     }       
     
     inline function pnlCabBLoaderClick(event)
@@ -99,9 +101,9 @@ namespace Cab
 				}		
 				pnlCabBLoader.set("text", result.toString(3));
 				pnlCabBLoader.repaint();			    				
-			});
-			
+			});			
 		}
+		else if (event.hover) { pnlTooltip.set("text", this.get("tooltip")); }
     }       
     
     pnlCabALoader.setMouseCallback(pnlCabALoaderClick);
@@ -109,8 +111,10 @@ namespace Cab
     
     inline function pnlCabLoaderPaintRoutine(g)
     {
+	    g.setColour(ColourData.clrComponentBGGrey);
+	    g.fillRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 4.0);  
 	    g.setColour(ColourData.clrDarkgrey);
-	    g.fillRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 4.0);        
+	    g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 4.0, 3.0);  
         g.setColour(ColourData.clrWhite);
  	   	g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred") ;
     }

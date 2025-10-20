@@ -26,22 +26,7 @@ namespace Amp
     const namCable = grm.getCable("nam");     
     const knbAmpMode = Content.getComponent("knbAmpMode");
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];    
-
-    inline function onknbAmpModeControl(component, value)
-    {
-        for (slot in fxSlots)
-            if (slot.getCurrentEffectId() == "amp")
-            {
-                local effect = slot.getCurrentEffect();
-                effect.setAttribute(effect.Mode, value);
-            }
-            
-        if (value < 2) { pnlAmpNAMLoader.set("enabled", false); }
-        else { pnlAmpNAMLoader.set("enabled", true); }        
-        
-    }  
-                
-    knbAmpMode.setControlCallback(onknbAmpModeControl);
+    const pnlTooltip = Content.getComponent("pnlTooltip");
        
     inline function pnlAmpNAMLoaderDrop(f)
     {
@@ -64,13 +49,19 @@ namespace Amp
                 sendNAMCableData();
                 pnlAmpNAMLoader.repaint();
             });
-        }        
+        }       
+       	else if (event.hover) { pnlTooltip.set("text", this.get("tooltip")); }
+       	 
     }
             
     pnlAmpNAMLoader.setPaintRoutine(function(g)
     {
+       var area = [0, 0, this.getWidth(), this.getHeight()];
+       g.setColour(ColourData.clrComponentBGGrey);
+       g.fillRoundedRectangle(area, 2.0);
+       g.setColour(ColourData.clrDarkgrey);
+       g.drawRoundedRectangle(area, 2.0, 3.0); 
        g.setColour(ColourData.clrWhite);
-       g.drawRoundedRectangle([0, 0, this.getWidth(), this.getHeight()], 0.0, 1.0);
        var text = this.get("text");      
        var index = text.lastIndexOf("\\") + 1;
        var substring = text.substring(index, text.length);
