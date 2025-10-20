@@ -30,8 +30,7 @@ namespace LookAndFeel
 	const LAFButtonInvertPhase = Content.createLocalLookAndFeel();
 	const LAFButtonOpenCabDesigner = Content.createLocalLookAndFeel();
 	const LAFButtonOpenCabFolder = Content.createLocalLookAndFeel();
-	const LAFButtonEQFirst = Content.createLocalLookAndFeel();
-	const LAFVuMeter = Content.createLocalLookAndFeel();	
+	const LAFButtonEQFirst = Content.createLocalLookAndFeel();	
 	const LAFButtonTransposeSnap = Content.createLocalLookAndFeel();
 		
 	const start = -Math.PI * 0.75;	
@@ -213,31 +212,6 @@ namespace LookAndFeel
 		g.fillPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4]);						
 		
 	});
-	
-	// VU Meters
-	LAFVuMeter.registerFunction("drawMatrixPeakMeter", function(g, obj)
-	{
-		var a = obj.area;
-		var padL = 10;
-		var thickness = a[2] / 2 - (padL * 2);
-		var center = a[2] / 2;
-				
-		g.setColour(ColourData.clrExtradarkgrey);		
-		g.fillRect(a);
-		g.setColour(ColourData.clrDarkgrey);
-		g.drawRect(a, 2.0);		
-		
-		// left channel				
-		var a1 = [padL + (center * 0), a[3] * (1 - obj.peaks[0]), thickness + (padL / 2), a[3] - a[3] * (1 - obj.peaks[0])];
-		g.setGradientFill([ColourData.clrGrey, 0, a[3], ColourData.clrWhite, 0, a[3] - thickness - (a[3] - thickness) * obj.peaks[0]]);			
-		g.fillRoundedRectangle(a1, 0);
-		
-		// right channel
-		var a2 = [padL + (center * 1) - (padL / 2), a[3] * (1 - obj.peaks[1]), thickness + (padL / 2), a[3] - a[3] * (1 - obj.peaks[1])];
-		g.setGradientFill([ColourData.clrGrey, 0, a[3], ColourData.clrWhite, 0, a[3] - thickness - (a[3] - thickness) * obj.peaks[0]]);			
-		g.fillRoundedRectangle(a2, 0);				
-
-	});
 
 	// Tuner Monitor Button
     LAFButtonTunerMonitor.registerFunction("drawToggleButton", function(g, obj)
@@ -326,8 +300,7 @@ namespace LookAndFeel
 	for (b in btnTransposeSnap) { b.setLocalLookAndFeel(LAFButtonTransposeSnap); }
 	for (b in btnInvertPhaseLAF) { b.setLocalLookAndFeel(LAFButtonInvertPhase); }
 	for (b in btnShowCabDesignerLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabDesigner); }
-	for (b in btnOpenCabFolderLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabFolder); }
-	for (f in fltVuMeterLAF) { f.setLocalLookAndFeel(LAFVuMeter); }	
+	for (b in btnOpenCabFolderLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabFolder); }	
 	
 	// Top Bar
 	

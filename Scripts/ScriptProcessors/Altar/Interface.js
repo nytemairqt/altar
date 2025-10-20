@@ -5,6 +5,7 @@ include("Boilerplate/colourData.js");
 include("Boilerplate/transportHandler.js");
 include("Boilerplate/presetBrowser.js");
 include("Boilerplate/lookAndFeel.js");
+include("Boilerplate/vuMeter.js");
 include("Boilerplate/tooltip.js");
 include("Boilerplate/click.js");
 include("Boilerplate/tuner.js");
