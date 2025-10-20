@@ -39,9 +39,9 @@
                  width="96.0" height="96.0" suffix=" st" pluginParameterName="Transpose"
                  isPluginParameter="1">
         <Component type="ScriptButton" id="btnTranspose" x="80.0" y="0.0" width="16.0"
-                   processorId="transpose" parameterId="Enabled" parentComponent="knbTranspose"
-                   tooltip="Enable pitch-shifter." text="" height="16.0" isPluginParameter="1"
-                   pluginParameterName="Transpose Enable"/>
+                   parentComponent="knbTranspose" tooltip="Enable pitch-shifter."
+                   text="" height="16.0" isPluginParameter="1" pluginParameterName="Transpose Enable"
+                   processorId="transpose" parameterId="Enabled"/>
         <Component type="ScriptButton" id="btnTransposeSnap" x="80.0" y="22.0" width="16.0"
                    parentComponent="knbTranspose" tooltip="Snap pitch-shifter to semitones."
                    text="" height="16.0"/>
@@ -188,17 +188,48 @@
     <Component type="ScriptLabel" id="lblCpuUsage" x="980.0" y="10.0" parentComponent="pnlMaster"
                text="CPU Usage: 0%" width="150.0" fontStyle="Bold" height="30.0"
                alignment="left" editable="0"/>
-    <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="19.0" y="231.0"
+    <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
                bgColour="4278190080" itemColour="4283782485" itemColour2="4280427042"
                Data="{&#10;  &quot;ProcessorId&quot;: &quot;inputGain&quot;,&#10;  &quot;Index&quot;: -1,&#10;  &quot;FollowWorkspace&quot;: false,&#10;  &quot;SegmentLedSize&quot;: 0.0,&#10;  &quot;UpDecayTime&quot;: 100,&#10;  &quot;DownDecayTime&quot;: 100,&#10;  &quot;UseSourceChannels&quot;: false,&#10;  &quot;SkewFactor&quot;: 1.0,&#10;  &quot;PaddingSize&quot;: 1.0,&#10;  &quot;ShowMaxPeak&quot;: 1.0,&#10;  &quot;ChannelIndexes&quot;: [&#10;    0,&#10;    1&#10;  ]&#10;}"/>
-    <Component type="ScriptFloatingTile" id="fltVuMeterOutput" x="1011.0" y="231.0"
+    <Component type="ScriptFloatingTile" id="fltVuMeterOutput" x="1001.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
                bgColour="4278190080" itemColour="4283782485" itemColour2="4280427042"
                Data="{&#10;  &quot;ProcessorId&quot;: &quot;limiter&quot;,&#10;  &quot;Index&quot;: -1,&#10;  &quot;FollowWorkspace&quot;: false,&#10;  &quot;SegmentLedSize&quot;: 0.0,&#10;  &quot;UpDecayTime&quot;: 0.0,&#10;  &quot;DownDecayTime&quot;: 0.0,&#10;  &quot;UseSourceChannels&quot;: false,&#10;  &quot;SkewFactor&quot;: 1.0,&#10;  &quot;PaddingSize&quot;: 1.0,&#10;  &quot;ShowMaxPeak&quot;: 1.0,&#10;  &quot;ChannelIndexes&quot;: [&#10;    0,&#10;    1&#10;  ]&#10;}"/>
+    <Component type="ScriptLabel" id="lblVuInputA" x="0.0" y="231.0" parentComponent="pnlMaster"
+               text="0" width="30.0" height="13.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuInputC" x="0.0" y="421.0" parentComponent="pnlMaster"
+               text="-6" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuInputB" x="0.0" y="336.0" parentComponent="pnlMaster"
+               text="-3" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuInputD" x="0.0" y="524.0" parentComponent="pnlMaster"
+               text="-12" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuInputE" x="0.0" y="631.0" parentComponent="pnlMaster"
+               text="-100" width="30.0" height="13.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuOutputA" x="1120.0" y="231.0" parentComponent="pnlMaster"
+               text="0" width="30.0" height="13.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuOutputC" x="1120.0" y="421.0" parentComponent="pnlMaster"
+               text="-6" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuOutputB" x="1120.0" y="336.0" parentComponent="pnlMaster"
+               text="-3" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuOutputD" x="1120.0" y="524.0" parentComponent="pnlMaster"
+               text="-12" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuOutputE" x="1120.0" y="631.0" parentComponent="pnlMaster"
+               text="-100" width="30.0" height="13.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="150.0" y="250.0" width="850.0"
-             height="400.0" itemColour="4278190080" itemColour2="4278190080">
+             height="400.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0">
     <Component type="ScriptLabel" id="lblOverdrive" x="365.0" y="20.0" text="OVERDRIVE"
                width="120.0" parentComponent="pnlOverdrive" height="30.0" fontStyle="Bold"
                editable="0"/>
@@ -271,8 +302,7 @@
     </Component>
   </Component>
   <Component type="ScriptPanel" id="pnlAmp" x="150.0" y="250.0" width="850.0"
-             height="400.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0">
+             height="400.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptLabel" id="lblAmp" x="365.0" y="20.0" parentComponent="pnlAmp"
                text="AMP" width="120.0" height="30.0" editable="0" fontStyle="Bold"/>
     <Component type="ScriptSlider" id="knbAmpMode" x="30.0" y="152.0" defaultValue="1.0"

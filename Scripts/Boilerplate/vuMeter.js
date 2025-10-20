@@ -39,14 +39,17 @@ namespace VuMeter
 		var stripR = [padL + center - (padL / 2), 0, thickness + (padL / 2), obj.area[3]];
 		var a1 = [padL + (center * 0), a[3] * (1 - obj.peaks[0]), thickness + (padL / 2), a[3] - a[3] * (1 - obj.peaks[0])];
 		var a2 = [padL + (center * 1) - (padL / 2), a[3] * (1 - obj.peaks[1]), thickness + (padL / 2), a[3] - a[3] * (1 - obj.peaks[1])];
-		g.drawImage("bg", obj.area, 0, 0);						
-
-		g.setColour(Colours.withAlpha(ColourData.clrDarkgrey, .5));
+		
+		g.drawImage("bg", obj.area, 0, 0);		
+		g.setColour(Colours.withAlpha(ColourData.clrGrey, .15));
 		g.drawRoundedRectangle(stripL, 0.0, 2.0);
 		g.drawRoundedRectangle(stripR, 0.0, 2.0);
 		
+		//var dbL = Engine.getDecibelsForGainFactor(obj.peaks[0]); // just used for position labels		
+		//Console.print(dbL);
+		
 		// left channel						
-		g.setGradientFill([ColourData.clrGrey, 0, a[3], ColourData.clrWhite, 0, a[3] - thickness - (a[3] - thickness) * obj.peaks[0]]);			
+		g.setGradientFill([ColourData.clrGrey, 0, a[3], ColourData.clrWhite, 0, a[3] - thickness - (a[3] - thickness) * obj.peaks[0]]);				
 		g.fillRoundedRectangle(a1, 0);		
 		
 		// right channel		
@@ -70,7 +73,7 @@ namespace VuMeter
 		g.drawImage("bg", obj.area, 0, 0);						
 		
 		// guiding lines
-		g.setColour(Colours.withAlpha(ColourData.clrDarkgrey, .5));
+		g.setColour(Colours.withAlpha(ColourData.clrGrey, .15));
 		g.drawRoundedRectangle(stripL, 0.0, 2.0);
 		g.drawRoundedRectangle(stripR, 0.0, 2.0);
 		

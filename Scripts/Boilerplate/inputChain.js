@@ -78,10 +78,10 @@ namespace InputChain
     });
 
     // Pitch-Shifter
-    const transpose = Synth.getEffect("transpose");
+    const transpose = Synth.getEffect("transpose");    
     const knbTranspose = Content.getComponent("knbTranspose");
     const btnTranspose = Content.getComponent("btnTranspose");
-    const btnTransposeSnap = Content.getComponent("btnTransposeSnap");
+    const btnTransposeSnap = Content.getComponent("btnTransposeSnap");                    
 
     inline function onknbTransposeControl(component, value)
     {                    
