@@ -186,7 +186,7 @@
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="ringmod"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="980.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 1%" width="150.0" fontStyle="Bold" height="30.0"
+               text="CPU Usage: 0%" width="150.0" fontStyle="Bold" height="30.0"
                alignment="left" editable="0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
@@ -1105,7 +1105,8 @@
     <Component type="ScriptLabel" id="lblTuner" x="270.0" y="60.0" text="TUNER"
                parentComponent="pnlTuner" editable="0" fontStyle="Bold"/>
     <Component type="ScriptButton" id="btnTunerMonitor" x="194.0" y="59.0" parentComponent="pnlTuner"
-               width="16.0" height="16.0" tooltip="Enable tuner monitoring."/>
+               width="16.0" height="16.0" tooltip="Enable tuner monitoring."
+               processorId="tuner" parameterId="Monitor"/>
     <Component type="ScriptButton" id="btnTuner" x="174.0" y="59.0" processorId="tuner"
                parameterId="Enabled" parentComponent="pnlTuner" width="16.0"
                height="16.0" tooltip="Enable tuner."/>
