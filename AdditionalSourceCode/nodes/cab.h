@@ -36,12 +36,19 @@ using convolution_t = wrap::data<filters::convolution,
                                  data::external::audiofile<0>>;
 
 template <int NV>
+using soft_bypass2_t_ = container::chain<parameter::empty, 
+                                         wrap::fix<2, math::inv<NV>>>;
+
+template <int NV>
+using soft_bypass2_t = bypass::smoothed<20, soft_bypass2_t_<NV>>;
+
+template <int NV>
 using soft_bypass_t_ = container::chain<parameter::empty, 
                                         wrap::fix<2, core::fix_delay>, 
                                         convolution_t, 
                                         filters::svf_eq<NV>, 
                                         filters::svf_eq<NV>, 
-                                        math::inv<NV>, 
+                                        soft_bypass2_t<NV>, 
                                         jdsp::jpanner<NV>>;
 
 template <int NV>
@@ -55,13 +62,18 @@ using chain_t = container::chain<parameter::empty,
 using convolution2_t = wrap::data<filters::convolution, 
                                   data::external::audiofile<1>>;
 
+template <int NV> using soft_bypass3_t_ = soft_bypass2_t_<NV>;
+
+template <int NV>
+using soft_bypass3_t = bypass::smoothed<20, soft_bypass3_t_<NV>>;
+
 template <int NV>
 using soft_bypass1_t_ = container::chain<parameter::empty, 
                                          wrap::fix<2, core::fix_delay>, 
                                          convolution2_t, 
                                          filters::svf_eq<NV>, 
                                          filters::svf_eq<NV>, 
-                                         math::inv<NV>, 
+                                         soft_bypass3_t<NV>, 
                                          jdsp::jpanner<NV>>;
 
 template <int NV>
@@ -86,7 +98,13 @@ template <int NV>
 using CabAEnable = parameter::bypass<cab_impl::soft_bypass_t<NV>>;
 
 template <int NV>
+using CabAPhase = parameter::bypass<cab_impl::soft_bypass2_t<NV>>;
+
+template <int NV>
 using CabBEnable = parameter::bypass<cab_impl::soft_bypass1_t<NV>>;
+
+template <int NV>
+using CabBPhase = parameter::bypass<cab_impl::soft_bypass3_t<NV>>;
 
 template <int NV>
 using Mix = parameter::plain<cab_impl::xfader_t<NV>, 0>;
@@ -96,15 +114,12 @@ using CabAAxis = parameter::plain<filters::svf_eq<NV>, 2>;
 template <int NV>
 using CabADistance = parameter::plain<filters::svf_eq<NV>, 0>;
 template <int NV>
-using CabAPhase = parameter::plain<math::inv<NV>, 0>;
-template <int NV>
 using CabAPan = parameter::plain<jdsp::jpanner<NV>, 0>;
 template <int NV>
 using CabAGain = parameter::plain<core::gain<NV>, 0>;
 using CabBDelay = CabADelay;
 template <int NV> using CabBAxis = CabAAxis<NV>;
 template <int NV> using CabBDistance = CabADistance<NV>;
-template <int NV> using CabBPhase = CabAPhase<NV>;
 template <int NV> using CabBPan = CabAPan<NV>;
 template <int NV> using CabBGain = CabAGain<NV>;
 template <int NV>
@@ -160,7 +175,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
             0x0000, 0x8000, 0x45BB, 0x4000, 0x469C, 0x8000, 0x45BB, 0x6C1A, 
             0x3E6B, 0x0000, 0x0000, 0x005C, 0x0005, 0x0000, 0x6143, 0x4162, 
             0x6850, 0x7361, 0x0065, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
-            0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5C00, 0x0600, 0x0000, 
+            0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5C3F, 0x0600, 0x0000, 
             0x4300, 0x6261, 0x5041, 0x6E61, 0x0000, 0x0000, 0xBF80, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 
             0x0007, 0x0000, 0x6143, 0x4162, 0x6147, 0x6E69, 0x0000, 0x0000, 
@@ -176,7 +191,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
             0x636E, 0x0065, 0x0000, 0xBB80, 0x0045, 0x9C40, 0x0046, 0xBB80, 
             0x1A45, 0x6B6C, 0x003E, 0x0000, 0x5C00, 0x0C00, 0x0000, 0x4300, 
             0x6261, 0x5042, 0x6168, 0x6573, 0x0000, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 
+            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x005C, 
             0x000D, 0x0000, 0x6143, 0x4262, 0x6150, 0x006E, 0x0000, 0x8000, 
             0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5C00, 0x0E00, 0x0000, 0x4300, 0x6261, 0x4742, 0x6961, 0x006E, 
@@ -203,7 +218,8 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		auto& convolution = this->getT(1).getT(0).getT(0).getT(1);  // cab_impl::convolution_t
 		auto& svf_eq3 = this->getT(1).getT(0).getT(0).getT(2);      // filters::svf_eq<NV>
 		auto& svf_eq1 = this->getT(1).getT(0).getT(0).getT(3);      // filters::svf_eq<NV>
-		auto& inv = this->getT(1).getT(0).getT(0).getT(4);          // math::inv<NV>
+		auto& soft_bypass2 = this->getT(1).getT(0).getT(0).getT(4); // cab_impl::soft_bypass2_t<NV>
+		auto& inv = this->getT(1).getT(0).getT(0).getT(4).getT(0);  // math::inv<NV>
 		auto& jpanner = this->getT(1).getT(0).getT(0).getT(5);      // jdsp::jpanner<NV>
 		auto& gain2 = this->getT(1).getT(0).getT(1);                // core::gain<NV>
 		auto& gain = this->getT(1).getT(0).getT(2);                 // core::gain<NV>
@@ -213,7 +229,8 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		auto& convolution2 = this->getT(1).getT(1).getT(0).getT(1); // cab_impl::convolution2_t
 		auto& svf_eq4 = this->getT(1).getT(1).getT(0).getT(2);      // filters::svf_eq<NV>
 		auto& svf_eq5 = this->getT(1).getT(1).getT(0).getT(3);      // filters::svf_eq<NV>
-		auto& inv1 = this->getT(1).getT(1).getT(0).getT(4);         // math::inv<NV>
+		auto& soft_bypass3 = this->getT(1).getT(1).getT(0).getT(4); // cab_impl::soft_bypass3_t<NV>
+		auto& inv1 = this->getT(1).getT(1).getT(0).getT(4).getT(0); // math::inv<NV>
 		auto& jpanner1 = this->getT(1).getT(1).getT(0).getT(5);     // jdsp::jpanner<NV>
 		auto& gain4 = this->getT(1).getT(1).getT(1);                // core::gain<NV>
 		auto& gain5 = this->getT(1).getT(1).getT(2);                // core::gain<NV>
@@ -230,7 +247,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		
 		this->getParameterT(4).connectT(0, svf_eq1); // CabADistance -> svf_eq1::Frequency
 		
-		this->getParameterT(5).connectT(0, inv); // CabAPhase -> inv::Value
+		this->getParameterT(5).connectT(0, soft_bypass2); // CabAPhase -> soft_bypass2::Bypassed
 		
 		this->getParameterT(6).connectT(0, jpanner); // CabAPan -> jpanner::Pan
 		
@@ -244,7 +261,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		
 		this->getParameterT(11).connectT(0, svf_eq5); // CabBDistance -> svf_eq5::Frequency
 		
-		this->getParameterT(12).connectT(0, inv1); // CabBPhase -> inv1::Value
+		this->getParameterT(12).connectT(0, soft_bypass3); // CabBPhase -> soft_bypass3::Bypassed
 		
 		this->getParameterT(13).connectT(0, jpanner1); // CabBPan -> jpanner1::Pan
 		
@@ -283,7 +300,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		svf_eq1.setParameterT(4, 0.);       // filters::svf_eq::Mode
 		svf_eq1.setParameterT(5, 1.);       // filters::svf_eq::Enabled
 		
-		; // inv::Value is automated
+		inv.setParameterT(0, 1.); // math::inv::Value
 		
 		;                             // jpanner::Pan is automated
 		jpanner.setParameterT(1, 1.); // jdsp::jpanner::Rule
@@ -319,7 +336,7 @@ template <int NV> struct instance: public cab_impl::cab_t_<NV>
 		svf_eq5.setParameterT(4, 0.);       // filters::svf_eq::Mode
 		svf_eq5.setParameterT(5, 1.);       // filters::svf_eq::Enabled
 		
-		; // inv1::Value is automated
+		inv1.setParameterT(0, 1.); // math::inv::Value
 		
 		;                              // jpanner1::Pan is automated
 		jpanner1.setParameterT(1, 1.); // jdsp::jpanner::Rule

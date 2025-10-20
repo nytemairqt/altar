@@ -105,10 +105,19 @@
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                     </Parameters>
                   </Node>
-                  <Node ID="inv" FactoryPath="math.inv" Bypassed="0" Name="inv" Folded="1">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
-                    </Parameters>
+                  <Node ID="soft_bypass2" FactoryPath="container.soft_bypass" Bypassed="0"
+                        Name="soft_bypass2">
+                    <Properties>
+                      <Property ID="SmoothingTime" Value="20"/>
+                    </Properties>
+                    <Nodes>
+                      <Node ID="inv" FactoryPath="math.inv" Bypassed="0" Name="inv">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="" Value="1.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
                   </Node>
                   <Node ID="jpanner" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
                     <Parameters>
@@ -221,10 +230,19 @@
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                     </Parameters>
                   </Node>
-                  <Node ID="inv1" FactoryPath="math.inv" Bypassed="0" Name="inv1" Folded="1">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
-                    </Parameters>
+                  <Node ID="soft_bypass3" FactoryPath="container.soft_bypass" Bypassed="0"
+                        Name="soft_bypass3">
+                    <Properties>
+                      <Property ID="SmoothingTime" Value="20"/>
+                    </Properties>
+                    <Nodes>
+                      <Node ID="inv1" FactoryPath="math.inv" Bypassed="0" Name="inv1">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="" Value="1.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
                   </Node>
                   <Node ID="jpanner1" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner1">
                     <Parameters>
@@ -295,9 +313,10 @@
           <Connection NodeId="svf_eq1" ParameterId="Frequency"/>
         </Connections>
       </Parameter>
-      <Parameter ID="CabAPhase" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled">
+      <Parameter ID="CabAPhase" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
+                 DefaultValue="" Value="0.0" StepSize="1">
         <Connections>
-          <Connection NodeId="inv" ParameterId="Value"/>
+          <Connection NodeId="soft_bypass2" ParameterId="Bypassed"/>
         </Connections>
       </Parameter>
       <Parameter ID="CabAPan" MinValue="-1.0" MaxValue="1.0" ExternalModulation="Disabled">
@@ -336,9 +355,10 @@
           <Connection NodeId="svf_eq5" ParameterId="Frequency"/>
         </Connections>
       </Parameter>
-      <Parameter ID="CabBPhase" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled">
+      <Parameter ID="CabBPhase" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
+                 DefaultValue="" StepSize="1" Value="0.0">
         <Connections>
-          <Connection NodeId="inv1" ParameterId="Value"/>
+          <Connection NodeId="soft_bypass3" ParameterId="Bypassed"/>
         </Connections>
       </Parameter>
       <Parameter ID="CabBPan" MinValue="-1.0" MaxValue="1.0" ExternalModulation="Disabled">
