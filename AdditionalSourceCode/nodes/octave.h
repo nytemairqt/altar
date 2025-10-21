@@ -1,5 +1,6 @@
 #pragma once
 
+#include "transpose.h"
 // These will improve the readability of the connection definition
 
 #define getT(Idx) template get<Idx>()
@@ -13,7 +14,7 @@ using namespace snex::Types;
 
 namespace octave_impl
 {
-// =====================| Node & Parameter type declarations |=====================
+// ======================| Node & Parameter type declarations |======================
 
 DECLARE_PARAMETER_RANGE_SKEW(xfader_c1Range, 
                              -100., 
@@ -32,11 +33,11 @@ template <int NV>
 using xfader_t = control::xfader<xfader_multimod<NV>, faders::linear>;
 
 using chain_t = container::chain<parameter::empty, 
-                                 wrap::fix<2, core::empty>>;
+                                 wrap::fix<2, core::fix_delay>>;
 
 template <int NV>
 using chain1_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, project::octave_faust<NV>>, 
+                                  wrap::fix<2, project::transpose<NV>>, 
                                   filters::svf_eq<NV>, 
                                   core::gain<NV>>;
 
@@ -54,7 +55,7 @@ using octave_t_ = container::chain<parameter::plain<octave_impl::xfader_t<NV>, 0
                                    wrap::fix<2, xfader_t<NV>>, 
                                    split_t<NV>>;
 
-// =========================| Root node initialiser class |=========================
+// ==========================| Root node initialiser class |==========================
 
 template <int NV> struct instance: public octave_impl::octave_t_<NV>
 {
@@ -72,7 +73,7 @@ template <int NV> struct instance: public octave_impl::octave_t_<NV>
 		SNEX_METADATA_ENCODED_PARAMETERS(18)
 		{
 			0x005C, 0x0000, 0x0000, 0x634F, 0x6174, 0x6576, 0x0000, 0x0000, 
-            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
+            0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0000
 		};
 		SNEX_METADATA_ENCODED_MOD_INFO(17)
@@ -85,34 +86,36 @@ template <int NV> struct instance: public octave_impl::octave_t_<NV>
 	
 	instance()
 	{
-		// Node References --------------------------------------------------------
+		// Node References ----------------------------------------------------------
 		
-		auto& xfader = this->getT(0);                 // octave_impl::xfader_t<NV>
-		auto& split = this->getT(1);                  // octave_impl::split_t<NV>
-		auto& chain = this->getT(1).getT(0);          // octave_impl::chain_t
-		auto& chain1 = this->getT(1).getT(1);         // octave_impl::chain1_t<NV>
-		auto& faust = this->getT(1).getT(1).getT(0);  // project::octave_faust<NV>
-		auto& svf_eq = this->getT(1).getT(1).getT(1); // filters::svf_eq<NV>
-		auto& gain = this->getT(1).getT(1).getT(2);   // core::gain<NV>
+		auto& xfader = this->getT(0);                    // octave_impl::xfader_t<NV>
+		auto& split = this->getT(1);                     // octave_impl::split_t<NV>
+		auto& chain = this->getT(1).getT(0);             // octave_impl::chain_t
+		auto& fix_delay = this->getT(1).getT(0).getT(0); // core::fix_delay
+		auto& chain1 = this->getT(1).getT(1);            // octave_impl::chain1_t<NV>
+		auto& transpose = this->getT(1).getT(1).getT(0); // project::transpose<NV>
+		auto& svf_eq = this->getT(1).getT(1).getT(1);    // filters::svf_eq<NV>
+		auto& gain = this->getT(1).getT(1).getT(2);      // core::gain<NV>
 		
-		// Parameter Connections --------------------------------------------------
+		// Parameter Connections ----------------------------------------------------
 		
 		this->getParameterT(0).connectT(0, xfader); // Octave -> xfader::Value
 		
-		// Modulation Connections -------------------------------------------------
+		// Modulation Connections ---------------------------------------------------
 		
 		auto& xfader_p = xfader.getWrappedObject().getParameter();
 		xfader_p.getParameterT(1).connectT(0, gain); // xfader -> gain::Gain
 		
-		// Default Values ---------------------------------------------------------
+		// Default Values -----------------------------------------------------------
 		
 		; // xfader::Value is automated
 		
-		faust.setParameterT(0, -12.);  // core::faust::shiftsemitones
-		faust.setParameterT(1, 2194.); // core::faust::windowsamples
-		faust.setParameterT(2, 490.);  // core::faust::xfadesamples
+		fix_delay.setParameterT(0, 10.7); // core::fix_delay::DelayTime
+		fix_delay.setParameterT(1, 512.); // core::fix_delay::FadeTime
 		
-		svf_eq.setParameterT(0, 644.981);  // filters::svf_eq::Frequency
+		transpose.setParameterT(0, 0.5); // project::transpose::FreqRatio
+		
+		svf_eq.setParameterT(0, 1024.75);  // filters::svf_eq::Frequency
 		svf_eq.setParameterT(1, 0.519895); // filters::svf_eq::Q
 		svf_eq.setParameterT(2, 0.);       // filters::svf_eq::Gain
 		svf_eq.setParameterT(3, 0.01);     // filters::svf_eq::Smoothing
@@ -123,7 +126,7 @@ template <int NV> struct instance: public octave_impl::octave_t_<NV>
 		gain.setParameterT(1, 20.); // core::gain::Smoothing
 		gain.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		this->setParameterT(0, 0.);
+		this->setParameterT(0, 1.);
 	}
 	
 	static constexpr bool isPolyphonic() { return NV > 1; };
@@ -139,7 +142,7 @@ template <int NV> struct instance: public octave_impl::octave_t_<NV>
 #undef setParameterT
 #undef setParameterWT
 #undef getParameterT
-// ==============================| Public Definition |==============================
+// ===============================| Public Definition |===============================
 
 namespace project
 {

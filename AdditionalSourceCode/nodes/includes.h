@@ -16,7 +16,6 @@
 #include "chorus.h"
 #include "delay.h"
 #include "gate.h"
-#include "octave_faust.h"
 #include "overdrive.h"
 #include "postprocess.h"
 #include "preprocess.h"

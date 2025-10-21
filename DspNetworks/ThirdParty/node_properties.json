@@ -1,14 +1,46 @@
 {
-  "amp": [],
-  "chorus": [],
-  "delay": [],
-  "gate": [],
-  "octave_faust": [],
-  "overdrive": [],
-  "postprocess": [],
-  "preprocess": [],
-  "reverb": [],
-  "ringmod": [],
-  "transpose": [],
-  "tuner": []
+  "amp": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "chorus": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "delay": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "gate": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "overdrive": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "postprocess": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "preprocess": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "reverb": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "ringmod": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "transpose": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "tuner": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ]
 }
