@@ -19,36 +19,36 @@ namespace Overdrive
 {            
     // Module Control
 
-    const controls = [Content.getComponent("knbOverdriveMode"), Content.getComponent("knbOverdriveDrive"), Content.getComponent("knbOverdriveCircuitBend"), Content.getComponent("knbOverdriveBits"), Content.getComponent("knbOverdriveSRReduction"), Content.getComponent("knbOverdriveFoldAmount"), Content.getComponent("knbOverdriveMix"), Content.getComponent("knbOverdriveOutputGain")];    
+    const controls = [Content.getComponent("knbOverdriveMode"), Content.getComponent("knbOverdriveDrive"), Content.getComponent("knbOverdriveCircuitBend"), Content.getComponent("btnOverdriveClearBuffer"), Content.getComponent("knbOverdriveFoldAmount"), Content.getComponent("knbOverdriveBits"), Content.getComponent("knbOverdriveSRReduction"), Content.getComponent("knbOverdriveMix"), Content.getComponent("knbOverdriveOutputGain")];    
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];        
 
     inline function onControl(component, value)
-    {
-        local text = component.get("text");
-        local idx = text.indexOf("_");
-        local mod = text.substring(0, idx);
-        local param = text.substring(idx + 1, text.length);        
+    {                
+        local attribute = component.get("text");
         
         for (slot in fxSlots)
-            if (slot.getCurrentEffectId() == mod)
+            if (slot.getCurrentEffectId() == "overdrive")
             {
                 local effect = slot.getCurrentEffect();
-                local index = effect.getAttributeIndex(param);
+                local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
             
         // conditional UI changes
-        if (text == "overdrive_Mode")
+        if (attribute == "Mode")
         {    
-            if (value == 3) {controls[4].set("visible", false); controls[5].set("visible", false); controls[6].set("visible", true); }           
-            else if (value == 4 || value == 5) {controls[4].set("visible", true); controls[5].set("visible", true); controls[6].set("visible", false); }             
+            if (value == 3) {controls[4].set("visible", true); controls[5].set("visible", false); controls[6].set("visible", false); }           
+            else if (value == 4 || value == 5) {controls[4].set("visible", false); controls[5].set("visible", true); controls[6].set("visible", true); }             
             else {controls[4].set("visible", false); controls[5].set("visible", false); controls[6].set("visible", false); }
+        }
+        if (attribute == "ClearBuffer")
+        {
+            if (value) { controls[2].setValue(0); controls[2].changed(); }
         }
     }   
 	
     for (control in controls) { control.setControlCallback(onControl); }
         
-
     // Look And Feel
 
     const pad = 8;

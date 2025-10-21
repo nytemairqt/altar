@@ -17,22 +17,19 @@
 
 namespace Ringmod
 {   
-    const controls = [Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")];      
+    const controls = [Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")];
+
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];            
     const pnlRingmod = Content.getComponent("pnlRingmod");
 
     inline function onControl(component, value)
     {
-        local text = component.get("text");
-        local idx = text.indexOf("_");
-        local mod = text.substring(0, idx);
-        local param = text.substring(idx + 1, text.length);        
-        
+        local attribute = component.get("text");        
         for (slot in fxSlots)
-            if (slot.getCurrentEffectId() == mod)
+            if (slot.getCurrentEffectId() == "ringmod")
             {
                 local effect = slot.getCurrentEffect();
-                local index = effect.getAttributeIndex(param);
+                local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
     }   

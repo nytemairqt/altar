@@ -17,7 +17,7 @@
 
 namespace Amp
 {   
-    const controls = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
+    const controls = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];    
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];         
     const pnlAmp = Content.getComponent("pnlAmp");
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
@@ -28,21 +28,18 @@ namespace Amp
 
     inline function onControl(component, value)
     {
-        local text = component.get("text");
-        local idx = text.indexOf("_");
-        local mod = text.substring(0, idx);
-        local param = text.substring(idx + 1, text.length);        
+        local attribute = component.get("text");  
         
         for (slot in fxSlots)
-            if (slot.getCurrentEffectId() == mod)
+            if (slot.getCurrentEffectId() == "amp")
             {
                 local effect = slot.getCurrentEffect();
-                local index = effect.getAttributeIndex(param);
+                local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
             
         // conditional UI changes
-        if (text == "amp_Mode")
+        if (attribute == "Mode")
         {
             if (value == 2) {pnlAmpNAMLoader.set("visible", true); btnAmpBrowseNAMTones.set("visible", true); }
             else { pnlAmpNAMLoader.set("visible", false); btnAmpBrowseNAMTones.set("visible", false); }         

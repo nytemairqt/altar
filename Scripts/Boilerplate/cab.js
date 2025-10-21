@@ -17,7 +17,7 @@
 
 namespace Cab
 {   
-	const controls = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
+	const controls = [Content.getComponent("btnCabAEnable"), Content.getComponent("btnCabAPhase"), Content.getComponent("knbCabAGain"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("btnCabBEnable"), Content.getComponent("btnCabBPhase"), Content.getComponent("knbCabBGain"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabMix")];	
 	const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];	
 	const pnlCabALoader = Content.getComponent("pnlCabALoader");
 	const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
@@ -28,16 +28,13 @@ namespace Cab
 
     inline function onControl(component, value)
     {
-        local text = component.get("text");
-        local idx = text.indexOf("_");
-        local mod = text.substring(0, idx);
-        local param = text.substring(idx + 1, text.length);        
+        local attribute = component.get("text");
         
         for (slot in fxSlots)
-            if (slot.getCurrentEffectId() == mod)
+            if (slot.getCurrentEffectId() == "cab")
             {
                 local effect = slot.getCurrentEffect();
-                local index = effect.getAttributeIndex(param);
+                local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
     }   

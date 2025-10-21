@@ -17,22 +17,20 @@
 
 namespace Chorus
 {        
-    const controls = [Content.getComponent("knbChorusMix"), Content.getComponent("knbChorusRate"), Content.getComponent("knbChorusDepth"), Content.getComponent("knbChorusTone"), Content.getComponent("knbChorusVoices"), Content.getComponent("knbChorusFeedback"), Content.getComponent("knbChorusDelayTime")];
+    const controls = [Content.getComponent("knbChorusMix"), Content.getComponent("knbChorusVoices"), Content.getComponent("knbChorusRate"), Content.getComponent("knbChorusDepth"), Content.getComponent("knbChorusFeedback"), Content.getComponent("knbChorusDelayTime"), Content.getComponent("knbChorusTone")];
+
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];        
     const pnlChorus = Content.getComponent("pnlChorus");
 
     inline function onControl(component, value)
     {
-        local text = component.get("text");
-        local idx = text.indexOf("_");
-        local mod = text.substring(0, idx);
-        local param = text.substring(idx + 1, text.length);        
+        local attribute = component.get("text");
         
         for (slot in fxSlots)
-            if (slot.getCurrentEffectId() == mod)
+            if (slot.getCurrentEffectId() == "chorus")
             {
                 local effect = slot.getCurrentEffect();
-                local index = effect.getAttributeIndex(param);
+                local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
     }   

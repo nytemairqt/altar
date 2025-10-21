@@ -1,4 +1,4 @@
-Content.makeFrontInterface(1150, 670); // 700 or 900 for keyboard
+Content.makeFrontInterface(1150, 670); 
 
 include("Boilerplate/pathData.js");
 include("Boilerplate/colourData.js");

@@ -17,23 +17,20 @@
 
 namespace Delay
 {   
-    const controls = [Content.getComponent("knbDelayMix"), Content.getComponent("btnDelayTempoSync"), Content.getComponent("knbDelayMode"), Content.getComponent("knbDelayDelayTime"), Content.getComponent("knbDelayDelayTimeSynced"), Content.getComponent("knbDelayFeedback"), Content.getComponent("knbDelayModulation"), Content.getComponent("knbDelayStereoWidth"), Content.getComponent("knbDelayDamping")];    
+    const var controls = [Content.getComponent("knbDelayMode"), Content.getComponent("knbDelayMix"), Content.getComponent("knbDelayDelayTime"), Content.getComponent("knbDelayDelayTimeSynced"), Content.getComponent("knbDelayFeedback"), Content.getComponent("knbDelayStereoWidth"), Content.getComponent("knbDelayModulation"), Content.getComponent("knbDelayDamping"), Content.getComponent("btnDelayTempoSync")];
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];        
     const pnlDelay = Content.getComponent("pnlDelay");
     const delayTimes = ["1/1", "1/2D", "1/2", "1/2T", "1/4D", "1/4", "1/4T", "1/8D", "1/8", "1/8T", "1/16D", "1/16", "1/16T", "1/32D", "1/32", "1/32T", "1/64D", "1/64", "1/64T"];    
 
     inline function onControl(component, value)
     {
-        local text = component.get("text");
-        local idx = text.indexOf("_");
-        local mod = text.substring(0, idx);
-        local param = text.substring(idx + 1, text.length);        
+        local attribute = component.get("text");
         
         for (slot in fxSlots)
-            if (slot.getCurrentEffectId() == mod)
+            if (slot.getCurrentEffectId() == "delay")
             {
                 local effect = slot.getCurrentEffect();
-                local index = effect.getAttributeIndex(param);
+                local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
     }   
