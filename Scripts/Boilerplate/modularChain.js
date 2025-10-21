@@ -43,15 +43,6 @@ namespace ModularChain
     
     // UI Controls (skip any that have individual logic in their respective namespaces)
     const bypassButtons = [Content.getComponent("btnModularABypass"), Content.getComponent("btnModularBBypass"), Content.getComponent("btnModularCBypass"), Content.getComponent("btnModularDBypass"), Content.getComponent("btnModularEBypass"), Content.getComponent("btnModularFBypass"), Content.getComponent("btnModularGBypass")];            
-    const overdriveControl = [Content.getComponent("knbOverdriveMode"), Content.getComponent("knbOverdriveDrive"), Content.getComponent("knbOverdriveTone"), Content.getComponent("knbOverdriveBits"), Content.getComponent("knbOverdriveSRReduction"), Content.getComponent("knbOverdriveFoldAmount"), Content.getComponent("knbOverdriveMix"), Content.getComponent("knbOverdriveOutputGain")];    
-    const ampControl = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
-    const cabControl = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
-    const reverbControl = [Content.getComponent("knbReverbMix"), Content.getComponent("knbReverbPreDelay"), Content.getComponent("knbReverbRoomSize"), Content.getComponent("knbReverbDecay"), Content.getComponent("knbReverbDampingFrequency"), Content.getComponent("knbReverbChorusDepth")];
-    const delayControl = [Content.getComponent("knbDelayMix"), Content.getComponent("btnDelayTempoSync"), Content.getComponent("knbDelayMode"), Content.getComponent("knbDelayDelayTime"), Content.getComponent("knbDelayDelayTimeSynced"), Content.getComponent("knbDelayFeedback"), Content.getComponent("knbDelayModulation"), Content.getComponent("knbDelayStereoWidth"), Content.getComponent("knbDelayDamping")];    
-    const chorusControl = [Content.getComponent("knbChorusMix"), Content.getComponent("knbChorusRate"), Content.getComponent("knbChorusDepth"), Content.getComponent("knbChorusTone"), Content.getComponent("knbChorusVoices"), Content.getComponent("knbChorusFeedback"), Content.getComponent("knbChorusDelayTime")];
-    const ringmodControl = [Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")]; 
-    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");
-    const btnAmpBrowseNAMTones = Content.getComponent("btnAmpBrowseNAMTones");    
 
     // Ensure slot states are stored with user presets
     for (m in fxModules)
@@ -327,48 +318,11 @@ namespace ModularChain
 
     for (p in pnlFxSlots)
         p.setMouseCallback(mouseCallback);
-
-    // ---------------------------
-    // Bind Parameters
-    // ---------------------------
     
-    inline function onknbModularControl(component, value)
-    {
-        local text = component.get("text");
-        local idx = text.indexOf("_");
-        local mod = text.substring(0, idx);
-        local param = text.substring(idx + 1, text.length);        
-        
-        for (slot in fxSlots)
-            if (slot.getCurrentEffectId() == mod)
-            {
-                local effect = slot.getCurrentEffect();
-                local index = effect.getAttributeIndex(param);
-                effect.setAttribute(index, value);                
-            }
-            
-        // conditional UI changes
-        if (text == "overdrive_Mode")
-        {	
-	        if (value == 3 || value == 4) {overdriveControl[3].set("visible", true); overdriveControl[4].set("visible", true); overdriveControl[5].set("visible", false); }
-	        else if (value == 5) {overdriveControl[3].set("visible", false); overdriveControl[4].set("visible", false); overdriveControl[5].set("visible", true); }
-	        else {overdriveControl[3].set("visible", false); overdriveControl[4].set("visible", false); overdriveControl[5].set("visible", false); }
-        }
-        if (text == "amp_Mode")
-        {
-	        if (value == 2) {pnlAmpNAMLoader.set("visible", true); btnAmpBrowseNAMTones.set("visible", true); }
-	        else { pnlAmpNAMLoader.set("visible", false); btnAmpBrowseNAMTones.set("visible", false); }
-        }
-    }    
-
-    for (c in overdriveControl) { c.setControlCallback(onknbModularControl); }
-    for (c in ampControl) { c.setControlCallback(onknbModularControl); }
-    for (c in cabControl) { c.setControlCallback(onknbModularControl); }    
-    for (c in reverbControl) { c.setControlCallback(onknbModularControl); }    
-    for (c in delayControl) { c.setControlCallback(onknbModularControl); }    
-    for (c in chorusControl) { c.setControlCallback(onknbModularControl); }    
-    for (c in ringmodControl) { c.setControlCallback(onknbModularControl); }
     
+    // ---------------------------
+    // Bind Bypass to Hidden Controls
+    // ---------------------------
     inline function onbtnModularBypassControl(component, value)
     {
         // FIX: map button -> slot index -> effect in that slot

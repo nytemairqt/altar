@@ -17,10 +17,31 @@
 
 namespace Chorus
 {        
-    const pad = 8;
-    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
+    const controls = [Content.getComponent("knbChorusMix"), Content.getComponent("knbChorusRate"), Content.getComponent("knbChorusDepth"), Content.getComponent("knbChorusTone"), Content.getComponent("knbChorusVoices"), Content.getComponent("knbChorusFeedback"), Content.getComponent("knbChorusDelayTime")];
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];        
     const pnlChorus = Content.getComponent("pnlChorus");
 
+    inline function onControl(component, value)
+    {
+        local text = component.get("text");
+        local idx = text.indexOf("_");
+        local mod = text.substring(0, idx);
+        local param = text.substring(idx + 1, text.length);        
+        
+        for (slot in fxSlots)
+            if (slot.getCurrentEffectId() == mod)
+            {
+                local effect = slot.getCurrentEffect();
+                local index = effect.getAttributeIndex(param);
+                effect.setAttribute(index, value);                
+            }
+    }   
+    
+    for (control in controls) { control.setControlCallback(onControl); }
+
+    // Look And Feel
+    const pad = 8;
+    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
     pnlChorus.loadImage("{PROJECT_FOLDER}bgChorus.jpg", "bg");
     pnlChorus.loadImage("{PROJECT_FOLDER}trim.png", "trim");
     pnlChorus.setPaintRoutine(function(g)

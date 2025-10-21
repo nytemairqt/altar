@@ -16,15 +16,32 @@
 */
 
 namespace Ringmod
-{        
-    const clrDarkgrey = 0xFF252525;   
-    const clrWhite = 0xFFFFFFFF;
-    const clrExtradarkgrey = 0xFF171717;
-    const clrGrey = 0xFF808080;   
-    const pad = 8;
-    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
+{   
+    const controls = [Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")];      
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];            
     const pnlRingmod = Content.getComponent("pnlRingmod");
 
+    inline function onControl(component, value)
+    {
+        local text = component.get("text");
+        local idx = text.indexOf("_");
+        local mod = text.substring(0, idx);
+        local param = text.substring(idx + 1, text.length);        
+        
+        for (slot in fxSlots)
+            if (slot.getCurrentEffectId() == mod)
+            {
+                local effect = slot.getCurrentEffect();
+                local index = effect.getAttributeIndex(param);
+                effect.setAttribute(index, value);                
+            }
+    }   
+    
+    for (control in controls) { control.setControlCallback(onControl); }
+        
+    // Look And Feel
+    const pad = 8;
+    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
     pnlRingmod.loadImage("{PROJECT_FOLDER}bgRingmod.jpg", "bg");
     pnlRingmod.loadImage("{PROJECT_FOLDER}trim.png", "trim");
     pnlRingmod.setPaintRoutine(function(g)

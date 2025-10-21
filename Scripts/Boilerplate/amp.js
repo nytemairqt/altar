@@ -16,19 +16,42 @@
 */
 
 namespace Amp
-{    
-    const pad = 8;
-    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
-	
-	const pnlAmp = Content.getComponent("pnlAmp");
+{   
+    const controls = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];         
+    const pnlAmp = Content.getComponent("pnlAmp");
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
-    const grm = Engine.getGlobalRoutingManager();  
-    const namCable = grm.getCable("nam");     
-    const knbAmpMode = Content.getComponent("knbAmpMode");
-    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];    
-    const pnlTooltip = Content.getComponent("pnlTooltip"); 
     const btnAmpBrowseNAMTones = Content.getComponent("btnAmpBrowseNAMTones");
-       
+    const grm = Engine.getGlobalRoutingManager();  
+    const namCable = grm.getCable("nam");
+    const pnlTooltip = Content.getComponent("pnlTooltip"); 
+
+    inline function onControl(component, value)
+    {
+        local text = component.get("text");
+        local idx = text.indexOf("_");
+        local mod = text.substring(0, idx);
+        local param = text.substring(idx + 1, text.length);        
+        
+        for (slot in fxSlots)
+            if (slot.getCurrentEffectId() == mod)
+            {
+                local effect = slot.getCurrentEffect();
+                local index = effect.getAttributeIndex(param);
+                effect.setAttribute(index, value);                
+            }
+            
+        // conditional UI changes
+        if (text == "amp_Mode")
+        {
+            if (value == 2) {pnlAmpNAMLoader.set("visible", true); btnAmpBrowseNAMTones.set("visible", true); }
+            else { pnlAmpNAMLoader.set("visible", false); btnAmpBrowseNAMTones.set("visible", false); }         
+        }
+    }   
+    
+    for (control in controls) { control.setControlCallback(onControl); }
+
+    // NAM Loader        
     inline function pnlAmpNAMLoaderDrop(f)
     {
         if(f.drop)
@@ -51,9 +74,12 @@ namespace Amp
                 pnlAmpNAMLoader.repaint();
             });
         }       
-       	else if (event.hover) { pnlTooltip.set("text", this.get("tooltip")); }
-       	 
+       	else if (event.hover) { pnlTooltip.set("text", this.get("tooltip")); }       	 
     }
+
+    // Look And Feel
+    const pad = 8;
+    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];                      
             
     pnlAmpNAMLoader.setPaintRoutine(function(g)
     {

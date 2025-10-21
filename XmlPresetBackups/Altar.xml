@@ -19,7 +19,7 @@
             <Control type="ScriptButton" id="btnTranspose" value="0.0"/>
             <Control type="ScriptButton" id="btnTransposeSnap" value="0.0"/>
             <Control type="ScriptSlider" id="knbOctave" value="0.0"/>
-            <Control type="ScriptButton" id="btnOctave" value="1.0"/>
+            <Control type="ScriptButton" id="btnOctave" value="0.0"/>
             <Control type="ScriptSlider" id="knbChugStrength" value="0.0"/>
             <Control type="ScriptButton" id="btnChug" value="0.0"/>
             <Control type="ScriptSlider" id="knbPickStrength" value="0.0"/>
@@ -28,12 +28,12 @@
             <Control type="ScriptButton" id="btnWhistle" value="0.0"/>
             <Control type="ScriptSlider" id="knbLofi" value="1.0"/>
             <Control type="ScriptButton" id="btnLofi" value="0.0"/>
-            <Control type="ScriptComboBox" id="cmbOversampling" value="1.0"/>
-            <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
+            <Control type="ScriptComboBox" id="cmbOversampling" value="2.0"/>
+            <Control type="ScriptSlider" id="knbOutputGain" value="-13.82999992370605"/>
             <Control type="ScriptButton" id="btnLimiter" value="1.0"/>
             <Control type="ScriptButton" id="btnShowPreProcess" value="0.0"/>
             <Control type="ScriptButton" id="btnShowPostProcess" value="0.0"/>
-            <Control type="ScriptButton" id="btnModularABypass" value="0.0"/>
+            <Control type="ScriptButton" id="btnModularABypass" value="1.0"/>
             <Control type="ScriptButton" id="btnModularBBypass" value="1.0"/>
             <Control type="ScriptButton" id="btnModularCBypass" value="1.0"/>
             <Control type="ScriptButton" id="btnModularDBypass" value="0.0"/>
@@ -41,11 +41,12 @@
             <Control type="ScriptButton" id="btnModularFBypass" value="0.0"/>
             <Control type="ScriptButton" id="btnModularGBypass" value="0.0"/>
             <Control type="ScriptSlider" id="knbOverdriveMode" value="0.0"/>
-            <Control type="ScriptSlider" id="knbOverdriveDrive" value="0.0"/>
-            <Control type="ScriptSlider" id="knbOverdriveTone" value="0.0"/>
+            <Control type="ScriptSlider" id="knbOverdriveDrive" value="0.1000000014901161"/>
+            <Control type="ScriptSlider" id="knbOverdriveCircuitBend" value="0.0"/>
+            <Control type="ScriptButton" id="btnOverdriveClearBuffer" value="0.0"/>
             <Control type="ScriptSlider" id="knbOverdriveMix" value="1.0"/>
-            <Control type="ScriptSlider" id="knbOverdriveSRReduction" value="0.0"/>
-            <Control type="ScriptSlider" id="knbOverdriveBits" value="1.0"/>
+            <Control type="ScriptSlider" id="knbOverdriveSRReduction" value="13.80000019073486"/>
+            <Control type="ScriptSlider" id="knbOverdriveBits" value="8.0"/>
             <Control type="ScriptSlider" id="knbOverdriveFoldAmount" value="1.0"/>
             <Control type="ScriptSlider" id="knbOverdriveOutputGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMode" value="1.0"/>
@@ -54,7 +55,7 @@
             <Control type="ScriptSlider" id="knbAmpMid" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpHigh" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpPresence" value="0.0"/>
-            <Control type="ScriptSlider" id="knbAmpOutput" value="1.490116119384766e-6"/>
+            <Control type="ScriptSlider" id="knbAmpOutput" value="-10.39999866485596"/>
             <Control type="ScriptPanel" id="pnlAmpNAMLoader" value="0.0"/>
             <Control type="ScriptButton" id="btnAmpBrowseNAMTones" value="0.0"/>
             <Control type="ScriptButton" id="btnCabALoadPrev" value="0.0"/>
@@ -69,7 +70,7 @@
             <Control type="ScriptSlider" id="knbCabADistance" value="20000.0"/>
             <Control type="ScriptSlider" id="knbCabAAxis" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAPan" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabAGain" value="0.0"/>
+            <Control type="ScriptSlider" id="knbCabAGain" value="1.490116119384766e-6"/>
             <Control type="ScriptButton" id="btnCabAPhase" value="0.0"/>
             <Control type="ScriptButton" id="btnCabBEnable" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabBAxis" value="0.0"/>
@@ -231,28 +232,29 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="octave" Bypassed="0" Network="octave"
+        <Processor Type="Hardcoded Master FX" ID="octave" Bypassed="1" Network="octave"
                    Octave="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="1" Network="overdrive"
-                   Mode="0.0" Oversampling="0.0" Drive="0.0" Tone="0.0" ToneFreq="1.0"
-                   OutputGain="0.0" Mix="1.0" Bits="1.0" SRReduction="0.0" FoldAmount="1.0">
+        <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="0" Network="overdrive"
+                   Mode="0.0" Oversampling="1.0" Drive="0.1000000014901161" CircuitBend="0.0"
+                   ToneFreq="440.0" OutputGain="0.0" Mix="1.0" Bits="8.0" SRReduction="13.80000019073486"
+                   FoldAmount="1.0" ClearBuffer="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="amp"
-                   Mode="1.0" Oversampling="0.0" InputGain="1.490116119384766e-6"
-                   Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="1.490116119384766e-6">
+                   Mode="1.0" Oversampling="1.0" InputGain="1.490116119384766e-6"
+                   Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="-10.39999866485596">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularC" Bypassed="0" Network="cab"
                    Mix="0.0" CabAEnable="1.0" CabADelay="0.0" CabAAxis="0.0" CabADistance="20000.0"
-                   CabAPhase="0.0" CabAPan="0.0" CabAGain="0.0" CabBEnable="0.0"
-                   CabBDelay="0.0" CabBAxis="0.0" CabBDistance="20000.0" CabBPhase="0.0"
-                   CabBPan="0.0" CabBGain="0.0">
+                   CabAPhase="0.0" CabAPan="0.0" CabAGain="1.490116119384766e-6"
+                   CabBEnable="0.0" CabBDelay="0.0" CabBAxis="0.0" CabBDistance="20000.0"
+                   CabBPhase="0.0" CabBPan="0.0" CabBGain="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
           <AudioFiles>
@@ -314,8 +316,8 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="SimpleGain" ID="outputGain" Bypassed="0" Gain="0.0" Delay="0.0"
-                   Width="100.0" Balance="0.0" InvertPolarity="0.0">
+        <Processor Type="SimpleGain" ID="outputGain" Bypassed="0" Gain="-13.82999992370605"
+                   Delay="0.0" Width="100.0" Balance="0.0" InvertPolarity="0.0">
           <ChildProcessors>
             <Processor Type="ModulatorChain" ID="Gain Modulation" Bypassed="0" Intensity="1.0">
               <ChildProcessors/>
@@ -387,7 +389,7 @@
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors>
-            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="1998.0"
+            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="2028.0"
                        CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
               <ChildProcessors/>
               <MidiFiles>
@@ -8367,8 +8369,127 @@
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>
-                <MidiFile ID="" Data="35.nT6K8ChFQC..MQEZjA...X..A.P.miRSTI2Z....D.v+u.."
-                          FileName="">
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
+                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
+                                 LoopEnd="1.0" Tempo="120.0"/>
+                </MidiFile>
+                <MidiFile ID="" Data="23.nT6K8ChCwA..MQEZjA...X..A...miB" FileName="">
                   <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
                                  LoopEnd="1.0" Tempo="120.0"/>
                 </MidiFile>

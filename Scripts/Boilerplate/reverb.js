@@ -16,14 +16,34 @@
 */
 
 namespace Reverb
-{            
+{   
+    const controls = [Content.getComponent("knbReverbMix"), Content.getComponent("knbReverbPreDelay"), Content.getComponent("knbReverbRoomSize"), Content.getComponent("knbReverbDecay"), Content.getComponent("knbReverbDampingFrequency"), Content.getComponent("knbReverbChorusDepth")];         
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];                
+    const pnlReverb = Content.getComponent("pnlReverb");    
+
+    inline function onControl(component, value)
+    {
+        local text = component.get("text");
+        local idx = text.indexOf("_");
+        local mod = text.substring(0, idx);
+        local param = text.substring(idx + 1, text.length);        
+        
+        for (slot in fxSlots)
+            if (slot.getCurrentEffectId() == mod)
+            {
+                local effect = slot.getCurrentEffect();
+                local index = effect.getAttributeIndex(param);
+                effect.setAttribute(index, value);                
+            }
+    }   
+    
+    for (control in controls) { control.setControlCallback(onControl); }    
+    
+    // Look And Feel
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
-    const pnlReverb = Content.getComponent("pnlReverb");        
-    
     pnlReverb.loadImage("{PROJECT_FOLDER}bgReverb.jpg", "bg");
     pnlReverb.loadImage("{PROJECT_FOLDER}trim.png", "trim");
-
     pnlReverb.setPaintRoutine(function(g)
     {               
         var stripHeight = 140;

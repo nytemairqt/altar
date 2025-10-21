@@ -17,6 +17,7 @@
 
 namespace Cab
 {   
+	const controls = [Content.getComponent("knbCabMix"), Content.getComponent("btnCabAEnable"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase"), Content.getComponent("btnCabBEnable"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain")];
 	const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];	
 	const pnlCabALoader = Content.getComponent("pnlCabALoader");
 	const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
@@ -25,8 +26,23 @@ namespace Cab
 	
 	Engine.loadAudioFilesIntoPool();
 
-    const pad = 8;
-    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
+    inline function onControl(component, value)
+    {
+        local text = component.get("text");
+        local idx = text.indexOf("_");
+        local mod = text.substring(0, idx);
+        local param = text.substring(idx + 1, text.length);        
+        
+        for (slot in fxSlots)
+            if (slot.getCurrentEffectId() == mod)
+            {
+                local effect = slot.getCurrentEffect();
+                local index = effect.getAttributeIndex(param);
+                effect.setAttribute(index, value);                
+            }
+    }   
+	
+    for (control in controls) { control.setControlCallback(onControl); }
 		
 	// Drop
 	inline function pnlCabALoaderDrop(f)
@@ -108,6 +124,10 @@ namespace Cab
     
     pnlCabALoader.setMouseCallback(pnlCabALoaderClick);
     pnlCabBLoader.setMouseCallback(pnlCabBLoaderClick);
+
+    // Look And Feel
+    const pad = 8;
+    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
     
     inline function pnlCabLoaderPaintRoutine(g)
     {
