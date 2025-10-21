@@ -33,6 +33,9 @@ namespace Delay
                 local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
+
+        // conditional UI changes
+        if (attribute == "TempoSync") { controls[2].set("visible", 1-value); controls[3].set("visible", value); }
     }   
     
     for (control in controls) { control.setControlCallback(onControl); }

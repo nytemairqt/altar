@@ -3,13 +3,13 @@
 <ContentProperties DeviceType="Desktop">
   <Component type="ScriptPanel" id="pnlMaster" x="0.0" y="0.0" width="1150.0"
              height="670.0">
-    <Component type="ScriptButton" id="btnShowPreferences" x="50.0" y="10.0"
+    <Component type="ScriptButton" id="btnShowPreferences" x="230.0" y="10.0"
                width="80.0" parentComponent="pnlMaster" tooltip="Open preferences."
-               text="Prefs" height="30.0"/>
-    <Component type="ScriptButton" id="btnShowTuner" x="140.0" y="10.0" width="80.0"
+               text="Settings" height="30.0"/>
+    <Component type="ScriptButton" id="btnShowTuner" x="50.0" y="10.0" width="80.0"
                parentComponent="pnlMaster" tooltip="Open tuner panel." text="Tuner"
                height="30.0"/>
-    <Component type="ScriptButton" id="btnShowClick" x="230.0" y="10.0" width="80.0"
+    <Component type="ScriptButton" id="btnShowClick" x="140.0" y="10.0" width="80.0"
                parentComponent="pnlMaster" tooltip="Open click panel." text="Click"
                height="30.0"/>
     <Component type="ScriptPanel" id="pnlTopBar" x="0.0" y="50.0" parentComponent="pnlMaster"
@@ -228,8 +228,7 @@
                textColour="4289374890"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="150.0" y="250.0" width="850.0"
-             height="400.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0">
+             height="400.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptLabel" id="lblOverdrive" x="365.0" y="20.0" text="OVERDRIVE"
                width="120.0" parentComponent="pnlOverdrive" height="30.0" fontStyle="Bold"
                editable="0"/>
@@ -549,7 +548,7 @@
                  text="Mode" parentComponent="knbDelayMode" height="30.0" editable="0"
                  fontStyle="Bold"/>
     </Component>
-    <Component type="ScriptSlider" id="knbDelayMix" x="144.0" y="152.0" text="Mix"
+    <Component type="ScriptSlider" id="knbDelayMix" x="144.0" y="152" text="Mix"
                width="96.0" middlePosition="0.5" defaultValue="0.5" parentComponent="pnlDelay"
                height="96.0" suffix="%" tooltip="Adjust delay mix." isPluginParameter="1"
                pluginParameterName="Delay Mix">
@@ -557,10 +556,10 @@
                  text="Mix" parentComponent="knbDelayMix" height="30.0" editable="0"
                  fontStyle="Bold"/>
     </Component>
-    <Component type="ScriptSlider" id="knbDelayDelayTime" x="258.0" y="152.0"
+    <Component type="ScriptSlider" id="knbDelayDelayTime" x="258.0" y="152"
                text="DelayTime" width="96.0" min="0.009999999776482582" max="4.0"
                middlePosition="2.0" defaultValue="2.0" parentComponent="pnlDelay"
-               height="96.0" tooltip="Adjust delay time (ms).">
+               height="96.0" tooltip="Adjust delay time (ms)." visible="0.0">
       <Component type="ScriptLabel" id="lblDelayDelayTime" x="0.0" y="54.0" width="96.0"
                  text="Time" parentComponent="knbDelayDelayTime" height="30.0"
                  editable="0" fontStyle="Bold"/>
@@ -598,19 +597,20 @@
                  width="96.0" text="Width" parentComponent="knbDelayStereoWidth"
                  height="30.0" editable="0" fontStyle="Bold"/>
     </Component>
-    <Component type="ScriptButton" id="btnDelayTempoSync" x="240.0" y="270.0"
-               text="TempoSync" parentComponent="pnlDelay" tooltip="Sync delay to DAW.">
-      <Component type="ScriptLabel" id="lblDelayTempoSync" x="0.0" y="54.0" width="96.0"
-                 text="Sync" parentComponent="btnDelayTempoSync" height="30.0"
-                 editable="0" fontStyle="Bold"/>
-    </Component>
-    <Component type="ScriptSlider" id="knbDelayDelayTimeSynced" x="258.0" y="50.0"
+    <Component type="ScriptSlider" id="knbDelayDelayTimeSynced" x="258.0" y="152"
                text="DelayTimeSynced" width="96.0" max="18.0" middlePosition="9.0"
                defaultValue="5.0" parentComponent="pnlDelay" stepSize="1.0"
                height="96.0" tooltip="Adjust delay time (synced).">
       <Component type="ScriptLabel" id="lblDelayDelayTimeSynced" x="0.0" y="54.0"
                  width="96.0" text="TimeSynced" parentComponent="knbDelayDelayTimeSynced"
                  height="30.0" editable="0" fontStyle="Bold"/>
+    </Component>
+    <Component type="ScriptButton" id="btnDelayTempoSync" x="338.0" y="152.0"
+               text="TempoSync" parentComponent="pnlDelay" tooltip="Sync delay to DAW."
+               width="16.0" height="16.0">
+      <Component type="ScriptLabel" id="lblDelayTempoSync" x="0.0" y="54.0" width="96.0"
+                 text="Sync" parentComponent="btnDelayTempoSync" height="30.0"
+                 editable="0" fontStyle="Bold"/>
     </Component>
   </Component>
   <Component type="ScriptPanel" id="pnlChorus" x="150.0" y="250.0" width="850.0"
@@ -677,7 +677,8 @@
     </Component>
   </Component>
   <Component type="ScriptPanel" id="pnlRingmod" x="150.0" y="250.0" width="850.0"
-             height="400.0" itemColour="4278190080" itemColour2="4278190080">
+             height="400.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0">
     <Component type="ScriptLabel" id="lblRingmod" x="365.0" y="20.0" width="120.0"
                text="RINGMOD" parentComponent="pnlRingmod" height="30.0" fontStyle="Bold"
                editable="0"/>

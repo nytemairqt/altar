@@ -29,6 +29,10 @@ namespace Preferences
 	const clrExtradarkgrey = 0xFF171717;
 	const clrGrey = 0xFF808080;   
 	
+	const isPlugin = Engine.isPlugin();
+	
+	if (isPlugin) { btnShowPreferences.setVisible(false); }
+	
 	const start = -Math.PI * 0.75;	
 	
 	inline function onbtnShowPreferencesControl(component, value)
