@@ -22,9 +22,25 @@ namespace PresetBrowser
     const btnPresetNext = Content.getComponent("btnPresetNext");
     const pnlPresetBrowser = Content.getComponent("pnlPresetBrowser");
     const fltPresetBrowser = Content.getComponent("fltPresetBrowser");
-    
+    const knbGateThreshold = Content.getComponent("knbGateThreshold");
+    const presetHandler = Engine.createUserPresetHandler();    
     const bounds = [0, 50, 1150, 650];
+    reg gateValue = knbGateThreshold.get("defaultValue");
     
+    presetHandler.setPreCallback(function(presetData)
+    {
+	   gateValue = knbGateThreshold.getValue(); 
+    });
+    
+    presetHandler.setPostCallback(function(presetData)
+    {
+		if (!presetHandler.isInternalPresetLoad())
+		{
+		    knbGateThreshold.setValue(gateValue);
+		    knbGateThreshold.changed();		    
+	    }
+    });
+            
 	pnlPresetBrowser.setMouseCallback(function(event)
     {
         var x = bounds[0];
@@ -59,4 +75,7 @@ namespace PresetBrowser
     
     btnPresetPrev.setControlCallback(onbtnPresetCycleControl);
     btnPresetNext.setControlCallback(onbtnPresetCycleControl);
+    
+    
+    
 }
