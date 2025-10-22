@@ -13,6 +13,7 @@
 // Include third party header files ----------------
 
 #include "amp.h"
+#include "cabDesigner.h"
 #include "chorus.h"
 #include "delay.h"
 #include "gate.h"

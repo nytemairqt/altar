@@ -25,6 +25,7 @@ enum class GlobalCablesAmp
     nam = 2
 };
 
+
 namespace project
 {
 using namespace juce;

@@ -25,6 +25,28 @@
           <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
         </Parameters>
       </Node>
+      <Node ID="xfader1" FactoryPath="control.xfader" Bypassed="0" Name="xfader1">
+        <Properties>
+          <Property ID="NumParameters" Value="2"/>
+          <Property ID="Mode" Value="Linear"/>
+        </Properties>
+        <SwitchTargets>
+          <SwitchTarget>
+            <Connections>
+              <Connection NodeId="mul" ParameterId="Value"/>
+              <Connection NodeId="mul1" ParameterId="Value"/>
+            </Connections>
+          </SwitchTarget>
+          <SwitchTarget>
+            <Connections>
+              <Connection NodeId="mul2" ParameterId="Value"/>
+            </Connections>
+          </SwitchTarget>
+        </SwitchTargets>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+        </Parameters>
+      </Node>
       <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
         <Nodes>
           <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
@@ -147,6 +169,11 @@
                              SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
                   <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                              SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="mul" FactoryPath="math.mul" Bypassed="0" Name="mul">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
                 </Parameters>
               </Node>
             </Nodes>
@@ -274,6 +301,21 @@
                              SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                 </Parameters>
               </Node>
+              <Node ID="mul1" FactoryPath="math.mul" Bypassed="0" Name="mul1">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain2">
+            <Nodes>
+              <Node ID="mul2" FactoryPath="math.mul" Bypassed="0" Name="mul2">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                </Parameters>
+              </Node>
             </Nodes>
             <Parameters/>
           </Node>
@@ -371,6 +413,12 @@
                  DefaultValue="" Value="1.490116105173911e-6">
         <Connections>
           <Connection NodeId="gain4" ParameterId="Gain"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="CabDesignerBypass" MinValue="0.0" MaxValue="1.0" StepSize="0.01"
+                 ExternalModulation="Disabled" DefaultValue="" Value="1.0">
+        <Connections>
+          <Connection NodeId="xfader1" ParameterId="Value"/>
         </Connections>
       </Parameter>
     </Parameters>

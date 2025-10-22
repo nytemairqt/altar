@@ -22,7 +22,7 @@ namespace Cab
 	const pnlCabALoader = Content.getComponent("pnlCabALoader");
 	const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
 	const pnlCab = Content.getComponent("pnlCab");
-	const pnlTooltip = Content.getComponent("pnlTooltip");
+	const pnlTooltip = Content.getComponent("pnlTooltip");	
 	
 	Engine.loadAudioFilesIntoPool();
 
@@ -152,8 +152,6 @@ namespace Cab
         g.drawRoundedRectangle(bounds, 0.0, 3.0);                
         g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
-
-    
 
 
 }

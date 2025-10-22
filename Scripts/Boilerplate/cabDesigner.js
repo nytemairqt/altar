@@ -20,15 +20,19 @@ namespace CabDesigner
 	const cabDesignerFileSave = Synth.getAudioSampleProcessor("cabDesignerFileSave");
     const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");
     const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
-    const btnCabGenerate = Content.getComponent("btnCabGenerate");    
+    const btnCabDesignerGenerate = Content.getComponent("btnCabDesignerGenerate");
+    const cabDesigner = Synth.getEffect("cabDesigner");
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];	
+    const bounds = [150, 250, 850, 400];
+
+
     const btnCabSave = Content.getComponent("btnCabSave");
     const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
     const cmbCabDesignerSpeaker = Content.getComponent("cmbCabDesignerSpeaker");
     const cmbCabDesignerMic = Content.getComponent("cmbCabDesignerMic");
     const knbCabDesignerMojo = Content.getComponent("knbCabDesignerMojo");
     const knbCabDesignerAge = Content.getComponent("knbCabDesignerAge");
-    const lblCabSaveName = Content.getComponent("lblCabSaveName");
-    const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");
+    const lblCabSaveName = Content.getComponent("lblCabSaveName");   
     const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
 
     var eventList = []; // used by cab apparently
@@ -40,14 +44,22 @@ namespace CabDesigner
     
     cabDesignerMIDIPlayer.create(4, 4, 1);
 
-    pnlCabDesigner.setPaintRoutine(function(g) // move to LAF later
-    {
-        var bounds = [145, 310, 860, 490];
 
-        g.setColour(Colours.withAlpha(Colours.black, 1.0));
-        g.fillRoundedRectangle(bounds, 2.0);
-    });
-
+	pnlCabDesigner.loadImage("{PROJECT_FOLDER}bgCab.jpg", "bg");
+    pnlCabDesigner.loadImage("{PROJECT_FOLDER}trim.png", "trim");
+    pnlCabDesigner.setPaintRoutine(function(g)
+    {               
+        var stripHeight = 140;
+        var pad = 8;
+        var padded = [bounds[0] + pad, bounds[1] + pad, bounds[2] - (pad * 2), bounds[3] - (pad * 2)];
+        g.drawImage("bg", padded, 0, 0);
+        g.drawImage("trim", padded, 0, 0);
+        g.setColour(ColourData.clrComponentBGGrey);
+        g.fillRoundedRectangle([bounds[0] + pad, bounds[1] + bounds[3] / 2 - (stripHeight / 2), bounds[2] - pad * 2, stripHeight], 2.0);
+        g.setColour(ColourData.clrDarkgrey);
+        g.drawRoundedRectangle(bounds, 0.0, 3.0);                
+        g.drawRoundedRectangle([bounds[0] + pad, bounds[1] + bounds[3] / 2 - (stripHeight / 2), bounds[2] - pad * 2, stripHeight], 2.0, 2.0);
+    });   
 
     pnlCabDesigner.setMouseCallback(function(event)
     {
@@ -188,8 +200,17 @@ namespace CabDesigner
     }
 
     inline function onbtnShowCabDesignerControl(component, value)
-    {                
-        pnlCabDesigner.set("visible", value);   
+    {                         
+        local attribute = component.get("text");                
+        for (slot in fxSlots)
+            if (slot.getCurrentEffectId() == "cab")
+            {
+                local effect = slot.getCurrentEffect();
+                local index = effect.getAttributeIndex(attribute);
+                effect.setAttribute(index, value);                
+            }
+        cabDesigner.setBypassed(1-value);
+        pnlCabDesigner.set("visible", value);  
     }
 
     btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);
@@ -199,17 +220,17 @@ namespace CabDesigner
         if (!value)
             return;
 
-        local gain = 0.0;
-        local q = 0.0;
-        local freq = 0;
-        local mojoGain = 0.0;
-
-        Console.print("generated a cab!");
+        //local gain = 0.0;
+        //local q = 0.0;
+        //local freq = 0;
+        //local mojoGain = 0.0;
+	//
+	//        Console.print("generated a cab!");
 
         // call a third-party node function to randomize cab        
     }
 
-    btnCabGenerate.setControlCallback(onbtnCabGenerateControl);
+    //btnCabDesignerGenerate.setControlCallback(onbtnCabGenerateControl);
 
     inline function onbtnCabSaveControl(component, value)
     {
