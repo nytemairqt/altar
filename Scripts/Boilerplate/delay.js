@@ -19,8 +19,7 @@ namespace Delay
 {   
     const var controls = [Content.getComponent("knbDelayMode"), Content.getComponent("knbDelayMix"), Content.getComponent("knbDelayDelayTime"), Content.getComponent("knbDelayDelayTimeSynced"), Content.getComponent("knbDelayFeedback"), Content.getComponent("knbDelayStereoWidth"), Content.getComponent("knbDelayModulation"), Content.getComponent("knbDelayDamping"), Content.getComponent("btnDelayTempoSync")];
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];        
-    const pnlDelay = Content.getComponent("pnlDelay");
-    const delayTimes = ["1/1", "1/2D", "1/2", "1/2T", "1/4D", "1/4", "1/4T", "1/8D", "1/8", "1/8T", "1/16D", "1/16", "1/16T", "1/32D", "1/32", "1/32T", "1/64D", "1/64", "1/64T"];    
+    const pnlDelay = Content.getComponent("pnlDelay");    
 
     inline function onControl(component, value)
     {

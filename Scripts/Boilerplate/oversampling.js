@@ -17,8 +17,6 @@
 
 namespace Oversampling
 {
-	const clrDarkgrey = 0xFF252525; 
-	const clrWhite = 0xFFFFFFFF;	
 	
 	const fxSlots = [
 	        Synth.getSlotFX("modularA"),
@@ -48,9 +46,9 @@ namespace Oversampling
 	cmbOversamplingLAF.registerFunction("drawComboBox", function(g, obj)
     {	        	
 	    // BG & Text
-	    g.setColour(obj.hover ? 0xFF2C2C2C : clrDarkgrey);
+	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
 	    g.fillRoundedRectangle(obj.area, 4.0);	    
-	    g.setColour(clrWhite);
+	    g.setColour(ColourData.clrWhite);
 	    g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");	    
 	    
 	    // Triangle

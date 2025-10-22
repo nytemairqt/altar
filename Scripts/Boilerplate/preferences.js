@@ -24,10 +24,6 @@ namespace Preferences
 	
 	const bounds = [75, 50, 440, 250];		
 	
-	const clrDarkgrey = 0xFF252525;   
-	const clrWhite = 0xFFFFFFFF;
-	const clrExtradarkgrey = 0xFF171717;
-	const clrGrey = 0xFF808080;   
 	
 	const isPlugin = Engine.isPlugin();
 	
@@ -44,9 +40,9 @@ namespace Preferences
 	
 	pnlPreferences.setPaintRoutine(function(g)
     {        
-        g.setColour(clrExtradarkgrey);
+        g.setColour(ColourData.clrExtradarkgrey);
         g.fillRoundedRectangle(bounds, 2.0);
-        g.setColour(clrGrey);
+        g.setColour(ColourData.clrGrey);
         g.drawRoundedRectangle(bounds, 2.0, 2.0);
     });
 
@@ -67,9 +63,9 @@ namespace Preferences
     fltPreferencesLAF.registerFunction("drawComboBox", function(g, obj)
     {	        	
 	    // BG & Text
-	    g.setColour(obj.hover ? 0xFF2C2C2C : clrDarkgrey);
+	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
 	    g.fillRoundedRectangle(obj.area, 4.0);	    
-	    g.setColour(clrWhite);
+	    g.setColour(ColourData.clrWhite);
 	    g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");	    
 	    
 	    // Triangle

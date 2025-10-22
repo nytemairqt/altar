@@ -31,7 +31,7 @@ namespace LookAndFeel
 	const LAFButtonOpenCabDesigner = Content.createLocalLookAndFeel();
 	const LAFButtonOpenCabFolder = Content.createLocalLookAndFeel();
 	const LAFButtonEQFirst = Content.createLocalLookAndFeel();		
-	const LAFButtonLock = Content.createLocalLookAndFeel();	
+	const LAFButtonLock = Content.createLocalLookAndFeel();		
 		
 	const start = -Math.PI * 0.75;	
 	
@@ -109,6 +109,7 @@ namespace LookAndFeel
 				case "knbOverdriveMode": return basicSlider(g, obj, ["Fuzz", "Screamer", "RAT", "Wavefolder", "Bitcrusher", "Glitch"]); break;
 				case "knbAmpMode": return basicSlider(g, obj, ["Clean", "Drive", "NAM"]); break;
 				case "knbDelayMode": return basicSlider(g, obj, ["Normal", "Reverse", "Glitch"]); break;
+				case "knbDelayDelayTimeSynced" : return basicSlider(g, obj, ["1/1", "1/2D", "1/2", "1/2T", "1/4D", "1/4", "1/4T", "1/8D", "1/8", "1/8T", "1/16D", "1/16", "1/16T", "1/32D", "1/32", "1/32T", "1/64D", "1/64", "1/64T"]); break;
 				// FIX ME: ADD DELAY GLITCH MODES (AFTER FIXING MODULATION)
 				default: return basicSlider(g, obj, [""]); break;
 			}

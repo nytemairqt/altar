@@ -31,23 +31,16 @@ namespace Tuner
 	reg inTune = false;
 	reg direction = "";
    	
-    inline function onbtnShowTunerControl(component, value) { pnlTuner.set("visible", value); }    
-    inline function onbtnTunerMonitorControl(component, value) {} //{ tuner.setAttribute(tuner.Monitor, 1-value); }
+    inline function onbtnShowTunerControl(component, value) { pnlTuner.set("visible", value); }        
     btnShowTuner.setControlCallback(onbtnShowTunerControl);
-    btnTunerMonitor.setControlCallback(onbtnTunerMonitorControl);
     
     const bounds = [165, 50, 340, 240];
-    const clrGrey = 0xFF808080;       
-    const clrWhite = 0xFFFFFFFF;
-    const clrExtradarkgrey = 0xFF171717;
-    const clrLightgrey = 0xFFD3D3D3; 
-    const clrLightblue = 0xFFADD8E6;
 
     pnlTuner.setPaintRoutine(function(g)
     {        		
-        g.setColour(clrExtradarkgrey);
+        g.setColour(ColourData.clrExtradarkgrey);
         g.fillRoundedRectangle(bounds, 2.0);
-        g.setColour(clrGrey);
+        g.setColour(ColourData.clrGrey);
         g.drawRoundedRectangle(bounds, 2.0, 2.0);
     });
 
@@ -79,14 +72,14 @@ namespace Tuner
 	    else
 	    	pitchRect = [(this.getWidth() / 2 - devRect) - pW, this.getHeight() / 2 - pW, pW * 2, pW * 2];	    	   	
 	    	       
-   	    g.setColour(clrLightgrey);
+   	    g.setColour(ColourData.clrLightgrey);
    	    g.drawLine(lX, this.getWidth() - lX, lH, lH, 2.0);   
-   	    g.setColour(clrExtradarkgrey);   	    
+   	    g.setColour(ColourData.clrExtradarkgrey);   	    
    	    g.fillRoundedRectangle(targetRect, 2.0);
-   	    g.setColour(clrLightgrey);
+   	    g.setColour(ColourData.clrLightgrey);
    	    g.drawRoundedRectangle(targetRect, 2.0, 2.0);
    	       	    
-   	    g.setColour(detectedInTune ? clrLightblue : clrLightgrey);
+   	    g.setColour(detectedInTune ? ColourData.clrLightblue : ColourData.clrLightgrey);
    	    g.fillRoundedRectangle(pitchRect, 2.0);   	       	    
     }
     

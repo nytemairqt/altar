@@ -20,10 +20,13 @@ namespace TransportHandler
     const grm = Engine.getGlobalRoutingManager();  
     const tempoCable = grm.getCable("tempo");     
     tempoCable.setRange(20.0, 260.0);
-    const transportHandler = Engine.createTransportHandler();        
+    const transportHandler = Engine.createTransportHandler();      
+    const lblDelayBPM = Content.getComponent("lblDelayBPM");          
 
     inline function tempoChange(newTempo)
     {
+		lblDelayBPM.set("text", newTempo);
+
         tempoCable.sendData(newTempo);        
     }
 

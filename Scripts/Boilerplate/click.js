@@ -59,7 +59,8 @@ namespace Click
     
     inline function onknbClickTempoControl(component, value)
     {		
-	    Engine.setHostBpm(value);
+    	if (!isPlugin)
+	    	Engine.setHostBpm(value);
     }   
     
     knbClickTempo.setControlCallback(onknbClickTempoControl);   
