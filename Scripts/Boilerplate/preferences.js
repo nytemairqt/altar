@@ -24,11 +24,6 @@ namespace Preferences
 	
 	const bounds = [75, 50, 440, 250];		
 	
-	
-	const isPlugin = Engine.isPlugin();
-	
-	if (isPlugin) { btnShowPreferences.setVisible(false); }
-	
 	const start = -Math.PI * 0.75;	
 	
 	inline function onbtnShowPreferencesControl(component, value)
@@ -62,11 +57,15 @@ namespace Preferences
     
     fltPreferencesLAF.registerFunction("drawComboBox", function(g, obj)
     {	        	
+    	var isPlugin = Engine.isPlugin();
+    	
 	    // BG & Text
 	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
 	    g.fillRoundedRectangle(obj.area, 4.0);	    
 	    g.setColour(ColourData.clrWhite);
-	    g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");	    
+	    
+	    if (!isPlugin) { g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left"); }	    	
+	    else { g.drawAlignedText("Disabled in plugin.", [8, 0, obj.area[2] - 16, obj.area[3]], "left"); }
 	    
 	    // Triangle
 	    var tXPad = 24;
