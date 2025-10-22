@@ -17,7 +17,7 @@
 
 namespace Ringmod
 {   
-    const controls = [Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")];
+    const controls = [Content.getComponent("knbRingmodMode"), Content.getComponent("knbRingmodMix"), Content.getComponent("knbRingmodFrequency"), Content.getComponent("knbRingmodDepth"), Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFORateSynced"), Content.getComponent("knbRingmodLFODepth"), Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("btnRingmodTempoSync"), Content.getComponent("btnRingmodStereoMode")];
 
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];            
     const pnlRingmod = Content.getComponent("pnlRingmod");
@@ -32,6 +32,7 @@ namespace Ringmod
                 local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
+        if (attribute == "TempoSync") { controls[4].set("visible", 1-value); controls[5].set("visible", value); }
     }   
     
     for (control in controls) { control.setControlCallback(onControl); }

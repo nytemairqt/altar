@@ -3,15 +3,25 @@
 #pragma once
 #include <JuceHeader.h>
 
+enum class GlobalCablesRingmod
+{
+    tempo = 0,
+    pitch = 1,
+    nam = 2
+};  
+
 namespace project
 {
 using namespace juce;
 using namespace hise;
 using namespace scriptnode;
+using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(110245659),
+                                                          SN_GLOBAL_CABLE(106677056),
+                                                          SN_GLOBAL_CABLE(108826)>;
 
 // ==========================| The node class with all required callbacks |==========================
 
-template <int NV> struct ringmod: public data::base
+template <int NV> struct ringmod: public data::base, public cable_manager_t
 {
     SNEX_NODE(ringmod);        
     
@@ -38,6 +48,12 @@ template <int NV> struct ringmod: public data::base
 
     ringmod()
     {
+        this->registerDataCallback<GlobalCablesRingmod::tempo>([this](const var& data)
+        {
+            // set global tempo here
+            currentBPM = data;
+        });
+
         // Initialize oscillator phases and envelope states
         for (int ch = 0; ch < 2; ++ch)
         {
@@ -79,11 +95,22 @@ template <int NV> struct ringmod: public data::base
         const float mixValue = juce::jlimit(0.0f, 1.0f, mix);
         const float freqValue = juce::jlimit(1.0f, 2000.0f, frequency);
         const float depthValue = juce::jlimit(0.0f, 1.0f, depth);
-        const float lfoRateValue = juce::jlimit(0.1f, 10.0f, lfoRate);
+        float lfoRateValue = juce::jlimit(0.1f, 10.0f, lfoRate);
         const float lfoDepthValue = juce::jlimit(0.0f, 1.0f, lfoDepth);
         const int modeValue = static_cast<int>(mode) % 4;
         const bool stereoModeEnabled = stereoMode;
         const bool tempoSyncEnabled = tempoSync;
+        
+        // If tempo sync is enabled, use the 19-step mapping to set the LFO rate (Hz), not the base frequency
+        if (tempoSyncEnabled && currentBPM > 0.0f)
+        {
+            const int idx = juce::jlimit(0, 18, (int)std::round(frequencySynced));
+            const float beats = getBeatsForSyncedIndex(idx); // quarter-note = 1 beat
+            // Convert note length (in beats) to frequency (Hz): f = (BPM/60) / beats
+            lfoRateValue = (currentBPM / 60.0f) / juce::jmax(0.0001f, beats);
+            // Keep original LFO clamp
+            lfoRateValue = juce::jlimit(0.1f, 10.0f, lfoRateValue);
+        }
         
         // Update output filter frequency
         updateOutputFilter();
@@ -102,15 +129,10 @@ template <int NV> struct ringmod: public data::base
                 // Apply input high-pass filter
                 float filteredInput = inputFilterState[channelIndex].process(input);
                 
+                // Base ringmod frequency is always the free Frequency parameter (no tempo sync here)
                 float baseFreq = freqValue;
-                if (tempoSyncEnabled && currentBPM > 0.0f)
-                {
-                    float noteValues[] = { 0.25f, 0.5f, 1.0f, 2.0f, 4.0f, 8.0f, 16.0f };
-                    int noteIndex = juce::jlimit(0, 6, static_cast<int>(freqValue * 6.0f / 2000.0f));
-                    baseFreq = (currentBPM / 60.0f) * noteValues[noteIndex];
-                }
 
-                // LFO modulation
+                // LFO modulation (rate may be tempo-synced if enabled)
                 float& lfoPhaseRef = lfoPhase[channelIndex];
                 lfoPhaseRef += (2.0f * juce::MathConstants<float>::pi * lfoRateValue) / sampleRate;
                 if (lfoPhaseRef >= 2.0f * juce::MathConstants<float>::pi)
@@ -193,10 +215,11 @@ template <int NV> struct ringmod: public data::base
         case 2: depth = static_cast<float>(v); break;
         case 3: mode = static_cast<float>(v); break;
         case 4: lfoRate = static_cast<float>(v); break;
-        case 5: lfoDepth = static_cast<float>(v); break;
-        case 6: filterFrequency = static_cast<float>(v); break;
-        case 7: stereoMode = v > 0.5f; break;
-        case 8: tempoSync = v > 0.5f; break;
+        case 5: frequencySynced = static_cast<float>(v); break; // used for tempo-synced LFO rate selection
+        case 6: lfoDepth = static_cast<float>(v); break;
+        case 7: filterFrequency = static_cast<float>(v); break;
+        case 8: stereoMode = v > 0.5f; break;
+        case 9: tempoSync = v > 0.5f; break;        
         }
     }
     
@@ -232,30 +255,37 @@ template <int NV> struct ringmod: public data::base
             lfo_rate_param.setDefaultValue(2.0);
             data.add(std::move(lfo_rate_param));
         }
+        {            
+            parameter::data freq_sync_param("LFORateSynced", { 0.0, 18.0 });
+            registerCallback<5>(freq_sync_param);
+            freq_sync_param.setDefaultValue(5.0); // default to 1/4 note
+            data.add(std::move(freq_sync_param));
+        }
         {
             parameter::data lfo_depth_param("LFODepth", { 0.0, 1.0 });
-            registerCallback<5>(lfo_depth_param);
+            registerCallback<6>(lfo_depth_param);
             lfo_depth_param.setDefaultValue(0.2);
             data.add(std::move(lfo_depth_param));
         }
         {
             parameter::data filter_param("FilterFrequency", { 200.0, 12000.0 });
-            registerCallback<6>(filter_param);
+            registerCallback<7>(filter_param);
             filter_param.setDefaultValue(8000.0);
             data.add(std::move(filter_param));
         }
         {
             parameter::data stereo_param("StereoMode", { 0.0, 1.0 });
-            registerCallback<7>(stereo_param);
+            registerCallback<8>(stereo_param);
             stereo_param.setDefaultValue(1.0);
             data.add(std::move(stereo_param));
         }
         {
             parameter::data tempo_param("TempoSync", { 0.0, 1.0 });
-            registerCallback<8>(tempo_param);
+            registerCallback<9>(tempo_param);
             tempo_param.setDefaultValue(0.0);
             data.add(std::move(tempo_param));
         }
+        
     }
 
 private:
@@ -265,7 +295,7 @@ private:
 
     // Parameters
     float mix = 0.3f;
-    float frequency = 100.0f;
+    float frequency = 100.0f;        // Hz (free mode)
     float depth = 0.7f;
     float mode = 0.0f;
     float lfoRate = 2.0f;
@@ -273,6 +303,7 @@ private:
     float filterFrequency = 8000.0f;
     bool stereoMode = true;
     bool tempoSync = false;
+    float frequencySynced = 5.0f;    // synced index [0..18] for LFO rate, same mapping as delay.h
     
     // Oscillator and LFO phases
     float oscillatorPhase[2] = { 0.0f, 0.0f };
@@ -358,6 +389,24 @@ private:
             outputFilterState[ch].a1 = a1 / a0;
             outputFilterState[ch].a2 = a2 / a0;
         }
+    }
+
+    // Map synced index [0..18] to beats (quarter-note = 1 beat), identical to delay.h
+    float getBeatsForSyncedIndex(int idx) const
+    {
+        if (idx <= 0) return 4.0f; // 1/1
+
+        static constexpr int denoms[6] = { 2, 4, 8, 16, 32, 64 };
+        const int i = idx - 1;
+        const int group = i / 3;          // 0..5 => which denominator
+        const int posInGroup = i % 3;     // 0=D, 1=plain, 2=T
+
+        const float baseBeats = 4.0f / (float)denoms[group];
+        const float mult = (posInGroup == 0) ? 1.5f    // dotted
+                          : (posInGroup == 1) ? 1.0f   // straight
+                          : (2.0f / 3.0f);            // triplet
+
+        return baseBeats * mult;
     }
 };
 }
