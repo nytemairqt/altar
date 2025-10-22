@@ -494,7 +494,7 @@
     <Component type="ScriptSlider" id="knbReverbPreDelay" x="167.0" y="152.0"
                parentComponent="pnlReverb" processorId="reverb" parameterId="Mix"
                width="96.0" text="PreDelay" max="0.2000000029802322" middlePosition="0.1000000014901161"
-               height="96.0" tooltip="Adjust reverb pre-delay.">
+               height="96.0" tooltip="Adjust reverb pre-delay." suffix=" ms">
       <Component type="ScriptLabel" id="lblReverbPreDelay" x="0.0" y="54.0" text="Pre-Delay"
                  width="96.0" parentComponent="knbReverbPreDelay" height="30.0"
                  editable="0" fontStyle="Bold"/>
@@ -503,7 +503,7 @@
                defaultValue="0.5" parentComponent="pnlReverb" processorId="reverb"
                parameterId="Mix" width="96.0" text="RoomSize" middlePosition="0.5"
                height="96.0" tooltip="Adjust reverb size." isPluginParameter="1"
-               pluginParameterName="Reverb Size">
+               pluginParameterName="Reverb Size" suffix="%">
       <Component type="ScriptLabel" id="lblReverbRoomSize" x="0.0" y="54.0" text="Size"
                  width="96.0" parentComponent="knbReverbRoomSize" height="30.0"
                  editable="0" fontStyle="Bold"/>
@@ -512,7 +512,7 @@
                parentComponent="pnlReverb" processorId="reverb" parameterId="Mix"
                width="96.0" text="Decay" max="0.9800000190734863" middlePosition="0.5"
                height="96.0" tooltip="Adjust reverb decay." isPluginParameter="1"
-               pluginParameterName="Reverb Decay">
+               pluginParameterName="Reverb Decay" suffix="%">
       <Component type="ScriptLabel" id="lblReverbDecay" x="0.0" y="54.0" text="Decay"
                  width="96.0" parentComponent="knbReverbDecay" height="30.0" editable="0"
                  fontStyle="Bold"/>
@@ -521,16 +521,16 @@
                y="152.0" defaultValue="2500.0" parentComponent="pnlReverb" processorId="reverb"
                parameterId="Mix" width="96.0" text="DampingFrequency" min="500.0"
                max="20000.0" stepSize="1.0" middlePosition="10000.0" height="96.0"
-               tooltip="Adjust reverb damping frequency.">
+               tooltip="Adjust reverb damping frequency." suffix=" Hz">
       <Component type="ScriptLabel" id="lblReverbDampingFrequency" x="0.0" y="54.0"
-                 text="Damping Freq" width="96.0" parentComponent="knbReverbDampingFrequency"
+                 text="Damping" width="96.0" parentComponent="knbReverbDampingFrequency"
                  height="30.0" editable="0" fontStyle="Bold"/>
     </Component>
     <Component type="ScriptSlider" id="knbReverbChorusDepth" x="716.0" y="152.0"
                defaultValue="0.300000011920929" parentComponent="pnlReverb"
                processorId="reverb" parameterId="Mix" width="96.0" text="ChorusDepth"
                middlePosition="0.5" height="96.0" tooltip="Adjust chorus depth."
-               isPluginParameter="1" pluginParameterName="Reverb Chorus">
+               isPluginParameter="1" pluginParameterName="Reverb Chorus" suffix="%">
       <Component type="ScriptLabel" id="lblReverbChorusDepth" x="0.0" y="54.0"
                  text="Chorus Depth" width="96.0" parentComponent="knbReverbChorusDepth"
                  height="30.0" editable="0" fontStyle="Bold"/>
@@ -538,7 +538,7 @@
   </Component>
   <Component type="ScriptPanel" id="pnlDelay" x="150.0" y="250.0" width="850.0"
              height="400.0" itemColour="4278190080" itemColour2="4278190080">
-    <Component type="ScriptLabel" id="lblDelayBPM" x="258" y="100.0" width="96.0"
+    <Component type="ScriptLabel" id="lblDelayBPM" x="258.0" y="100.0" width="96.0"
                text="120.0" parentComponent="pnlDelay" height="30.0" editable="0"
                fontStyle="Bold" visible="0"/>
     <Component type="ScriptLabel" id="lblDelay" x="365.0" y="20.0" width="120.0"
@@ -584,7 +584,7 @@
                  text="Damping" parentComponent="knbDelayDamping" height="30.0"
                  editable="0" fontStyle="Bold"/>
     </Component>
-    <Component type="ScriptSlider" id="knbDelayModulation" x="601.0" y="152.0"
+    <Component type="ScriptSlider" id="knbDelayModulation" x="601.0" y="152"
                text="Modulation" width="96.0" defaultValue="0.300000011920929"
                middlePosition="0.5" parentComponent="pnlDelay" height="96.0"
                tooltip="Adjust delay modulation. Changes based on mode." isPluginParameter="1"
@@ -615,6 +615,15 @@
       <Component type="ScriptLabel" id="lblDelayTempoSync" x="0.0" y="54.0" width="96.0"
                  text="Sync" parentComponent="btnDelayTempoSync" height="30.0"
                  editable="0" fontStyle="Bold"/>
+    </Component>
+    <Component type="ScriptSlider" id="knbDelayGlitchMode" x="601.0" y="152"
+               text="GlitchMode" width="96.0" middlePosition="0.5" parentComponent="pnlDelay"
+               height="96.0" tooltip="Adjust delay modulation. Changes based on mode."
+               isPluginParameter="1" pluginParameterName="Delay Modulation"
+               stepSize="1.0">
+      <Component type="ScriptLabel" id="lblDelayModulation1" x="0.0" y="54.0"
+                 width="96.0" text="Glitch Mode" parentComponent="knbDelayGlitchMode"
+                 height="30.0" editable="0" fontStyle="Bold"/>
     </Component>
   </Component>
   <Component type="ScriptPanel" id="pnlChorus" x="150.0" y="250.0" width="850.0"

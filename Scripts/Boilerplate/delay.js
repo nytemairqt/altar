@@ -17,7 +17,7 @@
 
 namespace Delay
 {   
-    const var controls = [Content.getComponent("knbDelayMode"), Content.getComponent("knbDelayMix"), Content.getComponent("knbDelayDelayTime"), Content.getComponent("knbDelayDelayTimeSynced"), Content.getComponent("knbDelayFeedback"), Content.getComponent("knbDelayStereoWidth"), Content.getComponent("knbDelayModulation"), Content.getComponent("knbDelayDamping"), Content.getComponent("btnDelayTempoSync")];
+    const var controls = [Content.getComponent("knbDelayMode"), Content.getComponent("knbDelayMix"), Content.getComponent("knbDelayDelayTime"), Content.getComponent("knbDelayDelayTimeSynced"), Content.getComponent("knbDelayFeedback"), Content.getComponent("knbDelayStereoWidth"), Content.getComponent("knbDelayModulation"), Content.getComponent("knbDelayDamping"), Content.getComponent("btnDelayTempoSync"), Content.getComponent("knbDelayGlitchMode")];
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];        
     const pnlDelay = Content.getComponent("pnlDelay");    
 
@@ -35,6 +35,11 @@ namespace Delay
 
         // conditional UI changes
         if (attribute == "TempoSync") { controls[2].set("visible", 1-value); controls[3].set("visible", value); }
+        if (attribute == "DelayMode")
+        {
+	        if (value == 2) { controls[6].set("visible", false); controls[9].set("visible", true); }
+	        else { controls[6].set("visible", true); controls[9].set("visible", false); }
+        }
     }   
     
     for (control in controls) { control.setControlCallback(onControl); }

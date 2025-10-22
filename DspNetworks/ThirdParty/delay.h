@@ -262,6 +262,12 @@ template <int NV> struct delay: public data::base, public cable_manager_t
         case 6: tempoSync = v > 0.5f; break;
         case 7: delayMode = static_cast<float>(v); reset(); break;
         case 8: delayTimeSynced = static_cast<float>(v); break;           // Synced mode (index 0..18)
+        case 9: // GlitchMode (integer 0..1): 0=Granular, 1=Pitch/Time-stretch
+        {
+            int iv = (int)std::round(v);
+            glitchModeParamValue = juce::jlimit(0, 1, iv);
+            break;
+        }
         }
     }
     
@@ -324,6 +330,13 @@ template <int NV> struct delay: public data::base, public cable_manager_t
             mode_param.setDefaultValue(0.0);
             data.add(std::move(mode_param));
         }
+        {
+            // New integer parameter to choose the glitch algorithm explicitly: 0=Granular, 1=Pitch/Time-stretch
+            parameter::data glitch_mode_param("GlitchMode", { 0.0, 1.0 });
+            registerCallback<9>(glitch_mode_param);
+            glitch_mode_param.setDefaultValue(0.0);
+            data.add(std::move(glitch_mode_param));
+        }
     }
 
 private:
@@ -343,6 +356,7 @@ private:
     float stereoWidth = 0.3f;
     bool tempoSync = false;
     float delayMode = 0.0f;
+    int glitchModeParamValue = 0;   // 0=Granular, 1=Pitch/Time-stretch
 
     // Delay lines
     std::vector<std::vector<float>> delayLines; // sized in ctor/prepare
@@ -413,8 +427,8 @@ private:
     std::array<GlitchGrain, 4> glitchGrains[2];
     std::vector<float> glitchBuffer[2];
     int glitchWritePos[2] = { 0, 0 };
-    int glitchStutterCounter[2] = { 0, 0 };
-    int glitchStutterLength[2] = { 0, 0 };
+    int glitchStutterCounter[2] = { 0, 0 }; // still used by pitch/time-stretch
+    int glitchStutterLength[2] = { 0, 0 };  // still used by pitch/time-stretch
     float glitchRandomPhase = 0.0f;
     int glitchMode = 0;
 
@@ -588,88 +602,31 @@ private:
 
         float chunkSize = juce::jlimit(0.01f, 0.5f, delayTimeSec);
 
-        // Change glitch type periodically
-        if ((sampleIndex % static_cast<int>(sampleRate * 0.25f)) == 0)
-        {
-            glitchMode = static_cast<int>(glitchIntensity * 4.0f) % 4;
-        }
+        // Explicitly select glitch mode from parameter (0=Granular, 1=Pitch/Time-stretch)
+        ignoreUnused(sampleIndex, feedbackValue, glitchIntensity);
+        glitchMode = juce::jlimit(0, 1, glitchModeParamValue);
 
         float output = 0.0f;
 
         switch (glitchMode)
         {
-        case 0: // Stutter effect
-            output = processStutterGlitch(channel, chunkSize, glitchIntensity, buffer, grains);
+        case 0: // Granular clouds
+            output = processGranularGlitch(channel, chunkSize, buffer, grains);
             break;
-        case 1: // Granular clouds
-            output = processGranularGlitch(channel, chunkSize, glitchIntensity, buffer, grains);
-            break;
-        case 2: // Reverse chunks
-            output = processReverseGlitch(channel, chunkSize, sampleIndex, buffer, grains);
-            break;
-        case 3: // Pitch/time stretch glitch
+        case 1: // Pitch/time-stretch glitch
             output = processPitchGlitch(channel, chunkSize, buffer, grains);
             break;
+        default:
+            output = 0.0f;
+            break;
         }
 
         return output;
     }
 
-    float processStutterGlitch(int channel, float chunkSize, float glitchIntensity, 
-                              std::vector<float>& buffer, std::array<GlitchGrain, 4>& grains)
+    float processGranularGlitch(int channel, float chunkSize, std::vector<float>& buffer, std::array<GlitchGrain, 4>& grains)
     {
-        if (glitchStutterCounter[channel] <= 0)
-        {
-            glitchStutterLength[channel] = static_cast<int>(chunkSize * sampleRate * (0.5f + glitchIntensity));
-
-            auto& grain = grains[0];
-            size_t desiredSize = static_cast<size_t>(juce::jmax(1, glitchStutterLength[channel]));
-            desiredSize = juce::jmin<size_t>(desiredSize, grain.data.size());
-            desiredSize = juce::jmin<size_t>(desiredSize, buffer.size());
-
-            grain.size = desiredSize;
-            grain.playPos = 0;
-            grain.active = true;
-            grain.reverse = (juce::Random::getSystemRandom().nextFloat() < glitchIntensity * 0.5f);
-            grain.pitch = 1.0f + (juce::Random::getSystemRandom().nextFloat() - 0.5f) * glitchIntensity * 0.5f;
-
-            int readPos = (int)glitchWritePos[channel] - (int)grain.size;
-            if (readPos < 0) readPos += (int)buffer.size();
-
-            for (size_t i = 0; i < grain.size; ++i)
-            {
-                grain.data[i] = buffer[(readPos + (int)i) % (int)buffer.size()];
-            }
-
-            glitchStutterCounter[channel] = (int)grain.size;
-        }
-
-        float output = 0.0f;
-        if (grains[0].active && grains[0].playPos < grains[0].size)
-        {
-            size_t pos = grains[0].reverse ? (grains[0].size - 1 - grains[0].playPos) : grains[0].playPos;
-            output = grains[0].data[pos];
-
-            if (grains[0].playPos < grains[0].totalFadeSamples)
-            {
-                output *= static_cast<float>(grains[0].playPos) / grains[0].totalFadeSamples;
-            }
-            else if (grains[0].playPos > grains[0].size - grains[0].totalFadeSamples)
-            {
-                float fadeOut = static_cast<float>(grains[0].size - grains[0].playPos) / grains[0].totalFadeSamples;
-                output *= juce::jlimit(0.0f, 1.0f, fadeOut);
-            }
-
-            grains[0].playPos += static_cast<size_t>(juce::jmax(1.0f, grains[0].pitch));
-        }
-
-        glitchStutterCounter[channel]--;
-        return output;
-    }
-
-    float processGranularGlitch(int channel, float chunkSize, float glitchIntensity,
-                               std::vector<float>& buffer, std::array<GlitchGrain, 4>& grains)
-    {
+        float glitchIntensity = 1.0f;
         // Trigger new grains randomly
         if (juce::Random::getSystemRandom().nextFloat() < glitchIntensity * 0.1f)
         {
@@ -721,40 +678,6 @@ private:
             {
                 grain.active = false;
             }
-        }
-        return output;
-    }
-
-    float processReverseGlitch(int channel, float chunkSize, int sampleIndex,
-                              std::vector<float>& buffer, std::array<GlitchGrain, 4>& grains)
-    {
-        if ((sampleIndex % static_cast<int>(chunkSize * sampleRate)) == 0)
-        {
-            auto& grain = grains[0];
-            size_t desired = static_cast<size_t>(chunkSize * sampleRate);
-            desired = juce::jlimit<size_t>(1, grain.data.size(), desired);
-            desired = juce::jmin<size_t>(desired, buffer.size());
-
-            grain.size = desired;
-            grain.playPos = 0;
-            grain.active = true;
-            grain.reverse = true;
-            grain.pitch = 1.0f;
-
-            int readPos = (int)glitchWritePos[channel] - (int)grain.size;
-            if (readPos < 0) readPos += (int)buffer.size();
-
-            for (size_t i = 0; i < grain.size; ++i)
-            {
-                grain.data[i] = buffer[(readPos + (int)i) % (int)buffer.size()];
-            }
-        }
-
-        float output = 0.0f;
-        if (grains[0].active && grains[0].playPos < grains[0].size)
-        {
-            output = grains[0].data[grains[0].size - 1 - grains[0].playPos];
-            grains[0].playPos++;
         }
         return output;
     }
