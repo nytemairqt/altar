@@ -213,24 +213,14 @@ namespace CabDesigner
         pnlCabDesigner.set("visible", value);  
     }
 
-    btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);
+    btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);    
 
-    inline function onbtnCabGenerateControl(component, value)
+    inline function oncmbCabDesignerSpeakerControl(component, value)
     {
-        if (!value)
-            return;
-
-        //local gain = 0.0;
-        //local q = 0.0;
-        //local freq = 0;
-        //local mojoGain = 0.0;
-	//
-	//        Console.print("generated a cab!");
-
-        // call a third-party node function to randomize cab        
+        cabDesigner.setAttribute(cabDesigner.SpeakerType, value-1);
     }
 
-    //btnCabDesignerGenerate.setControlCallback(onbtnCabGenerateControl);
+    cmbCabDesignerSpeaker.setControlCallback(oncmbCabDesignerSpeakerControl);    
 
     inline function onbtnCabSaveControl(component, value)
     {
