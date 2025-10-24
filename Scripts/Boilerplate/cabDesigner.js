@@ -17,19 +17,11 @@
 
 namespace CabDesigner
 {
-	const cabDesignerFileSave = Synth.getAudioSampleProcessor("cabDesignerFileSave");
-    const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");
-    const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
-    const btnCabDesignerGenerate = Content.getComponent("btnCabDesignerGenerate");
     const cabDesigner = Synth.getEffect("cabDesigner");
-    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];	            
-    const cabDesignerSlot = Synth.getSlotFX("cabDesigner");
-    const btnCloseCabDesigner = Content.getComponent("btnCloseCabDesigner");
     const cabDesignerEQ = Synth.getEffect("cabDesignerEQ");
-    const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");       
-    const fltCabDesignerResponseCurve = Content.getComponent("fltCabDesignerResponseCurve");            
-    //const fft = Synth.getDisplayBufferSource("cabDesigner");   
-    
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];                
+	const cabDesignerFileSave = Synth.getAudioSampleProcessor("cabDesignerFileSave");
+    const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");                    
     const dp = Synth.getDisplayBufferSource("cabDesigner");
     const fft = dp.getDisplayBuffer(0);
     
@@ -39,36 +31,35 @@ namespace CabDesigner
 		  "NumChannels": 1
 	});   
 
+    const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
+    const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
+    const btnCabDesignerEQEnable = Content.getComponent("btnCabDesignerEQEnable");
+    const btnCabDesignerGenerate = Content.getComponent("btnCabDesignerGenerate");            
+    const btnCabDesignerCustomMod = Content.getComponent("btnCabDesignerCustomMod");    
     const btnCabSave = Content.getComponent("btnCabSave");
     const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
-    const cmbCabDesignerSpeaker = Content.getComponent("cmbCabDesignerSpeaker");
-    const cmbCabDesignerMic = Content.getComponent("cmbCabDesignerMic");
+    const btnCloseCabDesigner = Content.getComponent("btnCloseCabDesigner");    
     const knbCabDesignerMojo = Content.getComponent("knbCabDesignerMojo");
     const knbCabDesignerAge = Content.getComponent("knbCabDesignerAge");
-    const lblCabSaveName = Content.getComponent("lblCabSaveName");   
-    const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
-    const btnCabDesignerCustomMod = Content.getComponent("btnCabDesignerCustomMod");    
-    const LAFButtonCabDesignerCustomMod = Content.createLocalLookAndFeel();
-    const LAFButtonCabDesignerGenerate = Content.createLocalLookAndFeel();
-    const LAFButtonCabDesignerSave = Content.createLocalLookAndFeel();
-    const LAFCabDesignerResponseCurve = Content.createLocalLookAndFeel();
+    const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");       
+    const fltCabDesignerResponseCurve = Content.getComponent("fltCabDesignerResponseCurve");     
+    const cmbCabDesignerSpeaker = Content.getComponent("cmbCabDesignerSpeaker");
+    const cmbCabDesignerMic = Content.getComponent("cmbCabDesignerMic");
+    const lblCabSaveName = Content.getComponent("lblCabSaveName");               
 
-    var eventList = []; // used by cab apparently
+    const modules = Synth.getAllEffects(".*");    
     const impulseSize = 1024;
     const moduleBypassedStates = [];
     const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);
     reg cabSaveName = "myCab.wav";
-    const modules = Synth.getAllEffects(".*");
-    
+    reg eventList = [];        
     cabDesignerMIDIPlayer.create(4, 4, 1);
 
-    inline function onbtnCloseCabDesignerControl(component, value)
-    {
-        if (value) { btnShowCabDesigner.setValue(0); btnShowCabDesigner.changed(); }
-    }
-
+    // Close Cab Designer
+    inline function onbtnCloseCabDesignerControl(component, value) { if (value) { btnShowCabDesigner.setValue(0); btnShowCabDesigner.changed(); } }
     btnCloseCabDesigner.setControlCallback(onbtnCloseCabDesignerControl);	  
 
+    // Save Module States
     inline function saveModuleBypassedState()
     {
         moduleBypassedStates.clear();
@@ -76,12 +67,13 @@ namespace CabDesigner
             moduleBypassedStates.push(m.isBypassed());
     }
 
+    // Restore Module States
     inline function restoreModuleBypassedState()
     {
-        for (i=0; i<moduleBypassedStates.length; i++)
-            modules[i].setBypassed(moduleBypassedStates[i]);
+        for (i=0; i<moduleBypassedStates.length; i++) { modules[i].setBypassed(moduleBypassedStates[i]); }        
     }
 
+    // Add MIDI Note
     inline function addNoteForCabSave(eventListToUse, noteNumber, startQuarter, durationQuarter)
     {
         /* Flushes the MIDI list for the impulse player */
@@ -103,9 +95,9 @@ namespace CabDesigner
         eventListToUse.push(off);
     }
 
+    // Normalize Dirac Delta
     inline function normalizeBuffer(buffer)
-    {
-        /* Normalizes the dirac IR */
+    {        
         local bufferNormalized = buffer.clone();
         local peak = 0.0;   
         local v = -1.0;
@@ -113,23 +105,20 @@ namespace CabDesigner
         for (i = 0; i < impulseSize; i++)
         {
             v = Math.abs(bufferNormalized[0][i]);       
-            if (v > peak)
-                peak = v;
+            if (v > peak) { peak = v; }                
         }
 
         if (peak > 0.0)
         {
             local scale = 1.0 / peak;   
-            for (i = 0; i < impulseSize; i++)           
-                bufferNormalized[0][i] *= scale;            
+            for (i = 0; i < impulseSize; i++) { bufferNormalized[0][i] *= scale; }                               
         }   
-
-        return bufferNormalized;
+        return bufferNormalized;            
     }
 
+    // File-writing for IR
     inline function renderAudioCallback (obj) 
-    {
-        /* Handles file-writing for IR */
+    {        
         if (obj.finished) 
         {   
             // get the buffer                               
@@ -149,8 +138,7 @@ namespace CabDesigner
             //cabDesignerMic.setBypassed(1);
             //cabDesignerEQ.setBypassed(1);
             //cabDesignerFileSave.setBypassed(1);             
-            testAudio.setBypassed(0); // force enable audio player  
-            //cabDesignerEQ.restoreState(dspNoProfile); // reset the custom EQ 
+            testAudio.setBypassed(0); // force enable audio player              
             
             // FIX ME:
             // refresh audio files list somehow so new cab shows up in list
@@ -204,31 +192,23 @@ namespace CabDesigner
                 local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
-        cabDesigner.setBypassed(1-value);
-        cabDesignerEQ.setBypassed(1-value);
+        cabDesigner.setBypassed(1-value);        
+        btnCabDesignerEQEnable.setValue(value); btnCabDesignerEQEnable.changed();
+
         pnlCabDesigner.set("visible", value);  
     }
 
     btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);    
 
 	// Select speaker
-    inline function oncmbCabDesignerSpeakerControl(component, value)
-    {
-        cabDesigner.setAttribute(cabDesigner.SpeakerType, value-1);
-    }
-
+    inline function oncmbCabDesignerSpeakerControl(component, value) { cabDesigner.setAttribute(cabDesigner.SpeakerType, value-1); }
     cmbCabDesignerSpeaker.setControlCallback(oncmbCabDesignerSpeakerControl);    
     
     // Select microphone
-    inline function oncmbCabDesignerMicControl(component, value)
-    {
-	    cabDesigner.setAttribute(cabDesigner.MicrophoneType, value-1);
-    }
-    
+    inline function oncmbCabDesignerMicControl(component, value) { cabDesigner.setAttribute(cabDesigner.MicrophoneType, value-1); }        
     cmbCabDesignerMic.setControlCallback(oncmbCabDesignerMicControl);
 
 	// Save cab IR    
-
     inline function onbtnCabSaveControl(component, value)
     {	
         if (!value)
@@ -270,13 +250,8 @@ namespace CabDesigner
 
     btnCabSave.setControlCallback(onbtnCabSaveControl);
 
-    inline function onbtnOpenCabFolderControl(component, value)
-    {
-        if (!value)
-            return;
-        audioFiles.show();
-    }
-
+    // Open Cab Folder
+    inline function onbtnOpenCabFolderControl(component, value) { if (value) { audioFiles.show(); } }    
     btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
 
     inline function onlblCabSaveNameControl(component, value)
@@ -293,6 +268,16 @@ namespace CabDesigner
     }
 
     // Look And Feel
+
+    const LAFButtonCabDesignerCustomMod = Content.createLocalLookAndFeel();
+    const LAFButtonCabDesignerGenerate = Content.createLocalLookAndFeel();
+    const LAFButtonCabDesignerSave = Content.createLocalLookAndFeel();
+    const LAFCabDesignerResponseCurve = Content.createLocalLookAndFeel();
+    const btnCabDesignerSpeakerLAF = Content.createLocalLookAndFeel();
+
+    const pnlCabDesignerSpeakerIcon = Content.getComponent("pnlCabDesignerSpeakerIcon");
+    const pnlCabDesignerMicrophoneIcon = Content.getComponent("pnlCabDesignerMicrophoneIcon");
+
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
     const eqBounds = [fltCabDesignerEQ.get("x"), fltCabDesignerEQ.get("y"), fltCabDesignerEQ.get("width"), fltCabDesignerEQ.get("height")];
@@ -315,103 +300,96 @@ namespace CabDesigner
     }); 
     
     const cmbCabDesignerLAF = Content.createLocalLookAndFeel();
+
+    inline function drawComboBox(g, obj)
+    {
+        // BG & Text
+        g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
+        g.fillRoundedRectangle(obj.area, 4.0);      
+        g.setColour(ColourData.clrWhite);
+        g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");     
+        
+        // Triangle
+        local tXPad = 24;
+        local tYPad = 12;
+        local tX = obj.area[2] - tXPad;
+        local tY = 8;
+        local tW = 16;
+        local tH = tY;        
+        local tA = [tX, tYPad, tW, tH];
+        g.fillTriangle(tA, Math.toRadians(180));
+    }
     	
-   	cmbCabDesignerLAF.registerFunction("drawComboBox", function(g, obj)
-    {	        	
-	    // BG & Text
-	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
-	    g.fillRoundedRectangle(obj.area, 4.0);	    
-	    g.setColour(ColourData.clrWhite);
-	    g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");	    
-	    
-	    // Triangle
-	    var tXPad = 24;
-    	var tYPad = 12;
-		var tX = obj.area[2] - tXPad;
-		var tY = 8;
-		var tW = 16;
-		var tH = tY;	    
-	    var tA = [tX, tYPad, tW, tH];
-	    g.fillTriangle(tA, Math.toRadians(180));
-    });
-    
+   	cmbCabDesignerLAF.registerFunction("drawComboBox", drawComboBox);        
     cmbCabDesignerSpeaker.setLocalLookAndFeel(cmbCabDesignerLAF);
     cmbCabDesignerMic.setLocalLookAndFeel(cmbCabDesignerLAF);
-    
-    const btnCabDesignerSpeakerLAF = Content.createLocalLookAndFeel();
-    	
-    const pnlCabDesignerSpeakerIcon = Content.getComponent("pnlCabDesignerSpeakerIcon");
-    
-    pnlCabDesignerSpeakerIcon.setPaintRoutine(function(g)
-    {
-		var x = 0; var y = 0; var w = this.getWidth(); var h = this.getHeight();
-		var area = [x, y, w, h];
-		var pad = 1;		
-		var line = 1.5;
-		var p = Content.createPath();
-		p.loadFromData(PathData.pathSpeaker);
-		g.setColour(ColourData.clrLightgrey);	
-	    
-	    g.drawPath(p, [x + pad, y + pad, w - (2 * pad), h - (2 * pad)], line);
-	    
-	    
-    });
-    
-    const pnlCabDesignerMicrophoneIcon = Content.getComponent("pnlCabDesignerMicrophoneIcon");
 
-	pnlCabDesignerMicrophoneIcon.setPaintRoutine(function(g)
-    {		
-		var x = 0; var y = 0; var w = this.getWidth(); var h = this.getHeight();
-		var area = [x, y, w, h];
-		var line = 1.5;
-		var baseW = w / 2; var baseH = Math.round(h * 0.4375);
-		var baseX = w / 2 - Math.round(baseW / 2); var baseY = Math.round(h * 0.6875) - Math.round(baseH / 2); 		
-		var topW = Math.round(w * 0.36); var topH = Math.round(h * 0.58);
-		var topX = w / 2 - Math.round(topW / 2); var topY = Math.round(h * 0.36) - Math.round(topH / 2);
-		var p = Content.createPath();		
-		g.setColour(ColourData.clrLightgrey);
-		
-		// base
-	    p.loadFromData(PathData.pathMicrophoneA);
-	    g.drawPath(p, [baseX, baseY, baseW, baseH], line);
-	    p.clear();
-	    
-	    // top
-	    p.loadFromData(PathData.pathMicrophoneB);
-	    g.drawPath(p, [topX, topY, topW, topH], line);
-    });
-    
-    LAFButtonCabDesignerCustomMod.registerFunction("drawToggleButton", function(g, obj)
+    inline function drawSpeakerIcon(g)
     {
-		var padY = 3;
-		var sq = 6;
+        local x = 0; local y = 0; local w = this.getWidth(); local h = this.getHeight();
+        local area = [x, y, w, h];
+        local pad = 1;        
+        local line = 1.5;
+        local p = Content.createPath();
+        p.loadFromData(PathData.pathSpeaker);
+        g.setColour(ColourData.clrLightgrey);           
+        g.drawPath(p, [x + pad, y + pad, w - (2 * pad), h - (2 * pad)], line);
+    }
 
-	    var x1 = Math.round(obj.area[2] * 0.25); var x2 = Math.round(obj.area[2] * 0.5); var x3 = Math.round(obj.area[2] * 0.75);
-	    
-	    
-	    
-	    if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
-   		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
-   		
-   		// left
-   		var y1a = padY; var y1b = Math.round(obj.area[3] * 0.25); var y1c = Math.round(y1b + sq); var y1d = obj.area[3] - padY;
-   		g.drawLine(x1, x1, y1a, y1b, 1.0); g.drawLine(x1, x1, y1c, y1d, 1.0);
-   		g.fillRect([x1 - (sq / 2), y1b, sq, sq]);
-   		
-   		// center
-   		var y2a = padY; var y2b = Math.round(obj.area[3] * 0.65); var y2c = Math.round(y2b + sq); var y2d = obj.area[3] - padY;
-   		g.drawLine(x2, x2, y2a, y2b, 1.0); g.drawLine(x2, x2, y2c, y2d, 1.0);
-   		g.fillRect([x2 - (sq / 2), y2b, sq, sq]);
-   		   		
-   		// right
-   		var y3a = padY; var y3b = Math.round(obj.area[3] * 0.4); var y3c = Math.round(y3b + sq); var y3d = obj.area[3] - padY;
-   		g.drawLine(x3, x3, y3a, y3b, 1.0); g.drawLine(x3, x3, y3c, y3d, 1.0);
-   		g.fillRect([x3 - (sq / 2), y3b, sq, sq]);
-    });
+    pnlCabDesignerSpeakerIcon.setPaintRoutine(drawSpeakerIcon);
+        
+    inline function drawMicrophoneIcon(g)
+    {
+        local x = 0; local y = 0; local w = this.getWidth(); local h = this.getHeight();
+        local area = [x, y, w, h];
+        local line = 1.5;
+        local baseW = w / 2; local baseH = Math.round(h * 0.4375);
+        local baseX = w / 2 - Math.round(baseW / 2); local baseY = Math.round(h * 0.6875) - Math.round(baseH / 2);      
+        local topW = Math.round(w * 0.36); local topH = Math.round(h * 0.58);
+        local topX = w / 2 - Math.round(topW / 2); local topY = Math.round(h * 0.36) - Math.round(topH / 2);
+        local p = Content.createPath();       
+        g.setColour(ColourData.clrLightgrey);
+        
+        // base
+        p.loadFromData(PathData.pathMicrophoneA);
+        g.drawPath(p, [baseX, baseY, baseW, baseH], line);
+        p.clear();
+        
+        // top
+        p.loadFromData(PathData.pathMicrophoneB);
+        g.drawPath(p, [topX, topY, topW, topH], line);
+    }
+
+	pnlCabDesignerMicrophoneIcon.setPaintRoutine(drawMicrophoneIcon);
+
+    inline function drawCustomMod(g, obj)
+    {
+        local padY = 3;
+        local sq = 6;
+        local x1 = Math.round(obj.area[2] * 0.25); local x2 = Math.round(obj.area[2] * 0.5); local x3 = Math.round(obj.area[2] * 0.75);               
+        
+        if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+        else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+        
+        // left
+        local y1a = padY; local y1b = Math.round(obj.area[3] * 0.25); local y1c = Math.round(y1b + sq); local y1d = obj.area[3] - padY;
+        g.drawLine(x1, x1, y1a, y1b, 1.0); g.drawLine(x1, x1, y1c, y1d, 1.0);
+        g.fillRect([x1 - (sq / 2), y1b, sq, sq]);
+        
+        // center
+        local y2a = padY; local y2b = Math.round(obj.area[3] * 0.65); local y2c = Math.round(y2b + sq); local y2d = obj.area[3] - padY;
+        g.drawLine(x2, x2, y2a, y2b, 1.0); g.drawLine(x2, x2, y2c, y2d, 1.0);
+        g.fillRect([x2 - (sq / 2), y2b, sq, sq]);
+                
+        // right
+        local y3a = padY; local y3b = Math.round(obj.area[3] * 0.4); local y3c = Math.round(y3b + sq); local y3d = obj.area[3] - padY;
+        g.drawLine(x3, x3, y3a, y3b, 1.0); g.drawLine(x3, x3, y3c, y3d, 1.0);
+        g.fillRect([x3 - (sq / 2), y3b, sq, sq]);
+    }
     
+    LAFButtonCabDesignerCustomMod.registerFunction("drawToggleButton", drawCustomMod);    
     btnCabDesignerCustomMod.setLocalLookAndFeel(LAFButtonCabDesignerCustomMod);
-    
-    // FIX ME: have to make all inline for some reason (pad var isn't scoped)
+        
     inline function drawCabGenerate(g, obj)
     {
 	    local pad = 3;    	  
@@ -427,43 +405,41 @@ namespace CabDesigner
        	
     };
        
-    LAFButtonCabDesignerGenerate.registerFunction("drawToggleButton", drawCabGenerate);
-    
+    LAFButtonCabDesignerGenerate.registerFunction("drawToggleButton", drawCabGenerate);    
     btnCabDesignerGenerate.setLocalLookAndFeel(LAFButtonCabDesignerGenerate);
-    
-    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserBackground", function(g, obj)
-    {
-	    g.fillAll(ColourData.clrComponentBGGrey);
-    });        
-    
-    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserPath", function(g, obj)
-    {
-		g.setColour(Colours.withAlpha(ColourData.clrMidgrey, .6));
-	   	g.fillPath(obj.path, obj.area);
-	   	//g.drawPath(obj.path, obj.area, 1.0);	   		   	
-    });
-    
-    
-    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserGrid", function(g, obj) {});
-    
-    fltCabDesignerResponseCurve.setLocalLookAndFeel(LAFCabDesignerResponseCurve);
-    
+
     inline function drawSaveButton(g, obj)
     {
-		local pad = 6;
-		local x = pad; local y = pad; local w = obj.area[2] - (2 * pad); local h = obj.area[3] - (2 * pad);
-		local area = [x, y, w, h];
-		local inner = [pad + Math.round(w * 0.208), pad + Math.round(h * 0.08), Math.round(w * 0.604), Math.round(h * 0.381)];
+        local pad = 6;
+        local x = pad; local y = pad; local w = obj.area[2] - (2 * pad); local h = obj.area[3] - (2 * pad);
+        local area = [x, y, w, h];
+        local inner = [pad + Math.round(w * 0.208), pad + Math.round(h * 0.08), Math.round(w * 0.604), Math.round(h * 0.381)];
 
-	    local p = Content.createPath();
-	    p.loadFromData(PathData.pathSave);
-	    g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey);   	    
-	    g.fillPath(p, area);
-	    
-	    g.setColour(ColourData.clrExtradarkgrey);
-	    g.fillRoundedRectangle(inner, 2.0);
+        local p = Content.createPath();
+        p.loadFromData(PathData.pathSave);
+        g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey);          
+        g.fillPath(p, area);
+        
+        g.setColour(ColourData.clrExtradarkgrey);
+        g.fillRoundedRectangle(inner, 2.0);
     }
     
     LAFButtonCabDesignerSave.registerFunction("drawToggleButton", drawSaveButton);   
     btnCabSave.setLocalLookAndFeel(LAFButtonCabDesignerSave);
+    
+    inline function drawAnalyserBackground(g, obj)
+    {
+        g.fillAll(ColourData.clrComponentBGGrey);
+    }
+
+    inline function drawAnalyserPath(g, obj)
+    {
+        g.setColour(Colours.withAlpha(ColourData.clrMidgrey, .6));
+        g.fillPath(obj.path, obj.area);
+    }
+
+    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserBackground", drawAnalyserBackground);    
+    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserPath", drawAnalyserPath);        
+    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserGrid", function(g, obj) {}); // leave empty
+    fltCabDesignerResponseCurve.setLocalLookAndFeel(LAFCabDesignerResponseCurve);        
 }
