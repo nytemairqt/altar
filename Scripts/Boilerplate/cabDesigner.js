@@ -26,7 +26,18 @@ namespace CabDesigner
     const cabDesignerSlot = Synth.getSlotFX("cabDesigner");
     const btnCloseCabDesigner = Content.getComponent("btnCloseCabDesigner");
     const cabDesignerEQ = Synth.getEffect("cabDesignerEQ");
-    const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");        
+    const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");       
+    const fltCabDesignerResponseCurve = Content.getComponent("fltCabDesignerResponseCurve");            
+    //const fft = Synth.getDisplayBufferSource("cabDesigner");   
+    
+    const dp = Synth.getDisplayBufferSource("cabDesigner");
+    const fft = dp.getDisplayBuffer(0);
+    
+    fft.setRingBufferProperties({
+		  "BufferLength": 2048,
+		  "WindowType": "Blackman Harris",
+		  "NumChannels": 1
+	});   
 
     const btnCabSave = Content.getComponent("btnCabSave");
     const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
@@ -36,6 +47,11 @@ namespace CabDesigner
     const knbCabDesignerAge = Content.getComponent("knbCabDesignerAge");
     const lblCabSaveName = Content.getComponent("lblCabSaveName");   
     const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
+    const btnCabDesignerCustomMod = Content.getComponent("btnCabDesignerCustomMod");    
+    const LAFButtonCabDesignerCustomMod = Content.createLocalLookAndFeel();
+    const LAFButtonCabDesignerGenerate = Content.createLocalLookAndFeel();
+    const LAFButtonCabDesignerSave = Content.createLocalLookAndFeel();
+    const LAFCabDesignerResponseCurve = Content.createLocalLookAndFeel();
 
     var eventList = []; // used by cab apparently
     const impulseSize = 1024;
@@ -365,5 +381,89 @@ namespace CabDesigner
 	    g.drawPath(p, [topX, topY, topW, topH], line);
     });
     
+    LAFButtonCabDesignerCustomMod.registerFunction("drawToggleButton", function(g, obj)
+    {
+		var padY = 3;
+		var sq = 6;
+
+	    var x1 = Math.round(obj.area[2] * 0.25); var x2 = Math.round(obj.area[2] * 0.5); var x3 = Math.round(obj.area[2] * 0.75);
+	    
+	    
+	    
+	    if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+   		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+   		
+   		// left
+   		var y1a = padY; var y1b = Math.round(obj.area[3] * 0.25); var y1c = Math.round(y1b + sq); var y1d = obj.area[3] - padY;
+   		g.drawLine(x1, x1, y1a, y1b, 1.0); g.drawLine(x1, x1, y1c, y1d, 1.0);
+   		g.fillRect([x1 - (sq / 2), y1b, sq, sq]);
+   		
+   		// center
+   		var y2a = padY; var y2b = Math.round(obj.area[3] * 0.65); var y2c = Math.round(y2b + sq); var y2d = obj.area[3] - padY;
+   		g.drawLine(x2, x2, y2a, y2b, 1.0); g.drawLine(x2, x2, y2c, y2d, 1.0);
+   		g.fillRect([x2 - (sq / 2), y2b, sq, sq]);
+   		   		
+   		// right
+   		var y3a = padY; var y3b = Math.round(obj.area[3] * 0.4); var y3c = Math.round(y3b + sq); var y3d = obj.area[3] - padY;
+   		g.drawLine(x3, x3, y3a, y3b, 1.0); g.drawLine(x3, x3, y3c, y3d, 1.0);
+   		g.fillRect([x3 - (sq / 2), y3b, sq, sq]);
+    });
     
+    btnCabDesignerCustomMod.setLocalLookAndFeel(LAFButtonCabDesignerCustomMod);
+    
+    // FIX ME: have to make all inline for some reason (pad var isn't scoped)
+    inline function drawCabGenerate(g, obj)
+    {
+	    local pad = 3;    	  
+       	local ts = 6;  	    	    
+       	local x = pad; local y = pad; local w = obj.area[2] - (2 * pad); local h = obj.area[3] - (2 * pad);
+       	local area = [x, y, w, h];
+       	g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey);       
+       	
+       	local p = Content.createPath();
+       	p.clear();
+       	p.loadFromData(PathData.pathGenerateCab);
+       	g.drawPath(p, area, 2.0);
+       	
+    };
+       
+    LAFButtonCabDesignerGenerate.registerFunction("drawToggleButton", drawCabGenerate);
+    
+    btnCabDesignerGenerate.setLocalLookAndFeel(LAFButtonCabDesignerGenerate);
+    
+    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserBackground", function(g, obj)
+    {
+	    g.fillAll(ColourData.clrComponentBGGrey);
+    });        
+    
+    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserPath", function(g, obj)
+    {
+		g.setColour(Colours.withAlpha(ColourData.clrMidgrey, .6));
+	   	g.fillPath(obj.path, obj.area);
+	   	//g.drawPath(obj.path, obj.area, 1.0);	   		   	
+    });
+    
+    
+    LAFCabDesignerResponseCurve.registerFunction("drawAnalyserGrid", function(g, obj) {});
+    
+    fltCabDesignerResponseCurve.setLocalLookAndFeel(LAFCabDesignerResponseCurve);
+    
+    inline function drawSaveButton(g, obj)
+    {
+		local pad = 6;
+		local x = pad; local y = pad; local w = obj.area[2] - (2 * pad); local h = obj.area[3] - (2 * pad);
+		local area = [x, y, w, h];
+		local inner = [pad + Math.round(w * 0.208), pad + Math.round(h * 0.08), Math.round(w * 0.604), Math.round(h * 0.381)];
+
+	    local p = Content.createPath();
+	    p.loadFromData(PathData.pathSave);
+	    g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey);   	    
+	    g.fillPath(p, area);
+	    
+	    g.setColour(ColourData.clrExtradarkgrey);
+	    g.fillRoundedRectangle(inner, 2.0);
+    }
+    
+    LAFButtonCabDesignerSave.registerFunction("drawToggleButton", drawSaveButton);   
+    btnCabSave.setLocalLookAndFeel(LAFButtonCabDesignerSave);
 }
