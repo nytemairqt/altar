@@ -91,12 +91,15 @@ using CabAge = parameter::chain<ranges::Identity,
                                 parameter::plain<project::cabDesigner<NV>, 5>>;
 
 template <int NV>
+using FFTGain = parameter::plain<core::gain<NV>, 0>;
+template <int NV>
 using cabDesignerNetwork_t_plist = parameter::list<SpeakerType<NV>, 
                                                    CustomMod<NV>, 
                                                    MicrophoneType<NV>, 
                                                    MojoStrength<NV>, 
                                                    GenerateMojo<NV>, 
-                                                   CabAge<NV>>;
+                                                   CabAge<NV>, 
+                                                   FFTGain<NV>>;
 }
 
 template <int NV>
@@ -118,7 +121,7 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		
 		SNEX_METADATA_ID(cabDesignerNetwork);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(118)
+		SNEX_METADATA_ENCODED_PARAMETERS(134)
 		{
 			0x005C, 0x0000, 0x0000, 0x7053, 0x6165, 0x656B, 0x5472, 0x7079, 
             0x0065, 0x0000, 0x0000, 0x0000, 0x8000, 0x0040, 0x0000, 0x0000, 
@@ -134,7 +137,9 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
             0x0000, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x005C, 0x0005, 0x0000, 0x6143, 0x4162, 
             0x6567, 0x0000, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x0000
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 0x0006, 0x0000, 0x4646, 
+            0x4754, 0x6961, 0x006E, 0x0000, 0x0000, 0x0000, 0x7000, 0x0042, 
+            0x0000, 0x0000, 0x8000, 0xCD3F, 0xCCCC, 0x003D
 		};
 		SNEX_METADATA_ENCODED_MOD_INFO(17)
 		{
@@ -186,6 +191,8 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		CabAge_p.connectT(0, cabDesigner1); // CabAge -> cabDesigner1::CabAge
 		CabAge_p.connectT(1, cabDesigner);  // CabAge -> cabDesigner::CabAge
 		
+		this->getParameterT(6).connectT(0, gain); // FFTGain -> gain::Gain
+		
 		// Default Values --------------------------------------------------------------------------
 		
 		clear.setParameterT(0, 0.); // math::clear::Value
@@ -195,9 +202,9 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		file_player.setParameterT(2, 440.); // core::file_player::RootFrequency
 		file_player.setParameterT(3, 1);    // core::file_player::FreqRatio
 		
-		gain.setParameterT(0, 20.9); // core::gain::Gain
-		gain.setParameterT(1, 20.);  // core::gain::Smoothing
-		gain.setParameterT(2, 0.);   // core::gain::ResetValue
+		;                           // gain::Gain is automated
+		gain.setParameterT(1, 20.); // core::gain::Smoothing
+		gain.setParameterT(2, 0.);  // core::gain::ResetValue
 		
 		; // cabDesigner::SpeakerType is automated
 		; // cabDesigner::CustomMod is automated
@@ -228,6 +235,7 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		this->setParameterT(3, 0.);
 		this->setParameterT(4, 0.);
 		this->setParameterT(5, 0.);
+		this->setParameterT(6, 0.);
 		this->setExternalData({}, -1);
 	}
 	~instance() override

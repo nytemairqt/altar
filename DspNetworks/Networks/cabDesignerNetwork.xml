@@ -31,11 +31,10 @@
                              ID="FreqRatio" Value="0.9999999776482582" DefaultValue="1.0"/>
                 </Parameters>
               </Node>
-              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain" Folded="1">
+              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
                 <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="60.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" Value="20.90000180155037"
-                             DefaultValue="1.490116119384766e-6"/>
+                  <Parameter MinValue="0.0" MaxValue="60.0" StepSize="0.1000000014901161"
+                             SkewFactor="1" ID="Gain" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
                   <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
@@ -156,6 +155,13 @@
         <Connections>
           <Connection NodeId="cabDesigner1" ParameterId="CabAge"/>
           <Connection NodeId="cabDesigner" ParameterId="CabAge"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="FFTGain" MinValue="0.0" MaxValue="60.0" StepSize="0.1000000014901161"
+                 SkewFactor="1" ExternalModulation="Disabled" DefaultValue=""
+                 Value="0.0">
+        <Connections>
+          <Connection NodeId="gain" ParameterId="Gain"/>
         </Connections>
       </Parameter>
     </Parameters>
