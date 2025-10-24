@@ -61,12 +61,12 @@ struct cabDesigner : public data::base
         {
             const float r = (float)i / (float)(kMojoBands - 1);
             mojoFreq[i] = kMojoMin * std::pow(kMojoMax / kMojoMin, r);
-            mojoGainDB[i] = 0.0f;
+            mojoSeed[i] = 0.0f; // will be randomized in generateRandomMojo()
         }
 
         // Instantiate Speakers & Microphones
-        addSpeaker(speakerA); addSpeaker(speakerB); addSpeaker(speakerC); addSpeaker(speakerD); addSpeaker(speakerE); addSpeaker(speakerF);              
-        addMic(micA); addMic(micB); addMic(micC); addMic(micD);addMic(micE); addMic(micF); addMic(micG); addMic(micH);
+        addSpeaker(speakerA); addSpeaker(speakerB); addSpeaker(speakerC); addSpeaker(speakerD); addSpeaker(speakerE);             
+        addMic(micA); addMic(micB); addMic(micC); addMic(micD); addMic(micE);
 
         generateRandomMojo();
     }
@@ -77,12 +77,13 @@ struct cabDesigner : public data::base
 
         for (int ch = 0; ch < 2; ++ch)
         {
-            for (int i = 0; i < 16; ++i) { spState[ch][i].reset(); micState[ch][i].reset(); }
+            for (int i = 0; i < 16; ++i) { spState[ch][i].reset(); micState[ch][i].reset(); cmState[ch][i].reset(); }
             for (int b = 0; b < kMojoBands; ++b) mojoState[ch][b].reset();
             lowShelf[ch].reset(); highShelf[ch].reset();
         }
 
         applySpeaker();
+        applyCustomMod();
         applyMic();
         updateMojo();
         updateCabAge();
@@ -91,39 +92,45 @@ struct cabDesigner : public data::base
     template <typename T>
     void process(T& data)
     {
-        const int nS = data.getNumSamples();
-        const int nC = jmin(2, (int)data.getNumChannels());
-
-        dyn<float> c0, c1;
+        const int numSamples = data.getNumSamples();
+        const int numChannels = jmin(2, (int)data.getNumChannels());
+        
+        dyn<float> chL, chR;
         int idx = 0;
         for (auto ch : data)
         {
-            if      (idx == 0) c0 = data.toChannelData(ch);
-            else if (idx == 1) c1 = data.toChannelData(ch);
+            if      (idx == 0) chL = data.toChannelData(ch);
+            else if (idx == 1) chR = data.toChannelData(ch);
             ++idx;
         }
-        if (nC == 1) c1 = c0;
+        if (numChannels == 1) chR = chL;
 
-        for (int s = 0; s < nS; ++s)
+        for (int s = 0; s < numSamples; ++s)
         {
-            float x0 = c0[s];
-            float x1 = (nC > 1 ? c1[s] : x0);
+            float xL = chL[s];
+            float xR = (numChannels > 1 ? chR[s] : xL);
 
             // 1) Speaker
-            for (int i = 0; i < spCount; ++i) { x0 = spState[0][i].process(x0); if (nC > 1) x1 = spState[1][i].process(x1); }
+            for (int i = 0; i < spCount; ++i) { xL = spState[0][i].process(xL); if (numChannels > 1) xR = spState[1][i].process(xR); }
 
-            // 2) Microphone
-            for (int i = 0; i < micCount; ++i) { x0 = micState[0][i].process(x0); if (nC > 1) x1 = micState[1][i].process(x1); }
+            // 2) Custom Mod (on/off)
+            if (cmEnabled)
+            {
+                for (int i = 0; i < cmCount; ++i) { xL = cmState[0][i].process(xL); if (numChannels > 1) xR = cmState[1][i].process(xR); }
+            }
 
-            // 3) Mojo
-            for (int b = 0; b < kMojoBands; ++b) { x0 = mojoState[0][b].process(x0); if (nC > 1) x1 = mojoState[1][b].process(x1); }
+            // 3) Microphone
+            for (int i = 0; i < micCount; ++i) { xL = micState[0][i].process(xL); if (numChannels > 1) xR = micState[1][i].process(xR); }
 
-            // 4) Cab Age
-            x0 = lowShelf[0].process(x0); x0 = highShelf[0].process(x0);
-            if (nC > 1) { x1 = lowShelf[1].process(x1); x1 = highShelf[1].process(x1); }
+            // 4) Mojo
+            for (int b = 0; b < kMojoBands; ++b) { xL = mojoState[0][b].process(xL); if (numChannels > 1) xR = mojoState[1][b].process(xR); }
 
-            c0[s] = x0;
-            if (nC > 1) c1[s] = x1;
+            // 5) Cab Age
+            xL = lowShelf[0].process(xL); xL = highShelf[0].process(xL);
+            if (numChannels > 1) { xR = lowShelf[1].process(xR); xR = highShelf[1].process(xR); }
+
+            chL[s] = xL;
+            if (numChannels > 1) chR[s] = xR;
         }
     }
 
@@ -135,20 +142,22 @@ struct cabDesigner : public data::base
         switch (P)
         {
             case 0: { const int ni = (int)jlimit(0.0, (double)(spModules - 1), v); if (ni != spIndex) { spIndex = ni; applySpeaker(); } break; }
-            case 1: { const int ni = (int)jlimit(0.0, (double)(micModules - 1), v); if (ni != micIndex) { micIndex = ni; applyMic(); } break; }
-            case 2: mojoStrength = (float)jlimit(0.0, 1.0, v); updateMojo(); break;
-            case 3: { const bool trig = (v > 0.5); if (trig && !genTrig) { generateRandomMojo(); updateMojo(); } genTrig = trig; break; }
-            case 4: cabAge = (float)jlimit(0.0, 1.0, v); updateCabAge(); break;
+            case 1: { const bool en = (v > 0.5); if (en != cmEnabled) { cmEnabled = en; applyCustomMod(); } break; }
+            case 2: { const int ni = (int)jlimit(0.0, (double)(micModules - 1), v); if (ni != micIndex) { micIndex = ni; applyMic(); } break; }
+            case 3: mojoStrength = (float)jlimit(0.0, 1.0, v); updateMojo(); break; 
+            case 4: { const bool trig = (v > 0.5); if (trig && !genTrig) { generateRandomMojo(); updateMojo(); } genTrig = trig; break; }
+            case 5: cabAge = (float)jlimit(0.0, 1.0, v); updateCabAge(); break;
         }
     }
 
     void createParameters(ParameterDataList& data)
     {
         { parameter::data p("SpeakerType", { 0.0, (double)(spModules ? spModules - 1 : 0) }); registerCallback<0>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
-        { parameter::data p("MicrophoneType", { 0.0, (double)(micModules ? micModules - 1 : 0) }); registerCallback<1>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
-        { parameter::data p("MojoStrength", { 0.0, 1.0 }); registerCallback<2>(p); p.setDefaultValue(0.5); data.add(std::move(p)); }
-        { parameter::data p("GenerateMojo", { 0.0, 1.0 }); registerCallback<3>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
-        { parameter::data p("CabAge", { 0.0, 1.0 }); registerCallback<4>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
+        { parameter::data p("CustomMod", { 0.0, 1.0 }); registerCallback<1>(p); p.setDefaultValue(1.0); data.add(std::move(p)); }
+        { parameter::data p("MicrophoneType", { 0.0, (double)(micModules ? micModules - 1 : 0) }); registerCallback<2>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
+        { parameter::data p("MojoStrength", { 0.0, 1.0 }); registerCallback<3>(p); p.setDefaultValue(0.5); data.add(std::move(p)); }
+        { parameter::data p("GenerateMojo", { 0.0, 1.0 }); registerCallback<4>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
+        { parameter::data p("CabAge", { 0.0, 1.0 }); registerCallback<5>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
     }
 
     // Simple adders from compile-time arrays
@@ -255,6 +264,22 @@ private:
     void applySpeaker() { const int idx = jlimit(0, jmax(0, spModules - 1), spIndex); applyEQ(sp[idx], spState, spCount); }
     void applyMic()     { const int idx = jlimit(0, jmax(0, micModules - 1), micIndex); applyEQ(mic[idx], micState, micCount); }
 
+    void applyCustomMod()
+    {
+        if (cmEnabled)
+        {
+            EQModule m;
+            m.set(customMod, (int)(sizeof(customMod) / sizeof(customMod[0])));
+            applyEQ(m, cmState, cmCount);
+        }
+        else
+        {
+            cmCount = 0;
+            for (int i = 0; i < 16; ++i)
+                for (int ch = 0; ch < 2; ++ch) { cmState[ch][i].b0 = 1.0f; cmState[ch][i].b1 = cmState[ch][i].b2 = 0.0f; cmState[ch][i].a1 = cmState[ch][i].a2 = 0.0f; }
+        }
+    }
+
     void updateCabAge()
     {
         const float lowBoost = cabAge * kCabMaxLowBoost;
@@ -266,13 +291,14 @@ private:
         }
     }
 
+    // Now stores only the random seed [-1, 1] and applies strength at update time
     void generateRandomMojo()
     {
         Random& rng = Random::getSystemRandom();
         for (int i = 0; i < kMojoBands; ++i)
         {
             const float r = rng.nextFloat() * 2.0f - 1.0f;
-            mojoGainDB[i] = r * kMojoMaxDb * mojoStrength;
+            mojoSeed[i] = r;
         }
     }
 
@@ -281,7 +307,7 @@ private:
         for (int i = 0; i < kMojoBands; ++i)
         {
             const float f = mojoFreq[i];
-            const float g = mojoGainDB[i];
+            const float g = mojoSeed[i] * kMojoMaxDb * mojoStrength; // strength applied here so it reacts immediately
             const float w = 2.0f * MathConstants<float>::pi * f / sr;
             const float c = std::cos(w), s = std::sin(w);
             const float A = std::pow(10.0f, g / 40.0f);
@@ -320,6 +346,11 @@ private:
     int spIndex = 0, micIndex = 0;
     int spCount = 0, micCount = 0;
 
+    // Custom Mod state
+    Biquad cmState[2][16];
+    int    cmCount = 0;
+    bool   cmEnabled = true;
+
     static constexpr int   kMojoBands = 200;
     static constexpr float kMojoMin   = 50.0f;
     static constexpr float kMojoMax   = 13000.0f;
@@ -328,7 +359,7 @@ private:
 
     Biquad mojoState[2][kMojoBands];
     float  mojoFreq[kMojoBands];
-    float  mojoGainDB[kMojoBands];
+    float  mojoSeed[kMojoBands];     // [-1, 1] random seed per band
     float  mojoStrength = 0.5f;
     bool   genTrig = false;
 
@@ -345,25 +376,9 @@ private:
 
     // ---------------------- Module definitions ----------------------
     // Speakers
-
-    // AL30 Modded
-    inline static const FilterSpec speakerA[] = {
-        FS(HighPass,    48.0f,      0.0f,    0.707f),
-        FS(HighPass,    48.0f,      0.0f,    0.707f),
-        FS(LowShelf,    90.0f,      4.0f,    1.0f),
-        FS(Peak,        200.0f,    -4.0f,    3.4f),
-        FS(Peak,        800.0f,    -3.0f,    4.0f),
-        FS(Peak,        1300.0f,   -7.0f,    6.0f),
-        FS(Peak,        1600.0f,   -8.0f,    6.0f),
-        FS(Peak,        2400.0f,    5.0f,   5.0f),
-        FS(HighShelf,   3500.0f,    3.0f,    1.0f),
-        FS(LowPass,     5500.0f,    0.0f,    0.707f),
-        FS(LowPass,     5500.0f,    0.0f,    0.707f),
-        FS(LowPass,     5500.0f,    0.0f,    0.707f)
-    };
     
     // AL30
-    inline static const FilterSpec speakerB[] = {
+    inline static const FilterSpec speakerA[] = {
         FS(HighPass,    48.0f,      0.0f,    0.707f),
         FS(HighPass,    48.0f,      0.0f,    0.707f),        
         FS(Peak,        200.0f,    -4.0f,    3.4f),
@@ -378,7 +393,7 @@ private:
     };
 
     // ALK100
-    inline static const FilterSpec speakerC[] = {
+    inline static const FilterSpec speakerB[] = {
         FS(HighPass,    60.0f,      0.0f,    0.707f),
         FS(HighPass,    60.0f,      0.0f,    0.707f),    
         FS(Peak,        206.0f,    -3.0f,    4.0f),
@@ -396,7 +411,7 @@ private:
     };
 
     // AL65
-    inline static const FilterSpec speakerD[] = {
+    inline static const FilterSpec speakerC[] = {
         FS(HighPass,    60.0f,      0.0f,    0.707f),
         FS(HighPass,    60.0f,      0.0f,    0.707f),    
         FS(Peak,        750.0f,     2.0f,    0.7f),
@@ -411,7 +426,7 @@ private:
     };
 
     // AL77
-    inline static const FilterSpec speakerE[] = {
+    inline static const FilterSpec speakerD[] = {
         FS(HighPass,    80.0f,      0.0f,    0.707f),
         FS(HighPass,    80.0f,      0.0f,    0.707f),    
         FS(Peak,        230.0f,    -2.0f,    3.0f),
@@ -427,7 +442,7 @@ private:
     };
 
     // AL12M
-    inline static const FilterSpec speakerF[] = {
+    inline static const FilterSpec speakerE[] = {
         FS(HighPass,    60.0f,      0.0f,    0.707f),
         FS(HighPass,    60.0f,      0.0f,    0.707f),    
         FS(Peak,        600.0f,     2.0f,    0.7f),
@@ -480,7 +495,7 @@ private:
         FS(LowPass,     16000.0f,   0.0f,   0.707f),
     };
 
-    // AL184
+    // AL121
     inline static const FilterSpec micE[] = {
         FS(HighPass,    30.0f,      0.0f,   0.707f),    
         FS(LowShelf,    60.0f,      2.0f,   1.0f),    
@@ -489,6 +504,15 @@ private:
         FS(HighShelf,   13500.0f,  -3.0f,   1.0f),
         FS(LowPass,     18000.0f,   0.0f,   0.707f),
         FS(LowPass,     18000.0f,   0.0f,   0.707f),
+    };
+
+    // Custom Mod 
+    inline static const FilterSpec customMod[] = {
+        FS(LowShelf,     90.0f,    1.5f,   0.707f),  
+        FS(Peak,        800.0f,   -2.0f,   0.7f),    
+        FS(Peak,       2500.0f,   -2.5f,   3.0f),    
+        FS(Peak,       3200.0f,   -2.5f,   3.0f),
+        FS(Peak,       4000.0f,   -2.5f,   3.0f),
     };
 };
 }

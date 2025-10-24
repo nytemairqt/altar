@@ -20,7 +20,6 @@ using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(110245
                                                           SN_GLOBAL_CABLE(108826)>;
 
 
-
 // ==========================| The node class with all required callbacks |==========================
 
 template <int NV> struct tuner: public data::base, public cable_manager_t, public hise::DllTimer

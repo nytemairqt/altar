@@ -22,9 +22,11 @@ namespace CabDesigner
     const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
     const btnCabDesignerGenerate = Content.getComponent("btnCabDesignerGenerate");
     const cabDesigner = Synth.getEffect("cabDesigner");
-    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];	
-    const bounds = [150, 250, 850, 400];
-
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];	            
+    const cabDesignerSlot = Synth.getSlotFX("cabDesigner");
+    const btnCloseCabDesigner = Content.getComponent("btnCloseCabDesigner");
+    const cabDesignerEQ = Synth.getEffect("cabDesignerEQ");
+    const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");        
 
     const btnCabSave = Content.getComponent("btnCabSave");
     const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
@@ -44,36 +46,12 @@ namespace CabDesigner
     
     cabDesignerMIDIPlayer.create(4, 4, 1);
 
-
-	pnlCabDesigner.loadImage("{PROJECT_FOLDER}bgCab.jpg", "bg");
-    pnlCabDesigner.loadImage("{PROJECT_FOLDER}trim.png", "trim");
-    pnlCabDesigner.setPaintRoutine(function(g)
-    {               
-        var stripHeight = 140;
-        var pad = 8;
-        var padded = [bounds[0] + pad, bounds[1] + pad, bounds[2] - (pad * 2), bounds[3] - (pad * 2)];
-        g.drawImage("bg", padded, 0, 0);
-        g.drawImage("trim", padded, 0, 0);
-        g.setColour(ColourData.clrComponentBGGrey);
-        g.fillRoundedRectangle([bounds[0] + pad, bounds[1] + bounds[3] / 2 - (stripHeight / 2), bounds[2] - pad * 2, stripHeight], 2.0);
-        g.setColour(ColourData.clrDarkgrey);
-        g.drawRoundedRectangle(bounds, 0.0, 3.0);                
-        g.drawRoundedRectangle([bounds[0] + pad, bounds[1] + bounds[3] / 2 - (stripHeight / 2), bounds[2] - pad * 2, stripHeight], 2.0, 2.0);
-    });   
-
-    pnlCabDesigner.setMouseCallback(function(event)
+    inline function onbtnCloseCabDesignerControl(component, value)
     {
-        var x = 145;
-        var y = 310;
-        var w = 860;
-        var h = 490;
-        
-        if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
-        {
-            btnShowCabDesigner.setValue(0);
-            btnShowCabDesigner.changed();
-        }   
-    });
+        if (value) { btnShowCabDesigner.setValue(0); btnShowCabDesigner.changed(); }
+    }
+
+    btnCloseCabDesigner.setControlCallback(onbtnCloseCabDesignerControl);	  
 
     inline function saveModuleBypassedState()
     {
@@ -199,6 +177,7 @@ namespace CabDesigner
         return sanitized;
     }
 
+	// Show cab designer
     inline function onbtnShowCabDesignerControl(component, value)
     {                         
         local attribute = component.get("text");                
@@ -210,20 +189,32 @@ namespace CabDesigner
                 effect.setAttribute(index, value);                
             }
         cabDesigner.setBypassed(1-value);
+        cabDesignerEQ.setBypassed(1-value);
         pnlCabDesigner.set("visible", value);  
     }
 
     btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);    
 
+	// Select speaker
     inline function oncmbCabDesignerSpeakerControl(component, value)
     {
         cabDesigner.setAttribute(cabDesigner.SpeakerType, value-1);
     }
 
     cmbCabDesignerSpeaker.setControlCallback(oncmbCabDesignerSpeakerControl);    
+    
+    // Select microphone
+    inline function oncmbCabDesignerMicControl(component, value)
+    {
+	    cabDesigner.setAttribute(cabDesigner.MicrophoneType, value-1);
+    }
+    
+    cmbCabDesignerMic.setControlCallback(oncmbCabDesignerMicControl);
+
+	// Save cab IR    
 
     inline function onbtnCabSaveControl(component, value)
-    {
+    {	
         if (!value)
             return;
             
@@ -257,7 +248,8 @@ namespace CabDesigner
             
         // Check sequencer is loaded
         if (cabDesignerMIDIPlayer.isEmpty() != true) 
-            Engine.renderAudio(cabDesignerMIDIPlayer.getEventList(), renderAudioCallback);  
+            Engine.renderAudio(cabDesignerMIDIPlayer.getEventList(), renderAudioCallback); 
+       
     };
 
     btnCabSave.setControlCallback(onbtnCabSaveControl);
@@ -283,4 +275,95 @@ namespace CabDesigner
             cabSaveName = "myCab.wav";
         }
     }
+
+    // Look And Feel
+    const pad = 8;
+    const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
+    const eqBounds = [fltCabDesignerEQ.get("x"), fltCabDesignerEQ.get("y"), fltCabDesignerEQ.get("width"), fltCabDesignerEQ.get("height")];
+
+    pnlCabDesigner.loadImage("{PROJECT_FOLDER}bgCab.jpg", "bg");
+    pnlCabDesigner.loadImage("{PROJECT_FOLDER}trim.png", "trim");
+    pnlCabDesigner.setPaintRoutine(function(g)
+    {                       
+        g.drawImage("bg", bounds, 0, 0);
+        g.drawImage("trim", bounds, 0, 0);
+        g.setColour(ColourData.clrDarkgrey);
+        g.drawRoundedRectangle(bounds, 0.0, 3.0);    
+        
+        g.setColour(ColourData.clrComponentBGGrey);
+        g.fillRoundedRectangle(eqBounds, 0.0);       
+        
+        g.setColour(ColourData.clrMidgrey);
+        g.drawRoundedRectangle(eqBounds, 0.0, 2.0);        
+        
+    }); 
+    
+    const cmbCabDesignerLAF = Content.createLocalLookAndFeel();
+    	
+   	cmbCabDesignerLAF.registerFunction("drawComboBox", function(g, obj)
+    {	        	
+	    // BG & Text
+	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
+	    g.fillRoundedRectangle(obj.area, 4.0);	    
+	    g.setColour(ColourData.clrWhite);
+	    g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");	    
+	    
+	    // Triangle
+	    var tXPad = 24;
+    	var tYPad = 12;
+		var tX = obj.area[2] - tXPad;
+		var tY = 8;
+		var tW = 16;
+		var tH = tY;	    
+	    var tA = [tX, tYPad, tW, tH];
+	    g.fillTriangle(tA, Math.toRadians(180));
+    });
+    
+    cmbCabDesignerSpeaker.setLocalLookAndFeel(cmbCabDesignerLAF);
+    cmbCabDesignerMic.setLocalLookAndFeel(cmbCabDesignerLAF);
+    
+    const btnCabDesignerSpeakerLAF = Content.createLocalLookAndFeel();
+    	
+    const pnlCabDesignerSpeakerIcon = Content.getComponent("pnlCabDesignerSpeakerIcon");
+    
+    pnlCabDesignerSpeakerIcon.setPaintRoutine(function(g)
+    {
+		var x = 0; var y = 0; var w = this.getWidth(); var h = this.getHeight();
+		var area = [x, y, w, h];
+		var pad = 1;		
+		var line = 1.5;
+		var p = Content.createPath();
+		p.loadFromData(PathData.pathSpeaker);
+		g.setColour(ColourData.clrLightgrey);	
+	    
+	    g.drawPath(p, [x + pad, y + pad, w - (2 * pad), h - (2 * pad)], line);
+	    
+	    
+    });
+    
+    const pnlCabDesignerMicrophoneIcon = Content.getComponent("pnlCabDesignerMicrophoneIcon");
+
+	pnlCabDesignerMicrophoneIcon.setPaintRoutine(function(g)
+    {		
+		var x = 0; var y = 0; var w = this.getWidth(); var h = this.getHeight();
+		var area = [x, y, w, h];
+		var line = 1.5;
+		var baseW = w / 2; var baseH = Math.round(h * 0.4375);
+		var baseX = w / 2 - Math.round(baseW / 2); var baseY = Math.round(h * 0.6875) - Math.round(baseH / 2); 		
+		var topW = Math.round(w * 0.36); var topH = Math.round(h * 0.58);
+		var topX = w / 2 - Math.round(topW / 2); var topY = Math.round(h * 0.36) - Math.round(topH / 2);
+		var p = Content.createPath();		
+		g.setColour(ColourData.clrLightgrey);
+		
+		// base
+	    p.loadFromData(PathData.pathMicrophoneA);
+	    g.drawPath(p, [baseX, baseY, baseW, baseH], line);
+	    p.clear();
+	    
+	    // top
+	    p.loadFromData(PathData.pathMicrophoneB);
+	    g.drawPath(p, [topX, topY, topW, topH], line);
+    });
+    
+    
 }

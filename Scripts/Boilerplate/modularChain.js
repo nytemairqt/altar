@@ -47,6 +47,10 @@ namespace ModularChain
     // Ensure slot states are stored with user presets
     for (m in fxModules)
         Engine.addModuleStateToUserPreset(m.getId());
+    
+    // Make sure cab designer is hidden
+    const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");   
+    inline function hideCabDesigner() { btnShowCabDesigner.setValue(0); btnShowCabDesigner.changed();}
         
     // Panel shenanigans
     reg dragging = false;
@@ -272,7 +276,8 @@ namespace ModularChain
         if (event.drag && !event.rightClick)
         {
 			dragging = true;
-			this.setMouseCursor("DraggingHandCursor", Colours.white, [0, 0]);
+			this.setMouseCursor("DraggingHandCursor", Colours.white, [0, 0]);  
+            hideCabDesigner();          
 
             if (event.dragX > 10 || event.dragY > 10 || event.dragX < -10 || event.dragY < -10)
             {				
@@ -288,6 +293,7 @@ namespace ModularChain
         {
             // Show the UI panel for the effect under this slot
             hideFXPanels();
+            hideCabDesigner();
             switch (this.get("text"))
             {
                 case "overdrive": pnlFx[0].set("visible", true); break;

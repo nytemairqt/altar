@@ -34,6 +34,7 @@ namespace LookAndFeel
 	const LAFButtonEQFirst = Content.createLocalLookAndFeel();		
 	const LAFButtonLock = Content.createLocalLookAndFeel();		
 	const LAFButtonClearBuffer = Content.createLocalLookAndFeel();
+	const LAFButtonClose = Content.createLocalLookAndFeel();
 		
 	const start = -Math.PI * 0.75;	
 	
@@ -44,16 +45,15 @@ namespace LookAndFeel
 		local x = obj.area[0];
 	    local y = obj.area[1];
 	    local w = obj.area[2];
-	    local h = obj.area[3];	
-	    local wKnb = text == ["processEQ"] || text == ["processComp"] ? 36 : 48;
-	    local hKnb = text == ["processEQ"] || text == ["processComp"] ? 36 : 48;
-	    local xKnb = Math.round((w - wKnb) / 2);
-	    local yKnb = text == ["processEQ"] || text == ["processComp"] ? 4 : 8;
+	    local h = obj.area[3];		    	    
+	    local wKnb = Math.round(w * 0.5);
+	    local hKnb = Math.round(h * 0.5);
+	    local xKnb = Math.round((w - wKnb) / 2);	    
+	    local yKnb = Math.round(h * 0.08);
 	    local areaKnob = [xKnb, yKnb, wKnb, hKnb];	
 	    local ringWidth = wKnb / 16;
 	    	
-	    // Background
-	    //g.setColour(ColourData.clrExtradarkgrey);
+	    // Background	    
 	    g.setColour(ColourData.clrDarkgrey);
 	    g.fillEllipse(areaKnob);
 	
@@ -74,10 +74,8 @@ namespace LookAndFeel
 		    
 		// Value Text (Before Rotating)
 		local textToDisplay = "";			
-		local textOffset = 30;		
-		if (text == ["processEQ"]) { textOffset = 10; }		
-		
-		if (text == ["processEQ"]) { textToDisplay = obj.suffix == "%" ? Math.round(obj.value * 100) + "%" : obj.valueSuffixString; }
+		local textOffset = Math.round(h * 0.3);				
+		if (text == ["processEQ"]) { textOffset = Math.round(h * 0.15); textToDisplay = obj.suffix == "%" ? Math.round(obj.value * 100) + "%" : obj.valueSuffixString; }
 		else if (text == ["processComp"]) { textToDisplay = obj.suffix == "%" ? Math.round(obj.value * 100) + "%" : obj.valueSuffixString; }
 		else if (text == [""]) { textToDisplay = obj.suffix == "%" ? Math.round(obj.value * 100) + "%" : obj.valueSuffixString;}
 		else { textToDisplay = text[obj.value]; }		
@@ -136,6 +134,18 @@ namespace LookAndFeel
 		g.fillEllipse([x + r, y + r, w - (2*r), h - (2*r)]);
 		
 	});	
+	
+	// Close Button
+	LAFButtonClose.registerFunction("drawToggleButton", function(g, obj)
+	{
+		var w = obj.area[2];
+		var h = obj.area[3];
+		g.fillAll(ColourData.clrComponentBGGrey);
+		var pad = Math.round(w * 0.3);
+		g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey);
+		g.drawLine(pad, w - pad, pad, h - pad, 2.0);
+		g.drawLine(w - pad, pad, pad, h - pad, 2.0); 
+	});
 	
 	// Mono / Stereo Switch
 	LAFButtonStereo.registerFunction("drawToggleButton", function(g, obj)
@@ -326,6 +336,7 @@ namespace LookAndFeel
 	const btnOpenCabFolderLAF = [Content.getComponent("btnOpenCabFolder")];	
 	const btnStereoLAF = [Content.getComponent("btnRingmodStereoMode")];
 	const btnClearBufferLAF = [Content.getComponent("btnOverdriveClearBuffer")];
+	const btnCloseLAF = [Content.getComponent("btnCloseCabDesigner")];
 
 	for (k in knbMainLAF) { k.setLocalLookAndFeel(LAFKnob); }	  
 	for (k in knbPreprocessLAF) { k.setLocalLookAndFeel(LAFKnob); }  
@@ -343,6 +354,7 @@ namespace LookAndFeel
 	for (b in btnOpenCabFolderLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabFolder); }	
 	for (b in btnStereoLAF) { b.setLocalLookAndFeel(LAFButtonStereo); }
 	for (b in btnClearBufferLAF) { b.setLocalLookAndFeel(LAFButtonClearBuffer); }
+	for (b in btnCloseLAF) { b.setLocalLookAndFeel(LAFButtonClose); }
 	
 	// Top Bar
 	

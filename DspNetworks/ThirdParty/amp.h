@@ -17,14 +17,12 @@
 #include "src/RTNeural-NAM/wavenet/wavenet_model.hpp"
 #include "src/math_approx/math_approx.hpp"
 
-// Use this enum to refer to the cables, eg. this->setGlobalCableValue<GlobalCables::tempo>(0.4)
 enum class GlobalCablesAmp
 {
     tempo = 0,
     pitch = 1,
     nam = 2
 };
-
 
 namespace project
 {
