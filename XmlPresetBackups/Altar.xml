@@ -55,7 +55,7 @@
             <Control type="ScriptSlider" id="knbAmpOutput" value="-30.39999961853027"/>
             <Control type="ScriptPanel" id="pnlAmpNAMLoader" value="0.0"/>
             <Control type="ScriptButton" id="btnAmpBrowseNAMTones" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowCabDesigner" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowCabDesigner" value="1.0"/>
             <Control type="ScriptSlider" id="knbCabMix" value="0.0"/>
             <Control type="ScriptButton" id="btnCabAEnable" value="1.0"/>
             <Control type="ScriptSlider" id="knbCabADelay" value="0.0"/>
@@ -77,7 +77,7 @@
             <Control type="ScriptSlider" id="knbCabDesignerMojo" value="0.5"/>
             <Control type="ScriptSlider" id="knbCabDesignerAge" value="0.5"/>
             <Control type="ScriptButton" id="btnCabDesignerCustomMod" value="1.0"/>
-            <Control type="ScriptButton" id="btnCabDesignerEQEnable" value="0.0"/>
+            <Control type="ScriptButton" id="btnCabDesignerEQEnable" value="1.0"/>
             <Control type="ScriptSlider" id="knbCabDesignerGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbReverbMix" value="0.5"/>
             <Control type="ScriptSlider" id="knbReverbPreDelay" value="0.0"/>
@@ -257,7 +257,7 @@
                    CabAPhase="0.0" CabAPan="0.0" CabAGain="1.490116119384766e-6"
                    CabBEnable="0.0" CabBDelay="0.0" CabBAxis="0.0" CabBDistance="20000.0"
                    CabBPhase="0.0" CabBPan="0.0" CabBGain="1.490116119384766e-6"
-                   CabDesignerBypass="0.0">
+                   CabDesignerBypass="1.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
           <AudioFiles>
@@ -291,13 +291,13 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="cabDesigner" Bypassed="1" Network="cabDesignerNetwork"
+        <Processor Type="Hardcoded Master FX" ID="cabDesigner" Bypassed="0" Network="cabDesignerNetwork"
                    SpeakerType="3.0" CustomMod="1.0" MicrophoneType="4.0" MojoStrength="0.5"
                    GenerateMojo="0.0" CabAge="0.5" FFTGain="12.0" Gain="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="CurveEq" ID="cabDesignerEQ" Bypassed="1" NumFilters="0"
+        <Processor Type="CurveEq" ID="cabDesignerEQ" Bypassed="0" NumFilters="0"
                    FFTEnabled="0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>

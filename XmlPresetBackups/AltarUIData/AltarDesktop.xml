@@ -186,7 +186,7 @@
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="ringmod"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="1040.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 3%" width="110.0" fontStyle="Regular" height="30.0"
+               text="CPU Usage: 9%" width="110.0" fontStyle="Regular" height="30.0"
                alignment="left" editable="0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
@@ -486,7 +486,7 @@
                height="16.0" enableMidiLearn="0"/>
     <Component type="ScriptPanel" id="pnlCabDesigner" x="0.0" y="0.0" width="850.0"
                height="400.0" itemColour="1023410176" itemColour2="1023410176"
-               allowCallbacks="Clicks Only" parentComponent="pnlCab" visible="0.0">
+               allowCallbacks="Clicks Only" parentComponent="pnlCab">
       <Component type="ScriptLabel" id="lblCabDesigner" x="365.0" y="20.0" parentComponent="pnlCabDesigner"
                  width="120.0" text="CAB DESIGNER" height="30.0" editable="0"
                  fontStyle="Bold"/>
@@ -517,10 +517,10 @@
                    width="76.0" text="Mojo" height="30.0" editable="0" fontStyle="Bold"
                    fontSize="11.0"/>
       </Component>
-      <Component type="ScriptSlider" id="knbCabDesignerAge" x="36" y="212.0" parentComponent="pnlCabDesigner"
-                 text="" width="76.0" height="76.0" processorId="cabDesigner"
-                 parameterId="CabAge" tooltip="Adjust cab age." defaultValue="0.5"
-                 suffix="%" middlePosition="0.5">
+      <Component type="ScriptSlider" id="knbCabDesignerAge" x="36.0" y="212.0"
+                 parentComponent="pnlCabDesigner" text="" width="76.0" height="76.0"
+                 processorId="cabDesigner" parameterId="CabAge" tooltip="Adjust cab age."
+                 defaultValue="0.5" suffix="%" middlePosition="0.5">
         <Component type="ScriptLabel" id="lblCabDesignerAge" x="0.0" y="40.0" parentComponent="knbCabDesignerAge"
                    width="76.0" text="Age" height="30.0" editable="0" fontStyle="Bold"
                    fontSize="11.0"/>
@@ -569,14 +569,14 @@
       <Component type="ScriptLabel" id="lblCabDesignerRegenerate" x="78.0" y="326.0"
                  parentComponent="pnlCabDesigner" width="76.0" text="Regenerate"
                  height="30.0" editable="0" fontStyle="Bold" fontSize="11.0"/>
-      <Component type="ScriptLabel" id="lblCabDesignerCustomMod" x="116" y="252.0"
+      <Component type="ScriptLabel" id="lblCabDesignerCustomMod" x="116.0" y="252.0"
                  parentComponent="pnlCabDesigner" width="76.0" text="Tone Mod"
                  height="30.0" editable="0" fontStyle="Bold" fontSize="11.0"/>
       <Component type="ScriptButton" id="btnCabDesignerEQEnable" x="773.0" y="69.0"
                  parentComponent="pnlCabDesigner" text="CabBEnable" tooltip="Enable speaker B."
                  width="16.0" height="16.0" enableMidiLearn="0" processorId="cabDesignerEQ"
                  parameterId="Enabled"/>
-      <Component type="ScriptSlider" id="knbCabDesignerGain" x="36" y="130.0"
+      <Component type="ScriptSlider" id="knbCabDesignerGain" x="36.0" y="130.0"
                  parentComponent="pnlCabDesigner" text="" processorId="cabDesigner"
                  parameterId="Gain" width="76.0" height="76.0" tooltip="Adjust mojo strength."
                  min="-12.0" max="12.0" suffix=" dB" middlePosition="0.0">
@@ -584,7 +584,7 @@
                    width="76.0" text="Gain" height="30.0" editable="0" fontStyle="Bold"
                    fontSize="11.0"/>
       </Component>
-      <Component type="ScriptLabel" id="lblCabDesignerCustomModValue" x="116"
+      <Component type="ScriptLabel" id="lblCabDesignerCustomModValue" x="116.0"
                  y="269.0" parentComponent="pnlCabDesigner" width="76.0" text="Enabled"
                  height="30.0" editable="0" fontStyle="Regular" fontSize="11.0"
                  textColour="4292861919"/>

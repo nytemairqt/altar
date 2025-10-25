@@ -39,7 +39,7 @@ namespace LookAndFeel
 	const start = -Math.PI * 0.75;	
 	
 	inline function reduced(obj, amount) { return [amount, amount, obj.area[2] - 2 * amount, obj.area[3] - 2 * amount]; }		
-	
+
 	inline function basicSlider(g, obj, text)
 	{
 		local x = obj.area[0];
@@ -61,7 +61,7 @@ namespace LookAndFeel
 	    local unfilled = Content.createPath();	    
 	    unfilled.startNewSubPath(0.5, 1.0);
 	    unfilled.addArc([0.0, 0.0, 1.0, 1.0], -Math.PI * 0.75, Math.PI * 0.75);	    	    
-	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
+	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);	    
 	    g.drawPath(unfilled, areaKnob, ringWidth * 2);
 	    
 	    // Filled Ring
@@ -69,7 +69,7 @@ namespace LookAndFeel
 	    filled.startNewSubPath(0.0, 0.0);
 	   	filled.startNewSubPath(1.0, 1.0);
 	    filled.addArc([0.0, 0.0, 1.0, 1.0], start, Math.max(start, start + Math.PI * 1.5 * obj.valueNormalized));
-	    g.setColour(obj.hover ? ColourData.clrOffWhite : ColourData.clrLightgrey);
+	    g.setColour(obj.hover ? ColourData.clrOffWhite : ColourData.clrLightgrey);	    
 	    g.drawPath(filled, areaKnob, ringWidth * 1.50);
 		    
 		// Value Text (Before Rotating)
@@ -82,11 +82,11 @@ namespace LookAndFeel
 		g.drawAlignedText(textToDisplay, [0, hKnb + textOffset, w, 20], "centred");
 						    	
 	    // Value Line (Rotated)
-	    local angle = (1.0 - (obj.valueNormalized - 0.02)) * -1.5 * Math.PI;
+	    local angle = (1.0 - (obj.valueNormalized * 0.98)) * -1.48 * Math.PI;
 	    local pivot = [xKnb + wKnb / 2, yKnb + hKnb / 2];
 	    g.rotate(angle, pivot);		   
 	    local lineX = .63;
-	    local lineY = .83; 
+	    local lineY = .885; 
 	    g.drawLine(
 	        xKnb + wKnb * lineX,	        
 	        xKnb + wKnb * lineY,
@@ -94,7 +94,7 @@ namespace LookAndFeel
 	        yKnb + hKnb * lineY,
 	        4
 	    );
-	}
+	}		
 	
 	// Main Slider	
 	LAFKnob.registerFunction("drawRotarySlider", function(g, obj)
