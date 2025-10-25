@@ -20,10 +20,15 @@ namespace CabDesigner
     const cabDesigner = Synth.getEffect("cabDesigner");
     const cabDesignerEQ = Synth.getEffect("cabDesignerEQ");
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];                
-	const cabDesignerFileSave = Synth.getAudioSampleProcessor("cabDesignerFileSave");
-    const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");                    
+	const cabFileSave = Synth.getAudioSampleProcessor("cabFileSave");
+    const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");
+    const testAudio = Synth.getChildSynth("testAudio");                    
     const dp = Synth.getDisplayBufferSource("cabDesigner");
     const fft = dp.getDisplayBuffer(0);
+    const inputGain = Synth.getEffect("inputGain");
+    const outputGain = Synth.getEffect("outputGain");
+    const preprocess = Synth.getEffect("preprocess");
+    const postprocess = Synth.getEffect("postprocess");
     
     fft.setRingBufferProperties({
 		  "BufferLength": 2048,
@@ -45,15 +50,14 @@ namespace CabDesigner
     const fltCabDesignerResponseCurve = Content.getComponent("fltCabDesignerResponseCurve");     
     const cmbCabDesignerSpeaker = Content.getComponent("cmbCabDesignerSpeaker");
     const cmbCabDesignerMic = Content.getComponent("cmbCabDesignerMic");
-    const lblCabSaveName = Content.getComponent("lblCabSaveName");               
+    const lblCabSaveName = Content.getComponent("lblCabSaveName");   
+    const lblCabDesignerCustomModValue = Content.getComponent("lblCabDesignerCustomModValue");
 
     const modules = Synth.getAllEffects(".*");    
     const impulseSize = 1024;
     const moduleBypassedStates = [];
     const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);
-    reg cabSaveName = "myCab.wav";
-    reg eventList = [];        
-    cabDesignerMIDIPlayer.create(4, 4, 1);
+    reg cabSaveName = "myCab.wav";          
 
     // Close Cab Designer
     inline function onbtnCloseCabDesignerControl(component, value) { if (value) { btnShowCabDesigner.setValue(0); btnShowCabDesigner.changed(); } }
@@ -63,20 +67,26 @@ namespace CabDesigner
     inline function saveModuleBypassedState()
     {
         moduleBypassedStates.clear();
-        for (m in modules)
-            moduleBypassedStates.push(m.isBypassed());
+        for (m in modules) { moduleBypassedStates.push(m.isBypassed()); m.setBypassed(1);}
+        cabDesigner.setBypassed(0);
+        cabDesignerEQ.setBypassed(1 - btnCabDesignerEQEnable.getValue());
+        cabFileSave.setBypassed(0);
+        testAudio.setBypassed(1);   
     }
 
     // Restore Module States
     inline function restoreModuleBypassedState()
     {
         for (i=0; i<moduleBypassedStates.length; i++) { modules[i].setBypassed(moduleBypassedStates[i]); }        
+        cabFileSave.setBypassed(1); testAudio.setBypassed(0); 
+        inputGain.setBypassed(0); outputGain.setBypassed(0); preprocess.setBypassed(0); postprocess.setBypassed(0); // force
     }
+    
 
     // Add MIDI Note
     inline function addNoteForCabSave(eventListToUse, noteNumber, startQuarter, durationQuarter)
     {
-        /* Flushes the MIDI list for the impulse player */
+        // Flushes the MIDI list for the impulse player
         // noteOn
         local on = Engine.createMessageHolder();
         on.setType(1);             
@@ -132,14 +142,8 @@ namespace CabDesigner
             // HISE conv expects stereo
             file.writeAudioFile([buffer[0], buffer[0]], Engine.getSampleRate(), 24);
 
-            restoreModuleBypassedState(); // DONT DELETE ME
-            //cabDesignerSpeaker.setBypassed(1);
-            //cabDesignerMojo.setBypassed(1);
-            //cabDesignerMic.setBypassed(1);
-            //cabDesignerEQ.setBypassed(1);
-            //cabDesignerFileSave.setBypassed(1);             
-            testAudio.setBypassed(0); // force enable audio player              
-            
+            restoreModuleBypassedState();
+
             // FIX ME:
             // refresh audio files list somehow so new cab shows up in list
         } 
@@ -194,11 +198,20 @@ namespace CabDesigner
             }
         cabDesigner.setBypassed(1-value);        
         btnCabDesignerEQEnable.setValue(value); btnCabDesignerEQEnable.changed();
-
         pnlCabDesigner.set("visible", value);  
     }
 
     btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);    
+
+
+    inline function onbtnCabDesignerCustomModControl(component, value)
+    {
+        cabDesigner.setAttribute(cabDesigner.CustomMod, value);
+        lblCabDesignerCustomModValue.set("text", value ? "Enabled" : "Disabled");
+    };
+
+    btnCabDesignerCustomMod.setControlCallback(onbtnCabDesignerCustomModControl);
+
 
 	// Select speaker
     inline function oncmbCabDesignerSpeakerControl(component, value) { cabDesigner.setAttribute(cabDesigner.SpeakerType, value-1); }
@@ -211,51 +224,44 @@ namespace CabDesigner
 	// Save cab IR    
     inline function onbtnCabSaveControl(component, value)
     {	
-        if (!value)
-            return;
-            
+        if (!value) { return; }
+                        
         saveModuleBypassedState();
-
-        for (m in modules) { m.setBypassed(1); }                    
-
-        testAudio.setBypassed(1); // force disable
-
-        // force enable third party node here
-                    
-        cabDesignerFileSave.setFile(""); // clears audio buffer
-
-        local buffer = Buffer.create(impulseSize);      
-        buffer[0] = 1.0; // Dirac delta
-
-        // get temp
-        local tempFiles = FileSystem.getFolder(FileSystem.Temp);
-        local tempFile = tempFiles.getChildFile("tempImpulse.wav");
-        
-        tempFile.writeAudioFile(buffer, Engine.getSampleRate(), 24);  
-        cabDesignerFileSave.setFile(tempFile.toString(0));  
-
-        eventList.clear();
-        addNoteForCabSave(eventList, 64, 0, 1.0);
-        
-        // swap workaround bullshit
-        cabDesignerMIDIPlayer.setUseTimestampInTicks(true); 
-        cabDesignerMIDIPlayer.flushMessageList(eventList);
-        cabDesignerMIDIPlayer.setUseTimestampInTicks(false);
-            
-        // Check sequencer is loaded
-        if (cabDesignerMIDIPlayer.isEmpty() != true) 
-            Engine.renderAudio(cabDesignerMIDIPlayer.getEventList(), renderAudioCallback); 
-       
+                            
+        if (cabDesignerMIDIPlayer.isEmpty()) { cabDesignerMIDIPlayer.setFile("{PROJECT_FOLDER}dirac.mid"); }
+        Engine.renderAudio(cabDesignerMIDIPlayer.getEventList(), renderAudioCallback);
     };
 
     btnCabSave.setControlCallback(onbtnCabSaveControl);
 
+    // Create New Midi file (in case dirac.mid gets deleted)
+    inline function createMidi()
+    {
+        local eventList = [];
+        cabDesignerMIDIPlayer.create(4, 4, 1);
+        addNoteForCabSave(eventList, 64, 0, 1.0);
+        cabDesignerMIDIPlayer.setUseTimestampInTicks(true); 
+        cabDesignerMIDIPlayer.flushMessageList(eventList);
+        cabDesignerMIDIPlayer.setUseTimestampInTicks(false);
+        cabDesignerMIDIPlayer.saveAsMidiFile("{PROJECT_FOLDER}dirac.mid", 0);     
+    }
+
+    // Create New Dirac file (in case dirac.wav gets deleted)
+    inline function createDirac()
+    {        
+        local buffer = Buffer.create(impulseSize);
+        buffer[0] = 1.0; // dirac
+        local file = audioFiles.getChildFile("dirac.wav");
+        file.writeAudioFile(buffer, Engine.getSampleRate(), 24);  
+    }
+    
     // Open Cab Folder
     inline function onbtnOpenCabFolderControl(component, value) { if (value) { audioFiles.show(); } }    
     btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
 
+    // Sanitize Filename
     inline function onlblCabSaveNameControl(component, value)
-    {
+    {        
         cabSaveName = sanitizeFileName(value);
 
         if (cabSaveName == "INVALID_FILENAME")
@@ -266,6 +272,8 @@ namespace CabDesigner
             cabSaveName = "myCab.wav";
         }
     }
+
+    lblCabSaveName.setControlCallback(onlblCabSaveNameControl);
 
     // Look And Feel
 
@@ -328,7 +336,7 @@ namespace CabDesigner
     {
         local x = 0; local y = 0; local w = this.getWidth(); local h = this.getHeight();
         local area = [x, y, w, h];
-        local pad = 1;        
+        local pad = 5;        
         local line = 1.5;
         local p = Content.createPath();
         p.loadFromData(PathData.pathSpeaker);

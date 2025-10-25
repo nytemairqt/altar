@@ -49,7 +49,8 @@ using chain_t = container::chain<parameter::empty,
 
 template <int NV>
 using chain1_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, project::cabDesigner<NV>>>;
+                                  wrap::fix<2, project::cabDesigner<NV>>, 
+                                  core::gain<NV>>;
 
 template <int NV>
 using split_t = container::split<parameter::empty, 
@@ -92,6 +93,7 @@ using CabAge = parameter::chain<ranges::Identity,
 
 template <int NV>
 using FFTGain = parameter::plain<core::gain<NV>, 0>;
+template <int NV> using Gain = FFTGain<NV>;
 template <int NV>
 using cabDesignerNetwork_t_plist = parameter::list<SpeakerType<NV>, 
                                                    CustomMod<NV>, 
@@ -99,7 +101,8 @@ using cabDesignerNetwork_t_plist = parameter::list<SpeakerType<NV>,
                                                    MojoStrength<NV>, 
                                                    GenerateMojo<NV>, 
                                                    CabAge<NV>, 
-                                                   FFTGain<NV>>;
+                                                   FFTGain<NV>, 
+                                                   Gain<NV>>;
 }
 
 template <int NV>
@@ -121,7 +124,7 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		
 		SNEX_METADATA_ID(cabDesignerNetwork);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(134)
+		SNEX_METADATA_ENCODED_PARAMETERS(150)
 		{
 			0x005C, 0x0000, 0x0000, 0x7053, 0x6165, 0x656B, 0x5472, 0x7079, 
             0x0065, 0x0000, 0x0000, 0x0000, 0x8000, 0x0040, 0x0000, 0x0000, 
@@ -139,7 +142,9 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
             0x6567, 0x0000, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 0x0006, 0x0000, 0x4646, 
             0x4754, 0x6961, 0x006E, 0x0000, 0x0000, 0x0000, 0x7000, 0x0042, 
-            0x0000, 0x0000, 0x8000, 0xCD3F, 0xCCCC, 0x003D
+            0x0000, 0x0000, 0x8000, 0xCD3F, 0xCCCC, 0x5C3D, 0x0700, 0x0000, 
+            0x4700, 0x6961, 0x006E, 0x0000, 0x4000, 0x00C1, 0x4000, 0x0041, 
+            0x4000, 0x0034, 0x8000, 0xCD3F, 0xCCCC, 0x003D
 		};
 		SNEX_METADATA_ENCODED_MOD_INFO(17)
 		{
@@ -164,6 +169,7 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		auto& clear1 = this->getT(0).getT(0).getT(6);       // math::clear<NV>
 		auto& chain1 = this->getT(0).getT(1);               // cabDesignerNetwork_impl::chain1_t<NV>
 		auto& cabDesigner1 = this->getT(0).getT(1).getT(0); // project::cabDesigner<NV>
+		auto& gain1 = this->getT(0).getT(1).getT(1);        // core::gain<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -192,6 +198,8 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		CabAge_p.connectT(1, cabDesigner);  // CabAge -> cabDesigner::CabAge
 		
 		this->getParameterT(6).connectT(0, gain); // FFTGain -> gain::Gain
+		
+		this->getParameterT(7).connectT(0, gain1); // Gain -> gain1::Gain
 		
 		// Default Values --------------------------------------------------------------------------
 		
@@ -229,6 +237,10 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		; // cabDesigner1::GenerateMojo is automated
 		; // cabDesigner1::CabAge is automated
 		
+		;                            // gain1::Gain is automated
+		gain1.setParameterT(1, 20.); // core::gain::Smoothing
+		gain1.setParameterT(2, 0.);  // core::gain::ResetValue
+		
 		this->setParameterT(0, 0.);
 		this->setParameterT(1, 0.);
 		this->setParameterT(2, 0.);
@@ -236,6 +248,7 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		this->setParameterT(4, 0.);
 		this->setParameterT(5, 0.);
 		this->setParameterT(6, 0.);
+		this->setParameterT(7, 1.78814e-07);
 		this->setExternalData({}, -1);
 	}
 	~instance() override

@@ -15,10 +15,10 @@
                 </Parameters>
               </Node>
               <Node ID="file_player" FactoryPath="core.file_player" Bypassed="0"
-                    Name="file_player" Folded="1">
+                    Name="file_player">
                 <ComplexData>
                   <AudioFiles>
-                    <AudioFile Index="-1" EmbeddedData="{PROJECT_FOLDER}diracDelta.wav" MinValue="0"
+                    <AudioFile Index="-1" EmbeddedData="{PROJECT_FOLDER}dirac.wav" MinValue="0"
                                MaxValue="1024"/>
                   </AudioFiles>
                 </ComplexData>
@@ -107,6 +107,16 @@
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="CabAge" Automated="1"/>
                 </Parameters>
               </Node>
+              <Node ID="gain1" FactoryPath="core.gain" Bypassed="0" Name="gain1">
+                <Parameters>
+                  <Parameter MinValue="-12.0" MaxValue="12.0" StepSize="0.1000000014901161"
+                             SkewFactor="1" ID="Gain" DefaultValue="1.78813932549815e-7" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                </Parameters>
+              </Node>
             </Nodes>
             <Parameters/>
           </Node>
@@ -162,6 +172,12 @@
                  Value="0.0">
         <Connections>
           <Connection NodeId="gain" ParameterId="Gain"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="Gain" MinValue="-12.0" MaxValue="12.0" StepSize="0.1000000014901161"
+                 ExternalModulation="Disabled" DefaultValue="" Value="1.78813932549815e-7">
+        <Connections>
+          <Connection NodeId="gain1" ParameterId="Gain"/>
         </Connections>
       </Parameter>
     </Parameters>
