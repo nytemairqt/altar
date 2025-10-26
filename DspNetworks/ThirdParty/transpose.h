@@ -8,6 +8,8 @@ And replace both "copy" variables in that same file with copyRectangle
 
 Then build HISE with HI_ENABLE_CUSTOM_NODES=1 preprocessor!
 
+Don't forget to extract SDK
+
 */
 
 #pragma once

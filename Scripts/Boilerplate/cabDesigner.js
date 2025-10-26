@@ -22,19 +22,11 @@ namespace CabDesigner
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];                
 	const cabFileSave = Synth.getAudioSampleProcessor("cabFileSave");
     const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");
-    const testAudio = Synth.getChildSynth("testAudio");                    
-    const dp = Synth.getDisplayBufferSource("cabDesigner");
-    const fft = dp.getDisplayBuffer(0);
+    const testAudio = Synth.getChildSynth("testAudio");                            
     const inputGain = Synth.getEffect("inputGain");
     const outputGain = Synth.getEffect("outputGain");
     const preprocess = Synth.getEffect("preprocess");
-    const postprocess = Synth.getEffect("postprocess");
-    
-    fft.setRingBufferProperties({
-		  "BufferLength": 2048,
-		  "WindowType": "Blackman Harris",
-		  "NumChannels": 1
-	});   
+    const postprocess = Synth.getEffect("postprocess");        
 
     const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
     const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
@@ -54,56 +46,123 @@ namespace CabDesigner
     const lblCabDesignerCustomModValue = Content.getComponent("lblCabDesignerCustomModValue");
 
     const modules = Synth.getAllEffects(".*");    
-    const impulseSize = 1024;
+    
     const moduleBypassedStates = [];
     const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);
-    reg cabSaveName = "myCab.wav";          
+    reg cabSaveName = "myCab.wav";   
+
+    const impulseSize = 1024;
+    const cabDesignerInput = Synth.getEffect("cabDesignerInput");
+    global cabRecord = false;
+    global cabBuffer = [];
+    
+    
+    inline function onbtnCabSaveControl(component, value)
+    {	    
+        cabRecord = value;	    
+	    
+	    if (value)
+	    {            	
+		    Synth.addNoteOn(1, 64, 64, 0);	    
+            Synth.addNoteOff(1, 64, 10000); // we'll trim this later
+		    return;
+	    }
+	    
+	    if (cabBuffer.length > 0)
+	    	reconstructBuffer();        
+    }
+
+    btnCabSave.setControlCallback(onbtnCabSaveControl);
+
+    inline function reconstructBuffer()
+    {
+        // cabBuffer = [ [L0, R0], [L1, R1], ... ]
+        if (cabBuffer.length == 0) { return; }
+
+        // Use actual captured block length in case it's not equal to maxBlockSize at the tail
+        local blockLen = cabBuffer[0][0].length;
+        local numBlocks = cabBuffer.length;
+        local totalLen = numBlocks * blockLen;
+
+        // Contiguous destination buffers per channel
+        local audioData = [Buffer.create(totalLen), Buffer.create(totalLen)];
+
+        // Explicit indices; avoid indexOf on object arrays
+        for (b = 0; b < numBlocks; b++)
+        {
+            // Left
+            {
+                local srcL = cabBuffer[b][0];
+                local dstL = Buffer.referTo(audioData[0], b * srcL.length, srcL.length);
+                srcL >> dstL;
+            }
+            // Right
+            {
+                local srcR = cabBuffer[b][1];
+                local dstR = Buffer.referTo(audioData[1], b * srcR.length, srcR.length);
+                srcR >> dstR;
+            }
+        }
+
+        cabBuffer.clear(); 
+        renderAudio(audioData);
+    }
+    
+    inline function reconstructBufferOld()
+    {	    
+        local length = cabBuffer.length * Engine.getBufferSize();
+        local audioData = [Buffer.create(length), Buffer.create(length)];				
+				
+        for (ch in cabBuffer)
+		{		
+            local channelIndex = cabBuffer.indexOf(ch);
+
+            for (block in ch)
+            {
+                local blockIndex = ch.indexOf(block); // L or R
+                local tempBuffer = Buffer.referTo(audioData[channelIndex], channelIndex * block.length, block.length);
+                block >> tempBuffer;
+            }			
+		}		
+		
+        cabBuffer.clear(); 
+        renderAudio(audioData);
+    }
+
+    inline function renderAudio(audioData)
+    {
+        local writeBuffer = Buffer.referTo(audioData[0]); // left channel only        
+        local trimStart = 0;
+        local threshold = 0.05;
+        
+        // get start trim
+        for (i = 0; i < writeBuffer.length; i++)
+        {
+            if (Math.abs(writeBuffer[i]) >= threshold)
+            {
+                trimStart = i;
+                break;
+            }            
+        }
+
+        local sliced = writeBuffer.getSlice(trimStart, impulseSize);
+
+        if (sliced.length < impulseSize)
+        {
+            Console.print("unable to trim properly, cancelling");
+            return;
+        }
+            
+        local output = [sliced, sliced]; // mono
+
+        local f = audioFiles.getChildFile(cabSaveName);
+        f.writeAudioFile(output, Engine.getSampleRate(), 24);
+        Engine.loadAudioFilesIntoPool(); // refresh cab list
+    }        
 
     // Close Cab Designer
     inline function onbtnCloseCabDesignerControl(component, value) { if (value) { btnShowCabDesigner.setValue(0); btnShowCabDesigner.changed(); } }
     btnCloseCabDesigner.setControlCallback(onbtnCloseCabDesignerControl);	  
-
-    // Save Module States
-    inline function saveModuleBypassedState()
-    {
-        moduleBypassedStates.clear();
-        for (m in modules) { moduleBypassedStates.push(m.isBypassed()); m.setBypassed(1);}
-        cabDesigner.setBypassed(0);
-        cabDesignerEQ.setBypassed(1 - btnCabDesignerEQEnable.getValue());
-        cabFileSave.setBypassed(0);
-        testAudio.setBypassed(1);   
-    }
-
-    // Restore Module States
-    inline function restoreModuleBypassedState()
-    {
-        for (i=0; i<moduleBypassedStates.length; i++) { modules[i].setBypassed(moduleBypassedStates[i]); }        
-        cabFileSave.setBypassed(1); testAudio.setBypassed(0); 
-        inputGain.setBypassed(0); outputGain.setBypassed(0); preprocess.setBypassed(0); postprocess.setBypassed(0); // force
-    }
-    
-
-    // Add MIDI Note
-    inline function addNoteForCabSave(eventListToUse, noteNumber, startQuarter, durationQuarter)
-    {
-        // Flushes the MIDI list for the impulse player
-        // noteOn
-        local on = Engine.createMessageHolder();
-        on.setType(1);             
-        on.setNoteNumber(noteNumber);  
-        on.setChannel(1);          
-        on.setVelocity(127);       
-        on.setTimestamp(0);
-        eventListToUse.push(on);
-        
-        // noteOff
-        local off = Engine.createMessageHolder();
-        off.setType(2); 
-        off.setNoteNumber(noteNumber);  
-        off.setChannel(1);         
-        off.setTimestamp(impulseSize);  
-        eventListToUse.push(off);
-    }
 
     // Normalize Dirac Delta
     inline function normalizeBuffer(buffer)
@@ -124,33 +183,8 @@ namespace CabDesigner
             for (i = 0; i < impulseSize; i++) { bufferNormalized[0][i] *= scale; }                               
         }   
         return bufferNormalized;            
-    }
-
-    // File-writing for IR
-    inline function renderAudioCallback (obj) 
-    {        
-        if (obj.finished) 
-        {   
-            // get the buffer                               
-            local buffer = normalizeBuffer(obj.channels);                       
-            local file = audioFiles.getChildFile(cabSaveName);
-            
-            // FIX ME:
-            // check if chosen file name is already loaded in either cab waveform
-            // if it is, show alert window and return
-
-            // HISE conv expects stereo
-            file.writeAudioFile([buffer[0], buffer[0]], Engine.getSampleRate(), 24);
-
-            restoreModuleBypassedState();
-
-            // FIX ME:
-            // refresh audio files list somehow so new cab shows up in list
-        } 
-    }
-
+    }    
     
-
     inline function sanitizeFileName(fileName)
     {
         /* Ensures people aren't putting stupid characters in their IR names */
@@ -196,7 +230,8 @@ namespace CabDesigner
                 local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
-        cabDesigner.setBypassed(1-value);        
+        cabDesigner.setBypassed(1-value);      
+        testAudio.setBypassed(value); // make sure this doesn't interfere with cab recording
         btnCabDesignerEQEnable.setValue(value); btnCabDesignerEQEnable.changed();
         pnlCabDesigner.set("visible", value);  
     }
@@ -220,31 +255,6 @@ namespace CabDesigner
     // Select microphone
     inline function oncmbCabDesignerMicControl(component, value) { cabDesigner.setAttribute(cabDesigner.MicrophoneType, value-1); }        
     cmbCabDesignerMic.setControlCallback(oncmbCabDesignerMicControl);
-
-	// Save cab IR    
-    inline function onbtnCabSaveControl(component, value)
-    {	
-        if (!value) { return; }
-                        
-        saveModuleBypassedState();
-                            
-        if (cabDesignerMIDIPlayer.isEmpty()) { cabDesignerMIDIPlayer.setFile("{PROJECT_FOLDER}dirac.mid"); }
-        Engine.renderAudio(cabDesignerMIDIPlayer.getEventList(), renderAudioCallback);
-    };
-
-    btnCabSave.setControlCallback(onbtnCabSaveControl);
-
-    // Create New Midi file (in case dirac.mid gets deleted)
-    inline function createMidi()
-    {
-        local eventList = [];
-        cabDesignerMIDIPlayer.create(4, 4, 1);
-        addNoteForCabSave(eventList, 64, 0, 1.0);
-        cabDesignerMIDIPlayer.setUseTimestampInTicks(true); 
-        cabDesignerMIDIPlayer.flushMessageList(eventList);
-        cabDesignerMIDIPlayer.setUseTimestampInTicks(false);
-        cabDesignerMIDIPlayer.saveAsMidiFile("{PROJECT_FOLDER}dirac.mid", 0);     
-    }
 
     // Create New Dirac file (in case dirac.wav gets deleted)
     inline function createDirac()

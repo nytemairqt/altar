@@ -94,6 +94,7 @@ using CabAge = parameter::chain<ranges::Identity,
 template <int NV>
 using FFTGain = parameter::plain<core::gain<NV>, 0>;
 template <int NV> using Gain = FFTGain<NV>;
+using DiracGate = parameter::empty;
 template <int NV>
 using cabDesignerNetwork_t_plist = parameter::list<SpeakerType<NV>, 
                                                    CustomMod<NV>, 
@@ -102,7 +103,8 @@ using cabDesignerNetwork_t_plist = parameter::list<SpeakerType<NV>,
                                                    GenerateMojo<NV>, 
                                                    CabAge<NV>, 
                                                    FFTGain<NV>, 
-                                                   Gain<NV>>;
+                                                   Gain<NV>, 
+                                                   DiracGate>;
 }
 
 template <int NV>
@@ -124,7 +126,7 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		
 		SNEX_METADATA_ID(cabDesignerNetwork);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(150)
+		SNEX_METADATA_ENCODED_PARAMETERS(170)
 		{
 			0x005C, 0x0000, 0x0000, 0x7053, 0x6165, 0x656B, 0x5472, 0x7079, 
             0x0065, 0x0000, 0x0000, 0x0000, 0x8000, 0x0040, 0x0000, 0x0000, 
@@ -144,7 +146,10 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
             0x4754, 0x6961, 0x006E, 0x0000, 0x0000, 0x0000, 0x7000, 0x0042, 
             0x0000, 0x0000, 0x8000, 0xCD3F, 0xCCCC, 0x5C3D, 0x0700, 0x0000, 
             0x4700, 0x6961, 0x006E, 0x0000, 0x4000, 0x00C1, 0x4000, 0x0041, 
-            0x4000, 0x0034, 0x8000, 0xCD3F, 0xCCCC, 0x003D
+            0x4000, 0x0034, 0x8000, 0xCD3F, 0xCCCC, 0x5C3D, 0x0800, 0x0000, 
+            0x4400, 0x7269, 0x6361, 0x6147, 0x6574, 0x0000, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x0000
 		};
 		SNEX_METADATA_ENCODED_MOD_INFO(17)
 		{
@@ -249,6 +254,7 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		this->setParameterT(5, 0.);
 		this->setParameterT(6, 0.);
 		this->setParameterT(7, 1.78814e-07);
+		this->setParameterT(8, 0.);
 		this->setExternalData({}, -1);
 	}
 	~instance() override

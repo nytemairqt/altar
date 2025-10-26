@@ -180,6 +180,10 @@
           <Connection NodeId="gain1" ParameterId="Gain"/>
         </Connections>
       </Parameter>
+      <Parameter ID="DiracGate" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
+                 DefaultValue="" Value="0.0">
+        <Connections/>
+      </Parameter>
     </Parameters>
   </Node>
 </Network>

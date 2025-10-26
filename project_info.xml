@@ -24,7 +24,7 @@
   <SupportMonoFX value="No"/>
   <EnableMidiInputFX value="No"/>
   <EnableMidiOut value="No"/>
-  <EnableSoundGeneratorsFX value="No"/>
+  <EnableSoundGeneratorsFX value="0"/>
   <VST3Support value="Yes"/>
   <UseRawFrontend value="No"/>
   <ExpansionType value="Disabled"/>
