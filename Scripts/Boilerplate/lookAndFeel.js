@@ -336,7 +336,7 @@ namespace LookAndFeel
 	const btnOpenCabFolderLAF = [Content.getComponent("btnOpenCabFolder")];	
 	const btnStereoLAF = [Content.getComponent("btnRingmodStereoMode")];
 	const btnClearBufferLAF = [Content.getComponent("btnOverdriveClearBuffer")];
-	const btnCloseLAF = [Content.getComponent("btnCloseCabDesigner")];
+	const btnCloseLAF = [Content.getComponent("btnCloseCabDesigner"), Content.getComponent("btnCabAUnload"), Content.getComponent("btnCabBUnload")];
 
 	for (k in knbMainLAF) { k.setLocalLookAndFeel(LAFKnob); }	  
 	for (k in knbPreprocessLAF) { k.setLocalLookAndFeel(LAFKnob); }  

@@ -41,11 +41,11 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerPolyNode<project::amp<1>, scriptnode::wrap::illegal_poly<project::amp<1>>>();
 		registerPolyNode<project::cab<1>, wrap::illegal_poly<project::cab<1>>>();
 		registerPolyNode<project::cabDesignerNetwork<1>, wrap::illegal_poly<project::cabDesignerNetwork<1>>>();
-		registerPolyNode<project::cabDesignerRecorder<1>, wrap::illegal_poly<project::cabDesignerRecorder<1>>>();
 		registerPolyNode<project::chug<1>, wrap::illegal_poly<project::chug<1>>>();
 		registerPolyNode<project::click<1>, wrap::illegal_poly<project::click<1>>>();
 		registerPolyNode<project::octave<1>, wrap::illegal_poly<project::octave<1>>>();
 		registerPolyNode<project::pick<1>, wrap::illegal_poly<project::pick<1>>>();
+		registerDataNode<project::cabDesignerInput_networkdata>();
 		registerDataNode<project::tuner_networkdata>();
 	}
 };

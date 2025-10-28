@@ -15,13 +15,29 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+    These source adjustments ensure we return an empty file object if user cancels the FileSystem.browse() call
+
+    hi_scripting/scripting/api/ScriptingApi.cpp
+
+    -- if (a.isObject())
+    ++ if (!a.isObject())
+    {
+        -- wc.call(&a, 1);
+        ++ File emptyFile;
+        ++ a = var(new ScriptingObjects::ScriptFile(p_, emptyFile));
+    }
+
+    ++ wc.call(&a, 1);
+*/
+
 namespace CabDesigner
 {
     const cabDesigner = Synth.getEffect("cabDesigner");
-    const cabDesignerEQ = Synth.getEffect("cabDesignerEQ");
-    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];                
-	const cabFileSave = Synth.getAudioSampleProcessor("cabFileSave");
-    const cabDesignerMIDIPlayer = Synth.getMidiPlayer("cabDesignerMIDIPlayer");
+    const cabDesignerEQ = Synth.getEffect("cabDesignerEQ");    
+    const cabDesignerInput = Synth.getEffect("cabDesignerInput");
+    const cabDesignerRecorder = Synth.getEffect("cabDesignerRecorder");
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];                	    
     const testAudio = Synth.getChildSynth("testAudio");                            
     const inputGain = Synth.getEffect("inputGain");
     const outputGain = Synth.getEffect("outputGain");
@@ -33,61 +49,102 @@ namespace CabDesigner
     const btnCabDesignerEQEnable = Content.getComponent("btnCabDesignerEQEnable");
     const btnCabDesignerGenerate = Content.getComponent("btnCabDesignerGenerate");            
     const btnCabDesignerCustomMod = Content.getComponent("btnCabDesignerCustomMod");    
-    const btnCabSave = Content.getComponent("btnCabSave");
+    const btnCabDesignerSave = Content.getComponent("btnCabDesignerSave");
     const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
     const btnCloseCabDesigner = Content.getComponent("btnCloseCabDesigner");    
+    
     const knbCabDesignerMojo = Content.getComponent("knbCabDesignerMojo");
     const knbCabDesignerAge = Content.getComponent("knbCabDesignerAge");
     const fltCabDesignerEQ = Content.getComponent("fltCabDesignerEQ");       
     const fltCabDesignerResponseCurve = Content.getComponent("fltCabDesignerResponseCurve");     
     const cmbCabDesignerSpeaker = Content.getComponent("cmbCabDesignerSpeaker");
     const cmbCabDesignerMic = Content.getComponent("cmbCabDesignerMic");
-    const lblCabSaveName = Content.getComponent("lblCabSaveName");   
+    const lblCabDesignerSave = Content.getComponent("lblCabDesignerSave");   
     const lblCabDesignerCustomModValue = Content.getComponent("lblCabDesignerCustomModValue");
+    const pnlCabDesignerSaveProtect = Content.getComponent("pnlCabDesignerSaveProtect");
+    pnlCabDesignerSaveProtect.set("visible", false);
+            
+    const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);    
 
-    const modules = Synth.getAllEffects(".*");    
-    
-    const moduleBypassedStates = [];
-    const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);
-    reg cabSaveName = "myCab.wav";   
-
-    const impulseSize = 1024;
-    const cabDesignerInput = Synth.getEffect("cabDesignerInput");
+    const impulseSize = 1024;    
     global cabRecord = false;
     global cabBuffer = [];
+    global cabSave = false;    
+            
+    const timerCabSave = Engine.createTimerObject();
     
+    timerCabSave.setTimerCallback(function()
+    {
+	   cabSave = false; 
+       cabRecord = false;
+	   pnlCabDesignerSaveProtect.set("visible", false);       
+
+       timerCabSave.stopTimer();
+    });    
     
-    inline function onbtnCabSaveControl(component, value)
-    {	    
-        cabRecord = value;	    
-	    
-	    if (value)
-	    {            	
-		    Synth.addNoteOn(1, 64, 64, 0);	    
-            Synth.addNoteOff(1, 64, 10000); // we'll trim this later
-		    return;
-	    }
-	    
-	    if (cabBuffer.length > 0)
-	    	reconstructBuffer();        
+    inline function onbtnCabDesignerSaveControl(component, value)
+    {	            
+        if (value)
+        {            
+            cabRecord = true; // starts our recording buffer
+            FileSystem.browse("", true, "*.wav", function(fileToSave)
+            {
+                // need a way to detect when user cancels the browse operation
+                // if cancelled, set cabRecord to false and clear cabBuffer
+                if (!fileToSave.hasWriteAccess()) { Console.print("File does not have write-access. Cancelling."); cabRecord = false; return; }
+
+                for (slot in fxSlots)
+                {
+                    if (slot.getCurrentEffectId() == "cab")
+                    {
+                        
+                        var id = slot.getCurrentEffect().getId();
+                        var ref = Synth.getAudioSampleProcessor(id);                                                                
+                        var cabAFile = ref.getAudioFile(0).getCurrentlyLoadedFile();
+                        var cabBFile = ref.getAudioFile(1).getCurrentlyLoadedFile();                                
+                        if (cabAFile == fileToSave.toString(0) || cabBFile == fileToSave.toString(0)) // just have to pray this works since the safety checks are returning different wildcards
+                        {                            
+                            Console.print("File in use by cab, please choose a different filename.");
+                            Engine.showErrorMessage("File in use by cab, please choose a different filename.", false);
+                            cabRecord = false;
+                            return;
+                        }
+                    }
+                }   
+
+                if (!fileToSave.isFile()) { cabRecord = false; return; }                    
+                
+                Synth.addNoteOn(1, 64, 64, 0);      
+                Synth.addNoteOff(1, 64, 10000); // we'll trim this later
+                cabSave = true;
+                timerCabSave.startTimer(1000);
+                pnlCabDesignerSaveProtect.set("visible", true);                           
+
+                if (cabBuffer.length > 0) // safety
+                {             
+                    var audioData = reconstructBuffer(); 
+                    renderAudio(audioData, fileToSave);
+                    cabRecord = false; // safety
+                } 
+            });            
+        }            
     }
 
-    btnCabSave.setControlCallback(onbtnCabSaveControl);
-
+    btnCabDesignerSave.setControlCallback(onbtnCabDesignerSaveControl);    
+	
     inline function reconstructBuffer()
     {
+		// Reconstructs the buffer from blocks received by processBlock        
+
         // cabBuffer = [ [L0, R0], [L1, R1], ... ]
         if (cabBuffer.length == 0) { return; }
-
-        // Use actual captured block length in case it's not equal to maxBlockSize at the tail
+        
         local blockLen = cabBuffer[0][0].length;
         local numBlocks = cabBuffer.length;
         local totalLen = numBlocks * blockLen;
 
-        // Contiguous destination buffers per channel
         local audioData = [Buffer.create(totalLen), Buffer.create(totalLen)];
-
-        // Explicit indices; avoid indexOf on object arrays
+        
         for (b = 0; b < numBlocks; b++)
         {
             // Left
@@ -104,38 +161,18 @@ namespace CabDesigner
             }
         }
 
-        cabBuffer.clear(); 
-        renderAudio(audioData);
+        cabBuffer.clear();                     
+        return audioData;
     }
-    
-    inline function reconstructBufferOld()
-    {	    
-        local length = cabBuffer.length * Engine.getBufferSize();
-        local audioData = [Buffer.create(length), Buffer.create(length)];				
-				
-        for (ch in cabBuffer)
-		{		
-            local channelIndex = cabBuffer.indexOf(ch);
-
-            for (block in ch)
-            {
-                local blockIndex = ch.indexOf(block); // L or R
-                local tempBuffer = Buffer.referTo(audioData[channelIndex], channelIndex * block.length, block.length);
-                block >> tempBuffer;
-            }			
-		}		
-		
-        cabBuffer.clear(); 
-        renderAudio(audioData);
-    }
-
-    inline function renderAudio(audioData)
+    	
+    inline function renderAudio(audioData, fileToSave)
     {
-        local writeBuffer = Buffer.referTo(audioData[0]); // left channel only        
+		// Trims the IR and saves it        
+        local writeBuffer = Buffer.referTo(audioData[0]); // left channel only
         local trimStart = 0;
         local threshold = 0.05;
         
-        // get start trim
+        // get start index
         for (i = 0; i < writeBuffer.length; i++)
         {
             if (Math.abs(writeBuffer[i]) >= threshold)
@@ -144,80 +181,22 @@ namespace CabDesigner
                 break;
             }            
         }
+		
+        local sliced = writeBuffer.getSlice(trimStart, impulseSize); // trim
 
-        local sliced = writeBuffer.getSlice(trimStart, impulseSize);
-
-        if (sliced.length < impulseSize)
-        {
-            Console.print("unable to trim properly, cancelling");
-            return;
-        }
-            
-        local output = [sliced, sliced]; // mono
-
-        local f = audioFiles.getChildFile(cabSaveName);
-        f.writeAudioFile(output, Engine.getSampleRate(), 24);
-        Engine.loadAudioFilesIntoPool(); // refresh cab list
+        if (sliced.length < impulseSize) { Console.print("Error trimming, cancelling."); return; }
+         
+        sliced.normalise(-0.1); // normalize
+        local output = [sliced, sliced]; // mono                    
+        
+        fileToSave.writeAudioFile(output, Engine.getSampleRate(), 24);
+        Engine.loadAudioFilesIntoPool(); // refresh cab list        
+        cabRecord = false;
     }        
 
     // Close Cab Designer
     inline function onbtnCloseCabDesignerControl(component, value) { if (value) { btnShowCabDesigner.setValue(0); btnShowCabDesigner.changed(); } }
-    btnCloseCabDesigner.setControlCallback(onbtnCloseCabDesignerControl);	  
-
-    // Normalize Dirac Delta
-    inline function normalizeBuffer(buffer)
-    {        
-        local bufferNormalized = buffer.clone();
-        local peak = 0.0;   
-        local v = -1.0;
-        
-        for (i = 0; i < impulseSize; i++)
-        {
-            v = Math.abs(bufferNormalized[0][i]);       
-            if (v > peak) { peak = v; }                
-        }
-
-        if (peak > 0.0)
-        {
-            local scale = 1.0 / peak;   
-            for (i = 0; i < impulseSize; i++) { bufferNormalized[0][i] *= scale; }                               
-        }   
-        return bufferNormalized;            
-    }    
-    
-    inline function sanitizeFileName(fileName)
-    {
-        /* Ensures people aren't putting stupid characters in their IR names */
-        local lbl = Content.getComponent("lblCabSaveName");
-        local strings = ["/", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "|", ",", ";", ":", "{", "}", "[", "]", "<", ">", "?", "~", "`", "?", " "];
-        
-        for (s in strings)
-            if (fileName.contains(s))
-                return "INVALID_FILENAME";
-
-        local sanitized = fileName;
-
-        if (sanitized.contains(".") && !sanitized.contains(".wav"))
-            return "INVALID_FILENAME";
-
-        local stops = fileName.split(".").length > 2;
-
-        if (stops)
-            return "INVALID_FILENAME";
-
-        if (!sanitized.contains(".wav"))
-        { 
-            sanitized = sanitized + ".wav";
-            lbl.set("text", sanitized);
-        }
-        else
-        {
-            if (sanitized.indexOf(".wav") != sanitized.length - 4)
-                return "INVALID_FILENAME";
-        }
-
-        return sanitized;
-    }
+    btnCloseCabDesigner.setControlCallback(onbtnCloseCabDesignerControl);	      
 
 	// Show cab designer
     inline function onbtnShowCabDesignerControl(component, value)
@@ -230,7 +209,12 @@ namespace CabDesigner
                 local index = effect.getAttributeIndex(attribute);
                 effect.setAttribute(index, value);                
             }
-        cabDesigner.setBypassed(1-value);      
+        cabDesigner.setBypassed(1-value);    
+        cabDesignerInput.setBypassed(1-value);
+        cabDesignerRecorder.setBypassed(1-value);
+        cabRecord = false;
+        cabSave = false;
+        cabBuffer.clear();  
         testAudio.setBypassed(value); // make sure this doesn't interfere with cab recording
         btnCabDesignerEQEnable.setValue(value); btnCabDesignerEQEnable.changed();
         pnlCabDesigner.set("visible", value);  
@@ -238,15 +222,14 @@ namespace CabDesigner
 
     btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);    
 
-
     inline function onbtnCabDesignerCustomModControl(component, value)
-    {
+    {	
+    	// Enables custom tone curve
         cabDesigner.setAttribute(cabDesigner.CustomMod, value);
         lblCabDesignerCustomModValue.set("text", value ? "Enabled" : "Disabled");
     };
 
-    btnCabDesignerCustomMod.setControlCallback(onbtnCabDesignerCustomModControl);
-
+    btnCabDesignerCustomMod.setControlCallback(onbtnCabDesignerCustomModControl);    
 
 	// Select speaker
     inline function oncmbCabDesignerSpeakerControl(component, value) { cabDesigner.setAttribute(cabDesigner.SpeakerType, value-1); }
@@ -269,22 +252,6 @@ namespace CabDesigner
     inline function onbtnOpenCabFolderControl(component, value) { if (value) { audioFiles.show(); } }    
     btnOpenCabFolder.setControlCallback(onbtnOpenCabFolderControl);
 
-    // Sanitize Filename
-    inline function onlblCabSaveNameControl(component, value)
-    {        
-        cabSaveName = sanitizeFileName(value);
-
-        if (cabSaveName == "INVALID_FILENAME")
-        {
-            Engine.showMessage("Invalid character in filename. File name must not include special characters, and end in .wav"); // only in compiled plugin
-            Console.print("Invalid character in filename. File name must not include special characters, and end in .wav"); // debug
-            lblCabSaveName.set("text", "myCab.wav");
-            cabSaveName = "myCab.wav";
-        }
-    }
-
-    lblCabSaveName.setControlCallback(onlblCabSaveNameControl);
-
     // Look And Feel
 
     const LAFButtonCabDesignerCustomMod = Content.createLocalLookAndFeel();
@@ -295,6 +262,10 @@ namespace CabDesigner
 
     const pnlCabDesignerSpeakerIcon = Content.getComponent("pnlCabDesignerSpeakerIcon");
     const pnlCabDesignerMicrophoneIcon = Content.getComponent("pnlCabDesignerMicrophoneIcon");
+    
+    const bufferSource = Synth.getDisplayBufferSource("cabDesigner");
+    const bufferDisplay = bufferSource.getDisplayBuffer(0);    
+    bufferDisplay.setRingBufferProperties({"BufferLength": 2048});
 
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
@@ -316,6 +287,13 @@ namespace CabDesigner
         g.drawRoundedRectangle(eqBounds, 0.0, 2.0);        
         
     }); 
+    
+    pnlCabDesignerSaveProtect.setPaintRoutine(function(g)
+    {
+		g.fillAll(ColourData.clrComponentBGGrey);
+		g.setColour(ColourData.clrWhite);
+		g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred");
+    });
     
     const cmbCabDesignerLAF = Content.createLocalLookAndFeel();
 
@@ -443,7 +421,7 @@ namespace CabDesigner
     }
     
     LAFButtonCabDesignerSave.registerFunction("drawToggleButton", drawSaveButton);   
-    btnCabSave.setLocalLookAndFeel(LAFButtonCabDesignerSave);
+    btnCabDesignerSave.setLocalLookAndFeel(LAFButtonCabDesignerSave);
     
     inline function drawAnalyserBackground(g, obj)
     {

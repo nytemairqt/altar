@@ -13,6 +13,17 @@ reg maxBlockSize;function prepareToPlay(sampleRate, blockSize)
 		// copy channels
 		channels[0] >> cabBuffer[cabBuffer.length-1][0];
 		channels[1] >> cabBuffer[cabBuffer.length-1][1];
+		
+		// mute output audio to avoid clicks
+		
+		// safety to prevent memory leak
+		if (cabBuffer.length > 1500) { Console.print("Maximum buffer length reached, clearing."); cabBuffer.clear(); }
+			
+		//Console.print(cabBuffer.length);
+	}
+	if (cabSave)
+	{
+		for (ch in channels) { ch *= 0; }			
 	}
 }
  function onControl(number, value)

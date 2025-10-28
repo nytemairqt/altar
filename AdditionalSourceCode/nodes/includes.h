@@ -28,8 +28,8 @@
 // Include compiled network files ------------------
 
 #include "cab.h"
+#include "cabDesignerInput_networkdata.h"
 #include "cabDesignerNetwork.h"
-#include "cabDesignerRecorder.h"
 #include "chug.h"
 #include "click.h"
 #include "octave.h"

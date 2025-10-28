@@ -31,8 +31,8 @@
             <Control type="ScriptButton" id="btnShowPreProcess" value="0.0"/>
             <Control type="ScriptButton" id="btnShowPostProcess" value="0.0"/>
             <Control type="ScriptButton" id="btnModularABypass" value="0.0"/>
-            <Control type="ScriptButton" id="btnModularBBypass" value="1.0"/>
-            <Control type="ScriptButton" id="btnModularCBypass" value="1.0"/>
+            <Control type="ScriptButton" id="btnModularBBypass" value="0.0"/>
+            <Control type="ScriptButton" id="btnModularCBypass" value="0.0"/>
             <Control type="ScriptButton" id="btnModularDBypass" value="0.0"/>
             <Control type="ScriptButton" id="btnModularEBypass" value="0.0"/>
             <Control type="ScriptButton" id="btnModularFBypass" value="0.0"/>
@@ -47,22 +47,24 @@
             <Control type="ScriptSlider" id="knbOverdriveFoldAmount" value="1.0"/>
             <Control type="ScriptSlider" id="knbOverdriveOutputGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMode" value="1.0"/>
-            <Control type="ScriptSlider" id="knbAmpInput" value="68.80000305175781"/>
+            <Control type="ScriptSlider" id="knbAmpInput" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpLow" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMid" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpHigh" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpPresence" value="0.0"/>
-            <Control type="ScriptSlider" id="knbAmpOutput" value="-20.79999923706055"/>
+            <Control type="ScriptSlider" id="knbAmpOutput" value="0.0"/>
             <Control type="ScriptPanel" id="pnlAmpNAMLoader" value="0.0"/>
             <Control type="ScriptButton" id="btnAmpBrowseNAMTones" value="0.0"/>
+            <Control type="ScriptButton" id="btnCabAUnload" value="0.0"/>
+            <Control type="ScriptButton" id="btnCabBUnload" value="0.0"/>
             <Control type="ScriptButton" id="btnShowCabDesigner" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabMix" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabAEnable" value="1.0"/>
+            <Control type="ScriptSlider" id="knbCabMix" value="0.5"/>
+            <Control type="ScriptButton" id="btnCabAEnable" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabADelay" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabADistance" value="20000.0"/>
             <Control type="ScriptSlider" id="knbCabAAxis" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAPan" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabAGain" value="1.490116119384766e-6"/>
+            <Control type="ScriptSlider" id="knbCabAGain" value="0.0"/>
             <Control type="ScriptButton" id="btnCabAPhase" value="0.0"/>
             <Control type="ScriptButton" id="btnCabBEnable" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabBAxis" value="0.0"/>
@@ -75,7 +77,7 @@
             <Control type="ScriptComboBox" id="cmbCabDesignerSpeaker" value="1.0"/>
             <Control type="ScriptComboBox" id="cmbCabDesignerMic" value="1.0"/>
             <Control type="ScriptSlider" id="knbCabDesignerMojo" value="0.5"/>
-            <Control type="ScriptSlider" id="knbCabDesignerAge" value="0.5"/>
+            <Control type="ScriptSlider" id="knbCabDesignerAge" value="0.4199999868869781"/>
             <Control type="ScriptButton" id="btnCabDesignerCustomMod" value="1.0"/>
             <Control type="ScriptButton" id="btnCabDesignerEQEnable" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabDesignerGain" value="0.0"/>
@@ -246,22 +248,22 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="amp"
-                   Mode="1.0" Oversampling="0.0" InputGain="68.80000305175781" Low="0.0"
-                   Mid="0.0" High="0.0" Presence="0.0" OutputGain="-20.79999923706055">
+        <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="1" Network="amp"
+                   Mode="1.0" Oversampling="0.0" InputGain="0.0" Low="0.0" Mid="0.0"
+                   High="0.0" Presence="0.0" OutputGain="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="modularC" Bypassed="0" Network="cab"
-                   Mix="0.0" CabAEnable="1.0" CabADelay="0.0" CabAAxis="0.0" CabADistance="20000.0"
-                   CabAPhase="0.0" CabAPan="0.0" CabAGain="1.490116119384766e-6"
-                   CabBEnable="0.0" CabBDelay="0.0" CabBAxis="0.0" CabBDistance="20000.0"
-                   CabBPhase="0.0" CabBPan="0.0" CabBGain="0.0" CabDesignerBypass="0.0">
+        <Processor Type="Hardcoded Master FX" ID="modularC" Bypassed="1" Network="cab"
+                   Mix="0.5" CabAEnable="0.0" CabADelay="0.0" CabAAxis="0.0" CabADistance="20000.0"
+                   CabAPhase="0.0" CabAPan="0.0" CabAGain="0.0" CabBEnable="0.0"
+                   CabBDelay="0.0" CabBAxis="0.0" CabBDistance="20000.0" CabBPhase="0.0"
+                   CabBPan="0.0" CabBGain="0.0" CabDesignerBypass="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
           <AudioFiles>
-            <AudioFile EmbeddedData="{PROJECT_FOLDER}test.wav" MinValue="0" MaxValue="1024"/>
-            <AudioFile EmbeddedData="C:\Users\iamla\Desktop\TSE.wav" MinValue="0" MaxValue="5512"/>
+            <AudioFile EmbeddedData="{PROJECT_FOLDER}test.wav" MinValue="0" MaxValue="0"/>
+            <AudioFile EmbeddedData="{PROJECT_FOLDER}TSE.wav" MinValue="0" MaxValue="5512"/>
           </AudioFiles>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularD" Bypassed="1" Network="reverb"
@@ -303,7 +305,8 @@
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="cabDesigner" Bypassed="1" Network="cabDesignerNetwork"
                    SpeakerType="0.0" CustomMod="1.0" MicrophoneType="0.0" MojoStrength="0.5"
-                   GenerateMojo="0.0" CabAge="0.5" FFTGain="12.0" Gain="0.0" DiracGate="0.0">
+                   GenerateMojo="0.0" CabAge="0.4199999868869781" FFTGain="12.0"
+                   Gain="0.0" DiracGate="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -312,7 +315,7 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="ScriptFX" ID="cabDesignerRecorder" Bypassed="0">
+        <Processor Type="ScriptFX" ID="cabDesignerRecorder" Bypassed="1">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
           <Content/>
@@ -397,49 +400,6 @@
           <ChildProcessors>
             <Processor Type="SimpleEnvelope" ID="DefaultEnvelope1" Bypassed="0" Monophonic="0.0"
                        Retrigger="1.0" Intensity="1.0" Attack="5.0" Release="10.0" LinearMode="1.0">
-              <ChildProcessors>
-                <Processor Type="ModulatorChain" ID="Attack Time Modulation" Bypassed="0"
-                           Intensity="1.0">
-                  <ChildProcessors/>
-                </Processor>
-              </ChildProcessors>
-            </Processor>
-          </ChildProcessors>
-        </Processor>
-        <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
-          <ChildProcessors/>
-        </Processor>
-        <Processor Type="EffectChain" ID="FX" Bypassed="0">
-          <ChildProcessors/>
-        </Processor>
-      </ChildProcessors>
-      <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
-    </Processor>
-    <Processor Type="AudioLooper" ID="cabFileSave" Bypassed="1" Gain="0.7585775852203369"
-               Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0"
-               SyncMode="1.0" PitchTracking="0.0" LoopEnabled="0.0" RootNote="64.0"
-               SampleStartMod="0.0" Reversed="0.0" FileName="{PROJECT_FOLDER}dirac.wav"
-               min="0" max="1024" loopStart="0" loopEnd="1024">
-      <ChildProcessors>
-        <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
-          <ChildProcessors>
-            <Processor Type="MidiPlayer" ID="cabDesignerMIDIPlayer" Bypassed="0" CurrentSequence="1.0"
-                       CurrentTrack="1.0" LoopEnabled="1.0" PlaybackSpeed="1.0">
-              <ChildProcessors/>
-              <MidiFiles>
-                <MidiFile ID="" Data="44.nT6K8CxHYD..MQEZjA...X..A.P.miRSTI2Z....M..j.8Gh..HP..v+u.."
-                          FileName="{PROJECT_FOLDER}dirac.mid">
-                  <TimeSignature NumBars="1.0" Nominator="4.0" Denominator="4.0" LoopStart="0.0"
-                                 LoopEnd="1.0" Tempo="120.0"/>
-                </MidiFile>
-              </MidiFiles>
-            </Processor>
-          </ChildProcessors>
-        </Processor>
-        <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
-          <ChildProcessors>
-            <Processor Type="SimpleEnvelope" ID="DefaultEnvelope2" Bypassed="0" Monophonic="0.0"
-                       Retrigger="1.0" Intensity="1.0" Attack="0.0" Release="0.0" LinearMode="1.0">
               <ChildProcessors>
                 <Processor Type="ModulatorChain" ID="Attack Time Modulation" Bypassed="0"
                            Intensity="1.0">

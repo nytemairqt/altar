@@ -23,6 +23,8 @@ namespace Cab
 	const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
 	const pnlCab = Content.getComponent("pnlCab");
 	const pnlTooltip = Content.getComponent("pnlTooltip");	
+	const btnCabAUnload = Content.getComponent("btnCabAUnload");
+    const btnCabBUnload = Content.getComponent("btnCabBUnload");
 	
 	Engine.loadAudioFilesIntoPool();
 
@@ -121,6 +123,25 @@ namespace Cab
     
     pnlCabALoader.setMouseCallback(pnlCabALoaderClick);
     pnlCabBLoader.setMouseCallback(pnlCabBLoaderClick);
+
+    inline function onbtnCabDesignerUnloadCabControl(component, value)
+    {
+	    if (!value) { return; }
+	    for (slot in fxSlots)
+		{
+			local effectId = slot.getCurrentEffectId();
+			if (effectId == "cab")
+			{
+				local id = slot.getCurrentEffect().getId();
+				local ref = Synth.getAudioSampleProcessor(id);	
+				if (component == btnCabAUnload) {local irSlot = ref.getAudioFile(0); irSlot.loadFile(""); pnlCabALoader.set("text", "Drag cab file, right click to browse."); pnlCabALoader.repaint();}
+				if (component == btnCabBUnload) {local irSlot = ref.getAudioFile(1); irSlot.loadFile(""); pnlCabBLoader.set("text", "Drag cab file, right click to browse."); pnlCabBLoader.repaint();}							
+			}
+		}		    	    
+    }
+    
+    btnCabAUnload.setControlCallback(onbtnCabDesignerUnloadCabControl);
+    btnCabBUnload.setControlCallback(onbtnCabDesignerUnloadCabControl);
 
     // Look And Feel
     const pad = 8;
