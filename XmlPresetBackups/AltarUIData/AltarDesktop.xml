@@ -186,7 +186,7 @@
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="ringmod"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="1040.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 2%" width="110.0" fontStyle="Regular" height="30.0"
+               text="CPU Usage: 0%" width="110.0" fontStyle="Regular" height="30.0"
                alignment="left" editable="0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
@@ -199,37 +199,43 @@
     <Component type="ScriptLabel" id="lblVuInputA" x="0.0" y="231.0" parentComponent="pnlMaster"
                text="0" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
-    <Component type="ScriptLabel" id="lblVuInputC" x="0.0" y="421.0" parentComponent="pnlMaster"
-               text="-6" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+    <Component type="ScriptLabel" id="lblVuInputC" x="0.0" y="398.0" parentComponent="pnlMaster"
+               text="-6" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
-    <Component type="ScriptLabel" id="lblVuInputB" x="0.0" y="336.0" parentComponent="pnlMaster"
-               text="-3" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+    <Component type="ScriptLabel" id="lblVuInputB" x="0.0" y="327.0" parentComponent="pnlMaster"
+               text="-3" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
-    <Component type="ScriptLabel" id="lblVuInputD" x="0.0" y="524.0" parentComponent="pnlMaster"
-               text="-12" width="30.0" height="30.0" fontStyle="Bold" editable="0"
+    <Component type="ScriptLabel" id="lblVuInputD" x="0.0" y="469.0" parentComponent="pnlMaster"
+               text="-12" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
-    <Component type="ScriptLabel" id="lblVuInputE" x="0.0" y="631.0" parentComponent="pnlMaster"
-               text="-100" width="30.0" height="13.0" fontStyle="Bold" editable="0"
+    <Component type="ScriptLabel" id="lblVuInputE" x="0.0" y="541.0" parentComponent="pnlMaster"
+               text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptLabel" id="lblVuOutputA" x="1120.0" y="231.0" parentComponent="pnlMaster"
                text="0" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
-    <Component type="ScriptLabel" id="lblVuOutputC" x="1120.0" y="421.0" parentComponent="pnlMaster"
+    <Component type="ScriptLabel" id="lblVuOutputC" x="1120.0" y="398.0" parentComponent="pnlMaster"
                text="-6" width="30.0" height="30.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
-    <Component type="ScriptLabel" id="lblVuOutputB" x="1120.0" y="336.0" parentComponent="pnlMaster"
+    <Component type="ScriptLabel" id="lblVuOutputB" x="1120.0" y="327.0" parentComponent="pnlMaster"
                text="-3" width="30.0" height="30.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
-    <Component type="ScriptLabel" id="lblVuOutputD" x="1120.0" y="524.0" parentComponent="pnlMaster"
+    <Component type="ScriptLabel" id="lblVuOutputD" x="1120.0" y="469.0" parentComponent="pnlMaster"
                text="-12" width="30.0" height="30.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
-    <Component type="ScriptLabel" id="lblVuOutputE" x="1120.0" y="631.0" parentComponent="pnlMaster"
-               text="-100" width="30.0" height="13.0" fontStyle="Bold" editable="0"
+    <Component type="ScriptLabel" id="lblVuOutputE" x="1120.0" y="541.0" parentComponent="pnlMaster"
+               text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnWitness" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="G7d7g7dg72gi8gd8sgdgzkgkuKgukGugufdu"
-               text="9fsauifa7*F&amp;*F837uUSJGKgs9g99" height="30.0" saveInPreset="0"
-               enableMidiLearn="0" isMomentary="1"/>
+               parentComponent="pnlMaster" tooltip="||              witness...             ||"
+               text="||              witness...             ||" height="30.0"
+               saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
+    <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
+               text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
+    <Component type="ScriptLabel" id="lblVuOutputF" x="1120.0" y="630.0" parentComponent="pnlMaster"
+               text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
+               textColour="4289374890"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="150.0" y="250.0" width="850.0"
              height="400.0" itemColour="4278190080" itemColour2="4278190080">
