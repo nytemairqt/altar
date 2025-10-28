@@ -75,8 +75,7 @@ namespace Cab
 		{
 		    FileSystem.browse(FileSystem.AudioFiles, false, "*.wav", function(result)
 			{
-				if (!result)
-					return;
+				if (!result || result.toString(0) == "") { return; }
 				for (slot in fxSlots)
 				{
 					var effectId = slot.getCurrentEffectId();

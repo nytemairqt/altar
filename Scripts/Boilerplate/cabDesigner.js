@@ -68,68 +68,102 @@ namespace CabDesigner
 
     const impulseSize = 1024;    
     global cabRecord = false;
-    global cabBuffer = [];
-    global cabSave = false;    
+    global cabBuffer = [];  
+    reg pendingCabFile = undefined;
             
     const timerCabSave = Engine.createTimerObject();
-    
-    timerCabSave.setTimerCallback(function()
+
+    inline function timerCabSaveCallback()
     {
-	   cabSave = false; 
-       cabRecord = false;
-	   pnlCabDesignerSaveProtect.set("visible", false);       
+        cabRecord = false;
 
-       timerCabSave.stopTimer();
-    });    
-    
-    inline function onbtnCabDesignerSaveControl(component, value)
-    {	            
-        if (value)
-        {           
-            Console.print("starting cabRecord"); 
-            cabRecord = true; // starts our recording buffer
-            FileSystem.browse("", true, "*.wav", function(fileToSave)
-            {
-                // need a way to detect when user cancels the browse operation
-                // if cancelled, set cabRecord to false and clear cabBuffer
-                if (!fileToSave.hasWriteAccess()) { Console.print("File does not have write-access. Cancelling."); cabRecord = false; return; }                
-                
-                for (slot in fxSlots)
-                {
-                    if (slot.getCurrentEffectId() == "cab")
-                    {
-                        
-                        var id = slot.getCurrentEffect().getId();
-                        var ref = Synth.getAudioSampleProcessor(id);                                                                
-                        var cabAFile = ref.getAudioFile(0).getCurrentlyLoadedFile();
-                        var cabBFile = ref.getAudioFile(1).getCurrentlyLoadedFile();                                
-                        if (cabAFile == fileToSave.toString(0) || cabBFile == fileToSave.toString(0)) // just have to pray this works since the safety checks are returning different wildcards
-                        {                            
-                            Console.print("File in use by cab, please choose a different filename.");
-                            Engine.showErrorMessage("File in use by cab, please choose a different filename.", false);
-                            cabRecord = false;
-                            return;
-                        }
-                    }
-                }                               
+        // safety: snapshot and clear pending file
+        local fileToSave = pendingCabFile;
+        pendingCabFile = undefined;
 
-                if (fileToSave.toString(0) == "") { Console.print("File browser cancelled."); cabRecord = false; return; }
-                                
-                Synth.addNoteOn(1, 64, 64, 0);      
-                Synth.addNoteOff(1, 64, 10000); // we'll trim this later
-                cabSave = true;
-                timerCabSave.startTimer(1000);
-                pnlCabDesignerSaveProtect.set("visible", true);                           
+        // Hide the overlay
+        pnlCabDesignerSaveProtect.set("visible", false);
 
-                if (cabBuffer.length > 0) // safety
-                {                                 
-                    var audioData = reconstructBuffer(); 
-                    renderAudio(audioData, fileToSave);
-                    cabRecord = false; // safety
-                } 
-            });            
-        }            
+        // If we have data, write it now
+        if (isDefined(fileToSave) && cabBuffer.length > 0)
+        {
+            local audioData = reconstructBuffer();
+            renderAudio(audioData, fileToSave);
+        }
+        else
+        {
+            Console.print("No recorded data available after capture window.");
+            cabBuffer.clear();
+        }
+
+        timerCabSave.stopTimer();
     }
+
+    timerCabSave.setTimerCallback(timerCabSaveCallback);
+
+
+    inline function onbtnCabDesignerSaveControl(component, value)
+    {
+        if (!value) return;
+
+        // Ensure recorder is enabled
+        cabDesignerRecorder.setBypassed(0);
+
+        FileSystem.browse(FileSystem.AudioFiles, true, "*.wav", function(result)
+        {
+            // User canceled
+            if (!result || result.toString(0) == "")
+            {
+                Console.print("File browser cancelled.");
+                cabRecord = false; 
+                cabBuffer.clear(); 
+                return;
+            }
+
+            if (!result.hasWriteAccess())
+            {
+                Console.print("File does not have write-access. Cancelling.");
+                cabRecord = false; 
+                cabBuffer.clear(); 
+                return;
+            }
+
+            // Prevent saving over an in-use cab file
+            for (slot in fxSlots)
+            {
+                if (slot.getCurrentEffectId() == "cab")
+                {
+                    var id = slot.getCurrentEffect().getId();
+                    var ref = Synth.getAudioSampleProcessor(id);
+                    var cabAFile = ref.getAudioFile(0).getCurrentlyLoadedFile();
+                    var cabBFile = ref.getAudioFile(1).getCurrentlyLoadedFile();
+                    if (cabAFile == result.toString(0) || cabBFile == result.toString(0))
+                    {
+                        Console.print("File in use by cab, please choose a different filename.");
+                        Engine.showErrorMessage("File in use by cab, please choose a different filename.", false);
+                        cabRecord = false; 
+                        cabBuffer.clear(); 
+                        return;
+                    }
+                }
+            }
+
+            // Prepare fresh capture
+            cabBuffer.clear();
+            pendingCabFile = result;
+
+            // Start recording now (after file selection)
+            cabRecord = true;
+
+            // Trigger excitation
+            Synth.addNoteOn(1, 64, 64, 0);
+            Synth.addNoteOff(1, 64, 20000);
+
+            // Show overlay and arm timer to stop & save later
+            pnlCabDesignerSaveProtect.set("visible", true);
+            timerCabSave.startTimer(1000); // give the audio thread time to capture
+        });
+    }    
 
     btnCabDesignerSave.setControlCallback(onbtnCabDesignerSaveControl);    
 	
@@ -165,15 +199,18 @@ namespace CabDesigner
         cabBuffer.clear();                     
         return audioData;
     }
+
+    reg writeBuffer;
     	
     inline function renderAudio(audioData, fileToSave)
     {        
-		// Trims the IR and saves it        
-        local writeBuffer = Buffer.referTo(audioData[0]); // left channel only
+		// Trims the IR and saves it                
+        writeBuffer = Buffer.referTo(audioData[0]);
         local trimStart = 0;
         local threshold = 0.05;
+        local pad = 16;
         
-        // get start index
+        // get start index        
         for (i = 0; i < writeBuffer.length; i++)
         {
             if (Math.abs(writeBuffer[i]) >= threshold)
@@ -181,14 +218,15 @@ namespace CabDesigner
                 trimStart = i;
                 break;
             }            
-        }
-		
+        }    
+
+        trimStart -= pad;        		
         local sliced = writeBuffer.getSlice(trimStart, impulseSize); // trim
 
-        if (sliced.length < impulseSize) { Console.print("Error trimming, cancelling."); return; }
+        if (sliced.length < impulseSize) { Console.print("Error trimming, cancelling."); cabRecord = false; cabBuffer.clear(); return; }
          
         sliced.normalise(-0.1); // normalize
-        local output = [sliced, sliced]; // mono                    
+        local output = [sliced, sliced]; // force mono                            
                 
         fileToSave.writeAudioFile(output, Engine.getSampleRate(), 24);
         Engine.loadAudioFilesIntoPool(); // refresh cab list        
@@ -214,7 +252,6 @@ namespace CabDesigner
         cabDesignerInput.setBypassed(1-value);
         cabDesignerRecorder.setBypassed(1-value);
         cabRecord = false;
-        cabSave = false;
         cabBuffer.clear();  
         testAudio.setBypassed(value); // make sure this doesn't interfere with cab recording
         btnCabDesignerEQEnable.setValue(value); btnCabDesignerEQEnable.changed();

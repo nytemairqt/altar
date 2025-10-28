@@ -62,6 +62,9 @@ template <int NV> struct overdrive: public data::base
         circuitBendSmoothed.reset(scaledSampleRate, 0.02f);
         circuitBendSmoothed.setCurrentAndTargetValue(circuitBend);
         
+        // Initialize circuit bend oscillator
+        updateCircuitBendFrequency();
+        
         // Reset all filters and states
         reset();        
     }           
@@ -79,11 +82,10 @@ template <int NV> struct overdrive: public data::base
         {
             inputHPFStates[ch].reset();
             outputLPFStates[ch].reset();
-            
-            // Reset circuit bend states
-            bendResonatorState[ch] = 0.0f;
-            bendFeedback[ch] = 0.0f;
-            bendPhase[ch] = 0.0f;
+
+            // Reset circuit bend oscillator states
+            bendOscPhase[ch] = 0.0f;
+            bendWasActive[ch] = false;
         }
         
         // Reset distortion states
@@ -157,8 +159,18 @@ template <int NV> struct overdrive: public data::base
             break;
         }
         case 2: drive = static_cast<float>(v); break;
-        case 3: circuitBend = static_cast<float>(v); updateCircuitBendParameters(); break;
-        case 4: circuitBendFreq = static_cast<float>(v); updateCircuitBendParameters(); break;
+        case 3: 
+        {
+            circuitBend = static_cast<float>(v); 
+            updateCircuitBendFrequency(); 
+            break;
+        }
+        case 4: 
+        {
+            circuitBendFreq = static_cast<float>(v); 
+            updateCircuitBendFrequency(); 
+            break;
+        }
         case 5: outputGain = static_cast<float>(v); break;
         case 6: mix = static_cast<float>(v); break;
         case 7: bits = static_cast<float>(v); break;
@@ -202,11 +214,11 @@ template <int NV> struct overdrive: public data::base
             data.add(std::move(bendParam));
         }
         
-        // CircuitBend Frequency (Base frequency for the resonator)
+        // CircuitBend Frequency (Base frequency for the oscillator)
         {
             parameter::data bendFreqParam("ToneFreq", { 200.0, 5000.0 });
             registerCallback<4>(bendFreqParam);
-            bendFreqParam.setDefaultValue(440.0);
+            bendFreqParam.setDefaultValue(800.0);
             data.add(std::move(bendFreqParam));
         }
         
@@ -270,8 +282,7 @@ private:
     int oversamplingFactor = 1;
     float drive = 5.0f;
     float circuitBend = 0.0f;
-    float circuitBendFreq = 1000.0f;
-    bool bendWasActive[2] = { false, false };
+    float circuitBendFreq = 440.0f;
     float outputGain = 0.0f;
     float mix = 1.0f;
     float bits = 16.0f;
@@ -330,13 +341,11 @@ private:
     BiquadState inputHPFStates[2];
     BiquadState outputLPFStates[2];
     
-    // Circuit bend states
-    float bendResonatorState[2] = { 0.0f, 0.0f };
-    float bendFeedback[2] = { 0.0f, 0.0f };
-    float bendPhase[2] = { 0.0f, 0.0f };
-    float bendFreqMultiplier = 1.0f;
-    float bendResonance = 0.0f;
-    float bendAmount = 0.0f;
+    // Circuit bend oscillator states
+    float bendOscPhase[2] = { 0.0f, 0.0f };
+    float bendOscFrequency = 440.0f;
+    float bendOscPhaseIncrement = 0.0f;
+    bool bendWasActive[2] = { false, false };
     
     // Distortion states
     float lastBitcrushedSample[2] = { 0.0f, 0.0f };
@@ -344,7 +353,6 @@ private:
     float wavefolderState[2] = { 0.0f, 0.0f };
     
     // Main processing function
-
     void processAudioBuffer(juce::AudioBuffer<float>& buffer)
     {
         juce::ScopedNoDenormals noDenormals;
@@ -390,10 +398,10 @@ private:
                     const float inputSample = procBuf.getSample(ch, s);
                     const float drySignal   = inputSample;
 
-                    float distortedSample = processDistortion(inputSample, driveValue, ch);
-                    
-                    // Apply circuit bending
-                    distortedSample = applyCircuitBend(distortedSample, bendValue, ch);
+                    // Apply circuit bending before distortion
+                    float circuitBentSample = applyCircuitBend(inputSample, bendValue, ch);
+
+                    float distortedSample = processDistortion(circuitBentSample, driveValue, ch);                                    
                     
                     distortedSample *= juce::Decibels::decibelsToGain(outputValue);
 
@@ -446,67 +454,65 @@ private:
     
     float applyCircuitBend(float input, float bendValue, int channel)
     {
-        // Small hysteresis so we don't toggle/reset every sample near zero
-        constexpr float onThresh  = 0.012f;  // activate above this
-        constexpr float offThresh = 0.008f;  // deactivate below this
+        // Hysteresis to prevent clicking when crossing zero
+        constexpr float onThresh  = 0.05f;
+        constexpr float offThresh = 0.02f;
 
-        const bool isActive = bendWasActive[channel]
-                              ? (std::abs(bendValue) > offThresh)
-                              : (std::abs(bendValue) > onThresh);
+        bool isActive = bendWasActive[channel]
+                        ? (std::abs(bendValue) > offThresh)
+                        : (std::abs(bendValue) > onThresh);
 
         if (!isActive)
         {
-            if (bendWasActive[channel])
-            {
-                // One-time reset when transitioning to inactive
-                bendResonatorState[channel] = 0.0f;
-                bendFeedback[channel]       = 0.0f;
-                bendPhase[channel]          = 0.0f;
-            }
-
             bendWasActive[channel] = false;
             return input;
         }
-
         bendWasActive[channel] = true;
 
-        // Drive bend parameters from the smoothed, per-sample bendValue
-        const float bendAmt      = juce::jlimit(0.0f, 1.0f, std::abs(bendValue) / 6.0f);
-        const float resonance    = std::min(0.98f, std::abs(bendValue) / 12.0f * 0.95f);
-        const float freqMult     = std::pow(2.0f, bendValue / 12.0f);
-
-        // Keep oscillator below Nyquist to avoid aliasy “buzz” when OS is off
-        float bendFreq = circuitBendFreq * freqMult;
-        bendFreq = juce::jlimit(5.0f, 0.45f * scaledSampleRate, bendFreq);
-
-        const float phaseInc = (juce::MathConstants<float>::twoPi * bendFreq) / scaledSampleRate;
-
-        // Update phase oscillator
-        bendPhase[channel] += phaseInc;
-        if (bendPhase[channel] >= juce::MathConstants<float>::twoPi)
-            bendPhase[channel] -= juce::MathConstants<float>::twoPi;
-
-        const float oscillator = std::sin(bendPhase[channel]);
-
-        // Feedback resonance
-        float resonantSignal = input + bendFeedback[channel] * resonance;
-        resonantSignal = juce::jlimit(-2.0f, 2.0f, resonantSignal); // Prevent explosion
-
-        // Mix oscillator with resonant signal
-        const float bendSignal =
-            resonantSignal * (1.0f - bendAmt * 0.3f) +
-            oscillator * resonantSignal * bendAmt * 0.5f;
-
-        // Slight nonlinearity to keep it lively and suppress denormals
-        bendResonatorState[channel] =
-            bendResonatorState[channel] * 0.95f +
-            std::tanh(bendSignal * 2.0f) * 0.05f;
-
-        bendFeedback[channel] = std::tanh(bendResonatorState[channel] * 1.5f);
-
-        // Mix the effect
-        float output = input * (1.0f - bendAmt * 0.5f) + bendSignal * bendAmt * 0.8f;
-
+        // Calculate oscillator frequency based on bend value
+        // Positive values go up in pitch, negative values go down
+        float frequency = bendOscFrequency * std::pow(2.0f, bendValue / 12.0f);
+        frequency = juce::jlimit(20.0f, 0.45f * scaledSampleRate, frequency);
+        
+        // Calculate phase increment
+        float phaseIncrement = 2.0f * juce::MathConstants<float>::pi * frequency / scaledSampleRate;
+        
+        // Update phase
+        bendOscPhase[channel] += phaseIncrement;
+        if (bendOscPhase[channel] >= 2.0f * juce::MathConstants<float>::pi)
+        {
+            bendOscPhase[channel] -= 2.0f * juce::MathConstants<float>::pi;
+        }
+        
+        // Generate oscillator output (mix of sine and triangle for more character)
+        float sineWave = std::sin(bendOscPhase[channel]);
+        
+        // Triangle wave calculation
+        float triangleWave;
+        float normalizedPhase = bendOscPhase[channel] / (2.0f * juce::MathConstants<float>::pi);
+        if (normalizedPhase < 0.25f)
+            triangleWave = 4.0f * normalizedPhase;
+        else if (normalizedPhase < 0.75f)
+            triangleWave = 2.0f - 4.0f * normalizedPhase;
+        else
+            triangleWave = 4.0f * normalizedPhase - 4.0f;
+        
+        // Mix sine and triangle (more triangle for harsher sound)
+        float oscillatorOutput = 0.3f * sineWave + 0.7f * triangleWave;
+        
+        // Scale oscillator amplitude based on bend amount
+        float bendAmount = juce::jlimit(0.0f, 1.0f, std::abs(bendValue) / 12.0f);
+        oscillatorOutput *= bendAmount * 0.4f; // Scale down to prevent clipping
+        
+        // Mix oscillator with input signal
+        // More bend = more oscillator, less input
+        float mixRatio = bendAmount * 0.6f; // Maximum 60% oscillator
+        float output = input * (1.0f - mixRatio) + oscillatorOutput * mixRatio;
+        
+        // Add some input-dependent modulation for more circuit-bend character
+        float modulatedOsc = oscillatorOutput * (1.0f + input * 0.3f);
+        output = output * 0.8f + modulatedOsc * 0.2f * bendAmount;
+        
         return juce::jlimit(-1.5f, 1.5f, output);
     }
     
@@ -712,7 +718,7 @@ private:
         }
         
         oversampling.swap(newOversampling);
-        updateCircuitBendParameters();
+        updateCircuitBendFrequency();
         updateFilterCoefficients();
     }
     
@@ -725,21 +731,13 @@ private:
         makeLowPass(&outputLPFStates[0], 12000.0f);
     }
     
-    void updateCircuitBendParameters()
+    void updateCircuitBendFrequency()
     {
-        // Map circuitBend parameter to frequency multiplier and resonance
-        // circuitBend range: -12 to +12
+        // Store the base frequency for the oscillator
+        bendOscFrequency = juce::jlimit(20.0f, 5000.0f, circuitBendFreq);
         
-        // Frequency multiplier: exponential scaling
-        // Positive values increase pitch, negative decrease
-        bendFreqMultiplier = std::pow(2.0f, circuitBend / 12.0f);
-        
-        // Resonance: increases with absolute bend value
-        // More bend = more feedback/squealing
-        bendResonance = std::min(0.98f, std::abs(circuitBend) / 12.0f * 0.95f);
-        
-        // Amount of circuit bend effect
-        bendAmount = std::min(1.0f, std::abs(circuitBend) / 6.0f);
+        // Calculate phase increment for the base frequency
+        bendOscPhaseIncrement = 2.0f * juce::MathConstants<float>::pi * bendOscFrequency / scaledSampleRate;
     }
 };
 }

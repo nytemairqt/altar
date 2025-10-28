@@ -66,6 +66,7 @@ namespace Amp
             // open file browser
             FileSystem.browse(FileSystem.Documents, false, "*.nam, *.json", function(result)
             {
+                if (!result || result.toString(0) == "") { return; }
                 pnlAmpNAMLoader.set("text", result.toString(0));
                 sendNAMCableData();
                 pnlAmpNAMLoader.repaint();
