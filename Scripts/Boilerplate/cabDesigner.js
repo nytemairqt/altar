@@ -85,14 +85,15 @@ namespace CabDesigner
     inline function onbtnCabDesignerSaveControl(component, value)
     {	            
         if (value)
-        {            
+        {           
+            Console.print("starting cabRecord"); 
             cabRecord = true; // starts our recording buffer
             FileSystem.browse("", true, "*.wav", function(fileToSave)
             {
                 // need a way to detect when user cancels the browse operation
                 // if cancelled, set cabRecord to false and clear cabBuffer
-                if (!fileToSave.hasWriteAccess()) { Console.print("File does not have write-access. Cancelling."); cabRecord = false; return; }
-
+                if (!fileToSave.hasWriteAccess()) { Console.print("File does not have write-access. Cancelling."); cabRecord = false; return; }                
+                
                 for (slot in fxSlots)
                 {
                     if (slot.getCurrentEffectId() == "cab")
@@ -110,10 +111,10 @@ namespace CabDesigner
                             return;
                         }
                     }
-                }   
+                }                               
 
-                if (!fileToSave.isFile()) { cabRecord = false; return; }                    
-                
+                if (fileToSave.toString(0) == "") { Console.print("File browser cancelled."); cabRecord = false; return; }
+                                
                 Synth.addNoteOn(1, 64, 64, 0);      
                 Synth.addNoteOff(1, 64, 10000); // we'll trim this later
                 cabSave = true;
@@ -121,7 +122,7 @@ namespace CabDesigner
                 pnlCabDesignerSaveProtect.set("visible", true);                           
 
                 if (cabBuffer.length > 0) // safety
-                {             
+                {                                 
                     var audioData = reconstructBuffer(); 
                     renderAudio(audioData, fileToSave);
                     cabRecord = false; // safety
@@ -135,7 +136,7 @@ namespace CabDesigner
     inline function reconstructBuffer()
     {
 		// Reconstructs the buffer from blocks received by processBlock        
-
+        
         // cabBuffer = [ [L0, R0], [L1, R1], ... ]
         if (cabBuffer.length == 0) { return; }
         
@@ -166,7 +167,7 @@ namespace CabDesigner
     }
     	
     inline function renderAudio(audioData, fileToSave)
-    {
+    {        
 		// Trims the IR and saves it        
         local writeBuffer = Buffer.referTo(audioData[0]); // left channel only
         local trimStart = 0;
@@ -188,10 +189,10 @@ namespace CabDesigner
          
         sliced.normalise(-0.1); // normalize
         local output = [sliced, sliced]; // mono                    
-        
+                
         fileToSave.writeAudioFile(output, Engine.getSampleRate(), 24);
         Engine.loadAudioFilesIntoPool(); // refresh cab list        
-        cabRecord = false;
+        cabRecord = false;        
     }        
 
     // Close Cab Designer

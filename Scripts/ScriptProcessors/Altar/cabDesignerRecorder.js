@@ -21,10 +21,12 @@ reg maxBlockSize;function prepareToPlay(sampleRate, blockSize)
 			
 		//Console.print(cabBuffer.length);
 	}
+	/*
 	if (cabSave)
 	{
 		for (ch in channels) { ch *= 0; }			
 	}
+	*/
 }
  function onControl(number, value)
 {
