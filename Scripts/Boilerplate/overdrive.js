@@ -19,8 +19,9 @@ namespace Overdrive
 {            
     // Module Control
 
-    const controls = [Content.getComponent("knbOverdriveMode"), Content.getComponent("knbOverdriveDrive"), Content.getComponent("knbOverdriveCircuitBend"), Content.getComponent("btnOverdriveClearBuffer"), Content.getComponent("knbOverdriveFoldAmount"), Content.getComponent("knbOverdriveBits"), Content.getComponent("knbOverdriveSRReduction"), Content.getComponent("knbOverdriveMix"), Content.getComponent("knbOverdriveOutputGain")];    
+    const controls = [Content.getComponent("knbOverdriveMode"), Content.getComponent("knbOverdriveDrive"), Content.getComponent("knbOverdriveCircuitBend"), Content.getComponent("btnOverdriveCircuitBendTrigger"), Content.getComponent("knbOverdriveFoldAmount"), Content.getComponent("knbOverdriveBits"), Content.getComponent("knbOverdriveSRReduction"), Content.getComponent("knbOverdriveMix"), Content.getComponent("knbOverdriveOutputGain"), Content.getComponent("knbOverdriveCircuitBendFreqHidden"),];    
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];        
+    const btnOverdriveCircuitBendTrigger = Content.getComponent("btnOverdriveCircuitBendTrigger");        
 
     inline function onControl(component, value)
     {                
@@ -58,6 +59,8 @@ namespace Overdrive
     pnlOverdrive.loadImage("{PROJECT_FOLDER}bgOverdrive.jpg", "bg");
     pnlOverdrive.loadImage("{PROJECT_FOLDER}trim.png", "trim");
 
+    const LAFButtonTriggerCircuitBend = Content.createLocalLookAndFeel();
+
     pnlOverdrive.setPaintRoutine(function(g)
     {		        
     	var stripHeight = 140;
@@ -69,4 +72,19 @@ namespace Overdrive
         g.drawRoundedRectangle(bounds, 0.0, 3.0);                
         g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
+
+    LAFButtonTriggerCircuitBend.registerFunction("drawToggleButton", function(g, obj)
+    {
+        if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
+        else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+        var w = obj.area[2];
+        var h = obj.area[3];
+        var p = Content.createPath();
+        p.loadFromData(PathData.pathLightningBolt);
+        g.rotate(Math.toRadians(-20), [w / 2, h / 2]);
+        g.fillPath(p, obj.area);
+    });
+    
+    btnOverdriveCircuitBendTrigger.setLocalLookAndFeel(LAFButtonTriggerCircuitBend);
+    
 }

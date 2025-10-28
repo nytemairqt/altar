@@ -82,10 +82,10 @@ template <int NV> struct overdrive: public data::base
         {
             inputHPFStates[ch].reset();
             outputLPFStates[ch].reset();
+            postHPFStates[ch].reset(); // Post-chain high-pass
 
             // Reset circuit bend oscillator states
             bendOscPhase[ch] = 0.0f;
-            bendWasActive[ch] = false;
         }
         
         // Reset distortion states
@@ -176,7 +176,7 @@ template <int NV> struct overdrive: public data::base
         case 7: bits = static_cast<float>(v); break;
         case 8: sampleRateReduction = static_cast<float>(v); break;
         case 9: foldAmount = static_cast<float>(v); break;
-        case 10: clearBuffer = static_cast<float>(v); break;
+        case 10: circuitBendTrigger = static_cast<float>(v); break;
         }
     }
     
@@ -208,17 +208,17 @@ template <int NV> struct overdrive: public data::base
         
         // CircuitBend
         {
-            parameter::data bendParam("CircuitBend", { -12.0, 12.0 });
+            parameter::data bendParam("CircuitBend", { -48.0, 48.0 });
             registerCallback<3>(bendParam);
             bendParam.setDefaultValue(0.0);
             data.add(std::move(bendParam));
         }
         
-        // CircuitBend Frequency (Base frequency for the oscillator)
+        // CircuitBend Frequency (Base frequency for the oscillator) - UPDATED DEFAULT
         {
-            parameter::data bendFreqParam("ToneFreq", { 200.0, 5000.0 });
+            parameter::data bendFreqParam("ToneFreq", { 400.0, 5000.0 });
             registerCallback<4>(bendFreqParam);
-            bendFreqParam.setDefaultValue(800.0);
+            bendFreqParam.setDefaultValue(400.0);
             data.add(std::move(bendFreqParam));
         }
         
@@ -262,12 +262,12 @@ template <int NV> struct overdrive: public data::base
             data.add(std::move(foldParam));
         }
 
-        // ClearBuffer (0 or 1)
+        // Circuit Bend Trigger (0 or 1)
         {
-            parameter::data clearParam("ClearBuffer", { 0.0, 1.0 });
-            registerCallback<10>(clearParam);
-            clearParam.setDefaultValue(0.0);
-            data.add(std::move(clearParam));
+            parameter::data triggerParam("BendTrigger", { 0.0, 1.0 });
+            registerCallback<10>(triggerParam);
+            triggerParam.setDefaultValue(0.0);
+            data.add(std::move(triggerParam));
         }
     }
 
@@ -288,7 +288,7 @@ private:
     float bits = 16.0f;
     float sampleRateReduction = 1.0f;
     float foldAmount = 2.0f;
-    float clearBuffer = 0.0f;
+    float circuitBendTrigger = 0.0f;
 
     
     // Oversampling
@@ -340,12 +340,12 @@ private:
     // Filter states [channel]
     BiquadState inputHPFStates[2];
     BiquadState outputLPFStates[2];
+    BiquadState postHPFStates[2]; // New: post-chain high-pass to remove sub content
     
     // Circuit bend oscillator states
     float bendOscPhase[2] = { 0.0f, 0.0f };
     float bendOscFrequency = 440.0f;
     float bendOscPhaseIncrement = 0.0f;
-    bool bendWasActive[2] = { false, false };
     
     // Distortion states
     float lastBitcrushedSample[2] = { 0.0f, 0.0f };
@@ -356,11 +356,6 @@ private:
     void processAudioBuffer(juce::AudioBuffer<float>& buffer)
     {
         juce::ScopedNoDenormals noDenormals;
-        if (clearBuffer >= 1.0f)
-        {
-            buffer.clear();
-            return;
-        }
         
         const bool useOversampling = (oversamplingFactor > 0 && oversampling != nullptr);
         juce::dsp::AudioBlock<float> inBlock(buffer);
@@ -375,7 +370,7 @@ private:
             driveSmoothed.setTargetValue(juce::jlimit(0.1f, 20.0f, drive));
             outputSmoothed.setTargetValue(juce::jlimit(-24.0f, 24.0f, outputGain));
             mixSmoothed.setTargetValue(juce::jlimit(0.0f, 1.0f, mix));
-            circuitBendSmoothed.setTargetValue(juce::jlimit(-12.0f, 12.0f, circuitBend));
+            circuitBendSmoothed.setTargetValue(juce::jlimit(-48.0f, 48.0f, circuitBend));
 
             // Input high-pass filter
             for (int ch = 0; ch < numCh; ++ch)
@@ -398,7 +393,7 @@ private:
                     const float inputSample = procBuf.getSample(ch, s);
                     const float drySignal   = inputSample;
 
-                    // Apply circuit bending before distortion
+                    // Apply circuit bending before distortion (only when triggered)
                     float circuitBentSample = applyCircuitBend(inputSample, bendValue, ch);
 
                     float distortedSample = processDistortion(circuitBentSample, driveValue, ch);                                    
@@ -410,7 +405,7 @@ private:
                 }
             }
 
-            // Output filter
+            // Output low-pass filter
             for (int ch = 0; ch < numCh; ++ch)
             {
                 float* channelData = procBuf.getWritePointer(ch);
@@ -419,6 +414,16 @@ private:
                     float sample = channelData[s];
                     sample = outputLPFStates[ch].process(sample);
                     channelData[s] = sample;
+                }
+            }
+
+            // Post-chain high-pass filter (remove sub content < ~50 Hz)
+            for (int ch = 0; ch < numCh; ++ch)
+            {
+                float* channelData = procBuf.getWritePointer(ch);
+                for (int s = 0; s < procSamples; ++s)
+                {
+                    channelData[s] = postHPFStates[ch].process(channelData[s]);
                 }
             }
         };
@@ -454,25 +459,20 @@ private:
     
     float applyCircuitBend(float input, float bendValue, int channel)
     {
-        // Hysteresis to prevent clicking when crossing zero
-        constexpr float onThresh  = 0.05f;
-        constexpr float offThresh = 0.02f;
-
-        bool isActive = bendWasActive[channel]
-                        ? (std::abs(bendValue) > offThresh)
-                        : (std::abs(bendValue) > onThresh);
-
-        if (!isActive)
+        // Only apply circuit bending when trigger is active (value = 1.0)
+        if (circuitBendTrigger < 0.5f)
         {
-            bendWasActive[channel] = false;
-            return input;
+            return input; // No circuit bending when trigger is off
         }
-        bendWasActive[channel] = true;
 
         // Calculate oscillator frequency based on bend value
+        // When bendValue is 0.0, use the base frequency (no pitch shift)
         // Positive values go up in pitch, negative values go down
+
+        // Allow up to 4 octaves down from base, but never below 5 Hz
         float frequency = bendOscFrequency * std::pow(2.0f, bendValue / 12.0f);
-        frequency = juce::jlimit(20.0f, 0.45f * scaledSampleRate, frequency);
+        const float minFreq = juce::jmax(5.0f, bendOscFrequency * std::pow(2.0f, -4.0f));
+        frequency = juce::jlimit(minFreq, 0.45f * scaledSampleRate, frequency);
         
         // Calculate phase increment
         float phaseIncrement = 2.0f * juce::MathConstants<float>::pi * frequency / scaledSampleRate;
@@ -500,18 +500,25 @@ private:
         // Mix sine and triangle (more triangle for harsher sound)
         float oscillatorOutput = 0.3f * sineWave + 0.7f * triangleWave;
         
-        // Scale oscillator amplitude based on bend amount
-        float bendAmount = juce::jlimit(0.0f, 1.0f, std::abs(bendValue) / 12.0f);
-        oscillatorOutput *= bendAmount * 0.4f; // Scale down to prevent clipping
+        // Use a base amount plus additional scaling based on bend amount
+        // Updated to use 48 as the maximum range instead of 12
+        float baseBendAmount = 0.2f; // Minimum effect amount when bendValue = 0
+        float additionalBendAmount = juce::jlimit(0.0f, 0.8f, std::abs(bendValue) / 48.0f);
+        float totalBendAmount = baseBendAmount + additionalBendAmount;
+        
+        oscillatorOutput *= totalBendAmount * 0.4f; // Scale down to prevent clipping
         
         // Mix oscillator with input signal
-        // More bend = more oscillator, less input
-        float mixRatio = bendAmount * 0.6f; // Maximum 60% oscillator
-        float output = input * (1.0f - mixRatio) + oscillatorOutput * mixRatio;
+        // Base mix ratio ensures effect is always present when triggered
+        float baseMixRatio = 0.15f; // Minimum oscillator mix when bendValue = 0
+        float additionalMixRatio = additionalBendAmount * 0.45f; // Additional mix based on bend amount
+        float totalMixRatio = baseMixRatio + additionalMixRatio; // Maximum ~60% oscillator
+        
+        float output = input * (1.0f - totalMixRatio) + oscillatorOutput * totalMixRatio;
         
         // Add some input-dependent modulation for more circuit-bend character
         float modulatedOsc = oscillatorOutput * (1.0f + input * 0.3f);
-        output = output * 0.8f + modulatedOsc * 0.2f * bendAmount;
+        output = output * 0.8f + modulatedOsc * 0.2f * totalBendAmount;
         
         return juce::jlimit(-1.5f, 1.5f, output);
     }
@@ -729,12 +736,15 @@ private:
         
         // Output low-pass filter
         makeLowPass(&outputLPFStates[0], 12000.0f);
+
+        // Post-chain high-pass filter (~50 Hz to remove rumble/subs)
+        makeHighPass(&postHPFStates[0], 50.0f);
     }
     
     void updateCircuitBendFrequency()
     {
-        // Store the base frequency for the oscillator
-        bendOscFrequency = juce::jlimit(20.0f, 5000.0f, circuitBendFreq);
+        // Store the base frequency for the oscillator - lowered minimum for downward bends
+        bendOscFrequency = juce::jlimit(5.0f, 5000.0f, circuitBendFreq);
         
         // Calculate phase increment for the base frequency
         bendOscPhaseIncrement = 2.0f * juce::MathConstants<float>::pi * bendOscFrequency / scaledSampleRate;

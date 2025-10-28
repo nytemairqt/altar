@@ -228,8 +228,7 @@
                textColour="4289374890"/>
   </Component>
   <Component type="ScriptPanel" id="pnlOverdrive" x="150.0" y="250.0" width="850.0"
-             height="400.0" itemColour="4278190080" itemColour2="4278190080"
-             visible="0">
+             height="400.0" itemColour="4278190080" itemColour2="4278190080">
     <Component type="ScriptLabel" id="lblOverdrive" x="365.0" y="20.0" text="OVERDRIVE"
                width="120.0" parentComponent="pnlOverdrive" height="30.0" fontStyle="Bold"
                editable="0"/>
@@ -250,12 +249,13 @@
                  editable="0" fontStyle="Bold"/>
     </Component>
     <Component type="ScriptSlider" id="knbOverdriveCircuitBend" x="373.0" y="152.0"
-               parentComponent="pnlOverdrive" text="CircuitBend" min="-12.0"
-               max="12.0" middlePosition="0.0" width="96.0" height="96.0" tooltip="Adjust circuit bend amount.">
-      <Component type="ScriptButton" id="btnOverdriveClearBuffer" x="80.0" y="0.0"
-                 width="16.0" parentComponent="knbOverdriveCircuitBend" tooltip="Clear circuit-bending buffer."
-                 text="ClearBuffer" height="16.0" isPluginParameter="1" pluginParameterName="Chug Enable"
-                 isMomentary="1"/>
+               parentComponent="pnlOverdrive" text="CircuitBend" min="-48.0"
+               max="48.0" middlePosition="0.0" width="96.0" height="96.0" tooltip="Adjust circuit bend amount."
+               isPluginParameter="1" pluginParameterName="OD Circuit Bend">
+      <Component type="ScriptButton" id="btnOverdriveCircuitBendTrigger" x="80.0"
+                 y="0.0" width="16.0" parentComponent="knbOverdriveCircuitBend"
+                 tooltip="Clear circuit-bending buffer." text="BendTrigger" height="16.0"
+                 pluginParameterName="OD Trigger Bend" isPluginParameter="1"/>
       <Component type="ScriptLabel" id="lblOverdriveTone" x="0.0" y="54.0" text="Circuit Bend"
                  width="96.0" parentComponent="knbOverdriveCircuitBend" height="30.0"
                  editable="0" fontStyle="Bold"/>
@@ -303,6 +303,10 @@
                  text="Output Gain" width="96.0" parentComponent="knbOverdriveOutputGain"
                  height="30.0" editable="0" fontStyle="Bold"/>
     </Component>
+    <Component type="ScriptSlider" id="knbOverdriveCircuitBendFreqHidden" x="520.0"
+               y="40.0" parentComponent="pnlOverdrive" text="ToneFreq" min="400.0"
+               max="800.0" middlePosition="600.0" width="96.0" height="96.0"
+               tooltip="Adjust circuit bend amount." defaultValue="400.0" visible="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlAmp" x="150.0" y="250.0" width="850.0"
              height="400.0" itemColour="4278190080" itemColour2="4278190080"
@@ -369,7 +373,8 @@
                text="Browse NAM Tones" height="30.0" isMomentary="1" visible="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="150.0" y="250.0" width="850.0"
-             height="400.0" itemColour2="4278190080" itemColour="4278190080">
+             height="400.0" itemColour2="4278190080" itemColour="4278190080"
+             visible="0">
     <Component type="ScriptLabel" id="lblCab" x="365.0" y="20.0" parentComponent="pnlCab"
                width="120.0" text="CAB" height="30.0" editable="0" fontStyle="Bold"/>
     <Component type="ScriptPanel" id="pnlCabALoader" x="50.0" y="30.0" width="270.0"

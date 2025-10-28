@@ -166,19 +166,6 @@ namespace LookAndFeel
 		}
 		else { g.fillEllipse([w / 4 + pad, h / 4 + pad, size, size]); }
 	});
-	
-	// Overdrive Circuitbend Clear Buffer	
-	LAFButtonClearBuffer.registerFunction("drawToggleButton", function(g, obj)
-	{
-		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
-		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
-		var w = obj.area[2];
-		var h = obj.area[3];
-		var p = Content.createPath();
-		p.loadFromData(PathData.pathLightningBolt);
-		g.rotate(Math.toRadians(-20), [w / 2, h / 2]);
-		g.fillPath(p, obj.area);
-	});
 
 	// Bypass Button
 	LAFButtonBypass.registerFunction("drawToggleButton", function(g, obj)
@@ -334,8 +321,7 @@ namespace LookAndFeel
 	const btnTunerMonitorLAF = [Content.getComponent("btnTunerMonitor")];  
 	const btnShowCabDesignerLAF = [Content.getComponent("btnShowCabDesigner")];
 	const btnOpenCabFolderLAF = [Content.getComponent("btnOpenCabFolder")];	
-	const btnStereoLAF = [Content.getComponent("btnRingmodStereoMode")];
-	const btnClearBufferLAF = [Content.getComponent("btnOverdriveClearBuffer")];
+	const btnStereoLAF = [Content.getComponent("btnRingmodStereoMode")];	
 	const btnCloseLAF = [Content.getComponent("btnCloseCabDesigner"), Content.getComponent("btnCabAUnload"), Content.getComponent("btnCabBUnload")];
 
 	for (k in knbMainLAF) { k.setLocalLookAndFeel(LAFKnob); }	  
@@ -352,8 +338,7 @@ namespace LookAndFeel
 	for (b in btnInvertPhaseLAF) { b.setLocalLookAndFeel(LAFButtonInvertPhase); }
 	for (b in btnShowCabDesignerLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabDesigner); }
 	for (b in btnOpenCabFolderLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabFolder); }	
-	for (b in btnStereoLAF) { b.setLocalLookAndFeel(LAFButtonStereo); }
-	for (b in btnClearBufferLAF) { b.setLocalLookAndFeel(LAFButtonClearBuffer); }
+	for (b in btnStereoLAF) { b.setLocalLookAndFeel(LAFButtonStereo); }	
 	for (b in btnCloseLAF) { b.setLocalLookAndFeel(LAFButtonClose); }
 	
 	// Top Bar
