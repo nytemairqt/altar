@@ -84,9 +84,11 @@ namespace Amp
         local path = pnlAmpNAMLoader.get("text");
         local file = FileSystem.fromAbsolutePath(path);
         local parent = file.getParentDirectory();
-        local fileList = FileSystem.findFiles(parent, "*.nam, *.json", false);        
+        local fileList = FileSystem.findFiles(parent, "*.nam, *.json", false);     
 
-        for (i=0; i<fileList.length; i++) { if (fileList[i].toString(0) == fileToString) { local index = i; } }
+        Console.print(fileList.length);   
+
+        for (i=0; i<fileList.length; i++) { if (fileList[i].toString(0) == path) { local index = i; } }
 
         if (component == btnAmpNAMLoaderPrev)       
         {
@@ -122,7 +124,8 @@ namespace Amp
        var text = this.get("text");      
        var index = text.lastIndexOf("\\") + 1;
        var substring = text.substring(index, text.length);
-       g.drawAlignedText(substring, [0, 0, this.getWidth(), this.getHeight()], "centred") ;
+       var pad = 24;
+       g.drawAlignedText(substring, [pad, 0, this.getWidth() - pad, this.getHeight()], "left") ;
     });
 
     inline function sendNAMCableData()

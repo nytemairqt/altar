@@ -60,9 +60,7 @@ namespace CabDesigner
     const cmbCabDesignerSpeaker = Content.getComponent("cmbCabDesignerSpeaker");
     const cmbCabDesignerMic = Content.getComponent("cmbCabDesignerMic");
     const lblCabDesignerSave = Content.getComponent("lblCabDesignerSave");   
-    const lblCabDesignerCustomModValue = Content.getComponent("lblCabDesignerCustomModValue");
-    const pnlCabDesignerSaveProtect = Content.getComponent("pnlCabDesignerSaveProtect");
-    pnlCabDesignerSaveProtect.set("visible", false);
+    const lblCabDesignerCustomModValue = Content.getComponent("lblCabDesignerCustomModValue");    
             
     const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);    
 
@@ -80,9 +78,9 @@ namespace CabDesigner
         // safety: snapshot and clear pending file
         local fileToSave = pendingCabFile;
         pendingCabFile = undefined;
-
-        // Hide the overlay
-        pnlCabDesignerSaveProtect.set("visible", false);
+        
+        lblCabDesignerSave.set("text", "Save");
+        btnCabDesignerSave.set("enabled", true);
 
         // If we have data, write it now
         if (isDefined(fileToSave) && cabBuffer.length > 0)
@@ -158,9 +156,9 @@ namespace CabDesigner
             // Trigger excitation
             Synth.addNoteOn(1, 64, 64, 0);
             Synth.addNoteOff(1, 64, 20000);
-
-            // Show overlay and arm timer to stop & save later
-            pnlCabDesignerSaveProtect.set("visible", true);
+                    
+            lblCabDesignerSave.set("text", "Saving...");
+            btnCabDesignerSave.set("enabled", false);
             timerCabSave.startTimer(1000); // give the audio thread time to capture
         });
     }    
@@ -324,14 +322,7 @@ namespace CabDesigner
         g.setColour(ColourData.clrMidgrey);
         g.drawRoundedRectangle(eqBounds, 0.0, 2.0);        
         
-    }); 
-    
-    pnlCabDesignerSaveProtect.setPaintRoutine(function(g)
-    {
-		g.fillAll(ColourData.clrComponentBGGrey);
-		g.setColour(ColourData.clrWhite);
-		g.drawAlignedText(this.get("text"), [0, 0, this.getWidth(), this.getHeight()], "centred");
-    });
+    });         
     
     const cmbCabDesignerLAF = Content.createLocalLookAndFeel();
 

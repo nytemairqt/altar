@@ -11,76 +11,76 @@
           <Content>
             <Control type="ScriptSlider" id="knbInputGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbGateThreshold" value="-36.0"/>
-            <Control type="ScriptButton" id="btnGate" value="1.0"/>
+            <Control type="ScriptButton" id="btnGate" value="1"/>
             <Control type="ScriptSlider" id="knbTranspose" value="0.0"/>
-            <Control type="ScriptButton" id="btnTranspose" value="0.0"/>
-            <Control type="ScriptButton" id="btnTransposeSnap" value="0.0"/>
+            <Control type="ScriptButton" id="btnTranspose" value="0"/>
+            <Control type="ScriptButton" id="btnTransposeSnap" value="0"/>
             <Control type="ScriptSlider" id="knbOctave" value="0.0"/>
-            <Control type="ScriptButton" id="btnOctave" value="0.0"/>
+            <Control type="ScriptButton" id="btnOctave" value="0"/>
             <Control type="ScriptSlider" id="knbChugStrength" value="0.0"/>
-            <Control type="ScriptButton" id="btnChug" value="0.0"/>
+            <Control type="ScriptButton" id="btnChug" value="0"/>
             <Control type="ScriptSlider" id="knbPickStrength" value="0.0"/>
-            <Control type="ScriptButton" id="btnPick" value="0.0"/>
+            <Control type="ScriptButton" id="btnPick" value="0"/>
             <Control type="ScriptSlider" id="knbWhistle" value="1.0"/>
-            <Control type="ScriptButton" id="btnWhistle" value="0.0"/>
+            <Control type="ScriptButton" id="btnWhistle" value="0"/>
             <Control type="ScriptSlider" id="knbLofi" value="1.0"/>
-            <Control type="ScriptButton" id="btnLofi" value="0.0"/>
-            <Control type="ScriptComboBox" id="cmbOversampling" value="1.0"/>
+            <Control type="ScriptButton" id="btnLofi" value="0"/>
+            <Control type="ScriptComboBox" id="cmbOversampling" value="1"/>
             <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnLimiter" value="1.0"/>
-            <Control type="ScriptButton" id="btnShowPreProcess" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowPostProcess" value="0.0"/>
-            <Control type="ScriptButton" id="btnModularABypass" value="0.0"/>
-            <Control type="ScriptButton" id="btnModularBBypass" value="1.0"/>
-            <Control type="ScriptButton" id="btnModularCBypass" value="1.0"/>
-            <Control type="ScriptButton" id="btnModularDBypass" value="0.0"/>
-            <Control type="ScriptButton" id="btnModularEBypass" value="0.0"/>
-            <Control type="ScriptButton" id="btnModularFBypass" value="0.0"/>
-            <Control type="ScriptButton" id="btnModularGBypass" value="0.0"/>
+            <Control type="ScriptButton" id="btnLimiter" value="1"/>
+            <Control type="ScriptButton" id="btnShowPreProcess" value="0"/>
+            <Control type="ScriptButton" id="btnShowPostProcess" value="0"/>
+            <Control type="ScriptButton" id="btnModularABypass" value="0"/>
+            <Control type="ScriptButton" id="btnModularBBypass" value="0"/>
+            <Control type="ScriptButton" id="btnModularCBypass" value="0"/>
+            <Control type="ScriptButton" id="btnModularDBypass" value="0"/>
+            <Control type="ScriptButton" id="btnModularEBypass" value="0"/>
+            <Control type="ScriptButton" id="btnModularFBypass" value="0"/>
+            <Control type="ScriptButton" id="btnModularGBypass" value="0"/>
             <Control type="ScriptSlider" id="knbOverdriveMode" value="0.0"/>
-            <Control type="ScriptSlider" id="knbOverdriveDrive" value="0.1000000014901161"/>
+            <Control type="ScriptSlider" id="knbOverdriveDrive" value="0.0"/>
             <Control type="ScriptSlider" id="knbOverdriveCircuitBend" value="0.0"/>
-            <Control type="ScriptButton" id="btnOverdriveCircuitBendTrigger" value="0.0"/>
+            <Control type="ScriptButton" id="btnOverdriveCircuitBendTrigger" value="0"/>
             <Control type="ScriptSlider" id="knbOverdriveMix" value="1.0"/>
             <Control type="ScriptSlider" id="knbOverdriveSRReduction" value="16.0"/>
             <Control type="ScriptSlider" id="knbOverdriveBits" value="8.0"/>
             <Control type="ScriptSlider" id="knbOverdriveFoldAmount" value="1.0"/>
             <Control type="ScriptSlider" id="knbOverdriveOutputGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbOverdriveCircuitBendFreqHidden" value="400.0"/>
-            <Control type="ScriptSlider" id="knbAmpMode" value="2.0"/>
-            <Control type="ScriptSlider" id="knbAmpInput" value="1.490116119384766e-6"/>
+            <Control type="ScriptSlider" id="knbAmpMode" value="1.0"/>
+            <Control type="ScriptSlider" id="knbAmpInput" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpLow" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMid" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpHigh" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpPresence" value="0.0"/>
-            <Control type="ScriptSlider" id="knbAmpOutput" value="1.490116119384766e-6"/>
+            <Control type="ScriptSlider" id="knbAmpOutput" value="0.0"/>
             <Control type="ScriptPanel" id="pnlAmpNAMLoader" value="0.0"/>
-            <Control type="ScriptButton" id="btnAmpBrowseNAMTones" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabAUnload" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabBUnload" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowCabDesigner" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabMix" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabAEnable" value="1.0"/>
+            <Control type="ScriptButton" id="btnAmpBrowseNAMTones" value="0"/>
+            <Control type="ScriptButton" id="btnCabAUnload" value="0"/>
+            <Control type="ScriptButton" id="btnCabBUnload" value="0"/>
+            <Control type="ScriptButton" id="btnShowCabDesigner" value="0"/>
+            <Control type="ScriptSlider" id="knbCabMix" value="0.5"/>
+            <Control type="ScriptButton" id="btnCabAEnable" value="0"/>
             <Control type="ScriptSlider" id="knbCabADelay" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabADistance" value="20000.0"/>
             <Control type="ScriptSlider" id="knbCabAAxis" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAPan" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabAPhase" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabBEnable" value="0.0"/>
+            <Control type="ScriptButton" id="btnCabAPhase" value="0"/>
+            <Control type="ScriptButton" id="btnCabBEnable" value="0"/>
             <Control type="ScriptSlider" id="knbCabBAxis" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabBDelay" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabBDistance" value="20000.0"/>
             <Control type="ScriptSlider" id="knbCabBPan" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabBGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnCabBPhase" value="0.0"/>
-            <Control type="ScriptButton" id="btnCloseCabDesigner" value="0.0"/>
-            <Control type="ScriptComboBox" id="cmbCabDesignerSpeaker" value="1.0"/>
-            <Control type="ScriptComboBox" id="cmbCabDesignerMic" value="1.0"/>
+            <Control type="ScriptButton" id="btnCabBPhase" value="0"/>
+            <Control type="ScriptButton" id="btnCloseCabDesigner" value="0"/>
+            <Control type="ScriptComboBox" id="cmbCabDesignerSpeaker" value="1"/>
+            <Control type="ScriptComboBox" id="cmbCabDesignerMic" value="1"/>
             <Control type="ScriptSlider" id="knbCabDesignerMojo" value="0.5"/>
-            <Control type="ScriptSlider" id="knbCabDesignerAge" value="0.4199999868869781"/>
-            <Control type="ScriptButton" id="btnCabDesignerCustomMod" value="1.0"/>
-            <Control type="ScriptButton" id="btnCabDesignerEQEnable" value="0.0"/>
+            <Control type="ScriptSlider" id="knbCabDesignerAge" value="0.5"/>
+            <Control type="ScriptButton" id="btnCabDesignerCustomMod" value="0"/>
+            <Control type="ScriptButton" id="btnCabDesignerEQEnable" value="0"/>
             <Control type="ScriptSlider" id="knbCabDesignerGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbReverbMix" value="0.5"/>
             <Control type="ScriptSlider" id="knbReverbPreDelay" value="0.0"/>
@@ -96,7 +96,7 @@
             <Control type="ScriptSlider" id="knbDelayModulation" value="0.300000011920929"/>
             <Control type="ScriptSlider" id="knbDelayStereoWidth" value="0.5"/>
             <Control type="ScriptSlider" id="knbDelayDelayTimeSynced" value="5.0"/>
-            <Control type="ScriptButton" id="btnDelayTempoSync" value="0.0"/>
+            <Control type="ScriptButton" id="btnDelayTempoSync" value="0"/>
             <Control type="ScriptSlider" id="knbDelayGlitchMode" value="0.0"/>
             <Control type="ScriptSlider" id="knbChorusMix" value="0.5"/>
             <Control type="ScriptSlider" id="knbChorusRate" value="2.0"/>
@@ -109,13 +109,13 @@
             <Control type="ScriptSlider" id="knbRingmodFrequency" value="1000.0"/>
             <Control type="ScriptSlider" id="knbRingmodDepth" value="0.5"/>
             <Control type="ScriptSlider" id="knbRingmodMode" value="0.0"/>
-            <Control type="ScriptButton" id="btnRingmodStereoMode" value="0.0"/>
+            <Control type="ScriptButton" id="btnRingmodStereoMode" value="0"/>
             <Control type="ScriptSlider" id="knbRingmodLFORate" value="1.5"/>
             <Control type="ScriptSlider" id="knbRingmodLFORateSynced" value="5.0"/>
             <Control type="ScriptSlider" id="knbRingmodLFODepth" value="0.5"/>
             <Control type="ScriptSlider" id="knbRingmodFilterFrequency" value="2600.0"/>
-            <Control type="ScriptButton" id="btnRingmodTempoSync" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreProcessEQFirst" value="1.0"/>
+            <Control type="ScriptButton" id="btnRingmodTempoSync" value="0"/>
+            <Control type="ScriptButton" id="btnPreProcessEQFirst" value="1"/>
             <Control type="ScriptSlider" id="knbPreprocessHpfFreq" value="40.0"/>
             <Control type="ScriptSlider" id="knbPreprocessLowShelfFreq" value="120.0"/>
             <Control type="ScriptSlider" id="knbPreprocessLowShelfGain" value="0.0"/>
@@ -141,10 +141,10 @@
             <Control type="ScriptSlider" id="knbPreprocessCompMix" value="1.0"/>
             <Control type="ScriptSlider" id="knbPreprocessCompMakeup" value="0.0"/>
             <Control type="ScriptSlider" id="knbPreprocessClipperGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreProcessEQEnable" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreProcessCompEnable" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreProcessClipperEnable" value="0.0"/>
-            <Control type="ScriptButton" id="btnPostProcessEQFirst" value="1.0"/>
+            <Control type="ScriptButton" id="btnPreProcessEQEnable" value="0"/>
+            <Control type="ScriptButton" id="btnPreProcessCompEnable" value="0"/>
+            <Control type="ScriptButton" id="btnPreProcessClipperEnable" value="0"/>
+            <Control type="ScriptButton" id="btnPostProcessEQFirst" value="1"/>
             <Control type="ScriptSlider" id="knbPostprocessHpfFreq" value="40.0"/>
             <Control type="ScriptSlider" id="knbPostprocessLowShelfFreq" value="120.0"/>
             <Control type="ScriptSlider" id="knbPostprocessLowShelfGain" value="0.0"/>
@@ -169,9 +169,9 @@
             <Control type="ScriptSlider" id="knbPostprocessCompKnee" value="3.0"/>
             <Control type="ScriptSlider" id="knbPostprocessCompMix" value="1.0"/>
             <Control type="ScriptSlider" id="knbPostprocessCompMakeup" value="0.0"/>
-            <Control type="ScriptButton" id="btnPostProcessEQEnable" value="0.0"/>
-            <Control type="ScriptButton" id="btnPostProcessCompEnable" value="0.0"/>
-            <Control type="ScriptButton" id="btnTunerMonitor" value="0.0"/>
+            <Control type="ScriptButton" id="btnPostProcessEQEnable" value="0"/>
+            <Control type="ScriptButton" id="btnPostProcessCompEnable" value="0"/>
+            <Control type="ScriptButton" id="btnTunerMonitor" value="0"/>
             <Control type="ScriptSlider" id="knbClickTempo" value="120.0"/>
           </Content>
           <UIData Source="AltarUIData"/>
@@ -249,7 +249,7 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="amp"
-                   Mode="2.0" Oversampling="0.0" InputGain="1.490116119384766e-6"
+                   Mode="1.0" Oversampling="0.0" InputGain="1.490116119384766e-6"
                    Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="1.490116119384766e-6">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
