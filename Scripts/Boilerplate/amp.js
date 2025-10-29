@@ -20,7 +20,9 @@ namespace Amp
     const controls = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];    
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];         
     const pnlAmp = Content.getComponent("pnlAmp");
-    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");  
+    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");      
+    const btnAmpNAMLoaderPrev = Content.getComponent("btnAmpNAMLoaderPrev");
+    const btnAmpNAMLoaderNext = Content.getComponent("btnAmpNAMLoaderNext");    
     const btnAmpBrowseNAMTones = Content.getComponent("btnAmpBrowseNAMTones");
     const grm = Engine.getGlobalRoutingManager();  
     const namCable = grm.getCable("nam");
@@ -73,8 +75,38 @@ namespace Amp
             });
         }       
        	else if (event.hover) { pnlTooltip.set("text", this.get("tooltip")); }       	 
-    }
+    }    
 
+    inline function onbtnAmpNAMCycleControl(component, value)
+    {
+	    if (!value) { return; }        
+
+        local path = pnlAmpNAMLoader.get("text");
+        local file = FileSystem.fromAbsolutePath(path);
+        local parent = file.getParentDirectory();
+        local fileList = FileSystem.findFiles(parent, "*.nam, *.json", false);        
+
+        for (i=0; i<fileList.length; i++) { if (fileList[i].toString(0) == fileToString) { local index = i; } }
+
+        if (component == btnAmpNAMLoaderPrev)       
+        {
+            if (index == 0) { index = fileList.length - 1; }
+            else (index -= 1);
+        }   
+        else
+        {
+            if (index == fileList.length - 1) { index = 0; }
+            else (index += 1);
+        }
+
+        pnlAmpNAMLoader.set("text", fileList[index].toString(0));
+        sendNAMCableData();
+        pnlAmpNAMLoader.repaint();
+    }
+	
+	btnAmpNAMLoaderPrev.setControlCallback(onbtnAmpNAMCycleControl);
+	btnAmpNAMLoaderNext.setControlCallback(onbtnAmpNAMCycleControl);
+	
     // Look And Feel
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];                      

@@ -309,8 +309,8 @@ namespace LookAndFeel
 	const btnToggleLAF = [Content.getComponent("btnTransposeSnap"), ];
 	const btnMenuLAF = [Content.getComponent("btnShowPreferences"), Content.getComponent("btnShowTuner"), Content.getComponent("btnShowClick"), Content.getComponent("btnShowPresetBrowser"), Content.getComponent("btnPresetPrev"), Content.getComponent("btnPresetNext"), Content.getComponent("btnShowPreProcess"), Content.getComponent("btnShowPostProcess"), Content.getComponent("btnAmpBrowseNAMTones"), Content.getComponent("btnWitness")]; 
 	const btnBypassLAF = [Content.getComponent("btnGate"), Content.getComponent("btnTranspose"), Content.getComponent("btnOctave"), Content.getComponent("btnChug"), Content.getComponent("btnPick"), Content.getComponent("btnWhistle"), Content.getComponent("btnLimiter"), Content.getComponent("btnLofi"), Content.getComponent("btnCabAEnable"), Content.getComponent("btnCabBEnable"), Content.getComponent("btnPreProcessEQEnable"), Content.getComponent("btnPreProcessCompEnable"), Content.getComponent("btnPreProcessClipperEnable"), Content.getComponent("btnPostProcessEQEnable"), Content.getComponent("btnPostProcessCompEnable"), Content.getComponent("btnClick"), Content.getComponent("btnCabDesignerEQEnable")];
-	const btnPrevLAF = [Content.getComponent("btnPresetPrev"), Content.getComponent("btnCabALoadPrev"), Content.getComponent("btnCabBLoadPrev")];	
-	const btnNextLAF = [Content.getComponent("btnPresetNext"), Content.getComponent("btnCabALoadNext"), Content.getComponent("btnCabBLoadNext")];	
+	const btnPrevLAF = [Content.getComponent("btnPresetPrev"), Content.getComponent("btnCabALoadPrev"), Content.getComponent("btnCabBLoadPrev"), Content.getComponent("btnAmpNAMLoaderPrev")];	
+	const btnNextLAF = [Content.getComponent("btnPresetNext"), Content.getComponent("btnCabALoadNext"), Content.getComponent("btnCabBLoadNext"), Content.getComponent("btnAmpNAMLoaderNext")];	
 	const fltVuMeterLAF = [Content.getComponent("fltVuMeterInput"), Content.getComponent("fltVuMeterOutput")];
 	
 	const btnLockLAF = [Content.getComponent("btnTransposeSnap"), Content.getComponent("btnDelayTempoSync"), Content.getComponent("btnRingmodTempoSync")];
