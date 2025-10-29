@@ -25,6 +25,11 @@ namespace Cab
 	const pnlTooltip = Content.getComponent("pnlTooltip");	
 	const btnCabAUnload = Content.getComponent("btnCabAUnload");
     const btnCabBUnload = Content.getComponent("btnCabBUnload");
+    const btnCabALoadPrev = Content.getComponent("btnCabALoadPrev");
+    const btnCabALoadNext = Content.getComponent("btnCabALoadNext");
+    const btnCabBLoadPrev = Content.getComponent("btnCabBLoadPrev");
+    const btnCabBLoadNext = Content.getComponent("btnCabBLoadNext");
+
 	
 	Engine.loadAudioFilesIntoPool();
 
@@ -44,7 +49,7 @@ namespace Cab
     for (control in controls) { control.setControlCallback(onControl); }
 		
 	// Drop
-	inline function pnlCabALoaderDrop(f)
+	inline function pnlCabLoaderDrop(f)
     {
 	    if(f.drop)
 	    {			
@@ -65,8 +70,8 @@ namespace Cab
 	    }
     }
     
-    pnlCabALoader.setFileDropCallback("All Callbacks", "*.wav", pnlCabALoaderDrop);
-    pnlCabBLoader.setFileDropCallback("All Callbacks", "*.wav", pnlCabALoaderDrop);   
+    pnlCabALoader.setFileDropCallback("All Callbacks", "*.wav", pnlCabLoaderDrop);
+    pnlCabBLoader.setFileDropCallback("All Callbacks", "*.wav", pnlCabLoaderDrop);   
     
     // Right Click (2 separate ones cause i can't figure out lambdas lol)    
     inline function pnlCabALoaderClick(event)
@@ -140,7 +145,53 @@ namespace Cab
     }
     
     btnCabAUnload.setControlCallback(onbtnCabDesignerUnloadCabControl);
-    btnCabBUnload.setControlCallback(onbtnCabDesignerUnloadCabControl);
+    btnCabBUnload.setControlCallback(onbtnCabDesignerUnloadCabControl);        
+
+    inline function onbtnCabCycleControl(component, value)
+    {
+    	if (!value) { return; }
+    	for (slot in fxSlots)
+		{
+			local effectId = slot.getCurrentEffectId();
+			if (effectId == "cab")
+			{
+				local id = slot.getCurrentEffect().getId();
+				local ref = Synth.getAudioSampleProcessor(id);	
+
+				if (component == btnCabALoadPrev || component == btnCabALoadNext) { local irSlot = ref.getAudioFile(0); local panel = pnlCabALoader;}
+				else { local irSlot = ref.getAudioFile(1); local panel = pnlCabBLoader;}
+
+				local fileName = irSlot.getCurrentlyLoadedFile(); 
+				local fileToString = FileSystem.fromReferenceString(fileName, FileSystem.AudioFiles).toString(0); 
+				local parent = FileSystem.fromReferenceString(fileName, FileSystem.AudioFiles).getParentDirectory();
+				local fileList = FileSystem.findFiles(parent, "*.wav", false);
+				
+				for (i=0; i<fileList.length; i++) { if (fileList[i].toString(0) == fileToString) { local index = i; } }	
+				
+				if (component == btnCabALoadPrev || component == btnCabBLoadPrev)		
+				{
+					if (index == 0) { index = fileList.length - 1; }
+					else (index -= 1);
+				}	
+				else
+				{
+					if (index == fileList.length - 1) { index = 0; }
+					else (index += 1);
+				}
+				
+				irSlot.loadFile(fileList[index].toString(0));
+				panel.set("text", fileList[index].toString(3));
+				panel.repaint();
+			}
+		}	
+    }
+
+    btnCabALoadPrev.setControlCallback(onbtnCabCycleControl);
+	btnCabALoadNext.setControlCallback(onbtnCabCycleControl);
+	btnCabBLoadPrev.setControlCallback(onbtnCabCycleControl);
+	btnCabBLoadNext.setControlCallback(onbtnCabCycleControl);
+
+    
 
     // Look And Feel
     const pad = 8;

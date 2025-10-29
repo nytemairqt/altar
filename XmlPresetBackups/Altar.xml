@@ -263,7 +263,7 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
           <AudioFiles>
             <AudioFile EmbeddedData="{PROJECT_FOLDER}TSE.wav" MinValue="0" MaxValue="5512"/>
-            <AudioFile EmbeddedData="{PROJECT_FOLDER}TSE.wav" MinValue="0" MaxValue="5512"/>
+            <AudioFile EmbeddedData="{PROJECT_FOLDER}myCoolCab.wav" MinValue="0" MaxValue="1024"/>
           </AudioFiles>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularD" Bypassed="1" Network="reverb"
