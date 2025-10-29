@@ -89,12 +89,19 @@ template <int NV> struct delay: public data::base, public cable_manager_t
         const size_t fadeSamples = static_cast<size_t>(0.01f * sampleRate);
         for (auto& rb : reverseBlocks)
         {
-            rb.data.assign(static_cast<size_t>(sampleRate * 4.0f), 0.0f);
-            rb.writePos = rb.playPos = 0;
+            const size_t maxReverseSize = static_cast<size_t>(sampleRate * 4.0f);
+            rb.dataA.assign(maxReverseSize, 0.0f);
+            rb.dataB.assign(maxReverseSize, 0.0f);
+            rb.playIsA = false; // Start by recording into A, will flip when first block is ready
+            rb.writePos = 0;
+            rb.playPos = 0;
             rb.playing = false;
             rb.fadeSamples = fadeSamples;
-            rb.fadingIn = rb.fadingOut = false;
+            rb.fadingIn = false;
+            rb.fadingOut = false;
             rb.fadePos = 0;
+            rb.recFilled = false;
+            rb.currentBlockSize = 0;
         }
 
         // Initialize glitch buffer
@@ -140,11 +147,17 @@ template <int NV> struct delay: public data::base, public cable_manager_t
         // Reset reverse blocks
         for (auto& rb : reverseBlocks)
         {
-            rb.writePos = rb.playPos = 0;
+            rb.writePos = 0;
+            rb.playPos = 0;
             rb.playing = false;
-            rb.fadingIn = rb.fadingOut = false;
+            rb.fadingIn = false;
+            rb.fadingOut = false;
             rb.fadePos = 0;
-            std::fill(rb.data.begin(), rb.data.end(), 0.0f);
+            rb.playIsA = false;
+            rb.recFilled = false;
+            rb.currentBlockSize = 0;
+            std::fill(rb.dataA.begin(), rb.dataA.end(), 0.0f);
+            std::fill(rb.dataB.begin(), rb.dataB.end(), 0.0f);
         }
 
         // Reset glitch state
@@ -395,17 +408,24 @@ private:
     BiquadState dampingFilterState[2];
     BiquadState inputFilterState[2];
 
-    // Reverse delay structures
+    // Reverse delay structures (ping-pong buffers for proper feedback)
     struct ReverseBlock
     {
-        std::vector<float> data;
-        size_t writePos = 0;
-        bool playing = false;
-        size_t playPos = 0;
-        bool fadingIn = false;
-        bool fadingOut = false;
-        size_t fadeSamples = 0;
-        size_t fadePos = 0;
+        std::vector<float> dataA;
+        std::vector<float> dataB;
+
+        bool     playIsA = false;      // true: play A, record B. false: play B, record A.
+        size_t   writePos = 0;         // position in the recording buffer
+        bool     recFilled = false;    // whether we've filled a full block in the current recording buffer
+
+        bool     playing = false;      // whether we are currently playing a block
+        size_t   playPos = 0;          // read position in the playing buffer (counts down)
+        size_t   currentBlockSize = 0; // size of the current block being played
+
+        bool     fadingIn = false;
+        bool     fadingOut = false;
+        size_t   fadeSamples = 0;
+        size_t   fadePos = 0;
     };
 
     std::array<ReverseBlock, 2> reverseBlocks;
@@ -534,59 +554,126 @@ private:
     {
         auto& rb = reverseBlocks[channel];
 
-        // Clamp block size to buffer size
+        // Clamp block size to buffer size (both A and B are the same size)
+        const size_t maxReverseSize = rb.dataA.size();
+        if (maxReverseSize == 0) return input;
+
         size_t blockSize = static_cast<size_t>(delayTimeSec * sampleRate);
-        blockSize = juce::jlimit<size_t>(1, rb.data.size(), blockSize);
+        blockSize = juce::jlimit<size_t>(1, maxReverseSize, blockSize);
 
-        float recordSample = input + feedbackValue * lastReverseSample[channel];
+        // Resolve playing and recording buffers
+        auto& playBuf = rb.playIsA ? rb.dataA : rb.dataB;
+        auto& recBuf  = rb.playIsA ? rb.dataB : rb.dataA;
 
-        // Only write while not playing (record phase)
+        float output = 0.0f;
+
         if (!rb.playing)
         {
-            if (rb.writePos >= rb.data.size()) rb.writePos = 0; // safety wrap
-            rb.data[rb.writePos++] = recordSample;
+            // Seed first block by recording; includes prior tail (lastReverseSample)
+            float recordSample = input + feedbackValue * lastReverseSample[channel];
+
+            if (rb.writePos >= recBuf.size()) rb.writePos = 0; // safety wrap
+            recBuf[rb.writePos++] = recordSample;
 
             if (rb.writePos >= blockSize)
             {
+                // Start playing the just recorded buffer
                 rb.playing = true;
-                rb.playPos = rb.writePos; // start from last valid sample
+                rb.playIsA = !rb.playIsA; // the recorded buffer becomes the play buffer
+                rb.currentBlockSize = rb.writePos; // could be <= blockSize
+                rb.playPos = rb.currentBlockSize;
                 rb.fadingIn = true;
                 rb.fadePos = 0;
+
+                // Prepare next recording
+                rb.writePos = 0;
+                rb.recFilled = false;
+            }
+
+            // No output yet until we switch to playing
+            lastReverseSample[channel] = 0.0f;
+            return 0.0f;
+        }
+
+        // PLAYBACK: read backwards from current play buffer
+        if (rb.playPos > 0)
+        {
+            size_t readIndex = rb.playPos - 1;
+            if (readIndex >= playBuf.size()) readIndex = 0; // safety
+            output = playBuf[readIndex];
+            rb.playPos--;
+
+            // Apply fade-in on start
+            if (rb.fadingIn)
+            {
+                float gain = (rb.fadeSamples > 0) ? (static_cast<float>(rb.fadePos) / rb.fadeSamples) : 1.0f;
+                output *= juce::jlimit(0.0f, 1.0f, gain);
+                if (++rb.fadePos >= rb.fadeSamples)
+                    rb.fadingIn = false;
+            }
+
+            // Apply fade-out near end
+            if (rb.playPos < rb.fadeSamples && rb.fadeSamples > 0)
+            {
+                float gain = static_cast<float>(rb.playPos) / rb.fadeSamples;
+                output *= juce::jlimit(0.0f, 1.0f, gain);
             }
         }
 
-        float output = 0.0f;
-        if (rb.playing)
+        // Apply damping to the output (tone shaping) and for feedback path
+        float filteredOut = dampingFilterState[channel].process(output);
+
+        // While playing the current block, continuously record the next block:
+        // recBuf receives input + feedback * filteredOut so tails persist without input.
+        if (rb.writePos < blockSize)
         {
-            if (rb.playPos > 0)
+            recBuf[rb.writePos++] = input + feedbackValue * filteredOut;
+            if (rb.writePos >= blockSize)
+                rb.recFilled = true;
+        }
+        else
+        {
+            // If block finished early, keep overwriting in a circular manner to avoid stalls
+            rb.writePos = 0;
+            if (blockSize > 0)
             {
-                output = rb.data[--rb.playPos]; // read backwards
+                recBuf[rb.writePos++] = input + feedbackValue * filteredOut;
+                rb.recFilled = (blockSize == 1) ? true : rb.recFilled;
+            }
+        }
 
-                if (rb.fadingIn)
-                {
-                    float gain = (rb.fadeSamples > 0) ? (static_cast<float>(rb.fadePos) / rb.fadeSamples) : 1.0f;
-                    output *= gain;
-                    if (++rb.fadePos >= rb.fadeSamples)
-                        rb.fadingIn = false;
-                }
+        // End of current play block?
+        if (rb.playPos == 0)
+        {
+            // If the next block has enough samples, swap immediately
+            size_t nextSize = rb.recFilled ? blockSize : rb.writePos;
 
-                if (rb.playPos < rb.fadeSamples && rb.fadeSamples > 0)
-                {
-                    float gain = static_cast<float>(rb.playPos) / rb.fadeSamples; // goes from ~1 down to 0 near end
-                    output *= gain;
-                }
+            if (nextSize > 0)
+            {
+                rb.playIsA = !rb.playIsA;    // swap roles: recorded buffer becomes the play buffer
+                rb.currentBlockSize = juce::jmin(nextSize, blockSize);
+                rb.playPos = rb.currentBlockSize;
+                rb.fadingIn = true;
+                rb.fadePos = 0;
+
+                // Reset recorder for the following block
+                rb.writePos = 0;
+                rb.recFilled = false;
             }
             else
             {
-                // finished this slice, reset for next one
+                // Nothing meaningful recorded, stop playback
                 rb.playing = false;
                 rb.writePos = 0;
+                rb.recFilled = false;
             }
         }
 
-        float filteredOut = dampingFilterState[channel].process(output);
+        // Store last filtered sample for the very first seeding only
         lastReverseSample[channel] = filteredOut;
-        return output;
+
+        // Return filtered output so damping affects audible repeats
+        return filteredOut;
     }
 
     float processGlitchDelay(float input, int channel, float delayTimeSec, float feedbackValue, float glitchIntensity, int sampleIndex)
@@ -596,18 +683,14 @@ private:
 
         if (buffer.empty()) return input;
 
-        // Always write input to circular buffer
-        buffer[glitchWritePos[channel]] = input;
-        glitchWritePos[channel] = (glitchWritePos[channel] + 1) % (int)buffer.size();
-
         float chunkSize = juce::jlimit(0.01f, 0.5f, delayTimeSec);
 
         // Explicitly select glitch mode from parameter (0=Granular, 1=Pitch/Time-stretch)
-        ignoreUnused(sampleIndex, feedbackValue, glitchIntensity);
+        ignoreUnused(sampleIndex, glitchIntensity);
         glitchMode = juce::jlimit(0, 1, glitchModeParamValue);
 
+        // 1) Compute output from existing buffer/grains FIRST (read-only)
         float output = 0.0f;
-
         switch (glitchMode)
         {
         case 0: // Granular clouds
@@ -620,6 +703,12 @@ private:
             output = 0.0f;
             break;
         }
+
+        // 2) Then write feedbacked signal back into the circular buffer so tails persist
+        const int writePos = glitchWritePos[channel];
+        float fbSample = dampingFilterState[channel].process(output); // tone-shape feedback
+        buffer[glitchWritePos[channel]] = input + feedbackValue * fbSample;
+        glitchWritePos[channel] = (glitchWritePos[channel] + 1) % (int)buffer.size();
 
         return output;
     }
@@ -718,7 +807,7 @@ private:
                 // Simple linear interpolation for pitch shifting
                 size_t pos1 = pos % grains[0].size;
                 size_t pos2 = (pos + 1) % grains[0].size;
-                float frac = grains[0].playPos - pos;
+                float frac = grains[0].playPos - (float)pos;
                 output = grains[0].data[pos1] * (1.0f - frac) + grains[0].data[pos2] * frac;
             }
 
