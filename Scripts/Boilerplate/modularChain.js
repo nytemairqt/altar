@@ -24,7 +24,7 @@ include("Boilerplate/chorus.js");
 include("Boilerplate/ringmod.js");
 
 namespace ModularChain
-{	
+{   
 
     // ---------------------------
     // Slots / Modules / UI Panels
@@ -54,7 +54,7 @@ namespace ModularChain
         
     // Panel shenanigans
     reg dragging = false;
-   	reg target; 
+    reg target; 
 
     // ---------------------------
     // Painting & Repaint Utilities
@@ -68,52 +68,52 @@ namespace ModularChain
         local slotIndex = pnlFxSlots.indexOf(this);
         local btn = slotIndex != -1 ? bypassButtons[slotIndex] : 0;
 
-		// Text 
+        // Text 
         g.setColour(btn && btn.getValue() ? Colours.white : Colours.grey);                
         switch (this.get("text"))
         {
-	        case "overdrive": 
-	        	g.drawAlignedText("Overdrive", area, "centred");
-	        	if (pnlFx[0].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
-	        	break;
-	        case "amp": 
-	        	g.drawAlignedText("Amp", area, "centred"); 
-	        	if (pnlFx[1].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
-	        	break;
-	        case "cab": 
-		        g.drawAlignedText("Cab", area, "centred"); 
-		        if (pnlFx[2].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
-		        break;
-	        case "reverb": 
-		        g.drawAlignedText("Reverb", area, "centred"); 
-		        if (pnlFx[3].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
-		        break;
-	        case "delay": 
-		        g.drawAlignedText("Delay", area, "centred"); 
-		        if (pnlFx[4].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
-		        break;
-	        case "chorus": 
-		        g.drawAlignedText("Chorus", area, "centred"); 
-		        if (pnlFx[5].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
-		        break;
-	        case "ringmod": 
-		        g.drawAlignedText("Ringmod", area, "centred"); 
-		        if (pnlFx[6].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
-		        break;	        
+            case "overdrive": 
+                g.drawAlignedText("Overdrive", area, "centred");
+                if (pnlFx[0].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+                break;
+            case "amp": 
+                g.drawAlignedText("Amp", area, "centred"); 
+                if (pnlFx[1].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+                break;
+            case "cab": 
+                g.drawAlignedText("Cab", area, "centred"); 
+                if (pnlFx[2].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+                break;
+            case "reverb": 
+                g.drawAlignedText("Reverb", area, "centred"); 
+                if (pnlFx[3].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+                break;
+            case "delay": 
+                g.drawAlignedText("Delay", area, "centred"); 
+                if (pnlFx[4].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+                break;
+            case "chorus": 
+                g.drawAlignedText("Chorus", area, "centred"); 
+                if (pnlFx[5].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+                break;
+            case "ringmod": 
+                g.drawAlignedText("Ringmod", area, "centred"); 
+                if (pnlFx[6].get("visible")) { g.setColour(ColourData.clrWhite); g.drawLine(20, area[2] - 20, area[3] - 5, area[3] - 5, 1.0); }
+                break;          
         }                
-        	
+            
         // Hover Highlight
         if (dragging)
         {
-			if (this == target) { g.setColour(Colours.withAlpha(Colours.green, 0.3)); }	        	
-	        else { g.setColour(Colours.withAlpha(Colours.green, 0.1)); }	        	
-	        g.fillRoundedRectangle(area, 4.0);
-       	}  
-       	else if (this.data.hover && !dragging)
-       	{
-	       	g.setColour(Colours.withAlpha(Colours.white, 0.05));
-	       	g.fillRoundedRectangle(area, 4.0);
-       	}
+            if (this == target) { g.setColour(Colours.withAlpha(Colours.green, 0.3)); }             
+            else { g.setColour(Colours.withAlpha(Colours.green, 0.1)); }                
+            g.fillRoundedRectangle(area, 4.0);
+        }  
+        else if (this.data.hover && !dragging)
+        {
+            g.setColour(Colours.withAlpha(Colours.white, 0.05));
+            g.fillRoundedRectangle(area, 4.0);
+        }
     }
 
     for (p in pnlFxSlots)
@@ -121,7 +121,7 @@ namespace ModularChain
 
     inline function repaintAllSlots()
     {
-		for (i = 0; i < pnlFxSlots.length; i++) { pnlFxSlots[i].set("text", fxSlots[i].getCurrentEffectId()); }                             
+        for (i = 0; i < pnlFxSlots.length; i++) { pnlFxSlots[i].set("text", fxSlots[i].getCurrentEffectId()); }                             
         for (p in pnlFxSlots) { p.repaint(); }
     }
 
@@ -130,8 +130,8 @@ namespace ModularChain
     // ---------------------------
 
     function dragPaintRoutine(g, obj)
-    {        		
-		// Little square that pops up when dragging
+    {               
+        // Little square that pops up when dragging
         g.setColour(Colours.withAlpha(Colours.white, 0.60));
         g.fillRoundedRectangle(obj.area, 2.0, 2.0);
     }
@@ -143,9 +143,9 @@ namespace ModularChain
         Content.refreshDragImage();     
         if (names.contains(targetId))
         {
-			target = Content.getComponent(targetId);
-			repaintAllSlots();
-	    	return true;  
+            target = Content.getComponent(targetId);
+            repaintAllSlots();
+            return true;  
         }        
         else { return false; }
     }
@@ -232,9 +232,10 @@ namespace ModularChain
 
     function insertDragCallback(isValid, targetName)
     {
-		dragging = false;
-		repaintAllSlots();
-		
+        dragging = false;
+        // Defer repaint until after states are restored so labels reflect the new order
+        // repaintAllSlots();
+        
         // Called when we drag a module panel onto another module panel
         if (!isValid || targetName == "") return;
 
@@ -260,6 +261,12 @@ namespace ModularChain
         // 4) Apply bypass values with the same mapping and propagate to effects
         applyBypassValuesByMapping(bypassVals, mapping);
         
+        // 5) Now that the mapping is applied, update labels and force a repaint
+        repaintAllSlots();
+
+        // Clear hover highlight target
+        target = 0;
+
         // restore NAM model
         Amp.sendNAMCableData();                
     }
@@ -270,17 +277,17 @@ namespace ModularChain
 
     inline function mouseCallback(event)
     {
-		dragging = false;		
-		this.setMouseCursor("NormalCursor", Colours.white, [0, 0]);
+        dragging = false;       
+        this.setMouseCursor("NormalCursor", Colours.white, [0, 0]);
 
         if (event.drag && !event.rightClick)
         {
-			dragging = true;
-			this.setMouseCursor("DraggingHandCursor", Colours.white, [0, 0]);  
+            dragging = true;
+            this.setMouseCursor("DraggingHandCursor", Colours.white, [0, 0]);  
             hideCabDesigner();          
 
             if (event.dragX > 10 || event.dragY > 10 || event.dragX < -10 || event.dragY < -10)
-            {				
+            {               
                 this.startInternalDrag({
                     area: [0, 0, 25, 25],
                     paintRoutine: dragPaintRoutine,

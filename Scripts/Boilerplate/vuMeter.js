@@ -67,9 +67,7 @@ namespace VuMeter
 
 		// Remap peaks for display
 		var pL = mapPeakToDisplay(obj.peaks[0]);
-		var pR = mapPeakToDisplay(obj.peaks[1]);
-		
-		Console.print(Engine.getDecibelsForGainFactor(obj.peaks[0]));
+		var pR = mapPeakToDisplay(obj.peaks[1]);				
 
 		var a1 = [padL + (center * 0), a[3] * (1 - pL), thickness + (padL / 2), a[3] * pL];
 		var a2 = [padL + (center * 1) - (padL / 2), a[3] * (1 - pR), thickness + (padL / 2), a[3] * pR];
