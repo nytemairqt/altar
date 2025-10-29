@@ -82,7 +82,7 @@ namespace Preferences
 	
 	// LOOK AND FEEL
 	
-	const bounds = [75, 50, 440, 250];		
+	const bounds = [250, 50, 440, 250];		
 	
 	const start = -Math.PI * 0.75;			
 	

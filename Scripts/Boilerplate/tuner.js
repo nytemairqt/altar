@@ -31,10 +31,10 @@ namespace Tuner
 	reg inTune = false;
 	reg direction = "";
    	
-    inline function onbtnShowTunerControl(component, value) { pnlTuner.set("visible", value); }        
+    inline function onbtnShowTunerControl(component, value) { tuner.setBypassed(1-value); pnlTuner.set("visible", value); }        
     btnShowTuner.setControlCallback(onbtnShowTunerControl);
     
-    const bounds = [165, 50, 340, 240];
+    const bounds = [70, 50, 340, 170];
 
     pnlTuner.setPaintRoutine(function(g)
     {        		
@@ -55,7 +55,7 @@ namespace Tuner
         {
             btnShowTuner.setValue(0);
             btnShowTuner.changed();
-        }   
+        }
     });
     
     inline function pnlTunerDisplayPaint(g)
@@ -155,10 +155,6 @@ namespace Tuner
     }, false);
     
     lblTunerNote.set("text", "C");
-    lblTunerDeviation.set("text", "+0c");
-
-    
-
-    
+    lblTunerDeviation.set("text", "+0c");    
     
 }

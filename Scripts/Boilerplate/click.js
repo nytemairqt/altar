@@ -25,7 +25,7 @@ namespace Click
     const pnlClick = Content.getComponent("pnlClick");
     const isPlugin = Engine.isPlugin();
     const isHISE = Engine.isHISE();     
-    const bounds = [255, 50, 240, 120];   
+    const bounds = [160, 50, 240, 120];   
 
     inline function onbtnShowClickControl(component, value)
     {

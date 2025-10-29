@@ -172,7 +172,6 @@
             <Control type="ScriptButton" id="btnPostProcessEQEnable" value="0.0"/>
             <Control type="ScriptButton" id="btnPostProcessCompEnable" value="0.0"/>
             <Control type="ScriptButton" id="btnTunerMonitor" value="0.0"/>
-            <Control type="ScriptButton" id="btnTuner" value="0.0"/>
             <Control type="ScriptSlider" id="knbClickTempo" value="120.0"/>
           </Content>
           <UIData Source="AltarUIData"/>

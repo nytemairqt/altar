@@ -227,8 +227,8 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnWitness" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="s7&amp;G*&amp;&amp;D*G*&amp;*&amp;gdiagdg87&amp;(&amp;--===F=G*S"
-               text="*&amp;T*#jheahgjdhag&amp;#*R&amp;&amp;&amp;t7t32t" height="30.0"
+               parentComponent="pnlMaster" tooltip="||              witness...             ||"
+               text="||              witness...             ||" height="30.0"
                saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
@@ -1288,38 +1288,36 @@
   <Component type="ScriptPanel" id="pnlTuner" x="0.0" y="0.0" width="1150.0"
              height="700.0" itemColour="1358954496" itemColour2="1358954496"
              allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptLabel" id="lblTuner" x="270.0" y="60.0" text="TUNER"
-               parentComponent="pnlTuner" editable="0" fontStyle="Bold"/>
-    <Component type="ScriptButton" id="btnTunerMonitor" x="194.0" y="59.0" parentComponent="pnlTuner"
+    <Component type="ScriptLabel" id="lblTuner" x="70.0" y="60.0" text="TUNER"
+               parentComponent="pnlTuner" editable="0" fontStyle="Bold" width="340.0"/>
+    <Component type="ScriptButton" id="btnTunerMonitor" x="79.0" y="59.0" parentComponent="pnlTuner"
                width="16.0" height="16.0" tooltip="Enable tuner monitoring."
                processorId="tuner" parameterId="Monitor"/>
-    <Component type="ScriptButton" id="btnTuner" x="174.0" y="59.0" processorId="tuner"
-               parameterId="Enabled" parentComponent="pnlTuner" width="16.0"
-               height="16.0" tooltip="Enable tuner."/>
     <Component type="ScriptLabel" id="lblClickDisasbled" x="20.0" y="249.0"
                width="290.0" height="20.0" text="Click disabled in Plugin version."
                visible="0" parentComponent="pnlTuner"/>
-    <Component type="ScriptPanel" id="pnlTunerDisplay" x="184.0" y="100.0" parentComponent="pnlTuner"
-               width="302.0" height="100.0"/>
-    <Component type="ScriptLabel" id="lblTunerNote" x="270.0" y="180.0" text="C"
-               parentComponent="pnlTuner" fontSize="20.0" fontStyle="Bold" editable="0"/>
-    <Component type="ScriptLabel" id="lblTunerDeviation" x="270.0" y="210.0"
-               text="+0c" parentComponent="pnlTuner" editable="0"/>
+    <Component type="ScriptPanel" id="pnlTunerDisplay" x="70.0" y="70.0" parentComponent="pnlTuner"
+               width="340.0" height="100.0"/>
+    <Component type="ScriptLabel" id="lblTunerNote" x="70.0" y="150.0" text="C"
+               parentComponent="pnlTuner" fontSize="20.0" fontStyle="Bold" editable="0"
+               width="340.0"/>
+    <Component type="ScriptLabel" id="lblTunerDeviation" x="70.0" y="180.0"
+               text="+0c" parentComponent="pnlTuner" editable="0" width="340.0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlClick" x="0.0" y="0.0" width="1150.0"
              height="700.0" itemColour="1358954496" itemColour2="1358954496"
              allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptButton" id="btnClick" x="264.0" y="59.0" parentComponent="pnlClick"
+    <Component type="ScriptButton" id="btnClick" x="169.0" y="59.0" parentComponent="pnlClick"
                processorId="click" parameterId="Enabled" saveInPreset="0" width="16.0"
                height="16.0" tooltip="Enable click."/>
-    <Component type="ScriptSlider" id="knbClickTempo" x="285.0" y="59.0" middlePosition="120.0"
+    <Component type="ScriptSlider" id="knbClickTempo" x="190.0" y="59.0" middlePosition="120.0"
                min="20.0" max="260.0" parentComponent="pnlClick" stepSize="1.0"
                defaultValue="120.0" width="96.0" height="96.0" suffix=" BPM"
                tooltip="Click tempo (disabled in DAW).">
       <Component type="ScriptLabel" id="lblClickTempo" x="0.0" y="54.0" text="Tempo"
                  width="96.0" height="30.0" fontStyle="Bold" editable="0" parentComponent="knbClickTempo"/>
     </Component>
-    <Component type="ScriptSlider" id="knbClickGain" x="385.0" y="59.0" middlePosition="-50.0"
+    <Component type="ScriptSlider" id="knbClickGain" x="290.0" y="59.0" middlePosition="-50.0"
                min="-100.0" max="12.0" mode="Decibel" processorId="click" parameterId="Gain"
                parentComponent="pnlClick" saveInPreset="0" width="96.0" height="96.0"
                suffix=" dB" tooltip="Click gain.">
@@ -1330,7 +1328,7 @@
   <Component type="ScriptPanel" id="pnlPreferences" x="0.0" y="0.0" width="1150.0"
              height="700.0" itemColour="1358954496" itemColour2="1358954496"
              allowCallbacks="Clicks Only" visible="0.0">
-    <Component type="ScriptFloatingTile" id="fltPreferences" x="20.0" y="64.0"
+    <Component type="ScriptFloatingTile" id="fltPreferences" x="195.0" y="64.0"
                parentComponent="pnlPreferences" width="480.0" height="220.0"
                ContentType="CustomSettings" bgColour="4278190080" itemColour="0"
                itemColour2="0" Data="{&#10;  &quot;Driver&quot;: true,&#10;  &quot;Device&quot;: true,&#10;  &quot;Output&quot;: true,&#10;  &quot;BufferSize&quot;: true,&#10;  &quot;SampleRate&quot;: true,&#10;  &quot;GlobalBPM&quot;: false,&#10;  &quot;StreamingMode&quot;: false,&#10;  &quot;ScaleFactor&quot;: false,&#10;  &quot;VoiceAmountMultiplier&quot;: false,&#10;  &quot;ClearMidiCC&quot;: false,&#10;  &quot;SampleLocation&quot;: false,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: []&#10;}"/>
