@@ -186,7 +186,7 @@
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="ringmod"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="1040.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 3%" width="110.0" fontStyle="Regular" height="30.0"
+               text="CPU Usage: 12%" width="110.0" fontStyle="Regular" height="30.0"
                alignment="left" editable="0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
@@ -227,9 +227,9 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnWitness" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="||              witness...             ||"
-               text="||              witness...             ||" height="30.0"
-               saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
+               parentComponent="pnlMaster" tooltip="8*G*Dg8ygsdg77ZGg7&amp;&amp;#&amp;T&amp;E(G(D&amp;G7d7g7"
+               text="7*&amp;JJFJK((9fsauifa7*F&amp;*F837uU" height="30.0" saveInPreset="0"
+               enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
@@ -526,7 +526,7 @@
                height="16.0" enableMidiLearn="0"/>
     <Component type="ScriptPanel" id="pnlCabDesigner" x="0.0" y="0.0" width="850.0"
                height="400.0" itemColour="1023410176" itemColour2="1023410176"
-               allowCallbacks="Clicks Only" parentComponent="pnlCab" visible="0.0">
+               allowCallbacks="Clicks Only" parentComponent="pnlCab">
       <Component type="ScriptLabel" id="lblCabDesigner" x="365.0" y="20.0" parentComponent="pnlCabDesigner"
                  width="120.0" text="CAB DESIGNER" height="30.0" editable="0"
                  fontStyle="Bold"/>
@@ -549,7 +549,8 @@
       <Component type="ScriptSlider" id="knbCabDesignerMojo" x="116.0" y="150.0"
                  parentComponent="pnlCabDesigner" text="" processorId="cabDesigner"
                  parameterId="MojoStrength" width="76.0" height="76.0" defaultValue="0.5"
-                 tooltip="Adjust mojo strength." suffix="%" middlePosition="0.5">
+                 tooltip="Adjust mojo strength." suffix="%" middlePosition="0.5"
+                 min="0.1">
         <Component type="ScriptLabel" id="lblCabDesignerMojo" x="0.0" y="40.0" parentComponent="knbCabDesignerMojo"
                    width="76.0" text="Mojo" height="30.0" editable="0" fontStyle="Bold"
                    fontSize="11.0"/>
