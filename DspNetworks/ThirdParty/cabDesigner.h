@@ -27,6 +27,10 @@ struct cabDesigner : public data::base
     static constexpr int NumFilters = 0;
     static constexpr int NumDisplayBuffers = 0;
 
+    // Explicit counts for UI ranges: Linear + 5 concrete models
+    static constexpr int kNumSpeakers = 6;
+    static constexpr int kNumMics     = 6;
+
     int handleModulation(double&) { return 0; }
     template <typename T> void processFrame(T&) {}
     void handleHiseEvent(HiseEvent&) {}
@@ -64,7 +68,17 @@ struct cabDesigner : public data::base
             mojoSeed[i] = 0.0f; // will be randomized in generateRandomMojo()
         }
 
-        // Instantiate Speakers & Microphones
+        // Insert Linear presets first (index 0) for both Speakers and Microphones
+        {
+            EQModule linear; // count = 0 -> no filters -> linear
+            addSpeakerModule(linear);
+        }
+        {
+            EQModule linear; // count = 0 -> no filters -> linear
+            addMicModule(linear);
+        }
+
+        // Instantiate Speakers & Microphones after Linear
         addSpeaker(speakerA); addSpeaker(speakerB); addSpeaker(speakerC); addSpeaker(speakerD); addSpeaker(speakerE);             
         addMic(micA); addMic(micB); addMic(micC); addMic(micD); addMic(micE);
 
@@ -152,12 +166,13 @@ struct cabDesigner : public data::base
 
     void createParameters(ParameterDataList& data)
     {
-        { parameter::data p("SpeakerType", { 0.0, (double)(spModules ? spModules - 1 : 0) }); registerCallback<0>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
-        { parameter::data p("CustomMod", { 0.0, 1.0 }); registerCallback<1>(p); p.setDefaultValue(1.0); data.add(std::move(p)); }
-        { parameter::data p("MicrophoneType", { 0.0, (double)(micModules ? micModules - 1 : 0) }); registerCallback<2>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
-        { parameter::data p("MojoStrength", { 0.0, 1.0 }); registerCallback<3>(p); p.setDefaultValue(0.5); data.add(std::move(p)); }
-        { parameter::data p("GenerateMojo", { 0.0, 1.0 }); registerCallback<4>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
-        { parameter::data p("CabAge", { 0.0, 1.0 }); registerCallback<5>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
+        // Use explicit maxima so UI always shows Linear (index 0) through last model.
+        { parameter::data p("SpeakerType",    { 0.0, (double)(kNumSpeakers - 1) });   registerCallback<0>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
+        { parameter::data p("MixReady",      { 0.0, 1.0 });                          registerCallback<1>(p); p.setDefaultValue(1.0); data.add(std::move(p)); }
+        { parameter::data p("MicrophoneType", { 0.0, (double)(kNumMics - 1) });       registerCallback<2>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
+        { parameter::data p("MojoStrength",   { 0.0, 1.0 });                          registerCallback<3>(p); p.setDefaultValue(0.5); data.add(std::move(p)); }
+        { parameter::data p("GenerateMojo",   { 0.0, 1.0 });                          registerCallback<4>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }
+        { parameter::data p("CabAge",         { 0.0, 1.0 });                          registerCallback<5>(p); p.setDefaultValue(0.0); data.add(std::move(p)); }        
     }
 
     // Simple adders from compile-time arrays
@@ -379,80 +394,62 @@ private:
     
     // AL30
     inline static const FilterSpec speakerA[] = {
-        FS(HighPass,    48.0f,      0.0f,    0.707f),
-        FS(HighPass,    48.0f,      0.0f,    0.707f),        
-        FS(Peak,        200.0f,    -4.0f,    3.4f),
-        FS(Peak,        800.0f,    -3.0f,    4.0f),
-        FS(Peak,        1300.0f,   -7.0f,    6.0f),
-        FS(Peak,        1600.0f,   -8.0f,    6.0f),
-        FS(Peak,        2400.0f,    5.0f,   5.0f),
-        FS(HighShelf,   3500.0f,    5.0f,    1.0f),
-        FS(LowPass,     5500.0f,    0.0f,    0.707f),
-        FS(LowPass,     5500.0f,    0.0f,    0.707f),
-        FS(LowPass,     5500.0f,    0.0f,    0.707f)
+        FS(HighPass,    93.0f,      0.0f,    0.6f),        
+        FS(Peak,        220.0f,    -4.5f,    6.5f),
+        FS(Peak,        805.0f,    -2.8f,    6.0f),
+        FS(Peak,        1200.0f,   -8.2f,    8.0f),
+        FS(Peak,        1500.0f,   -10.0f,   8.0f),
+        FS(Peak,        2200.0f,    6.8f,    8.0f),
+        FS(Peak,        2400.0f,    3.5f,    4.2f),        
+        FS(LowPass,     5000.0f,    0.0f,    0.707f),            
     };
 
     // ALK100
-    inline static const FilterSpec speakerB[] = {
-        FS(HighPass,    60.0f,      0.0f,    0.707f),
-        FS(HighPass,    60.0f,      0.0f,    0.707f),    
-        FS(Peak,        206.0f,    -3.0f,    4.0f),
-        FS(Peak,        800.0f,    -4.0f,    4.0f),
-        FS(Peak,        960.0f,     3.0f,    4.0f),
-        FS(Peak,        1400.0f,   -4.0f,    4.0f),
-        FS(Peak,        1600.0f,    3.0f,    4.0f),
-        FS(Peak,        1800.0f,   -5.0f,    4.0f),
-        FS(Peak,        2500.0f,    3.5f,    3.0f),
-        FS(Peak,        3000.0f,   -5.0f,    4.0f),
-        FS(Peak,        3500.0f,    3.0f,    4.0f),
-        FS(LowPass,     6400.0f,    0.0f,    0.707f),
-        FS(LowPass,     6400.0f,    0.0f,    0.707f),
-        FS(LowPass,     6400.0f,    0.0f,    0.707f)        
+    inline static const FilterSpec speakerB[] = {        
+        FS(HighPass,    100.0f,      0.0f,   0.6f),    
+        FS(Peak,        350.0f,    -1.4f,    2.2f),
+        FS(Peak,        700.0f,     0.9f,    1.0f),
+        FS(Peak,        830.0f,    -1.6f,    3.7f),
+        FS(Peak,        1400.0f,   -3.6f,    2.2f),
+        FS(Peak,        2300.0f,    5.0f,    2.4f),
+        FS(Peak,        3500.0f,    3.5f,    3.4f),        
+        FS(LowPass,     5000.0f,    0.0f,    0.707f),        
     };
 
     // AL65
-    inline static const FilterSpec speakerC[] = {
-        FS(HighPass,    60.0f,      0.0f,    0.707f),
-        FS(HighPass,    60.0f,      0.0f,    0.707f),    
-        FS(Peak,        750.0f,     2.0f,    0.7f),
-        FS(Peak,        1500.0f,   -5.0f,    3.0f),
-        FS(Peak,        2400.0f,    4.0f,    4.0f),
-        FS(Peak,        3200.0f,    3.5f,    3.5f),
-        FS(Peak,        4500.0f,   -3.0f,    3.0f),
-        FS(HighShelf,   5000.0f,   -10.0f,   3.0f),
-        FS(LowPass,     6000.0f,    0.0f,    0.707f),
-        FS(LowPass,     6000.0f,    0.0f,    0.707f),
-        FS(LowPass,     6000.0f,    0.0f,    0.707f),
+    inline static const FilterSpec speakerC[] = {        
+        FS(HighPass,    97.0f,      0.0f,    0.6f),    
+        FS(Peak,        404.0f,    -1.5f,    2.2f),        
+        FS(Peak,        1400.0f,   -6.8f,    2.9f),
+        FS(Peak,        2300.0f,    7.6f,    6.2f),
+        FS(Peak,        3300.0f,    4.9f,    6.3f),
+        FS(Peak,        5300.0f,    2.8f,    8.0f),
+        FS(LowPass,     5000.0f,    0.0f,    0.707f),
     };
 
     // AL77
     inline static const FilterSpec speakerD[] = {
-        FS(HighPass,    80.0f,      0.0f,    0.707f),
-        FS(HighPass,    80.0f,      0.0f,    0.707f),    
-        FS(Peak,        230.0f,    -2.0f,    3.0f),
-        FS(Peak,        320.0f,    -2.0f,    3.0f),
-        FS(Peak,        600.0f,     3.0f,    3.0f),
-        FS(Peak,        900.0f,    -1.0f,    5.0f),
-        FS(Peak,        1500.0f,   -4.0f,    3.0f),
-        FS(Peak,        2200.0f,    3.0f,    3.0f),
-        FS(HighShelf,   2200.0f,    5.0f,    1.0f),
-        FS(LowPass,     5800.0f,    0.0f,    0.707f),
-        FS(LowPass,     6400.0f,    0.0f,    0.707f),
-        FS(LowPass,     6400.0f,    0.0f,    0.707f),
+        FS(HighPass,    80.0f,      0.0f,    0.6f),        
+        FS(Peak,        239.0f,    -1.1f,    4.4f),        
+        FS(Peak,        342.0f,    -1.4f,    6.8f),    
+        FS(Peak,        502.0f,     1.7f,    5.4f),    
+        FS(Peak,        904.0f,    -1.0f,    8.0f),    
+        FS(Peak,        1400.0f,   -3.6f,    4.2f),    
+        FS(Peak,        2200.0f,    5.5f,    4.9f),    
+        FS(Peak,        3000.0f,    4.4f,    5.2f),    
+        FS(LowPass,     5000.0f,    0.0f,    0.707f),
     };
 
     // AL12M
     inline static const FilterSpec speakerE[] = {
-        FS(HighPass,    60.0f,      0.0f,    0.707f),
-        FS(HighPass,    60.0f,      0.0f,    0.707f),    
-        FS(Peak,        600.0f,     2.0f,    0.7f),
-        FS(Peak,        1500.0f,   -5.0f,    3.0f),
-        FS(Peak,        2500.0f,    6.0f,    3.0f),
-        FS(Peak,        3300.0f,    4.0f,    3.0f),
-        FS(Peak,        4500.0f,   -3.0f,    3.0f),
-        FS(LowPass,     5800.0f,    0.0f,    0.707f),
-        FS(LowPass,     6400.0f,    0.0f,    0.707f),
-        FS(LowPass,     6400.0f,    0.0f,    0.707f),
+        FS(HighPass,    60.0f,      0.0f,    0.6f),
+        FS(Peak,        153.0f,     1.5f,    0.4f),
+        FS(Peak,        402.0f,    -1.9f,    0.9f),
+        FS(Peak,        797.0f,     1.8f,    1.0f),
+        FS(Peak,        1600.0f,   -3.8f,    2.2f),
+        FS(Peak,        2300.0f,    5.5f,    4.0f),
+        FS(Peak,        3300.0f,    4.2f,    3.9f),
+        FS(LowPass,     5000.0f,    0.0f,    0.707f),
     };
 
     // Microphones
@@ -508,11 +505,17 @@ private:
 
     // Custom Mod 
     inline static const FilterSpec customMod[] = {
-        FS(LowShelf,     90.0f,    1.5f,   0.707f),  
-        FS(Peak,        800.0f,   -2.0f,   0.7f),    
-        FS(Peak,       2500.0f,   -2.5f,   3.0f),    
-        FS(Peak,       3200.0f,   -2.5f,   3.0f),
-        FS(Peak,       4000.0f,   -2.5f,   3.0f),
+        FS(HighPass,    50.0f,      0.0f,   0.707f),
+        FS(HighPass,    50.0f,      0.0f,   0.707f),        
+        FS(Peak,        123.0f,     8.0f,   0.4f),  
+        FS(Peak,        200.0f,     4.0f,   0.3f),  
+        FS(Peak,        498.0f,    -4.4f,   4.9f),  
+        FS(Peak,        2400.0f,   -3.6f,   2.9f),  
+        FS(Peak,        3900.0f,    2.9f,   0.6f), 
+        FS(Peak,        4500.0f,    7.7f,   0.7f),          
+        FS(LowPass,     5000.0f,    0.0f,   0.7f),        
+        FS(LowPass,     5000.0f,    0.0f,   0.7f),        
+        FS(LowPass,     5000.0f,    0.0f,   0.7f),        
     };
 };
 }

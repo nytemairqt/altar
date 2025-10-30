@@ -31,7 +31,7 @@
                              ID="FreqRatio" Value="0.9999999776482582" DefaultValue="1.0"/>
                 </Parameters>
               </Node>
-              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
+              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain" Folded="1">
                 <Parameters>
                   <Parameter MinValue="0.0" MaxValue="60.0" StepSize="0.1000000014901161"
                              SkewFactor="1" ID="Gain" Automated="1"/>
@@ -41,21 +41,20 @@
                              SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                 </Parameters>
               </Node>
-              <Node ID="cabDesigner" FactoryPath="project.cabDesigner" Bypassed="0"
-                    Name="cabDesigner" Folded="1">
+              <Node ID="cabDesigner2" FactoryPath="project.cabDesigner" Bypassed="0"
+                    Name="cabDesigner2">
                 <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="4.0" ID="SpeakerType" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" ID="CustomMod" DefaultValue="1.0"
+                  <Parameter MinValue="0.0" MaxValue="5.0" ID="SpeakerType" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="MixReady" DefaultValue="1.0"
                              Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" ID="MicrophoneType" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="5.0" ID="MicrophoneType" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="MojoStrength" DefaultValue="0.5"
                              Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="GenerateMojo" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="CabAge" Automated="1"/>
                 </Parameters>
               </Node>
-              <Node ID="svf_eq" FactoryPath="filters.svf_eq" Bypassed="0" Name="svf_eq"
-                    Folded="1">
+              <Node ID="one_pole" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
                 <ComplexData>
                   <Filters>
                     <Filter Index="-1"/>
@@ -63,14 +62,94 @@
                 </ComplexData>
                 <Parameters>
                   <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                             ID="Frequency" TextToValueConverter="Frequency" Value="166.5331657988242"
+                             ID="Frequency" TextToValueConverter="Frequency" Value="50.0"
                              DefaultValue="1000.0"/>
                   <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                             ID="Q" Value="0.689054489705456" DefaultValue="1.0"/>
+                             ID="Q" Value="1.0"/>
                   <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
                              ID="Smoothing" Value="0.009999999776482582"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Value="1.0"
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="1.0"
+                             DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="one_pole1" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
+                <ComplexData>
+                  <Filters>
+                    <Filter Index="-1"/>
+                  </Filters>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                             ID="Frequency" TextToValueConverter="Frequency" Value="50.0"
+                             DefaultValue="1000.0"/>
+                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                             ID="Q" Value="1.0"/>
+                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                             ID="Smoothing" Value="0.009999999776482582"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="1.0"
+                             DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="one_pole2" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
+                <ComplexData>
+                  <Filters>
+                    <Filter Index="-1"/>
+                  </Filters>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                             ID="Frequency" TextToValueConverter="Frequency" Value="50.0"
+                             DefaultValue="1000.0"/>
+                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                             ID="Q" Value="1.0"/>
+                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                             ID="Smoothing" Value="0.009999999776482582"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="1.0"
+                             DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="one_pole3" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
+                <ComplexData>
+                  <Filters>
+                    <Filter Index="-1"/>
+                  </Filters>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                             ID="Frequency" TextToValueConverter="Frequency" Value="50.0"
+                             DefaultValue="1000.0"/>
+                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                             ID="Q" Value="1.0"/>
+                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                             ID="Smoothing" Value="0.009999999776482582"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="1.0"
+                             DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="one_pole4" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
+                <ComplexData>
+                  <Filters>
+                    <Filter Index="-1"/>
+                  </Filters>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                             ID="Frequency" TextToValueConverter="Frequency" Value="50.0"
+                             DefaultValue="1000.0"/>
+                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                             ID="Q" Value="1.0"/>
+                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                             ID="Smoothing" Value="0.009999999776482582"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="1.0"
                              DefaultValue="0.0"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                 </Parameters>
@@ -94,13 +173,13 @@
           </Node>
           <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain">
             <Nodes>
-              <Node ID="cabDesigner1" FactoryPath="project.cabDesigner" Bypassed="0"
-                    Name="cabDesigner1">
+              <Node ID="cabDesigner3" FactoryPath="project.cabDesigner" Bypassed="0"
+                    Name="cabDesigner3">
                 <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="4.0" ID="SpeakerType" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1.0" ID="CustomMod" DefaultValue="1.0"
+                  <Parameter MinValue="0.0" MaxValue="5.0" ID="SpeakerType" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="MixReady" DefaultValue="1.0"
                              Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="4.0" ID="MicrophoneType" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="5.0" ID="MicrophoneType" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="MojoStrength" DefaultValue="0.5"
                              Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="GenerateMojo" Automated="1"/>
@@ -125,46 +204,46 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="SpeakerType" MinValue="0.0" MaxValue="4.0" ExternalModulation="Disabled"
+      <Parameter ID="SpeakerType" MinValue="0.0" MaxValue="5.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="cabDesigner1" ParameterId="SpeakerType"/>
-          <Connection NodeId="cabDesigner" ParameterId="SpeakerType"/>
+          <Connection NodeId="cabDesigner2" ParameterId="SpeakerType"/>
+          <Connection NodeId="cabDesigner3" ParameterId="SpeakerType"/>
         </Connections>
       </Parameter>
-      <Parameter ID="CustomMod" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
+      <Parameter ID="MixReady" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="cabDesigner1" ParameterId="CustomMod"/>
-          <Connection NodeId="cabDesigner" ParameterId="CustomMod"/>
+          <Connection NodeId="cabDesigner2" ParameterId="MixReady"/>
+          <Connection NodeId="cabDesigner3" ParameterId="MixReady"/>
         </Connections>
       </Parameter>
-      <Parameter ID="MicrophoneType" MinValue="0.0" MaxValue="4.0" ExternalModulation="Disabled"
+      <Parameter ID="MicrophoneType" MinValue="0.0" MaxValue="5.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="cabDesigner1" ParameterId="MicrophoneType"/>
-          <Connection NodeId="cabDesigner" ParameterId="MicrophoneType"/>
+          <Connection NodeId="cabDesigner2" ParameterId="MicrophoneType"/>
+          <Connection NodeId="cabDesigner3" ParameterId="MicrophoneType"/>
         </Connections>
       </Parameter>
       <Parameter ID="MojoStrength" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="cabDesigner1" ParameterId="MojoStrength"/>
-          <Connection NodeId="cabDesigner" ParameterId="MojoStrength"/>
+          <Connection NodeId="cabDesigner2" ParameterId="MojoStrength"/>
+          <Connection NodeId="cabDesigner3" ParameterId="MojoStrength"/>
         </Connections>
       </Parameter>
       <Parameter ID="GenerateMojo" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="cabDesigner1" ParameterId="GenerateMojo"/>
-          <Connection NodeId="cabDesigner" ParameterId="GenerateMojo"/>
+          <Connection NodeId="cabDesigner2" ParameterId="GenerateMojo"/>
+          <Connection NodeId="cabDesigner3" ParameterId="GenerateMojo"/>
         </Connections>
       </Parameter>
       <Parameter ID="CabAge" MinValue="0.0" MaxValue="1.0" ExternalModulation="Disabled"
                  DefaultValue="" Value="0.0">
         <Connections>
-          <Connection NodeId="cabDesigner1" ParameterId="CabAge"/>
-          <Connection NodeId="cabDesigner" ParameterId="CabAge"/>
+          <Connection NodeId="cabDesigner2" ParameterId="CabAge"/>
+          <Connection NodeId="cabDesigner3" ParameterId="CabAge"/>
         </Connections>
       </Parameter>
       <Parameter ID="FFTGain" MinValue="0.0" MaxValue="60.0" StepSize="0.1000000014901161"

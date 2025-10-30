@@ -186,7 +186,7 @@
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="ringmod"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="1040.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 1%" width="110.0" fontStyle="Regular" height="30.0"
+               text="CPU Usage: 3%" width="110.0" fontStyle="Regular" height="30.0"
                alignment="left" editable="0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
@@ -227,8 +227,8 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnWitness" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="gd7gs7gs7&amp;G*&amp;&amp;D*G*&amp;*&amp;gdiagdg87&amp;(&amp;--="
-               text="g___gdsg898sdg8zg&amp;&amp;&amp;Gdg-_g9as" height="30.0"
+               parentComponent="pnlMaster" tooltip="||              witness...             ||"
+               text="||              witness...             ||" height="30.0"
                saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
@@ -320,7 +320,8 @@
                tooltip="Adjust circuit bend amount." defaultValue="400.0" visible="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlAmp" x="150.0" y="250.0" width="850.0"
-             height="400.0" itemColour="4278190080" itemColour2="4278190080">
+             height="400.0" itemColour="4278190080" itemColour2="4278190080"
+             visible="0">
     <Component type="ScriptLabel" id="lblAmp" x="365.0" y="20.0" parentComponent="pnlAmp"
                text="AMP" width="120.0" height="30.0" editable="0" fontStyle="Bold"/>
     <Component type="ScriptSlider" id="knbAmpMode" x="30.0" y="152.0" defaultValue="1.0"
@@ -392,8 +393,7 @@
                text="Browse NAM Tones" height="30.0" isMomentary="1" visible="0"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="150.0" y="250.0" width="850.0"
-             height="400.0" itemColour2="4278190080" itemColour="4278190080"
-             visible="0">
+             height="400.0" itemColour2="4278190080" itemColour="4278190080">
     <Component type="ScriptLabel" id="lblCab" x="365.0" y="20.0" parentComponent="pnlCab"
                width="120.0" text="CAB" height="30.0" editable="0" fontStyle="Bold"/>
     <Component type="ScriptPanel" id="pnlCabALoader" x="50.0" y="30.0" width="270.0"
@@ -531,16 +531,15 @@
                  width="32.0" saveInPreset="0" enableMidiLearn="0" processorId="cabDesigner"
                  parameterId="GenerateMojo" height="32.0" tooltip="Generate new random mojo."/>
       <Component type="ScriptComboBox" id="cmbCabDesignerSpeaker" x="88.0" y="56.0"
-                 max="5" parentComponent="pnlCabDesigner" text="Speaker" items="AL-30&#10;AL-K100&#10;AL-65&#10;AL-77&#10;AL-12M"
-                 width="96.0" tooltip="Select microphone type."/>
+                 max="6" parentComponent="pnlCabDesigner" text="Speaker" items="Linear&#10;AL-30&#10;AL-K100&#10;AL-65&#10;AL-77&#10;AL-12M"
+                 width="96.0" tooltip="Select microphone type." defaultValue="2.0"/>
       <Component type="ScriptComboBox" id="cmbCabDesignerMic" x="88.0" y="102.0"
-                 max="5" parentComponent="pnlCabDesigner" text="Mic" items="AL-57&#10;AL-421&#10;AL-414&#10;AL-184&#10;AL-121"
-                 width="96.0" tooltip="Select speaker type."/>
+                 max="6" parentComponent="pnlCabDesigner" text="Mic" items="Linear&#10;AL-57&#10;AL-421&#10;AL-414&#10;AL-184&#10;AL-121"
+                 width="96.0" tooltip="Select speaker type." defaultValue="2.0"/>
       <Component type="ScriptSlider" id="knbCabDesignerMojo" x="116.0" y="150.0"
                  parentComponent="pnlCabDesigner" text="" processorId="cabDesigner"
                  parameterId="MojoStrength" width="76.0" height="76.0" defaultValue="0.5"
-                 tooltip="Adjust mojo strength." suffix="%" middlePosition="0.5"
-                 min="0.1000000014901161">
+                 tooltip="Adjust mojo strength." suffix="%" middlePosition="0.5">
         <Component type="ScriptLabel" id="lblCabDesignerMojo" x="0.0" y="40.0" parentComponent="knbCabDesignerMojo"
                    width="76.0" text="Mojo" height="30.0" editable="0" fontStyle="Bold"
                    fontSize="11.0"/>
@@ -553,9 +552,9 @@
                    width="76.0" text="Age" height="30.0" editable="0" fontStyle="Bold"
                    fontSize="11.0"/>
       </Component>
-      <Component type="ScriptButton" id="btnCabDesignerCustomMod" x="138.0" y="247.0"
+      <Component type="ScriptButton" id="btnCabDesignerMixReady" x="138.0" y="247.0"
                  parentComponent="pnlCabDesigner" text="Custom Mod" width="32.0"
-                 enableMidiLearn="0" height="32.0" tooltip="Enable custom tone mod."/>
+                 enableMidiLearn="0" height="32.0" tooltip="Toggle between processed and raw signal."/>
       <Component type="ScriptFloatingTile" id="fltCabDesignerResponseCurve" x="201.0"
                  y="60.0" parentComponent="pnlCabDesigner" ContentType="AudioAnalyser"
                  bgColour="4281545523" itemColour="8947848" itemColour2="4282664004"
@@ -572,8 +571,8 @@
       <Component type="ScriptLabel" id="lblCabDesignerRegenerate" x="36.0" y="352.0"
                  parentComponent="pnlCabDesigner" width="76.0" text="Regenerate"
                  height="30.0" editable="0" fontStyle="Bold" fontSize="11.0"/>
-      <Component type="ScriptLabel" id="lblCabDesignerCustomMod" x="116.0" y="277.0"
-                 parentComponent="pnlCabDesigner" width="76.0" text="Custom Mod"
+      <Component type="ScriptLabel" id="lblCabDesignerMixReady" x="116.0" y="277.0"
+                 parentComponent="pnlCabDesigner" width="76.0" text="Mix Ready"
                  height="30.0" editable="0" fontStyle="Bold" fontSize="11.0"/>
       <Component type="ScriptButton" id="btnCabDesignerEQEnable" x="773.0" y="68.0"
                  parentComponent="pnlCabDesigner" text="CabBEnable" tooltip="Enable speaker B."
@@ -587,8 +586,8 @@
                    width="76.0" text="Gain" height="30.0" editable="0" fontStyle="Bold"
                    fontSize="11.0"/>
       </Component>
-      <Component type="ScriptLabel" id="lblCabDesignerCustomModValue" x="116.0"
-                 y="292.0" parentComponent="pnlCabDesigner" width="76.0" text="Disabled"
+      <Component type="ScriptLabel" id="lblCabDesignerMixReadyValue" x="116.0"
+                 y="292.0" parentComponent="pnlCabDesigner" width="76.0" text="Enabled"
                  height="30.0" editable="0" fontStyle="Regular" fontSize="11.0"
                  textColour="4292861919"/>
       <Component type="ScriptPanel" id="pnlCabDesignerSaveProtect" x="44.0" y="357.0"

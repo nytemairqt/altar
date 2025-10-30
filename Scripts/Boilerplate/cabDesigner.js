@@ -48,7 +48,7 @@ namespace CabDesigner
     const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");
     const btnCabDesignerEQEnable = Content.getComponent("btnCabDesignerEQEnable");
     const btnCabDesignerGenerate = Content.getComponent("btnCabDesignerGenerate");            
-    const btnCabDesignerCustomMod = Content.getComponent("btnCabDesignerCustomMod");    
+    const btnCabDesignerMixReady = Content.getComponent("btnCabDesignerMixReady");    
     const btnCabDesignerSave = Content.getComponent("btnCabDesignerSave");
     const btnOpenCabFolder = Content.getComponent("btnOpenCabFolder");
     const btnCloseCabDesigner = Content.getComponent("btnCloseCabDesigner");    
@@ -60,7 +60,7 @@ namespace CabDesigner
     const cmbCabDesignerSpeaker = Content.getComponent("cmbCabDesignerSpeaker");
     const cmbCabDesignerMic = Content.getComponent("cmbCabDesignerMic");
     const lblCabDesignerSave = Content.getComponent("lblCabDesignerSave");   
-    const lblCabDesignerCustomModValue = Content.getComponent("lblCabDesignerCustomModValue");    
+    const lblCabDesignerMixReadyValue = Content.getComponent("lblCabDesignerMixReadyValue");    
             
     const audioFiles = FileSystem.getFolder(FileSystem.AudioFiles);    
 
@@ -258,14 +258,14 @@ namespace CabDesigner
 
     btnShowCabDesigner.setControlCallback(onbtnShowCabDesignerControl);    
 
-    inline function onbtnCabDesignerCustomModControl(component, value)
+    inline function onbtnCabDesignerMixReadyControl(component, value)
     {	
     	// Enables custom tone curve
-        cabDesigner.setAttribute(cabDesigner.CustomMod, value);
-        lblCabDesignerCustomModValue.set("text", value ? "Enabled" : "Disabled");
+        cabDesigner.setAttribute(cabDesigner.MixReady, value);
+        lblCabDesignerMixReadyValue.set("text", value ? "Enabled" : "Disabled");
     };
 
-    btnCabDesignerCustomMod.setControlCallback(onbtnCabDesignerCustomModControl);    
+    btnCabDesignerMixReady.setControlCallback(onbtnCabDesignerMixReadyControl);    
 
 	// Select speaker
     inline function oncmbCabDesignerSpeakerControl(component, value) { cabDesigner.setAttribute(cabDesigner.SpeakerType, value-1); }
@@ -290,7 +290,7 @@ namespace CabDesigner
 
     // Look And Feel
 
-    const LAFButtonCabDesignerCustomMod = Content.createLocalLookAndFeel();
+    const LAFButtonCabDesignerMixReady = Content.createLocalLookAndFeel();
     const LAFButtonCabDesignerGenerate = Content.createLocalLookAndFeel();
     const LAFButtonCabDesignerSave = Content.createLocalLookAndFeel();
     const LAFCabDesignerResponseCurve = Content.createLocalLookAndFeel();
@@ -301,7 +301,9 @@ namespace CabDesigner
     
     const bufferSource = Synth.getDisplayBufferSource("cabDesigner");
     const bufferDisplay = bufferSource.getDisplayBuffer(0);    
-    bufferDisplay.setRingBufferProperties({"BufferLength": 2048});
+    bufferDisplay.setRingBufferProperties({"BufferLength": 2048, "WindowType": "Hann"});
+
+    // "Rectangle", "Hamming", "Hann", "Blackman Harris", "Triangle", "FlatTop", "Kaiser"
 
     const pad = 8;
     const bounds = [pad, pad, 850 - pad * 2, 400 - pad * 2];
@@ -387,7 +389,7 @@ namespace CabDesigner
 
 	pnlCabDesignerMicrophoneIcon.setPaintRoutine(drawMicrophoneIcon);
 
-    inline function drawCustomMod(g, obj)
+    inline function drawMixReady(g, obj)
     {
         local padY = 3;
         local sq = 6;
@@ -412,8 +414,8 @@ namespace CabDesigner
         g.fillRect([x3 - (sq / 2), y3b, sq, sq]);
     }
     
-    LAFButtonCabDesignerCustomMod.registerFunction("drawToggleButton", drawCustomMod);    
-    btnCabDesignerCustomMod.setLocalLookAndFeel(LAFButtonCabDesignerCustomMod);
+    LAFButtonCabDesignerMixReady.registerFunction("drawToggleButton", drawMixReady);    
+    btnCabDesignerMixReady.setLocalLookAndFeel(LAFButtonCabDesignerMixReady);
         
     inline function drawCabGenerate(g, obj)
     {
@@ -451,16 +453,49 @@ namespace CabDesigner
     
     LAFButtonCabDesignerSave.registerFunction("drawToggleButton", drawSaveButton);   
     btnCabDesignerSave.setLocalLookAndFeel(LAFButtonCabDesignerSave);
+
+    reg testBool = false;
+    reg analyserPath;
+    reg myCoolPath;
     
     inline function drawAnalyserBackground(g, obj)
     {
-        g.fillAll(ColourData.clrComponentBGGrey);
+        g.fillAll(ColourData.clrComponentBGGrey);        
     }
 
     inline function drawAnalyserPath(g, obj)
     {
         g.setColour(Colours.withAlpha(ColourData.clrMidgrey, .6));
+        //g.fillPath(obj.path, obj.area);
+        
+        //analyserPath = obj.path;
+                
         g.fillPath(obj.path, obj.area);
+        
+        //Console.print("X: " + obj.path.getPointOnPath(100)[0] + " Y: " + obj.path.getPointOnPath(100)[1]);
+        
+        /*
+        for (i=200; i<obj.path.getLength(); i++)
+        {
+	        analyserPath.lineTo(obj.path[i])
+        }
+        
+        
+        
+        */
+        //if (!testBool) { Console.print(trace(obj.path)); testBool = true;}
+        
+        
+        //analyserPath = obj.path;
+        /*
+        for (i=200; i<obj.path.getLength(); i++)
+        {
+
+        }        
+        Console.print(analyserPath.getLength());
+        g.fillPath(analyserPath, obj.area);
+        */
+
     }
 
     LAFCabDesignerResponseCurve.registerFunction("drawAnalyserBackground", drawAnalyserBackground);    

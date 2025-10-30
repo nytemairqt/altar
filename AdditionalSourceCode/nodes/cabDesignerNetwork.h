@@ -43,7 +43,11 @@ using chain_t = container::chain<parameter::empty,
                                  file_player_t<NV>, 
                                  core::gain<NV>, 
                                  project::cabDesigner<NV>, 
-                                 filters::svf_eq<NV>, 
+                                 filters::one_pole<NV>, 
+                                 filters::one_pole<NV>, 
+                                 filters::one_pole<NV>, 
+                                 filters::one_pole<NV>, 
+                                 filters::one_pole<NV>, 
                                  fft_t, 
                                  math::clear<NV>>;
 
@@ -67,9 +71,9 @@ using SpeakerType = parameter::chain<ranges::Identity,
                                      parameter::plain<project::cabDesigner<NV>, 0>>;
 
 template <int NV>
-using CustomMod = parameter::chain<ranges::Identity, 
-                                   parameter::plain<project::cabDesigner<NV>, 1>, 
-                                   parameter::plain<project::cabDesigner<NV>, 1>>;
+using MixReady = parameter::chain<ranges::Identity, 
+                                  parameter::plain<project::cabDesigner<NV>, 1>, 
+                                  parameter::plain<project::cabDesigner<NV>, 1>>;
 
 template <int NV>
 using MicrophoneType = parameter::chain<ranges::Identity, 
@@ -97,7 +101,7 @@ template <int NV> using Gain = FFTGain<NV>;
 using DiracGate = parameter::empty;
 template <int NV>
 using cabDesignerNetwork_t_plist = parameter::list<SpeakerType<NV>, 
-                                                   CustomMod<NV>, 
+                                                   MixReady<NV>, 
                                                    MicrophoneType<NV>, 
                                                    MojoStrength<NV>, 
                                                    GenerateMojo<NV>, 
@@ -126,30 +130,29 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		
 		SNEX_METADATA_ID(cabDesignerNetwork);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(170)
+		SNEX_METADATA_ENCODED_PARAMETERS(168)
 		{
 			0x005C, 0x0000, 0x0000, 0x7053, 0x6165, 0x656B, 0x5472, 0x7079, 
-            0x0065, 0x0000, 0x0000, 0x0000, 0x8000, 0x0040, 0x0000, 0x0000, 
-            0x8000, 0x003F, 0x0000, 0x5C00, 0x0100, 0x0000, 0x4300, 0x7375, 
-            0x6F74, 0x4D6D, 0x646F, 0x0000, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 0x0002, 
-            0x0000, 0x694D, 0x7263, 0x706F, 0x6F68, 0x656E, 0x7954, 0x6570, 
-            0x0000, 0x0000, 0x0000, 0x0000, 0x4080, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x005C, 0x0003, 0x0000, 0x6F4D, 0x6F6A, 
-            0x7453, 0x6572, 0x676E, 0x6874, 0x0000, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 
-            0x0004, 0x0000, 0x6547, 0x656E, 0x6172, 0x6574, 0x6F4D, 0x6F6A, 
-            0x0000, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x005C, 0x0005, 0x0000, 0x6143, 0x4162, 
-            0x6567, 0x0000, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x005C, 0x0006, 0x0000, 0x4646, 
-            0x4754, 0x6961, 0x006E, 0x0000, 0x0000, 0x0000, 0x7000, 0x0042, 
-            0x0000, 0x0000, 0x8000, 0xCD3F, 0xCCCC, 0x5C3D, 0x0700, 0x0000, 
-            0x4700, 0x6961, 0x006E, 0x0000, 0x4000, 0x00C1, 0x4000, 0x0041, 
-            0x4000, 0x0034, 0x8000, 0xCD3F, 0xCCCC, 0x5C3D, 0x0800, 0x0000, 
-            0x4400, 0x7269, 0x6361, 0x6147, 0x6574, 0x0000, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
-            0x0000, 0x0000
+            0x0065, 0x0000, 0x0000, 0x0000, 0xA000, 0x0040, 0x0000, 0x0000, 
+            0x8000, 0x003F, 0x0000, 0x5C00, 0x0100, 0x0000, 0x4D00, 0x7869, 
+            0x6552, 0x6461, 0x0079, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
+            0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5C00, 0x0200, 0x0000, 
+            0x4D00, 0x6369, 0x6F72, 0x6870, 0x6E6F, 0x5465, 0x7079, 0x0065, 
+            0x0000, 0x0000, 0x0000, 0xA000, 0x0040, 0x0000, 0x0000, 0x8000, 
+            0x003F, 0x0000, 0x5C00, 0x0300, 0x0000, 0x4D00, 0x6A6F, 0x536F, 
+            0x7274, 0x6E65, 0x7467, 0x0068, 0x0000, 0x0000, 0x0000, 0x8000, 
+            0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5C00, 0x0400, 
+            0x0000, 0x4700, 0x6E65, 0x7265, 0x7461, 0x4D65, 0x6A6F, 0x006F, 
+            0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
+            0x003F, 0x0000, 0x5C00, 0x0500, 0x0000, 0x4300, 0x6261, 0x6741, 
+            0x0065, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 
+            0x8000, 0x003F, 0x0000, 0x5C00, 0x0600, 0x0000, 0x4600, 0x5446, 
+            0x6147, 0x6E69, 0x0000, 0x0000, 0x0000, 0x0000, 0x4270, 0x0000, 
+            0x0000, 0x0000, 0x3F80, 0xCCCD, 0x3DCC, 0x005C, 0x0007, 0x0000, 
+            0x6147, 0x6E69, 0x0000, 0x0000, 0xC140, 0x0000, 0x4140, 0x0000, 
+            0x3440, 0x0000, 0x3F80, 0xCCCD, 0x3DCC, 0x005C, 0x0008, 0x0000, 
+            0x6944, 0x6172, 0x4763, 0x7461, 0x0065, 0x0000, 0x0000, 0x0000, 
+            0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000
 		};
 		SNEX_METADATA_ENCODED_MOD_INFO(17)
 		{
@@ -168,39 +171,43 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		auto& clear = this->getT(0).getT(0).getT(0);        // math::clear<NV>
 		auto& file_player = this->getT(0).getT(0).getT(1);  // cabDesignerNetwork_impl::file_player_t<NV>
 		auto& gain = this->getT(0).getT(0).getT(2);         // core::gain<NV>
-		auto& cabDesigner = this->getT(0).getT(0).getT(3);  // project::cabDesigner<NV>
-		auto& svf_eq = this->getT(0).getT(0).getT(4);       // filters::svf_eq<NV>
-		auto& fft = this->getT(0).getT(0).getT(5);          // cabDesignerNetwork_impl::fft_t
-		auto& clear1 = this->getT(0).getT(0).getT(6);       // math::clear<NV>
+		auto& cabDesigner2 = this->getT(0).getT(0).getT(3); // project::cabDesigner<NV>
+		auto& one_pole = this->getT(0).getT(0).getT(4);     // filters::one_pole<NV>
+		auto& one_pole1 = this->getT(0).getT(0).getT(5);    // filters::one_pole<NV>
+		auto& one_pole2 = this->getT(0).getT(0).getT(6);    // filters::one_pole<NV>
+		auto& one_pole3 = this->getT(0).getT(0).getT(7);    // filters::one_pole<NV>
+		auto& one_pole4 = this->getT(0).getT(0).getT(8);    // filters::one_pole<NV>
+		auto& fft = this->getT(0).getT(0).getT(9);          // cabDesignerNetwork_impl::fft_t
+		auto& clear1 = this->getT(0).getT(0).getT(10);      // math::clear<NV>
 		auto& chain1 = this->getT(0).getT(1);               // cabDesignerNetwork_impl::chain1_t<NV>
-		auto& cabDesigner1 = this->getT(0).getT(1).getT(0); // project::cabDesigner<NV>
+		auto& cabDesigner3 = this->getT(0).getT(1).getT(0); // project::cabDesigner<NV>
 		auto& gain1 = this->getT(0).getT(1).getT(1);        // core::gain<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
 		auto& SpeakerType_p = this->getParameterT(0);
-		SpeakerType_p.connectT(0, cabDesigner1); // SpeakerType -> cabDesigner1::SpeakerType
-		SpeakerType_p.connectT(1, cabDesigner);  // SpeakerType -> cabDesigner::SpeakerType
+		SpeakerType_p.connectT(0, cabDesigner2); // SpeakerType -> cabDesigner2::SpeakerType
+		SpeakerType_p.connectT(1, cabDesigner3); // SpeakerType -> cabDesigner3::SpeakerType
 		
-		auto& CustomMod_p = this->getParameterT(1);
-		CustomMod_p.connectT(0, cabDesigner1); // CustomMod -> cabDesigner1::CustomMod
-		CustomMod_p.connectT(1, cabDesigner);  // CustomMod -> cabDesigner::CustomMod
+		auto& MixReady_p = this->getParameterT(1);
+		MixReady_p.connectT(0, cabDesigner2); // MixReady -> cabDesigner2::MixReady
+		MixReady_p.connectT(1, cabDesigner3); // MixReady -> cabDesigner3::MixReady
 		
 		auto& MicrophoneType_p = this->getParameterT(2);
-		MicrophoneType_p.connectT(0, cabDesigner1); // MicrophoneType -> cabDesigner1::MicrophoneType
-		MicrophoneType_p.connectT(1, cabDesigner);  // MicrophoneType -> cabDesigner::MicrophoneType
+		MicrophoneType_p.connectT(0, cabDesigner2); // MicrophoneType -> cabDesigner2::MicrophoneType
+		MicrophoneType_p.connectT(1, cabDesigner3); // MicrophoneType -> cabDesigner3::MicrophoneType
 		
 		auto& MojoStrength_p = this->getParameterT(3);
-		MojoStrength_p.connectT(0, cabDesigner1); // MojoStrength -> cabDesigner1::MojoStrength
-		MojoStrength_p.connectT(1, cabDesigner);  // MojoStrength -> cabDesigner::MojoStrength
+		MojoStrength_p.connectT(0, cabDesigner2); // MojoStrength -> cabDesigner2::MojoStrength
+		MojoStrength_p.connectT(1, cabDesigner3); // MojoStrength -> cabDesigner3::MojoStrength
 		
 		auto& GenerateMojo_p = this->getParameterT(4);
-		GenerateMojo_p.connectT(0, cabDesigner1); // GenerateMojo -> cabDesigner1::GenerateMojo
-		GenerateMojo_p.connectT(1, cabDesigner);  // GenerateMojo -> cabDesigner::GenerateMojo
+		GenerateMojo_p.connectT(0, cabDesigner2); // GenerateMojo -> cabDesigner2::GenerateMojo
+		GenerateMojo_p.connectT(1, cabDesigner3); // GenerateMojo -> cabDesigner3::GenerateMojo
 		
 		auto& CabAge_p = this->getParameterT(5);
-		CabAge_p.connectT(0, cabDesigner1); // CabAge -> cabDesigner1::CabAge
-		CabAge_p.connectT(1, cabDesigner);  // CabAge -> cabDesigner::CabAge
+		CabAge_p.connectT(0, cabDesigner2); // CabAge -> cabDesigner2::CabAge
+		CabAge_p.connectT(1, cabDesigner3); // CabAge -> cabDesigner3::CabAge
 		
 		this->getParameterT(6).connectT(0, gain); // FFTGain -> gain::Gain
 		
@@ -219,28 +226,56 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		gain.setParameterT(1, 20.); // core::gain::Smoothing
 		gain.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		; // cabDesigner::SpeakerType is automated
-		; // cabDesigner::CustomMod is automated
-		; // cabDesigner::MicrophoneType is automated
-		; // cabDesigner::MojoStrength is automated
-		; // cabDesigner::GenerateMojo is automated
-		; // cabDesigner::CabAge is automated
+		; // cabDesigner2::SpeakerType is automated
+		; // cabDesigner2::MixReady is automated
+		; // cabDesigner2::MicrophoneType is automated
+		; // cabDesigner2::MojoStrength is automated
+		; // cabDesigner2::GenerateMojo is automated
+		; // cabDesigner2::CabAge is automated
 		
-		svf_eq.setParameterT(0, 166.533);  // filters::svf_eq::Frequency
-		svf_eq.setParameterT(1, 0.689054); // filters::svf_eq::Q
-		svf_eq.setParameterT(2, 0.);       // filters::svf_eq::Gain
-		svf_eq.setParameterT(3, 0.01);     // filters::svf_eq::Smoothing
-		svf_eq.setParameterT(4, 1.);       // filters::svf_eq::Mode
-		svf_eq.setParameterT(5, 1.);       // filters::svf_eq::Enabled
+		one_pole.setParameterT(0, 50.);  // filters::one_pole::Frequency
+		one_pole.setParameterT(1, 1.);   // filters::one_pole::Q
+		one_pole.setParameterT(2, 0.);   // filters::one_pole::Gain
+		one_pole.setParameterT(3, 0.01); // filters::one_pole::Smoothing
+		one_pole.setParameterT(4, 1.);   // filters::one_pole::Mode
+		one_pole.setParameterT(5, 1.);   // filters::one_pole::Enabled
+		
+		one_pole1.setParameterT(0, 50.);  // filters::one_pole::Frequency
+		one_pole1.setParameterT(1, 1.);   // filters::one_pole::Q
+		one_pole1.setParameterT(2, 0.);   // filters::one_pole::Gain
+		one_pole1.setParameterT(3, 0.01); // filters::one_pole::Smoothing
+		one_pole1.setParameterT(4, 1.);   // filters::one_pole::Mode
+		one_pole1.setParameterT(5, 1.);   // filters::one_pole::Enabled
+		
+		one_pole2.setParameterT(0, 50.);  // filters::one_pole::Frequency
+		one_pole2.setParameterT(1, 1.);   // filters::one_pole::Q
+		one_pole2.setParameterT(2, 0.);   // filters::one_pole::Gain
+		one_pole2.setParameterT(3, 0.01); // filters::one_pole::Smoothing
+		one_pole2.setParameterT(4, 1.);   // filters::one_pole::Mode
+		one_pole2.setParameterT(5, 1.);   // filters::one_pole::Enabled
+		
+		one_pole3.setParameterT(0, 50.);  // filters::one_pole::Frequency
+		one_pole3.setParameterT(1, 1.);   // filters::one_pole::Q
+		one_pole3.setParameterT(2, 0.);   // filters::one_pole::Gain
+		one_pole3.setParameterT(3, 0.01); // filters::one_pole::Smoothing
+		one_pole3.setParameterT(4, 1.);   // filters::one_pole::Mode
+		one_pole3.setParameterT(5, 1.);   // filters::one_pole::Enabled
+		
+		one_pole4.setParameterT(0, 50.);  // filters::one_pole::Frequency
+		one_pole4.setParameterT(1, 1.);   // filters::one_pole::Q
+		one_pole4.setParameterT(2, 0.);   // filters::one_pole::Gain
+		one_pole4.setParameterT(3, 0.01); // filters::one_pole::Smoothing
+		one_pole4.setParameterT(4, 1.);   // filters::one_pole::Mode
+		one_pole4.setParameterT(5, 1.);   // filters::one_pole::Enabled
 		
 		clear1.setParameterT(0, 0.); // math::clear::Value
 		
-		; // cabDesigner1::SpeakerType is automated
-		; // cabDesigner1::CustomMod is automated
-		; // cabDesigner1::MicrophoneType is automated
-		; // cabDesigner1::MojoStrength is automated
-		; // cabDesigner1::GenerateMojo is automated
-		; // cabDesigner1::CabAge is automated
+		; // cabDesigner3::SpeakerType is automated
+		; // cabDesigner3::MixReady is automated
+		; // cabDesigner3::MicrophoneType is automated
+		; // cabDesigner3::MojoStrength is automated
+		; // cabDesigner3::GenerateMojo is automated
+		; // cabDesigner3::CabAge is automated
 		
 		;                            // gain1::Gain is automated
 		gain1.setParameterT(1, 20.); // core::gain::Smoothing
@@ -277,7 +312,7 @@ template <int NV> struct instance: public cabDesignerNetwork_impl::cabDesignerNe
 		// External Data Connections ---------------------------------------------------------------
 		
 		this->getT(0).getT(0).getT(1).setExternalData(b, index); // cabDesignerNetwork_impl::file_player_t<NV>
-		this->getT(0).getT(0).getT(5).setExternalData(b, index); // cabDesignerNetwork_impl::fft_t
+		this->getT(0).getT(0).getT(9).setExternalData(b, index); // cabDesignerNetwork_impl::fft_t
 	}
 };
 }
