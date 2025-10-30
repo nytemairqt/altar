@@ -115,7 +115,7 @@
                 Name="file_player">
             <ComplexData>
               <AudioFiles>
-                <AudioFile Index="-1" EmbeddedData="{PROJECT_FOLDER}click.wav" MinValue="0"
+                <AudioFile Index="-1" EmbeddedData="{PROJECT_FOLDER}hidden/_click.wav" MinValue="0"
                            MaxValue="132300"/>
               </AudioFiles>
             </ComplexData>

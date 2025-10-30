@@ -11,7 +11,7 @@
           <Content>
             <Control type="ScriptSlider" id="knbInputGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbGateThreshold" value="-36.0"/>
-            <Control type="ScriptButton" id="btnGate" value="1.0"/>
+            <Control type="ScriptButton" id="btnGate" value="0.0"/>
             <Control type="ScriptSlider" id="knbTranspose" value="0.0"/>
             <Control type="ScriptButton" id="btnTranspose" value="0.0"/>
             <Control type="ScriptButton" id="btnTransposeSnap" value="0.0"/>
@@ -25,7 +25,7 @@
             <Control type="ScriptButton" id="btnWhistle" value="0.0"/>
             <Control type="ScriptSlider" id="knbLofi" value="1.0"/>
             <Control type="ScriptButton" id="btnLofi" value="0.0"/>
-            <Control type="ScriptComboBox" id="cmbOversampling" value="1.0"/>
+            <Control type="ScriptComboBox" id="cmbOversampling" value="3.0"/>
             <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
             <Control type="ScriptButton" id="btnLimiter" value="1.0"/>
             <Control type="ScriptButton" id="btnShowPreProcess" value="0.0"/>
@@ -58,14 +58,13 @@
             <Control type="ScriptButton" id="btnAmpBrowseNAMTones" value="0.0"/>
             <Control type="ScriptButton" id="btnCabAUnload" value="0.0"/>
             <Control type="ScriptButton" id="btnCabBUnload" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowCabDesigner" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabMix" value="0.0"/>
             <Control type="ScriptButton" id="btnCabAEnable" value="1.0"/>
             <Control type="ScriptSlider" id="knbCabADelay" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabADistance" value="20000.0"/>
             <Control type="ScriptSlider" id="knbCabAAxis" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabAPan" value="0.0"/>
-            <Control type="ScriptSlider" id="knbCabAGain" value="3.20000147819519"/>
+            <Control type="ScriptSlider" id="knbCabAGain" value="1.490116119384766e-6"/>
             <Control type="ScriptButton" id="btnCabAPhase" value="0.0"/>
             <Control type="ScriptButton" id="btnCabBEnable" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabBAxis" value="0.0"/>
@@ -204,7 +203,7 @@
           </ChildProcessors>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="gate" Bypassed="0" Network="gate"
+        <Processor Type="Hardcoded Master FX" ID="gate" Bypassed="1" Network="gate"
                    Threshold="-36.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
@@ -242,28 +241,30 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="1" Network="overdrive"
-                   Mode="0.0" Oversampling="0.0" Drive="0.0" CircuitBend="0.0" ToneFreq="400.0"
+                   Mode="0.0" Oversampling="2.0" Drive="0.0" CircuitBend="0.0" ToneFreq="400.0"
                    OutputGain="0.0" Mix="1.0" Bits="8.0" SRReduction="16.0" FoldAmount="1.0"
                    BendTrigger="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="amp"
-                   Mode="1.0" Oversampling="0.0" InputGain="77.60000610351562" Low="0.0"
+                   Mode="1.0" Oversampling="2.0" InputGain="77.60000610351562" Low="0.0"
                    Mid="0.0" High="0.0" Presence="0.0" OutputGain="-33.59999847412109">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularC" Bypassed="0" Network="cab"
                    Mix="0.0" CabAEnable="1.0" CabADelay="0.0" CabAAxis="0.0" CabADistance="20000.0"
-                   CabAPhase="0.0" CabAPan="0.0" CabAGain="3.20000147819519" CabBEnable="0.0"
-                   CabBDelay="0.0" CabBAxis="0.0" CabBDistance="20000.0" CabBPhase="0.0"
-                   CabBPan="0.0" CabBGain="0.0" CabDesignerBypass="0.0">
+                   CabAPhase="0.0" CabAPan="0.0" CabAGain="1.490116119384766e-6"
+                   CabBEnable="0.0" CabBDelay="0.0" CabBAxis="0.0" CabBDistance="20000.0"
+                   CabBPhase="0.0" CabBPan="0.0" CabBGain="0.0" CabDesignerBypass="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
           <AudioFiles>
-            <AudioFile EmbeddedData="{PROJECT_FOLDER}TSE.wav" MinValue="0" MaxValue="5512"/>
-            <AudioFile EmbeddedData="{PROJECT_FOLDER}myCoolCab.wav" MinValue="0" MaxValue="1024"/>
+            <AudioFile EmbeddedData="{PROJECT_FOLDER}JD-MB_OS-2001_7-UniDunne-07.wav"
+                       MinValue="0" MaxValue="24001"/>
+            <AudioFile EmbeddedData="{PROJECT_FOLDER}JD-OS-2004_1-SM57-10_44 Suhr 500ms.wav"
+                       MinValue="0" MaxValue="24000"/>
           </AudioFiles>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularD" Bypassed="1" Network="reverb"
@@ -390,8 +391,8 @@
     <Processor Type="AudioLooper" ID="testAudio" Bypassed="0" Gain="1.0" Balance="0.0"
                VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0" SyncMode="1.0"
                PitchTracking="0.0" LoopEnabled="1.0" RootNote="64.0" SampleStartMod="0.0"
-               Reversed="0.0" FileName="C:\Users\iamla\Desktop\jaded.wav" min="0"
-               max="627020" loopStart="0" loopEnd="627020">
+               Reversed="0.0" FileName="{PROJECT_FOLDER}hidden/_testAudio.wav"
+               min="0" max="627020" loopStart="0" loopEnd="627020">
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
           <ChildProcessors/>

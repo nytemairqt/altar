@@ -23,6 +23,8 @@ namespace Cab
 	const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
 	const pnlCab = Content.getComponent("pnlCab");
 	const pnlTooltip = Content.getComponent("pnlTooltip");	
+	const cmbCabALoader = Content.getComponent("cmbCabALoader");
+	const cmbCabBLoader = Content.getComponent("cmbCabBLoader");
 	const btnCabAUnload = Content.getComponent("btnCabAUnload");
     const btnCabBUnload = Content.getComponent("btnCabBUnload");
     const btnCabALoadPrev = Content.getComponent("btnCabALoadPrev");
@@ -31,8 +33,21 @@ namespace Cab
     const btnCabBLoadNext = Content.getComponent("btnCabBLoadNext");
 
 	
-	Engine.loadAudioFilesIntoPool();
+	const audioFiles = Engine.loadAudioFilesIntoPool();
+	
+	inline function initializeCabs()
+	{		
+		cmbCabALoader.set("items", "");
+		cmbCabBLoader.set("items", "");
+		for (file in audioFiles)
+		{				
+			if (!file.contains("_click") && !file.contains("_dirac") && !file.contains("_testAudio")) { cmbCabALoader.addItem(file); cmbCabBLoader.addItem(file); }
+		}
+	}
+	
+	initializeCabs();			
 
+	// Modular Control
     inline function onControl(component, value)
     {
         local attribute = component.get("text");
@@ -47,6 +62,30 @@ namespace Cab
     }   
 	
     for (control in controls) { control.setControlCallback(onControl); }
+    
+    // Load via combobox
+    inline function oncmbAmpLoaderControl(component, value)
+    {		
+    	local path = component.getItemText();    
+    	local index = path.indexOf("}");    	
+    	local prettyName = path.substring(index + 1, path.length);    	
+	    for (slot in fxSlots)
+		{
+			local effectId = slot.getCurrentEffectId();
+			if (effectId == "cab")
+			{
+				local id = slot.getCurrentEffect().getId();
+				local ref = Synth.getAudioSampleProcessor(id);	
+				local irSlot = component == cmbCabALoader ? ref.getAudioFile(0) : ref.getAudioFile(1);
+				irSlot.loadFile(path);
+			}
+		}	
+		if (component == cmbCabALoader) { pnlCabALoader.set("text", prettyName); pnlCabALoader.repaint(); }
+		if (component == cmbCabBLoader) { pnlCabBLoader.set("text", prettyName); pnlCabBLoader.repaint(); }
+    }
+    
+    cmbCabALoader.setControlCallback(oncmbAmpLoaderControl);
+    cmbCabBLoader.setControlCallback(oncmbAmpLoaderControl);
 		
 	// Drop
 	inline function pnlCabLoaderDrop(f)
@@ -145,11 +184,14 @@ namespace Cab
     }
     
     btnCabAUnload.setControlCallback(onbtnCabDesignerUnloadCabControl);
-    btnCabBUnload.setControlCallback(onbtnCabDesignerUnloadCabControl);        
+    btnCabBUnload.setControlCallback(onbtnCabDesignerUnloadCabControl);      
+    
+    reg fileList;  
 
     inline function onbtnCabCycleControl(component, value)
-    {
-    	if (!value) { return; }
+    {	
+    	local usingProjectFolder = false;
+    	if (!value) { return; }    	
     	for (slot in fxSlots)
 		{
 			local effectId = slot.getCurrentEffectId();
@@ -162,11 +204,45 @@ namespace Cab
 				else { local irSlot = ref.getAudioFile(1); local panel = pnlCabBLoader;}
 
 				local fileName = irSlot.getCurrentlyLoadedFile(); 
+				if (fileName == "") { return; }				
 				local fileToString = FileSystem.fromReferenceString(fileName, FileSystem.AudioFiles).toString(0); 
-				local parent = FileSystem.fromReferenceString(fileName, FileSystem.AudioFiles).getParentDirectory();
-				local fileList = FileSystem.findFiles(parent, "*.wav", false);
 				
-				for (i=0; i<fileList.length; i++) { if (fileList[i].toString(0) == fileToString) { local index = i; } }	
+				if (fileName.contains("{PROJECT_FOLDER}"))
+				{													
+					switch (component)
+					{
+						case btnCabALoadPrev: 
+							local index = cmbCabALoader.getValue();
+							local newValue = index > cmbCabALoader.get("min") ? index - 1 : cmbCabALoader.get("max");
+							cmbCabALoader.setValue(newValue);
+							cmbCabALoader.changed();
+							break;
+						case btnCabALoadNext: 
+							local index = cmbCabALoader.getValue();
+							local newValue = index < cmbCabALoader.get("max") ? index + 1 : cmbCabALoader.get("min");
+							cmbCabALoader.setValue(newValue);
+							cmbCabALoader.changed();
+							break;
+						case btnCabBLoadPrev: 
+							local index = cmbCabBLoader.getValue();
+							local newValue = index > cmbCabBLoader.get("min") ? index - 1 : cmbCabBLoader.get("max");
+							cmbCabBLoader.setValue(newValue);
+							cmbCabBLoader.changed();
+							break;
+						case btnCabBLoadNext: 
+							local index = cmbCabBLoader.getValue();
+							local newValue = index < cmbCabBLoader.get("max") ? index + 1 : cmbCabBLoader.get("min");
+							cmbCabBLoader.setValue(newValue);
+							cmbCabBLoader.changed();
+							break;
+						default: return;
+					}
+					return;
+				}
+									
+				local parent = FileSystem.fromReferenceString(fileName, FileSystem.AudioFiles).getParentDirectory();
+				fileList = FileSystem.findFiles(parent, "*.wav", false);									
+				for (i=0; i<fileList.length; i++) { if (fileList[i].toString(0) == fileToString) { local index = i; } }					
 				
 				if (component == btnCabALoadPrev || component == btnCabBLoadPrev)		
 				{
@@ -178,7 +254,7 @@ namespace Cab
 					if (index == fileList.length - 1) { index = 0; }
 					else (index += 1);
 				}
-				
+								
 				irSlot.loadFile(fileList[index].toString(0));
 				panel.set("text", fileList[index].toString(3));
 				panel.repaint();
@@ -189,9 +265,9 @@ namespace Cab
     btnCabALoadPrev.setControlCallback(onbtnCabCycleControl);
 	btnCabALoadNext.setControlCallback(onbtnCabCycleControl);
 	btnCabBLoadPrev.setControlCallback(onbtnCabCycleControl);
-	btnCabBLoadNext.setControlCallback(onbtnCabCycleControl);
-
-    
+	btnCabBLoadNext.setControlCallback(onbtnCabCycleControl);    
+	
+	const LAFComboBoxCabLoader = Content.createLocalLookAndFeel();
 
     // Look And Feel
     const pad = 8;
@@ -223,6 +299,18 @@ namespace Cab
         g.drawRoundedRectangle(bounds, 0.0, 3.0);                
         g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
+    
+    inline function drawComboBox(g, obj)
+    {		
+    	local area = [0, 0, obj.area[2], obj.area[3]];
+    	g.setFont("Arial Bold", 30.0);
+    	g.setColour(obj.hover ? ColourData.clrWhite : ColourData.clrLightgrey);
+    	g.drawAlignedText("...", area, "centred");
+    }
 
+	LAFComboBoxCabLoader.registerFunction("drawComboBox", drawComboBox);
+	
+	cmbCabALoader.setLocalLookAndFeel(LAFComboBoxCabLoader);
+	cmbCabBLoader.setLocalLookAndFeel(LAFComboBoxCabLoader);
 
 }

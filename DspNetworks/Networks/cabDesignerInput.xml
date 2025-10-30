@@ -21,7 +21,7 @@
                     Name="file_player">
                 <ComplexData>
                   <AudioFiles>
-                    <AudioFile Index="-1" EmbeddedData="{PROJECT_FOLDER}dirac.wav" MinValue="0"
+                    <AudioFile Index="-1" EmbeddedData="{PROJECT_FOLDER}hidden/_dirac.wav" MinValue="0"
                                MaxValue="1024"/>
                   </AudioFiles>
                 </ComplexData>
