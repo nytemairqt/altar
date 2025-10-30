@@ -232,21 +232,39 @@ namespace ModularChain
 
     function insertDragCallback(isValid, targetName)
     {
+        // Always end drag visuals and clear any hover target
         dragging = false;
-        // Defer repaint until after states are restored so labels reflect the new order
-        // repaintAllSlots();
-        
-        // Called when we drag a module panel onto another module panel
-        if (!isValid || targetName == "") return;
+        target = 0;
 
-        var target = Content.getComponent(targetName);
-        if (!pnlFxSlots.contains(target)) return;
-        if (target == this) return;  
+        // If the drop is not valid or cancelled, just repaint to clear highlights
+        if (!isValid || targetName == "")
+        {
+            repaintAllSlots();
+            return;
+        }
+
+        // Use a distinct name to avoid shadowing the global 'target'
+        var dropTarget = Content.getComponent(targetName);
+        if (!pnlFxSlots.contains(dropTarget))
+        {
+            repaintAllSlots();
+            return;
+        }
+        if (dropTarget == this)
+        {
+            // Dropped back onto the same source slot -> no-op, but clear highlights
+            repaintAllSlots();
+            return;
+        }
 
         // Compute indices
         var fromIndex = pnlFxSlots.indexOf(this);
-        var toIndex = pnlFxSlots.indexOf(target);
-        if (fromIndex == -1 || toIndex == -1 || fromIndex == toIndex) return;
+        var toIndex = pnlFxSlots.indexOf(dropTarget);
+        if (fromIndex == -1 || toIndex == -1 || fromIndex == toIndex)
+        {
+            repaintAllSlots();
+            return;
+        }
 
         // 1) Snapshot all slot container states and current bypass UI values
         var states = snapshotStates();
@@ -264,7 +282,7 @@ namespace ModularChain
         // 5) Now that the mapping is applied, update labels and force a repaint
         repaintAllSlots();
 
-        // Clear hover highlight target
+        // Ensure global target is cleared after a successful drop
         target = 0;
 
         // restore NAM model
