@@ -56,7 +56,9 @@
             <Control type="ScriptSlider" id="knbAmpOutput" value="-33.59999847412109"/>
             <Control type="ScriptPanel" id="pnlAmpNAMLoader" value="0.0"/>
             <Control type="ScriptButton" id="btnAmpBrowseNAMTones" value="0.0"/>
+            <Control type="ScriptPanel" id="pnlCabALoader" value="0.0"/>
             <Control type="ScriptButton" id="btnCabAUnload" value="0.0"/>
+            <Control type="ScriptPanel" id="pnlCabBLoader" value="0.0"/>
             <Control type="ScriptButton" id="btnCabBUnload" value="0.0"/>
             <Control type="ScriptSlider" id="knbCabMix" value="0.0"/>
             <Control type="ScriptButton" id="btnCabAEnable" value="1.0"/>

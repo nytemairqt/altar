@@ -23,8 +23,13 @@ namespace PresetBrowser
     const pnlPresetBrowser = Content.getComponent("pnlPresetBrowser");
     const fltPresetBrowser = Content.getComponent("fltPresetBrowser");
     const knbGateThreshold = Content.getComponent("knbGateThreshold");
+    const pnlCabALoader = Content.getComponent("pnlCabALoader");
+    const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
     const presetHandler = Engine.createUserPresetHandler();    
+    const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];    
     const bounds = [0, 50, 1150, 650];
+
+
     reg gateValue = knbGateThreshold.get("defaultValue");
     
     presetHandler.setPreCallback(function(presetData)
@@ -39,6 +44,45 @@ namespace PresetBrowser
 		    knbGateThreshold.setValue(gateValue);
 		    knbGateThreshold.changed();		    
 	    }
+
+        for (slot in fxSlots)
+        {
+            if (slot.getCurrentEffectId() == "cab")
+            {
+                var id = slot.getCurrentEffect().getId();
+                var ref = Synth.getAudioSampleProcessor(id);
+                var cabAFile = ref.getAudioFile(0).getCurrentlyLoadedFile(); var cabAText = cabAFile;
+                var cabBFile = ref.getAudioFile(1).getCurrentlyLoadedFile(); var cabBText = cabBFile;
+                                
+                if (cabAFile.contains("{PROJECT_FOLDER}"))
+                {
+                    var cabAStart = cabAFile.indexOf("}") + 1;
+                    var cabAEnd = cabAFile.length;
+                    cabAText = cabAFile.substring(cabAStart, cabAEnd);
+                }   
+                else if (cabAFile.contains("\\")) 
+                {
+                    var cabAStart = cabAFile.lastIndexOf("\\") + 1;
+                    var cabAEnd = cabAFile.length;
+                    cabAText = cabAFile.substring(cabAStart, cabAEnd);
+                }
+                if (cabBFile.contains("{PROJECT_FOLDER}"))
+                {
+                    var cabBStart = cabBFile.indexOf("}") + 1;
+                    var cabBEnd = cabBFile.length;
+                    cabBText = cabBFile.substring(cabBStart, cabBEnd);
+                } 
+                else if (cabBFile.contains("\\")) 
+                {
+                    var cabBStart = cabBFile.lastIndexOf("\\") + 1;
+                    var cabBEnd = cabBFile.length;
+                    cabBText = cabBFile.substring(cabBStart, cabBEnd);
+                }
+
+                pnlCabALoader.set("text", cabAText); pnlCabALoader.repaint();
+                pnlCabBLoader.set("text", cabBText); pnlCabBLoader.repaint();                
+            }
+        }
     });
             
 	pnlPresetBrowser.setMouseCallback(function(event)
