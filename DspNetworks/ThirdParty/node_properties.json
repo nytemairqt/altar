@@ -1,0 +1,38 @@
+{
+  "amp": [
+    "IsPolyphonic"
+  ],
+  "cabDesigner": [
+    "IsPolyphonic"
+  ],
+  "chorus": [
+    "IsPolyphonic"
+  ],
+  "delay": [
+    "IsPolyphonic"
+  ],
+  "gate": [
+    "IsPolyphonic"
+  ],
+  "overdrive": [
+    "IsPolyphonic"
+  ],
+  "postprocess": [
+    "IsPolyphonic"
+  ],
+  "preprocess": [
+    "IsPolyphonic"
+  ],
+  "reverb": [
+    "IsPolyphonic"
+  ],
+  "ringmod": [
+    "IsPolyphonic"
+  ],
+  "transpose": [
+    "IsPolyphonic"
+  ],
+  "tuner": [
+    "IsPolyphonic"
+  ]
+}
