@@ -15,6 +15,25 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+
+    source fix for EQ band not deleting:
+    https://github.com/christophhart/HISE/pull/793/commits/3c812642c718925c2d79ee3114239a69a17945c5
+
+    hi_core/hi_components/audio_components/EqComponent.cpp
+
+    void FilterDragOverlay::updateFilters()
+    {
+        ...
+        if (numFilters == 0)
+        {
+            --filterGraph.repaint();
+            ++filterGraph.refreshAsync();
+        }
+        ...
+    }    
+*/
+
 #pragma once
 #include <JuceHeader.h>
 
