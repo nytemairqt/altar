@@ -24,7 +24,7 @@
       </Component>
       <Component type="ScriptSlider" id="knbGateThreshold" x="120.0" y="20.0"
                  min="-100.0" max="0.0" middlePosition="-48.0" width="96.0" height="96.0"
-                 processorId="gate" parameterId="Threshold" defaultValue="-48.0"
+                 processorId="gate" parameterId="Threshold" defaultValue="-80.0"
                  parentComponent="pnlTopBar" tooltip="Gate threshold." suffix=" dB"
                  isPluginParameter="1" pluginParameterName="Gate Threshold">
         <Component type="ScriptButton" id="btnGate" x="80.0" y="0.0" width="16.0"
@@ -33,6 +33,26 @@
                    pluginParameterName="Gate Enable"/>
         <Component type="ScriptLabel" id="lblGate" x="0.0" y="54.0" parentComponent="knbGateThreshold"
                    text="Gate" width="96.0" height="30.0" fontStyle="Bold" editable="0"/>
+        <Component type="ScriptButton" id="btnGateSettings" x="80.0" y="21.0" width="16.0"
+                   parentComponent="knbGateThreshold" tooltip="Open Gate settings."
+                   text="" height="16.0" saveInPreset="0"/>
+      </Component>
+      <Component type="ScriptSlider" id="knbGateAttack" x="250.0" y="20.0" min="1.0"
+                 max="100.0" middlePosition="50.0" width="96.0" height="96.0"
+                 processorId="gate" parameterId="Attack" defaultValue="25.0" parentComponent="pnlTopBar"
+                 tooltip="Gate attack." suffix=" ms" isPluginParameter="1" pluginParameterName="Gate Attack"
+                 stepSize="1.0" visible="0.0">
+        <Component type="ScriptLabel" id="lblGateAttack" x="0.0" y="54.0" parentComponent="knbGateAttack"
+                   text="Attack" width="96.0" height="30.0" fontStyle="Bold" editable="0"/>
+      </Component>
+      <Component type="ScriptSlider" id="knbGateRelease" x="350.0" y="20.0" min="1.0"
+                 max="200.0" middlePosition="100.0" width="96.0" height="96.0"
+                 processorId="gate" parameterId="Release" defaultValue="40.0"
+                 parentComponent="pnlTopBar" tooltip="Gate release." suffix=" ms"
+                 isPluginParameter="1" pluginParameterName="Gate Release" stepSize="1.0"
+                 visible="0.0">
+        <Component type="ScriptLabel" id="lblGateRelease" x="0.0" y="54.0" parentComponent="knbGateRelease"
+                   text="Release" width="96.0" height="30.0" fontStyle="Bold" editable="0"/>
       </Component>
       <Component type="ScriptSlider" id="knbTranspose" x="250.0" y="20.0" middlePosition="0.0"
                  min="-24.0" max="24.0" parentComponent="pnlTopBar" tooltip="Adjust transpose amount."
@@ -227,7 +247,7 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnSacrifice" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="witness..." text="&amp;g_dg7g6u  witness  jg7a7gg*T"
+               parentComponent="pnlMaster" tooltip="witness..." text="*g8)8=y&amp;&amp;  witness  d79d*s&amp;8)"
                height="30.0" saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"

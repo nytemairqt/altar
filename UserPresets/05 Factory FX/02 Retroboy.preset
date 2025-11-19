@@ -3,8 +3,10 @@
 <Preset Version="1.0.0">
   <Content Processor="Interface">
     <Control type="ScriptSlider" id="knbInputGain" value="0.0"/>
-    <Control type="ScriptSlider" id="knbGateThreshold" value="-48.0"/>
+    <Control type="ScriptSlider" id="knbGateThreshold" value="-80.0"/>
     <Control type="ScriptButton" id="btnGate" value="1.0"/>
+    <Control type="ScriptSlider" id="knbGateAttack" value="25.0"/>
+    <Control type="ScriptSlider" id="knbGateRelease" value="40.0"/>
     <Control type="ScriptSlider" id="knbTranspose" value="0.0"/>
     <Control type="ScriptButton" id="btnTranspose" value="0.0"/>
     <Control type="ScriptButton" id="btnTransposeSnap" value="0.0"/>
@@ -19,7 +21,7 @@
     <Control type="ScriptSlider" id="knbLofi" value="1.0"/>
     <Control type="ScriptButton" id="btnLofi" value="0.0"/>
     <Control type="ScriptComboBox" id="cmbOversampling" value="3.0"/>
-    <Control type="ScriptSlider" id="knbOutputGain" value="-1.440000057220459"/>
+    <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
     <Control type="ScriptButton" id="btnLimiter" value="1.0"/>
     <Control type="ScriptButton" id="btnShowPreProcess" value="0.0"/>
     <Control type="ScriptButton" id="btnShowPostProcess" value="0.0"/>
@@ -168,6 +170,7 @@
     <Control type="ScriptButton" id="btnPostProcessCompEnable" value="1.0"/>
     <Control type="ScriptButton" id="btnTunerMonitor" value="0.0"/>
     <Control type="ScriptSlider" id="knbClickTempo" value="120.0"/>
+    <Control type="ScriptLabel" id="lblAmpNAMLoader" value=""/>
   </Content>
   <Modules>
     <Processor Type="Hardcoded Master FX" ID="modularA" Bypassed="0" Network="amp"

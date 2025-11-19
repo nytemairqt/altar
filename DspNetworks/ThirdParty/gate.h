@@ -117,7 +117,7 @@ template <int NV> struct gate: public data::base
                 gainReductionDB = 0.0f;
                 lastGainReductionDB = 0.0f;
                 
-                if (levelDB < thresholdParameter)
+                if (levelDB < threshold)
                 {
                     timeHeld += dt;
                     if (timeHeld >= maxHold) { state = GateState::MOVING; }
@@ -129,7 +129,7 @@ template <int NV> struct gate: public data::base
             else 
             {
                 float targetGainReduction = 0.0f;
-                if (levelDB < thresholdParameter) { targetGainReduction = maxGainReduction; }                
+                if (levelDB < threshold) { targetGainReduction = maxGainReduction; }                
                 if (targetGainReduction > lastGainReductionDB)
                 {
                     // open
@@ -161,7 +161,9 @@ template <int NV> struct gate: public data::base
     
     template <int P> void setParameter(double v)
     {
-        if (P == 0) { thresholdParameter = static_cast<float>(v); }
+        if (P == 0) { threshold = static_cast<float>(v); }
+        if (P == 1) { attack = static_cast<float>(v); }
+        if (P == 2) { release = static_cast<float>(v); }
     }
     
     void createParameters(ParameterDataList& data)
@@ -171,7 +173,19 @@ template <int NV> struct gate: public data::base
             registerCallback<0>(threshold);
             threshold.setDefaultValue(-24.0);            
             data.add(std::move(threshold));
+        }      
+        {
+            parameter::data attack("Attack", { 1.0, 100.0 });
+            registerCallback<1>(attack);
+            attack.setDefaultValue(5.0);            
+            data.add(std::move(attack));
         }        
+        {
+            parameter::data release("Release", { 1.0, 200.0 });
+            registerCallback<2>(release);
+            release.setDefaultValue(15.0);            
+            data.add(std::move(release));
+        }          
     }
 
 private:
@@ -182,10 +196,9 @@ private:
     float timeHeld = 0.0f;
     float lastGainReductionDB = -60.0f;
 
-    float attack = 3.5f;
+    float attack = 5.0f;
     float release = 15.0f;
-
-    float thresholdParameter = -24.0f;    
+    float threshold = -24.0f;    
     
     float alpha = 0.0f;
     float beta = 0.0f;

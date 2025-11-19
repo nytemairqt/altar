@@ -22,10 +22,6 @@ namespace InputChain
     const inputGain = Synth.getEffect("inputGain");
     const knbInputGain = Content.getComponent("knbInputGain");
 
-    const gate = Synth.getEffect("gate");
-    const btnGate = Content.getComponent("btnGate");
-    const knbGateThreshold = Content.getComponent("knbGateThreshold");
-
     const pnlPreProcess = Content.getComponent("pnlPreProcess");
     const btnShowPreProcess = Content.getComponent("btnShowPreProcess");    
     

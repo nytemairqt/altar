@@ -20,7 +20,7 @@
 namespace LookAndFeel
 {			
 
-	const knbMainLAF = [Content.getComponent("knbInputGain"), Content.getComponent("knbGateThreshold"), Content.getComponent("knbTranspose"), Content.getComponent("knbOctave"), Content.getComponent("knbChugStrength"), Content.getComponent("knbPickStrength"), Content.getComponent("knbWhistle"), Content.getComponent("knbOutputGain"), Content.getComponent("knbLofi"), Content.getComponent("knbOverdriveMode"),  Content.getComponent("knbOverdriveDrive"),  Content.getComponent("knbOverdriveTone"), Content.getComponent("knbOverdriveCircuitBend"),  Content.getComponent("knbOverdriveBits"),  Content.getComponent("knbOverdriveSRReduction"),  Content.getComponent("knbOverdriveFoldAmount"),  Content.getComponent("knbOverdriveMix"),  Content.getComponent("knbOverdriveOutputGain"), Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain"), Content.getComponent("knbCabMix"),	    Content.getComponent("knbReverbMix"),  Content.getComponent("knbReverbPreDelay"),  Content.getComponent("knbReverbRoomSize"),  Content.getComponent("knbReverbDecay"),  Content.getComponent("knbReverbDampingFrequency"),  Content.getComponent("knbReverbChorusDepth"),      Content.getComponent("knbDelayMix"),  Content.getComponent("knbDelayMode"),  Content.getComponent("knbDelayDelayTime"),  Content.getComponent("knbDelayDelayTimeSynced"),  Content.getComponent("knbDelayFeedback"),  Content.getComponent("knbDelayModulation"),  Content.getComponent("knbDelayStereoWidth"),  Content.getComponent("knbDelayDamping"), Content.getComponent("knbDelayGlitchMode"), Content.getComponent("knbChorusMix"),  Content.getComponent("knbChorusRate"),  Content.getComponent("knbChorusDepth"),  Content.getComponent("knbChorusTone"),  Content.getComponent("knbChorusVoices"),  Content.getComponent("knbChorusFeedback"),  Content.getComponent("knbChorusDelayTime"), Content.getComponent("knbRingmodMix"),  Content.getComponent("knbRingmodFrequency"),  Content.getComponent("knbRingmodDepth"),  Content.getComponent("knbRingmodMode"),  Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFORateSynced"),  Content.getComponent("knbRingmodLFODepth"),  Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("knbClickTempo"), Content.getComponent("knbClickGain"), Content.getComponent("knbCabDesignerMojo"), Content.getComponent("knbCabDesignerAge"), Content.getComponent("knbCabDesignerGain")];
+	const knbMainLAF = [Content.getComponent("knbInputGain"), Content.getComponent("knbGateThreshold"), Content.getComponent("knbGateAttack"), Content.getComponent("knbGateRelease"), Content.getComponent("knbTranspose"), Content.getComponent("knbOctave"), Content.getComponent("knbChugStrength"), Content.getComponent("knbPickStrength"), Content.getComponent("knbWhistle"), Content.getComponent("knbOutputGain"), Content.getComponent("knbLofi"), Content.getComponent("knbOverdriveMode"),  Content.getComponent("knbOverdriveDrive"),  Content.getComponent("knbOverdriveTone"), Content.getComponent("knbOverdriveCircuitBend"),  Content.getComponent("knbOverdriveBits"),  Content.getComponent("knbOverdriveSRReduction"),  Content.getComponent("knbOverdriveFoldAmount"),  Content.getComponent("knbOverdriveMix"),  Content.getComponent("knbOverdriveOutputGain"), Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain"), Content.getComponent("knbCabMix"),	    Content.getComponent("knbReverbMix"),  Content.getComponent("knbReverbPreDelay"),  Content.getComponent("knbReverbRoomSize"),  Content.getComponent("knbReverbDecay"),  Content.getComponent("knbReverbDampingFrequency"),  Content.getComponent("knbReverbChorusDepth"),      Content.getComponent("knbDelayMix"),  Content.getComponent("knbDelayMode"),  Content.getComponent("knbDelayDelayTime"),  Content.getComponent("knbDelayDelayTimeSynced"),  Content.getComponent("knbDelayFeedback"),  Content.getComponent("knbDelayModulation"),  Content.getComponent("knbDelayStereoWidth"),  Content.getComponent("knbDelayDamping"), Content.getComponent("knbDelayGlitchMode"), Content.getComponent("knbChorusMix"),  Content.getComponent("knbChorusRate"),  Content.getComponent("knbChorusDepth"),  Content.getComponent("knbChorusTone"),  Content.getComponent("knbChorusVoices"),  Content.getComponent("knbChorusFeedback"),  Content.getComponent("knbChorusDelayTime"), Content.getComponent("knbRingmodMix"),  Content.getComponent("knbRingmodFrequency"),  Content.getComponent("knbRingmodDepth"),  Content.getComponent("knbRingmodMode"),  Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFORateSynced"),  Content.getComponent("knbRingmodLFODepth"),  Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("knbClickTempo"), Content.getComponent("knbClickGain"), Content.getComponent("knbCabDesignerMojo"), Content.getComponent("knbCabDesignerAge"), Content.getComponent("knbCabDesignerGain")];
 	const btnToggleLAF = [Content.getComponent("btnTransposeSnap"), ];
 	const btnMenuLAF = [Content.getComponent("btnShowPreferences"), Content.getComponent("btnShowTuner"), Content.getComponent("btnShowClick"), Content.getComponent("btnShowPresetBrowser"), Content.getComponent("btnPresetPrev"), Content.getComponent("btnPresetNext"), Content.getComponent("btnShowPreProcess"), Content.getComponent("btnShowPostProcess"), Content.getComponent("btnAmpBrowseNAMTones"), Content.getComponent("btnSacrifice")]; 
 	const btnBypassLAF = [Content.getComponent("btnGate"), Content.getComponent("btnTranspose"), Content.getComponent("btnOctave"), Content.getComponent("btnChug"), Content.getComponent("btnPick"), Content.getComponent("btnWhistle"), Content.getComponent("btnLimiter"), Content.getComponent("btnLofi"), Content.getComponent("btnCabAEnable"), Content.getComponent("btnCabBEnable"), Content.getComponent("btnPreProcessEQEnable"), Content.getComponent("btnPreProcessCompEnable"), Content.getComponent("btnPreProcessClipperEnable"), Content.getComponent("btnPostProcessEQEnable"), Content.getComponent("btnPostProcessCompEnable"), Content.getComponent("btnClick"), Content.getComponent("btnCabDesignerEQEnable")];
@@ -37,7 +37,8 @@ namespace LookAndFeel
 	const btnShowCabDesignerLAF = [Content.getComponent("btnShowCabDesigner")];
 	const btnOpenCabFolderLAF = [Content.getComponent("btnOpenCabFolder")];	
 	const btnStereoLAF = [Content.getComponent("btnRingmodStereoMode")];	
-	const btnCloseLAF = [Content.getComponent("btnCloseCabDesigner"), Content.getComponent("btnCabAUnload"), Content.getComponent("btnCabBUnload")];
+	const btnCloseLAF = [Content.getComponent("btnCloseCabDesigner"), Content.getComponent("btnCabAUnload"), Content.getComponent("btnCabBUnload")];	
+	const btnSettings = [Content.getComponent("btnGateSettings")];
 
 	const LAFKnob = Content.createLocalLookAndFeel();
 	const LAFKnobProcess = Content.createLocalLookAndFeel();
@@ -55,6 +56,7 @@ namespace LookAndFeel
 	const LAFButtonLock = Content.createLocalLookAndFeel();		
 	const LAFButtonClearBuffer = Content.createLocalLookAndFeel();
 	const LAFButtonClose = Content.createLocalLookAndFeel();
+	const LAFButtonSettings = Content.createLocalLookAndFeel();
 		
 	const start = -Math.PI * 0.75;	
 	
@@ -320,7 +322,15 @@ namespace LookAndFeel
         g.fillPath(p, [obj.area[0] + padX, obj.area[1] + padY, obj.area[2] - padX * 2, obj.area[3] - padY * 2]);                  
 	});
 	
-	
+	// Settings Button (Gear)
+	LAFButtonSettings.registerFunction("drawToggleButton", function(g, obj)
+	{
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }		
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrBypassedGrey); }
+		var p = Content.createPath();		
+		p.loadFromData(PathData.pathGear);
+		g.fillPath(p, obj.area);
+	});
 	
 	// Look And Feel Assignment		
 	
@@ -341,6 +351,7 @@ namespace LookAndFeel
 	for (b in btnOpenCabFolderLAF) { b.setLocalLookAndFeel(LAFButtonOpenCabFolder); }	
 	for (b in btnStereoLAF) { b.setLocalLookAndFeel(LAFButtonStereo); }	
 	for (b in btnCloseLAF) { b.setLocalLookAndFeel(LAFButtonClose); }
+	for (b in btnSettings) { b.setLocalLookAndFeel(LAFButtonSettings); }
 	
 	// Top Bar
 	
