@@ -42,7 +42,7 @@ template <int NV> struct tuner: public data::base, public cable_manager_t, publi
 
     tuner()
     {
-        startTimer(100); 
+        startTimer(33); 
         pitchHistory.resize(pitchHistorySize, 0.0f);
     }
 
