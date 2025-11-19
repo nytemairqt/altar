@@ -20,7 +20,8 @@ namespace Amp
     const controls = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];    
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];         
     const pnlAmp = Content.getComponent("pnlAmp");
-    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");      
+    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");   
+    const lblAmpNAMLoader = Content.getComponent("lblAmpNAMLoader");   
     const btnAmpNAMLoaderPrev = Content.getComponent("btnAmpNAMLoaderPrev");
     const btnAmpNAMLoaderNext = Content.getComponent("btnAmpNAMLoaderNext");    
     const btnAmpBrowseNAMTones = Content.getComponent("btnAmpBrowseNAMTones");
@@ -52,11 +53,11 @@ namespace Amp
 
     inline function pnlAmpNAMLoaderDrop(f)
     {
-        if(f.drop)
-        {
-            pnlAmpNAMLoader.set("text", f.fileName);
-            sendNAMCableData();
+        if(f.drop) // already sanitized in the filedrop callback
+        {                    	            
+            lblAmpNAMLoader.set("text", f.fileName);
             pnlAmpNAMLoader.repaint();
+            sendNAMCableData();            
         }
     }        
     
@@ -66,10 +67,10 @@ namespace Amp
         {
             FileSystem.browse(FileSystem.Documents, false, "*.nam, *.json", function(result)
             {
-                if (!result || result.toString(0) == "") { return; }
-                pnlAmpNAMLoader.set("text", result.toString(0));
-                sendNAMCableData();
+                if (!result || result.toString(0) == "") { return; }                
+                lblAmpNAMLoader.set("text", result.toString(0));
                 pnlAmpNAMLoader.repaint();
+                sendNAMCableData();                
             });
         }       
        	else if (event.hover) { pnlTooltip.set("text", this.get("tooltip")); }       	 
@@ -80,11 +81,11 @@ namespace Amp
 	    if (!value) { return; }        
 
         local path = pnlAmpNAMLoader.get("text");
+
+        if (path == "Load NAM File" || path == "Load NAM Model") { return; }
         local file = FileSystem.fromAbsolutePath(path);
         local parent = file.getParentDirectory();
         local fileList = FileSystem.findFiles(parent, "*.nam, *.json", false);     
-
-        Console.print(fileList.length);   
 
         for (i=0; i<fileList.length; i++) { if (fileList[i].toString(0) == path) { local index = i; } }
 
@@ -98,8 +99,8 @@ namespace Amp
             if (index == fileList.length - 1) { index = 0; }
             else (index += 1);
         }
-
-        pnlAmpNAMLoader.set("text", fileList[index].toString(0));
+        
+        lblAmpNAMLoader.set("text", fileList[index].toString(0));
         sendNAMCableData();
         pnlAmpNAMLoader.repaint();
     }
@@ -115,12 +116,11 @@ namespace Amp
     btnAmpBrowseNAMTones.setControlCallback(onbtnAmpBrowseNAMTonesControl);
 
     inline function sendNAMCableData()
-    {
-        local path = pnlAmpNAMLoader.get("text");
-        local file = FileSystem.fromAbsolutePath(path);
-        if (!isDefined(file)) { pnlAmpNAMLoader.set("text", "Load NAM file."); return; }
-        if (!file.isFile()) { pnlAmpNAMLoader.set("text", "Load NAM file."); return; }
-        local json = file.loadAsObject();        
+    {        
+        local path = lblAmpNAMLoader.get("text");
+        if (path == "Load NAM File." || path == "Load NAM Model.") { return; }
+        local file = FileSystem.fromAbsolutePath(path);        
+        local json = file.loadAsObject();
         namCable.sendData(json);
     }
     
@@ -144,8 +144,8 @@ namespace Amp
        g.fillRoundedRectangle(area, 2.0);
        g.setColour(ColourData.clrDarkgrey);
        g.drawRoundedRectangle(area, 2.0, 3.0); 
-       g.setColour(ColourData.clrWhite);
-       var text = this.get("text");      
+       g.setColour(ColourData.clrWhite);       
+       var text = lblAmpNAMLoader.get("text");
        var index = text.lastIndexOf("\\") + 1;
        var substring = text.substring(index, text.length);
        var pad = 24;

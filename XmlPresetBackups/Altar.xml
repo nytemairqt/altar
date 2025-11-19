@@ -48,7 +48,7 @@
             <Control type="ScriptSlider" id="knbOverdriveOutputGain" value="0.0"/>
             <Control type="ScriptSlider" id="knbOverdriveCircuitBendFreqHidden" value="400.0"/>
             <Control type="ScriptSlider" id="knbOverdriveTone" value="0.0"/>
-            <Control type="ScriptSlider" id="knbAmpMode" value="1.0"/>
+            <Control type="ScriptSlider" id="knbAmpMode" value="2.0"/>
             <Control type="ScriptSlider" id="knbAmpInput" value="1.490116119384766e-6"/>
             <Control type="ScriptSlider" id="knbAmpLow" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMid" value="0.0"/>
@@ -175,6 +175,7 @@
             <Control type="ScriptButton" id="btnPostProcessCompEnable" value="1.0"/>
             <Control type="ScriptButton" id="btnTunerMonitor" value="0.0"/>
             <Control type="ScriptSlider" id="knbClickTempo" value="120.0"/>
+            <Control type="ScriptLabel" id="lblAmpNAMLoader" value="Load NAM File."/>
           </Content>
           <UIData Source="AltarUIData"/>
         </Processor>
@@ -251,7 +252,7 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="amp"
-                   Mode="1.0" Oversampling="2.0" InputGain="1.490116119384766e-6"
+                   Mode="2.0" Oversampling="2.0" InputGain="1.490116119384766e-6"
                    Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="5.364418029785156e-7">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>

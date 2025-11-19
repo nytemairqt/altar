@@ -163,7 +163,7 @@
                width="80.0" height="40.0" text="ringmod" allowCallbacks="Clicks, Hover &amp; Dragging"
                tooltip="Right click to bypass, drag to re-order."/>
     <Component type="ScriptPanel" id="pnlTooltip" x="410.0" y="641.0" parentComponent="pnlMaster"
-               width="330.0" height="30.0" text="Drag IR file here, right click to browse."/>
+               width="330.0" height="30.0" text="Drag NAM model here, right click to browse."/>
     <Component type="ScriptButton" id="btnModularABypass" x="320.0" y="240.0"
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="overdrive"/>
@@ -186,7 +186,7 @@
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="ringmod"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="1040.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 7%" width="110.0" fontStyle="Regular" height="30.0"
+               text="CPU Usage: 2%" width="110.0" fontStyle="Regular" height="30.0"
                alignment="left" editable="0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
@@ -227,7 +227,7 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnSacrifice" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="witness..." text="(&amp;ggGszd8  witness  usAdgud7G"
+               parentComponent="pnlMaster" tooltip="witness..." text="&amp;7(tgssge  witne$s  7g&amp;gdg8&amp;)"
                height="30.0" saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
@@ -382,21 +382,20 @@
                  text="Output" width="96.0" height="30.0" editable="0" fontStyle="Bold"/>
     </Component>
     <Component type="ScriptPanel" id="pnlAmpNAMLoader" x="275.0" y="274.0" width="300.0"
-               height="100.0" text="Load NAM file." allowCallbacks="All Callbacks"
-               parentComponent="pnlAmp" saveInPreset="1" tooltip="Drag NAM model here, right click to browse."
-               visible="0">
+               height="100.0" text="Load NAM File." allowCallbacks="All Callbacks"
+               parentComponent="pnlAmp" saveInPreset="1" tooltip="Drag NAM model here, right click to browse.">
       <Component type="ScriptButton" id="btnAmpNAMLoaderPrev" x="277.0" y="84.0"
                  parentComponent="pnlAmpNAMLoader" isMomentary="1" text="PREV"
-                 width="8.0" height="12.0" tooltip="Load previous IR." saveInPreset="0"
+                 width="8.0" height="12.0" tooltip="Load previous NAM file." saveInPreset="0"
                  enableMidiLearn="0"/>
       <Component type="ScriptButton" id="btnAmpNAMLoaderNext" x="288.0" y="84.0"
                  parentComponent="pnlAmpNAMLoader" isMomentary="1" text="NEXT"
-                 width="8.0" height="12.0" tooltip="Load next IR." saveInPreset="0"
+                 width="8.0" height="12.0" tooltip="Load next NAM file." saveInPreset="0"
                  enableMidiLearn="0"/>
     </Component>
     <Component type="ScriptButton" id="btnAmpBrowseNAMTones" x="610.0" y="310.0"
                width="140.0" parentComponent="pnlAmp" tooltip="Open Tone3000 in a browser."
-               text="Browse NAM Tones" height="30.0" isMomentary="1" visible="0"/>
+               text="Browse NAM Tones" height="30.0" isMomentary="1"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="150.0" y="250.0" width="850.0"
              height="400.0" itemColour2="4278190080" itemColour="4278190080"
@@ -1373,4 +1372,6 @@
                itemColour="4292927712" itemColour2="0" Data="{&#10;  &quot;ShowSaveButton&quot;: true,&#10;  &quot;ShowExpansionsAsColumn&quot;: false,&#10;  &quot;ShowFolderButton&quot;: true,&#10;  &quot;ShowNotes&quot;: false,&#10;  &quot;ShowEditButtons&quot;: true,&#10;  &quot;EditButtonOffset&quot;: 10,&#10;  &quot;ShowAddButton&quot;: true,&#10;  &quot;ShowRenameButton&quot;: true,&#10;  &quot;ShowDeleteButton&quot;: true,&#10;  &quot;ShowSearchBar&quot;: true,&#10;  &quot;FavoriteIconOffset&quot;: 0,&#10;  &quot;ShowFavoriteIcon&quot;: false,&#10;  &quot;FullPathFavorites&quot;: false,&#10;  &quot;ButtonsInsideBorder&quot;: false,&#10;  &quot;NumColumns&quot;: 2,&#10;  &quot;ColumnWidthRatio&quot;: [&#10;    0.5,&#10;    0.5&#10;  ],&#10;  &quot;ListAreaOffset&quot;: [&#10;    0,&#10;    0,&#10;    0,&#10;    0&#10;  ],&#10;  &quot;ColumnRowPadding&quot;: [&#10;    0,&#10;    0,&#10;    0,&#10;    0&#10;  ],&#10;  &quot;SearchBarBounds&quot;: [],&#10;  &quot;MoreButtonBounds&quot;: [],&#10;  &quot;SaveButtonBounds&quot;: [],&#10;  &quot;FavoriteButtonBounds&quot;: []&#10;}"
                parentComponent="pnlPresetBrowser"/>
   </Component>
+  <Component type="ScriptLabel" id="lblAmpNAMLoader" x="510.0" y="580.0" saveInPreset="1"
+             editable="0" text="Load NAM File." visible="0"/>
 </ContentProperties>

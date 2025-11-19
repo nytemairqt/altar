@@ -23,6 +23,7 @@ namespace Presets
     const pnlPresetBrowser = Content.getComponent("pnlPresetBrowser");
     const fltPresetBrowser = Content.getComponent("fltPresetBrowser");
     
+    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");
     const pnlCabALoader = Content.getComponent("pnlCabALoader");
     const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
     const presetHandler = Engine.createUserPresetHandler();    
@@ -66,7 +67,7 @@ namespace Presets
 	    else { btnShowPresetBrowser.set("text", "Preset Browser"); } // called by DAW recall-state    
 
         for (slot in fxSlots)
-        {
+        {	
             if (slot.getCurrentEffectId() == "cab")
             {
                 var id = slot.getCurrentEffect().getId();
@@ -104,6 +105,7 @@ namespace Presets
             }
         }
         
+        Amp.sendNAMCableData();
         ModularChain.repaintAllSlots();        
     });
             
