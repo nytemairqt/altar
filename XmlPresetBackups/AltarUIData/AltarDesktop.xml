@@ -183,7 +183,7 @@
                width="80.0" height="40.0" text="ringmod" allowCallbacks="Clicks, Hover &amp; Dragging"
                tooltip="Double click or RMB to bypass, drag to re-order."/>
     <Component type="ScriptPanel" id="pnlTooltip" x="410.0" y="641.0" parentComponent="pnlMaster"
-               width="330.0" height="30.0" text="Drag NAM model here, right click to browse."/>
+               width="330.0" height="30.0" text="Drag IR file here, right click to browse."/>
     <Component type="ScriptButton" id="btnModularABypass" x="320.0" y="240.0"
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="overdrive"/>
@@ -247,7 +247,7 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnSacrifice" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="witness..." text="*g8)8=y&amp;&amp;  witness  d79d*s&amp;8)"
+               parentComponent="pnlMaster" tooltip="witness..." text="S8(SS2*u*  w1tness  F((e7f)gu"
                height="30.0" saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"

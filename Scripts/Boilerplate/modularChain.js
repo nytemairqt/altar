@@ -243,7 +243,7 @@ namespace ModularChain
         dragging = false;       
         this.setMouseCursor("NormalCursor", Colours.white, [0, 0]);
 
-        if (event.drag && !event.rightClick)
+        if (event.drag && !event.rightClick) // drag
         {
             dragging = true;
             this.setMouseCursor("DraggingHandCursor", Colours.white, [0, 0]);  
@@ -259,7 +259,7 @@ namespace ModularChain
                 });
             }
         }
-        else if (event.clicked && !event.rightClick && !event.doubleClick)
+        else if (event.clicked && !event.rightClick && !event.doubleClick) // left click
         {
             hideFXPanels();
             hideCabDesigner();
@@ -275,7 +275,7 @@ namespace ModularChain
             }            
             repaintAllSlots();
         }        
-        else if (event.rightClick || event.doubleClick)
+        else if (event.clicked && event.rightClick) // right click
         {
             local slotIndex = pnlFxSlots.indexOf(this);
             if (slotIndex != -1)
@@ -284,6 +284,16 @@ namespace ModularChain
                 btn.setValue(1 - btn.getValue());
                 btn.changed();
             }            
+        }
+        else if (event.doubleClick && !event.rightClick) // double click (needs its own scope)
+        {
+	        local slotIndex = pnlFxSlots.indexOf(this);
+            if (slotIndex != -1)
+            {
+                local btn = bypassButtons[slotIndex];
+                btn.setValue(1 - btn.getValue());
+                btn.changed();
+            }   
         }
 
         this.data.hover = event.hover;    

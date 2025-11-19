@@ -33,7 +33,7 @@
   <ReadOnlyFactoryPresets value="No"/>
   <ForceStereoOutput value="No"/>
   <AdminPermissions value="No"/>
-  <EmbedUserPresets value="Yes"/>
+  <EmbedUserPresets value="1"/>
   <OverwriteOldUserPresets value="No"/>
   <EnableGlobalPreprocessor value="No"/>
   <UseGlobalAppDataFolderWindows value="No"/>
