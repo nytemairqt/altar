@@ -28,4 +28,5 @@ namespace ColourData
     const clrBlack = 0xFF000000;  
     const clrMidgrey = 0xFF343434;
     const clrLightblue = 0xFFADD8E6;
+    const clrBypassedGrey = 0xFF404040;
 }

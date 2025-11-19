@@ -91,7 +91,7 @@ namespace Overdrive
     LAFButtonTriggerCircuitBend.registerFunction("drawToggleButton", function(g, obj)
     {
         if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
-        else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+        else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrBypassedGrey); }
         var w = obj.area[2];
         var h = obj.area[3];
         var p = Content.createPath();

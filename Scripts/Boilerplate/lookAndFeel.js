@@ -149,8 +149,8 @@ namespace LookAndFeel
 	    g.setColour(ColourData.clrSliderBG);		    
 	    g.fillEllipse(obj.area);
 		
-		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
-		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }		
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrBypassedGrey); }
 		g.fillEllipse([x + r, y + r, w - (2*r), h - (2*r)]);
 		
 	});	
@@ -190,8 +190,8 @@ namespace LookAndFeel
 	// Bypass Button
 	LAFButtonBypass.registerFunction("drawToggleButton", function(g, obj)
 	{
-		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
-		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }		
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrBypassedGrey); }
 		var p = Content.createPath();		
 		p.loadFromData(PathData.pathBypassButton);
 		g.drawPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4], 2);
@@ -253,14 +253,12 @@ namespace LookAndFeel
 		var tPad = 30;				
 		g.fillTriangle([tPad, tPad, obj.area[2] - tPad * 2, obj.area[3] - tPad * 2], Math.toRadians(180));
 	});
-	
-	
-	
-	// Transpose Snape	
+			
+	// Lock / Tempo Sync / Transpose Snap
 	LAFButtonLock.registerFunction("drawToggleButton", function(g, obj)
 	{
 		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
-		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrBypassedGrey); }
 		
 		var p = Content.createPath();
 		p.loadFromData(PathData.pathChain);
@@ -272,7 +270,7 @@ namespace LookAndFeel
     LAFButtonTunerMonitor.registerFunction("drawToggleButton", function(g, obj)
     {
         if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
-        else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+        else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrBypassedGrey); }
         
         var p = Content.createPath();
         p.loadFromData(PathData.pathHeadphones);
@@ -284,7 +282,7 @@ namespace LookAndFeel
 	LAFButtonInvertPhase.registerFunction("drawToggleButton", function(g, obj)
 	{
 		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
-		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
+		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrBypassedGrey); }
 
 		g.drawEllipse([4, 4, obj.area[2] - 8, obj.area[3] - 8], 2.0);
 		g.drawLine(2, obj.area[2] - 2, obj.area[3] - 2, 2, 2.0);
