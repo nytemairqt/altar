@@ -259,7 +259,7 @@ namespace ModularChain
                 });
             }
         }
-        else if (event.clicked && !event.rightClick)
+        else if (event.clicked && !event.rightClick && !event.doubleClick)
         {
             hideFXPanels();
             hideCabDesigner();
@@ -274,8 +274,8 @@ namespace ModularChain
                 case "ringmod":   pnlFx[6].set("visible", true); break;
             }            
             repaintAllSlots();
-        }
-        else if (event.clicked && event.rightClick)
+        }        
+        else if (event.rightClick || event.doubleClick)
         {
             local slotIndex = pnlFxSlots.indexOf(this);
             if (slotIndex != -1)
