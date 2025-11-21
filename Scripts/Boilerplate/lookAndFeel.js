@@ -19,20 +19,18 @@
 
 namespace LookAndFeel
 {			
-
 	const knbMainLAF = [Content.getComponent("knbInputGain"), Content.getComponent("knbGateThreshold"), Content.getComponent("knbGateAttack"), Content.getComponent("knbGateRelease"), Content.getComponent("knbTranspose"), Content.getComponent("knbOctave"), Content.getComponent("knbChugStrength"), Content.getComponent("knbPickStrength"), Content.getComponent("knbWhistle"), Content.getComponent("knbOutputGain"), Content.getComponent("knbLofi"), Content.getComponent("knbOverdriveMode"),  Content.getComponent("knbOverdriveDrive"),  Content.getComponent("knbOverdriveTone"), Content.getComponent("knbOverdriveCircuitBend"),  Content.getComponent("knbOverdriveBits"),  Content.getComponent("knbOverdriveSRReduction"),  Content.getComponent("knbOverdriveFoldAmount"),  Content.getComponent("knbOverdriveMix"),  Content.getComponent("knbOverdriveOutputGain"), Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput"), Content.getComponent("knbCabAAxis"), Content.getComponent("knbCabADistance"), Content.getComponent("knbCabADelay"), Content.getComponent("knbCabAPan"), Content.getComponent("knbCabAGain"), Content.getComponent("knbCabBAxis"), Content.getComponent("knbCabBDistance"), Content.getComponent("knbCabBDelay"), Content.getComponent("knbCabBPan"), Content.getComponent("knbCabBGain"), Content.getComponent("knbCabMix"),	    Content.getComponent("knbReverbMix"),  Content.getComponent("knbReverbPreDelay"),  Content.getComponent("knbReverbRoomSize"),  Content.getComponent("knbReverbDecay"),  Content.getComponent("knbReverbDampingFrequency"),  Content.getComponent("knbReverbChorusDepth"),      Content.getComponent("knbDelayMix"),  Content.getComponent("knbDelayMode"),  Content.getComponent("knbDelayDelayTime"),  Content.getComponent("knbDelayDelayTimeSynced"),  Content.getComponent("knbDelayFeedback"),  Content.getComponent("knbDelayModulation"),  Content.getComponent("knbDelayStereoWidth"),  Content.getComponent("knbDelayDamping"), Content.getComponent("knbDelayGlitchMode"), Content.getComponent("knbChorusMix"),  Content.getComponent("knbChorusRate"),  Content.getComponent("knbChorusDepth"),  Content.getComponent("knbChorusTone"),  Content.getComponent("knbChorusVoices"),  Content.getComponent("knbChorusFeedback"),  Content.getComponent("knbChorusDelayTime"), Content.getComponent("knbRingmodMix"),  Content.getComponent("knbRingmodFrequency"),  Content.getComponent("knbRingmodDepth"),  Content.getComponent("knbRingmodMode"),  Content.getComponent("knbRingmodLFORate"), Content.getComponent("knbRingmodLFORateSynced"),  Content.getComponent("knbRingmodLFODepth"),  Content.getComponent("knbRingmodFilterFrequency"), Content.getComponent("knbClickTempo"), Content.getComponent("knbClickGain"), Content.getComponent("knbCabDesignerMojo"), Content.getComponent("knbCabDesignerAge"), Content.getComponent("knbCabDesignerGain")];
 	const btnToggleLAF = [Content.getComponent("btnTransposeSnap"), ];
-	const btnMenuLAF = [Content.getComponent("btnShowPreferences"), Content.getComponent("btnShowTuner"), Content.getComponent("btnShowClick"), Content.getComponent("btnShowPresetBrowser"), Content.getComponent("btnPresetPrev"), Content.getComponent("btnPresetNext"), Content.getComponent("btnShowPreProcess"), Content.getComponent("btnShowPostProcess"), Content.getComponent("btnAmpBrowseNAMTones"), Content.getComponent("btnSacrifice")]; 
-	const btnBypassLAF = [Content.getComponent("btnGate"), Content.getComponent("btnTranspose"), Content.getComponent("btnOctave"), Content.getComponent("btnChug"), Content.getComponent("btnPick"), Content.getComponent("btnWhistle"), Content.getComponent("btnLimiter"), Content.getComponent("btnLofi"), Content.getComponent("btnCabAEnable"), Content.getComponent("btnCabBEnable"), Content.getComponent("btnPreProcessEQEnable"), Content.getComponent("btnPreProcessCompEnable"), Content.getComponent("btnPreProcessClipperEnable"), Content.getComponent("btnPostProcessEQEnable"), Content.getComponent("btnPostProcessCompEnable"), Content.getComponent("btnClick"), Content.getComponent("btnCabDesignerEQEnable")];
+	const btnMenuLAF = [Content.getComponent("btnShowPreferences"), Content.getComponent("btnShowTuner"), Content.getComponent("btnShowClick"), Content.getComponent("btnShowPresetBrowser"), Content.getComponent("btnPresetPrev"), Content.getComponent("btnPresetNext"), Content.getComponent("btnShowPreprocess"), Content.getComponent("btnShowPostprocess"), Content.getComponent("btnAmpBrowseNAMTones"), Content.getComponent("btnWitness")]; 
+	const btnBypassLAF = [Content.getComponent("btnGate"), Content.getComponent("btnTranspose"), Content.getComponent("btnOctave"), Content.getComponent("btnChug"), Content.getComponent("btnPick"), Content.getComponent("btnWhistle"), Content.getComponent("btnLimiter"), Content.getComponent("btnLofi"), Content.getComponent("btnCabAEnable"), Content.getComponent("btnCabBEnable"), Content.getComponent("btnPreprocessEQEnable"), Content.getComponent("btnPreprocessCompEnable"), Content.getComponent("btnPreprocessClipperEnable"), Content.getComponent("btnPostprocessEQEnable"), Content.getComponent("btnPostprocessCompEnable"), Content.getComponent("btnClick"), Content.getComponent("btnCabDesignerEQEnable")];
 	const btnPrevLAF = [Content.getComponent("btnPresetPrev"), Content.getComponent("btnCabALoadPrev"), Content.getComponent("btnCabBLoadPrev"), Content.getComponent("btnAmpNAMLoaderPrev")];	
 	const btnNextLAF = [Content.getComponent("btnPresetNext"), Content.getComponent("btnCabALoadNext"), Content.getComponent("btnCabBLoadNext"), Content.getComponent("btnAmpNAMLoaderNext")];	
 	const fltVuMeterLAF = [Content.getComponent("fltVuMeterInput"), Content.getComponent("fltVuMeterOutput")];
 	
 	const btnLockLAF = [Content.getComponent("btnTransposeSnap"), Content.getComponent("btnDelayTempoSync"), Content.getComponent("btnRingmodTempoSync")];
 	const btnInvertPhaseLAF = [Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase")];
-	const knbPreprocessLAF = [Content.getComponent("btnPreProcessEQFirst"), Content.getComponent("knbPreprocessHpfFreq"), Content.getComponent("knbPreprocessLowShelfFreq"), Content.getComponent("knbPreprocessLowShelfGain"), Content.getComponent("knbPreprocessLowShelfQ"), Content.getComponent("knbPreprocessLowMidFreq"), Content.getComponent("knbPreprocessLowMidGain"), Content.getComponent("knbPreprocessLowMidQ"), Content.getComponent("knbPreprocessMidFreq"), Content.getComponent("knbPreprocessMidGain"), Content.getComponent("knbPreprocessMidQ"), Content.getComponent("knbPreprocessHighMidFreq"), Content.getComponent("knbPreprocessHighMidGain"), Content.getComponent("knbPreprocessHighMidQ"), Content.getComponent("knbPreprocessHighShelfFreq"), Content.getComponent("knbPreprocessHighShelfGain"), Content.getComponent("knbPreprocessHighShelfQ"), Content.getComponent("knbPreprocessLpfFreq"), Content.getComponent("knbPreprocessCompThreshold"), Content.getComponent("knbPreprocessCompRatio"), Content.getComponent("knbPreprocessCompRelease"), Content.getComponent("knbPreprocessCompAttack"), Content.getComponent("knbPreprocessCompMix"), Content.getComponent("knbPreprocessCompKnee"), Content.getComponent("knbPreprocessCompMakeup"), Content.getComponent("knbPreprocessClipperGain")];
-	const knbPostprocessLAF = [Content.getComponent("btnPostProcessEQFirst"), Content.getComponent("knbPostprocessHpfFreq"), Content.getComponent("knbPostprocessLowShelfFreq"), Content.getComponent("knbPostprocessLowShelfGain"), Content.getComponent("knbPostprocessLowShelfQ"), Content.getComponent("knbPostprocessLowMidFreq"), Content.getComponent("knbPostprocessLowMidGain"), Content.getComponent("knbPostprocessLowMidQ"), Content.getComponent("knbPostprocessMidFreq"), Content.getComponent("knbPostprocessMidGain"), Content.getComponent("knbPostprocessMidQ"), Content.getComponent("knbPostprocessHighMidFreq"), Content.getComponent("knbPostprocessHighMidGain"), Content.getComponent("knbPostprocessHighMidQ"), Content.getComponent("knbPostprocessHighShelfFreq"), Content.getComponent("knbPostprocessHighShelfGain"), Content.getComponent("knbPostprocessHighShelfQ"), Content.getComponent("knbPostprocessLpfFreq"), Content.getComponent("knbPostprocessCompThreshold"), Content.getComponent("knbPostprocessCompRatio"), Content.getComponent("knbPostprocessCompRelease"), Content.getComponent("knbPostprocessCompAttack"), Content.getComponent("knbPostprocessCompMix"), Content.getComponent("knbPostprocessCompKnee"), Content.getComponent("knbPostprocessCompMakeup")];
-	const btnEQFirstLAF = [Content.getComponent("btnPreProcessEQFirst"), Content.getComponent("btnPostProcessEQFirst")];
+	const knbPreprocessLAF = [Content.getComponent("knbPreprocessCompThreshold"), Content.getComponent("knbPreprocessCompRatio"), Content.getComponent("knbPreprocessCompRelease"), Content.getComponent("knbPreprocessCompAttack"), Content.getComponent("knbPreprocessClipperGain")];
+	const knbPostprocessLAF = [Content.getComponent("knbPostprocessCompThreshold"), Content.getComponent("knbPostprocessCompRatio"), Content.getComponent("knbPostprocessCompRelease"), Content.getComponent("knbPostprocessCompAttack")];	
 	const btnTunerMonitorLAF = [Content.getComponent("btnTunerMonitor")];  
 	const btnShowCabDesignerLAF = [Content.getComponent("btnShowCabDesigner")];
 	const btnOpenCabFolderLAF = [Content.getComponent("btnOpenCabFolder")];	
@@ -51,8 +49,7 @@ namespace LookAndFeel
 	const LAFButtonTunerMonitor = Content.createLocalLookAndFeel();      
 	const LAFButtonInvertPhase = Content.createLocalLookAndFeel();
 	const LAFButtonOpenCabDesigner = Content.createLocalLookAndFeel();
-	const LAFButtonOpenCabFolder = Content.createLocalLookAndFeel();
-	const LAFButtonEQFirst = Content.createLocalLookAndFeel();		
+	const LAFButtonOpenCabFolder = Content.createLocalLookAndFeel();	
 	const LAFButtonLock = Content.createLocalLookAndFeel();		
 	const LAFButtonClearBuffer = Content.createLocalLookAndFeel();
 	const LAFButtonClose = Content.createLocalLookAndFeel();
@@ -219,42 +216,22 @@ namespace LookAndFeel
 	{
 		var linePad = 26;
 		var lineY = 26;
+		var drawLine = true;
 		
 		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
 		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrGrey); }
 			
 		g.drawAlignedText(obj.text, obj.area, "centred");	
-		
-		if (obj.id == "btnShowPreProcess" || obj.id == "btnShowPostProcess") { lineY = 36; linePad = 26; }
+				
+		if (obj.id == "btnShowPreprocess" || obj.id == "btnShowPostprocess") { drawLine = false; }
 		else if (obj.id == "btnShowPresetBrowser") {lineY = 26; linePad = 165;} // special case, since we need to change the text
 		else { lineY = 26; linePad = 26; }					
 		
-		if (obj.value)
+		if (obj.value && drawLine)
 		{
 			g.drawLine(linePad, obj.area[2] - linePad, lineY, lineY, 2.0);
 		}
-	});
-		
-	
-	
-	// Preprocess/Postprocess EQ First Button
-	LAFButtonEQFirst.registerFunction("drawToggleButton", function(g, obj)
-	{				
-		g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey);
-		g.setFont("Arial Bold", 14.0);
-		if (obj.value)
-		{
-			g.drawAlignedText("EQ", [0, 0, obj.area[2], 20], "centred");
-			g.drawAlignedText("COMP", [0, 60, obj.area[2], 20], "centred");
-		}
-		else
-		{
-			g.drawAlignedText("COMP", [0, 0, obj.area[2], 20], "centred");
-			g.drawAlignedText("EQ", [0, 60, obj.area[2], 20], "centred");
-		}
-		var tPad = 30;				
-		g.fillTriangle([tPad, tPad, obj.area[2] - tPad * 2, obj.area[3] - tPad * 2], Math.toRadians(180));
-	});
+	});	
 			
 	// Lock / Tempo Sync / Transpose Snap
 	LAFButtonLock.registerFunction("drawToggleButton", function(g, obj)
@@ -342,8 +319,7 @@ namespace LookAndFeel
 	for (b in btnMenuLAF) { b.setLocalLookAndFeel(LAFButtonMenu); }
 	for (b in btnBypassLAF) { b.setLocalLookAndFeel(LAFButtonBypass); }
 	for (b in btnPrevLAF) { b.setLocalLookAndFeel(LAFButtonPrev); }
-	for (b in btnNextLAF) { b.setLocalLookAndFeel(LAFButtonNext); }	
-	for (b in btnEQFirstLAF) { b.setLocalLookAndFeel(LAFButtonEQFirst); }
+	for (b in btnNextLAF) { b.setLocalLookAndFeel(LAFButtonNext); }		
 	for (b in btnTunerMonitorLAF) { b.setLocalLookAndFeel(LAFButtonTunerMonitor); }
 	for (b in btnLockLAF) { b.setLocalLookAndFeel(LAFButtonLock); }
 	for (b in btnInvertPhaseLAF) { b.setLocalLookAndFeel(LAFButtonInvertPhase); }

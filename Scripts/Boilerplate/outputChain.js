@@ -20,17 +20,18 @@ namespace OutputChain
 	const outputGain = Synth.getEffect("outputGain");
     const knbOutputGain = Content.getComponent("knbOutputGain");
 
-    const btnShowPostProcess = Content.getComponent("btnShowPostProcess");
-    const pnlPostProcess = Content.getComponent("pnlPostProcess");
-    
-    inline function onbtnShowPostProcessControl(component, value)
+    const btnShowPostprocess = Content.getComponent("btnShowPostprocess");
+    const pnlPostprocess = Content.getComponent("pnlPostprocess");
+    Engine.addModuleStateToUserPreset("postprocessEQ");
+        
+    inline function onbtnShowPostprocessControl(component, value)
     {
-        pnlPostProcess.set("visible", value);
+        pnlPostprocess.set("visible", value);
     }
 
-    btnShowPostProcess.setControlCallback(onbtnShowPostProcessControl);           
+    btnShowPostprocess.setControlCallback(onbtnShowPostprocessControl);           
     
-    pnlPostProcess.setMouseCallback(function(event)
+    pnlPostprocess.setMouseCallback(function(event)
     {
         var x = bounds[0];
         var y = bounds[1];
@@ -39,8 +40,8 @@ namespace OutputChain
         
         if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
         {
-            btnShowPostProcess.setValue(0);
-            btnShowPostProcess.changed();
+            btnShowPostprocess.setValue(0);
+            btnShowPostprocess.changed();
         }   
     });
     
@@ -81,37 +82,20 @@ namespace OutputChain
     knbLofi.setControlCallback(onknbLofiControl);
 
     // Look and feel
+    
+    const padLeft = 154;
+    const padTop = 50;
+    const padRight = 308;
+    const padBottom = 57;
+    
+    const bounds = [padLeft, padTop, pnlPostprocess.getWidth() - padRight, pnlPostprocess.getHeight() - padBottom];
 
-    const bounds = [190, 190, 700, 452];
-    const clrGrey = 0xFF808080;       
-    const clrWhite = 0xFFFFFFFF;
-    const clrExtradarkgrey = 0xFF171717;
-    const clrLightgrey = 0xFFD3D3D3; 
-    const p = Content.createPath();     
-
-    pnlPostProcess.loadImage("{PROJECT_FOLDER}bgPostprocess.png", "bg");    
-
-    pnlPostProcess.setPaintRoutine(function(g)
-    {
-        g.drawImage("bg", [0, 0, this.getWidth(), this.getHeight()], 0, 0);
-        g.setColour(Colours.withAlpha(ColourData.clrComponentBGGrey, .8));
+    pnlPostprocess.setPaintRoutine(function(g)
+    {        
+        g.setColour(Colours.withAlpha(ColourData.clrComponentBGGrey, 1.0));
         g.fillRoundedRectangle(bounds, 2.0);
         g.setColour(ColourData.clrMidgrey);
-        g.drawRoundedRectangle(bounds, 2.0, 3.0);
-        
-        var y = Content.getComponent("knbPostprocessHpfFreq").get("y") + 80; // inline yuckiness
-        var paths = [PathData.pathHPF, PathData.pathLowShelf, PathData.pathPeak, PathData.pathPeak, PathData.pathPeak, PathData.pathHighShelf, PathData.pathLPF];
-        var knbs = [Content.getComponent("knbPostprocessHpfFreq"), Content.getComponent("knbPostprocessLowShelfFreq"), Content.getComponent("knbPostprocessLowMidFreq"), Content.getComponent("knbPostprocessMidFreq"), Content.getComponent("knbPostprocessHighMidFreq"), Content.getComponent("knbPostprocessHighShelfFreq"), Content.getComponent("knbPostprocessLpfFreq")];
-        var offset = 23;
-        
-        g.setColour(clrLightgrey);
-        
-        for (i=0; i<knbs.length; i++)
-        {
-            p.clear();
-            p.loadFromData(paths[i]);
-            g.drawPath(p, [knbs[i].get("x") + offset, y, 20, 10], 3.0);
-        }                
+        g.drawRoundedRectangle(bounds, 2.0, 3.0);                        
     });
     
 }

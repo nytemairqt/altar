@@ -24,14 +24,14 @@
             <Control type="ScriptSlider" id="knbPickStrength" value="0.0"/>
             <Control type="ScriptButton" id="btnPick" value="0.0"/>
             <Control type="ScriptSlider" id="knbWhistle" value="1.0"/>
-            <Control type="ScriptButton" id="btnWhistle" value="0.0"/>
+            <Control type="ScriptButton" id="btnWhistle" value="1.0"/>
             <Control type="ScriptSlider" id="knbLofi" value="1.0"/>
             <Control type="ScriptButton" id="btnLofi" value="0.0"/>
             <Control type="ScriptComboBox" id="cmbOversampling" value="3.0"/>
             <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
             <Control type="ScriptButton" id="btnLimiter" value="1.0"/>
-            <Control type="ScriptButton" id="btnShowPreProcess" value="0.0"/>
-            <Control type="ScriptButton" id="btnShowPostProcess" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowPreprocess" value="0.0"/>
+            <Control type="ScriptButton" id="btnShowPostprocess" value="0.0"/>
             <Control type="ScriptButton" id="btnModularABypass" value="0.0"/>
             <Control type="ScriptButton" id="btnModularBBypass" value="1.0"/>
             <Control type="ScriptButton" id="btnModularCBypass" value="1.0"/>
@@ -119,62 +119,20 @@
             <Control type="ScriptSlider" id="knbRingmodLFODepth" value="0.5"/>
             <Control type="ScriptSlider" id="knbRingmodFilterFrequency" value="2600.0"/>
             <Control type="ScriptButton" id="btnRingmodTempoSync" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreProcessEQFirst" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessHpfFreq" value="20.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessLowShelfFreq" value="120.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessLowShelfGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessLowShelfQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessLowMidFreq" value="300.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessLowMidGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessLowMidQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessMidFreq" value="700.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessMidGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessMidQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessHighMidFreq" value="3200.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessHighMidGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessHighMidQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessHighShelfFreq" value="7000.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessHighShelfGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessHighShelfQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessLpfFreq" value="20000.0"/>
+            <Control type="ScriptButton" id="btnPreprocessEQEnable" value="1.0"/>
+            <Control type="ScriptButton" id="btnPreprocessCompEnable" value="1.0"/>
             <Control type="ScriptSlider" id="knbPreprocessCompThreshold" value="0.0"/>
             <Control type="ScriptSlider" id="knbPreprocessCompRatio" value="4.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessCompAttack" value="2.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessCompRelease" value="150.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessCompKnee" value="3.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessCompMix" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessCompMakeup" value="0.0"/>
+            <Control type="ScriptSlider" id="knbPreprocessCompAttack" value="10.0"/>
+            <Control type="ScriptSlider" id="knbPreprocessCompRelease" value="40.0"/>
+            <Control type="ScriptButton" id="btnPreprocessClipperEnable" value="1.0"/>
             <Control type="ScriptSlider" id="knbPreprocessClipperGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreProcessEQEnable" value="1.0"/>
-            <Control type="ScriptButton" id="btnPreProcessCompEnable" value="1.0"/>
-            <Control type="ScriptButton" id="btnPreProcessClipperEnable" value="1.0"/>
-            <Control type="ScriptButton" id="btnPostProcessEQFirst" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessHpfFreq" value="20.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessLowShelfFreq" value="120.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessLowShelfGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessLowShelfQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessLowMidFreq" value="300.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessLowMidGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessLowMidQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessMidFreq" value="700.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessMidGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessMidQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessHighMidFreq" value="3200.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessHighMidGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessHighMidQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessHighShelfFreq" value="7000.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessHighShelfGain" value="0.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessHighShelfQ" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessLpfFreq" value="20000.0"/>
+            <Control type="ScriptButton" id="btnPostprocessEQEnable" value="1.0"/>
+            <Control type="ScriptButton" id="btnPostprocessCompEnable" value="0.0"/>
             <Control type="ScriptSlider" id="knbPostprocessCompThreshold" value="0.0"/>
             <Control type="ScriptSlider" id="knbPostprocessCompRatio" value="4.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessCompAttack" value="2.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessCompRelease" value="150.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessCompKnee" value="3.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessCompMix" value="1.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessCompMakeup" value="0.0"/>
-            <Control type="ScriptButton" id="btnPostProcessEQEnable" value="1.0"/>
-            <Control type="ScriptButton" id="btnPostProcessCompEnable" value="1.0"/>
+            <Control type="ScriptSlider" id="knbPostprocessCompAttack" value="10.0"/>
+            <Control type="ScriptSlider" id="knbPostprocessCompRelease" value="40.0"/>
             <Control type="ScriptButton" id="btnTunerMonitor" value="0.0"/>
             <Control type="ScriptSlider" id="knbClickTempo" value="120.0"/>
             <Control type="ScriptLabel" id="lblAmpNAMLoader" value="Load NAM File."/>
@@ -219,15 +177,22 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="preprocess" Bypassed="0" Network="preprocess"
-                   HPFFreq="20.0" LowShelfFreq="120.0" LowShelfGain="0.0" LowShelfQ="1.0"
-                   LowMidFreq="300.0" LowMidGain="0.0" LowMidQ="1.0" MidFreq="700.0"
-                   MidGain="0.0" MidQ="1.0" HighMidFreq="3200.0" HighMidGain="0.0"
-                   HighMidQ="1.0" HighShelfFreq="7000.0" HighShelfGain="0.0" HighShelfQ="1.0"
-                   LPFFreq="20000.0" CompThreshold="0.0" CompRatio="4.0" CompAttack="2.0"
-                   CompRelease="150.0" CompKnee="3.0" CompMix="1.0" CompMakeup="0.0"
-                   ClipperGain="0.0" EQFirst="1.0" EQEnable="1.0" CompEnable="1.0"
-                   ClipperEnable="1.0">
+        <Processor Type="CurveEq" ID="preprocessEQ" Bypassed="0" NumFilters="0"
+                   FFTEnabled="0">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Dynamics" ID="preprocessComp" Bypassed="0" GateEnabled="0.0"
+                   GateThreshold="0.0" GateAttack="1.0" GateRelease="100.0" CompressorEnabled="1.0"
+                   CompressorThreshold="0.0" CompressorRatio="4.0" CompressorAttack="10.0"
+                   CompressorRelease="40.0" LimiterEnabled="0.0" LimiterThreshold="0.0"
+                   LimiterAttack="1.0" LimiterRelease="10.0" CompressorMakeup="0.0"
+                   LimiterMakeup="0.0">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Hardcoded Master FX" ID="preprocessClipper" Bypassed="0"
+                   Network="clipper" ClipperGain="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -327,7 +292,7 @@
             <ContentProperties DeviceType="Desktop"/>
           </UIData>
         </Processor>
-        <Processor Type="CurveEq" ID="whistle" Bypassed="1" NumFilters="2" Band0="-5.0"
+        <Processor Type="CurveEq" ID="whistle" Bypassed="0" NumFilters="2" Band0="-5.0"
                    Band1="2600.0" Band2="4.539204120635986" Band3="1.0" Band4="4.0"
                    Band5="-8.0" Band6="4000.0" Band7="4.406803607940674" Band8="1.0"
                    Band9="4.0" FFTEnabled="0">
@@ -339,14 +304,17 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="postprocess" Bypassed="0" Network="postprocess"
-                   HPFFreq="20.0" LowShelfFreq="120.0" LowShelfGain="0.0" LowShelfQ="1.0"
-                   LowMidFreq="300.0" LowMidGain="0.0" LowMidQ="1.0" MidFreq="700.0"
-                   MidGain="0.0" MidQ="1.0" HighMidFreq="3200.0" HighMidGain="0.0"
-                   HighMidQ="1.0" HighShelfFreq="7000.0" HighShelfGain="0.0" HighShelfQ="1.0"
-                   LPFFreq="20000.0" CompThreshold="0.0" CompRatio="4.0" CompAttack="2.0"
-                   CompRelease="150.0" CompKnee="3.0" CompMix="1.0" CompMakeup="0.0"
-                   EQFirst="1.0" EQEnable="1.0" CompEnable="1.0">
+        <Processor Type="CurveEq" ID="postprocessEQ" Bypassed="0" NumFilters="0"
+                   FFTEnabled="0">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Dynamics" ID="postprocessComp" Bypassed="1" GateEnabled="0.0"
+                   GateThreshold="0.0" GateAttack="1.0" GateRelease="100.0" CompressorEnabled="1.0"
+                   CompressorThreshold="0.0" CompressorRatio="4.0" CompressorAttack="10.0"
+                   CompressorRelease="40.0" LimiterEnabled="0.0" LimiterThreshold="0.0"
+                   LimiterAttack="1.0" LimiterRelease="10.0" CompressorMakeup="0.0"
+                   LimiterMakeup="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>

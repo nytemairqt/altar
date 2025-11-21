@@ -24,14 +24,14 @@ namespace Preferences
 	const fltPreferences = Content.getComponent("fltPreferences");	
 	const fltPreferencesLAF = Content.createLocalLookAndFeel();	
 
-	const btnSacrifice = Content.getComponent("btnSacrifice");		
-	const sacrificeString = "dj&#fhfa))-118jkgfajge7g7*&JJFJK((9fsauifa7*F&*F837uUSJGKgs9g997da97ggd7gs7gs7&G*&&D*G*&*&gdiagdg87&(&--===F=G*SD8g9dgdigdsgG*G8d8g2gQ!!8e9g89sgd8))SF=++)hgejg7*&T*#jheahgjdhag&#*R&&&t7t32t78dstd78s7td87z7t7&FEGAF&SFdglkg2ly8t9g89sg8*G*Dg8ygsdg77ZGg7&&#&T&E(G(D&G7d7g7dg72gi8gd8sgdgzkgkuKgukGugufdusgewg___gdsg898sdg8zg&&&Gdg-_g9asg8-_G8dsgs-648gT";
+	const btnWitness = Content.getComponent("btnWitness");		
+	const witnessString = "dj&#fhfa))-118jkgfajge7g7*&JJFJK((9fsauifa7*F&*F837uUSJGKgs9g997da97ggd7gs7gs7&G*&&D*G*&*&gdiagdg87&(&--===F=G*SD8g9dgdigdsgG*G8d8g2gQ!!8e9g89sgd8))SF=++)hgejg7*&T*#jheahgjdhag&#*R&&&t7t32t78dstd78s7td87z7t7&FEGAF&SFdglkg2ly8t9g89sg8*G*Dg8ygsdg77ZGg7&&#&T&E(G(D&G7d7g7dg72gi8gd8sgdgzkgkuKgukGugufdusgewg___gdsg898sdg8zg&&&Gdg-_g9asg8-_G8dsgs-648gT";
 	const targetWord = "  witness  ";
 	const displayLength = 29;
 	reg currentDisplayText = "";
 	reg frameCounter = 0;		
 
-	const sacrificeTimer = Engine.createTimerObject();
+	const witnessTimer = Engine.createTimerObject();
 
 	inline function applyLeetSpeak(word)
 	{
@@ -58,8 +58,8 @@ namespace Preferences
 	    
 	    for (i = 0; i < displayLength; i++)
 	    {
-	        local randomIndex = Math.randInt(0, sacrificeString.length - 1);
-	        tempDisplay += sacrificeString.substring(randomIndex, randomIndex + 1);
+	        local randomIndex = Math.randInt(0, witnessString.length - 1);
+	        tempDisplay += witnessString.substring(randomIndex, randomIndex + 1);
 	    }
 
 	    currentDisplayText = tempDisplay;
@@ -81,8 +81,8 @@ namespace Preferences
 	        }
 	        else
 	        {
-	            local randomIndex = Math.randInt(0, sacrificeString.length - 1);
-	            result += sacrificeString.substring(randomIndex, randomIndex + 1);
+	            local randomIndex = Math.randInt(0, witnessString.length - 1);
+	            result += witnessString.substring(randomIndex, randomIndex + 1);
 	        }
 	    }
 	    
@@ -127,8 +127,8 @@ namespace Preferences
 	    if (validCount > 0)
 	    {
 	        local changeIndex = validPositions[Math.randInt(0, validCount - 1)];
-	        local randomIndex = Math.randInt(0, sacrificeString.length - 1);
-	        textArray[changeIndex] = sacrificeString.substring(randomIndex, randomIndex + 1);
+	        local randomIndex = Math.randInt(0, witnessString.length - 1);
+	        textArray[changeIndex] = witnessString.substring(randomIndex, randomIndex + 1);
 	    }
 	    
 	    local result = "";
@@ -140,20 +140,20 @@ namespace Preferences
 	{
 	    frameCounter++;
 	    currentDisplayText = updateGlitchCharacters(currentDisplayText, displayLength);
-	    btnSacrifice.set("text", currentDisplayText);	    
+	    btnWitness.set("text", currentDisplayText);	    
 	}
 	
 	currentDisplayText = createCenteredText(displayLength);
-	sacrificeTimer.setTimerCallback(witnessTimerCallback);
-	sacrificeTimer.startTimer(70);
+	witnessTimer.setTimerCallback(witnessTimerCallback);
+	witnessTimer.startTimer(70);
 
-	inline function onbtnSacrificeControl(component, value)
+	inline function onbtnWitnessControl(component, value)
 	{
 	    if (!value) { return; }
 	    Engine.openWebsite("https://iamlamprey.com/altar");
 	}
 
-	btnSacrifice.setControlCallback(onbtnSacrificeControl);	
+	btnWitness.setControlCallback(onbtnWitnessControl);	
 	
 	inline function onbtnShowPreferencesControl(component, value)
 	{
@@ -169,7 +169,10 @@ namespace Preferences
     
     cpuUsageTimer.setTimerCallback(function()
     {
-	    lblCpuUsage.set("text", "CPU Usage: " + Math.round(Engine.getCpuUsage()) + "%");
+	    // HISE defaults to a CPU spike reporting system, getCpuUsage() isn't actually showing CPU usage
+	    // instead it represents a 512-sample buffer fill amount for 10ms audio @ 44100 
+	    // in other words, dividing by 10 gives us a smoother representation of the actual CPU usage of the plugin    	    
+	    lblCpuUsage.set("text", "CPU Usage: " + Math.round(Engine.getCpuUsage() / 10) + "%");
     });
     
     cpuUsageTimer.startTimer(300);

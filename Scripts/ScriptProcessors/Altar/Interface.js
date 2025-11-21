@@ -12,12 +12,12 @@ include("Boilerplate/preferences.js");
 include("Boilerplate/cabDesigner.js");
 include("Boilerplate/gate.js");
 include("Boilerplate/inputChain.js");
+include("Boilerplate/preprocess.js");
 include("Boilerplate/modularChain.js");
+include("Boilerplate/postprocess.js");
 include("Boilerplate/outputChain.js");
 include("Boilerplate/oversampling.js");
-include("Boilerplate/presets.js");
-
-function onNoteOn()
+include("Boilerplate/presets.js");function onNoteOn()
 {
 	
 }

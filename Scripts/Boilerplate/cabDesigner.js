@@ -40,9 +40,7 @@ namespace CabDesigner
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];                	    
     const testAudio = Synth.getChildSynth("testAudio");                            
     const inputGain = Synth.getEffect("inputGain");
-    const outputGain = Synth.getEffect("outputGain");
-    const preprocess = Synth.getEffect("preprocess");
-    const postprocess = Synth.getEffect("postprocess");        
+    const outputGain = Synth.getEffect("outputGain");        
 
     const pnlCabDesigner = Content.getComponent("pnlCabDesigner");
     const btnShowCabDesigner = Content.getComponent("btnShowCabDesigner");

@@ -17,36 +17,8 @@
 
 namespace InputChain
 {
-	const p = Content.createPath();
-
     const inputGain = Synth.getEffect("inputGain");
-    const knbInputGain = Content.getComponent("knbInputGain");
-
-    const pnlPreProcess = Content.getComponent("pnlPreProcess");
-    const btnShowPreProcess = Content.getComponent("btnShowPreProcess");    
-    
-   	const bounds = [260, 190, 700, 452];
-
-    inline function onbtnShowPreProcessControl(component, value)
-    {
-        pnlPreProcess.set("visible", value);
-    }
-    
-    btnShowPreProcess.setControlCallback(onbtnShowPreProcessControl);
-        
-    pnlPreProcess.setMouseCallback(function(event)
-    {
-        var x = bounds[0];
-        var y = bounds[1];
-        var w = bounds[2];
-        var h = bounds[3];
-        
-        if (event.mouseDownX < x || event.mouseDownX > (x + w) || event.mouseDownY < y || event.mouseDownY > (y + h)) 
-        {
-            btnShowPreProcess.setValue(0);
-            btnShowPreProcess.changed();
-        }   
-    });
+    const knbInputGain = Content.getComponent("knbInputGain");    
 
     const transpose = Synth.getEffect("transpose");    
     const btnTranspose = Content.getComponent("btnTranspose");
@@ -85,30 +57,6 @@ namespace InputChain
 
     const octave = Synth.getEffect("octave");
     const btnOctave = Content.getComponent("btnOctave");
-    const knbOctave = Content.getComponent("knbOctave");
-
-    // Look and Feel
-
-    pnlPreProcess.loadImage("{PROJECT_FOLDER}bgPreprocess.png", "bg");    
-    pnlPreProcess.setPaintRoutine(function(g)
-    {
-        g.drawImage("bg", [0, 0, this.getWidth(), this.getHeight()], 0, 0);
-        g.setColour(Colours.withAlpha(ColourData.clrComponentBGGrey, .8));
-        g.fillRoundedRectangle(bounds, 2.0);
-        g.setColour(ColourData.clrMidgrey);
-        g.drawRoundedRectangle(bounds, 2.0, 3.0);
-                
-        var y = Content.getComponent("knbPreprocessHpfFreq").get("y") + 80; // inline yuckiness
-        var paths = [PathData.pathHPF, PathData.pathLowShelf, PathData.pathPeak, PathData.pathPeak, PathData.pathPeak, PathData.pathHighShelf, PathData.pathLPF];
-        var knbs = [Content.getComponent("knbPreprocessHpfFreq"), Content.getComponent("knbPreprocessLowShelfFreq"), Content.getComponent("knbPreprocessLowMidFreq"), Content.getComponent("knbPreprocessMidFreq"), Content.getComponent("knbPreprocessHighMidFreq"), Content.getComponent("knbPreprocessHighShelfFreq"), Content.getComponent("knbPreprocessLpfFreq")];
-        var offset = 23;
-        g.setColour(ColourData.clrLightgrey);        
-        for (i=0; i<knbs.length; i++)
-        {
-            p.clear();
-            p.loadFromData(paths[i]);
-            g.drawPath(p, [knbs[i].get("x") + offset, y, 20, 10], 3.0);
-        }                
-    });
+    const knbOctave = Content.getComponent("knbOctave");    
     
 }
