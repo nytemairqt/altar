@@ -29,6 +29,8 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <initializer_list>
+#include <array>
 
 #include "src/dependencies/nlohmann/json.hpp"
 #include "src/dependencies/RTNeural/RTNeural.h"
@@ -111,47 +113,19 @@ template <int NV> struct amp: public data::base, public cable_manager_t
     }           
 
     void reset() 
-    {
-        // filter chains
-        for (int ch = 0; ch < 2; ++ch)
-        {            
-            for (int i = 0; i < numDCOffsetStates; ++i) { dcOffset[ch][i].reset(); }
-            for (int i = 0; i < numToneStackStates; ++i) { toneStackStates[ch][i].reset(); }
-
-            // clean
-
-            for (int i = 0; i < numGlassPreSculptStates; ++i) { glassPreSculptStates[ch][i].reset(); } 
-            for (int i = 0; i < numGlassPostSculptStates; ++i) { glassPostSculptStates[ch][i].reset(); }
-
-            for (int i = 0; i < numPearlPreSculptStates; ++i) { pearlPreSculptStates[ch][i].reset(); } 
-            for (int i = 0; i < numPearlPostSculptStates; ++i) { pearlPostSculptStates[ch][i].reset(); }
-
-            for (int i = 0; i < numDiamondPreSculptStates; ++i) { diamondPreSculptStates[ch][i].reset(); } 
-            for (int i = 0; i < numDiamondPostSculptStates; ++i) { diamondPostSculptStates[ch][i].reset(); }
-
-            for (int i = 0; i < numZirconPreSculptStates; ++i) { zirconPreSculptStates[ch][i].reset(); } 
-            for (int i = 0; i < numZirconPostSculptStates; ++i) { zirconPostSculptStates[ch][i].reset(); }
-
-            // dirty
-            
-            for (int i = 0; i < numSlatePreSculptStates; ++i) { slatePreSculptStates[ch][i].reset(); }
-            for (int i = 0; i < numSlatePostSculptStates; ++i) { slatePostSculptStates[ch][i].reset(); }
-
-            for (int i = 0; i < numObsidianPreSculptStates; ++i) {obsidianPreSculptStates[ch][i].reset(); }
-            for (int i = 0; i < numObsidianPostSculptStates; ++i) { obsidianPostSculptStates[ch][i].reset(); }
-
-            for (int i = 0; i < numAmethystPreSculptStates; ++i) { amethystPreSculptStates[ch][i].reset(); }
-            for (int i = 0; i < numAmethystPostSculptStates; ++i) { amethystPostSculptStates[ch][i].reset(); }
-
-            for (int i = 0; i < numOpalPreSculptStates; ++i) { opalPreSculptStates[ch][i].reset(); }
-            for (int i = 0; i < numOpalPostSculptStates; ++i) { opalPostSculptStates[ch][i].reset(); }
-
-            for (int i = 0; i < numSapphirePreSculptStates; ++i) { sapphirePreSculptStates[ch][i].reset(); }
-            for (int i = 0; i < numSapphirePostSculptStates; ++i) { sapphirePostSculptStates[ch][i].reset(); }
-
-            for (int i = 0; i < numGarnetPreSculptStates; ++i) { garnetPreSculptStates[ch][i].reset(); }
-            for (int i = 0; i < numGarnetPostSculptStates; ++i) { garnetPostSculptStates[ch][i].reset(); }                    
-        }
+    {        
+        toneStack.reset();
+        dcBlocker.reset();
+        glass.reset();
+        pearl.reset();
+        diamond.reset();
+        zircon.reset();
+        slate.reset();
+        obsidian.reset();
+        amethyst.reset();
+        opal.reset();
+        sapphire.reset();
+        garnet.reset();
                 
         if (oversamplingFactor > 0 && oversampling != nullptr) { oversampling->reset(); }
         for (int ch = 0; ch < 2; ++ch) { dirtyLowBandMem[ch] = 0.0f; dirtyPresenceMem[ch] = 0.0f; }
@@ -210,17 +184,41 @@ template <int NV> struct amp: public data::base, public cable_manager_t
             break;
         }        
         case 2: inputGain = static_cast<float>(v); break;
-        case 3: low = static_cast<float>(v); updateToneStack(); break;
-        case 4: mid = static_cast<float>(v); updateToneStack(); break;
-        case 5: high = static_cast<float>(v); updateToneStack(); break;
-        case 6: presence = static_cast<float>(v); updateToneStack(); break;
+        case 3: 
+        {
+            low = static_cast<float>(v); 
+            toneStack.setPreGain(0, low);
+            toneStack.update(scaledSampleRate); 
+            break;
+        }
+        case 4: 
+        {
+            mid = static_cast<float>(v); 
+            toneStack.setPreGain(1, mid);
+            toneStack.update(scaledSampleRate); 
+            break;
+        }
+        case 5: 
+        {
+            high = static_cast<float>(v); 
+            toneStack.setPreGain(2, high);
+            toneStack.update(scaledSampleRate); 
+            break;
+        }
+        case 6: 
+        {
+            presence = static_cast<float>(v); 
+            toneStack.setPreGain(3, presence);
+            toneStack.update(scaledSampleRate); 
+            break;
+        }
         case 7: outputGain = static_cast<float>(v); break;           
         case 8: distortionMode = static_cast<int>(v); break;
         case 9: cleanToneStackMode = static_cast<int>(v); break;  
         case 10: dirtyToneStackMode = static_cast<int>(v); break;  
-        case 11: latestFilterFreq = static_cast<float>(v); updateSlate(); break;
-        case 12: latestFilterQ = static_cast<float>(v); updateSlate(); break;
-        case 13: latestFilterGain = static_cast<float>(v); updateSlate(); break;
+        case 11: latestFilterFreq = static_cast<float>(v); break;
+        case 12: latestFilterQ = static_cast<float>(v); break;
+        case 13: latestFilterGain = static_cast<float>(v); break;
         }
     }
     
@@ -402,23 +400,24 @@ private:
                 sample *= Decibels::decibelsToGain(inputGain); // input gain                                                
 
                 switch (cleanToneStackMode)
-                {
-                    case 0: for (int f = 0; f < numGlassPreSculptStates; ++f) { sample = glassPreSculptStates[ch][f].process(sample); } break;
-                    case 1: for (int f = 0; f < numPearlPreSculptStates; ++f) { sample = pearlPreSculptStates[ch][f].process(sample); } break;
-                    case 2: for (int f = 0; f < numDiamondPreSculptStates; ++f) { sample = diamondPreSculptStates[ch][f].process(sample); } break;
-                    case 3: for (int f = 0; f < numZirconPreSculptStates; ++f) { sample = zirconPreSculptStates[ch][f].process(sample); } break;                    
+                {                    
+                    case 0: sample = glass.processPre(ch, sample); break;
+                    case 1: sample = pearl.processPre(ch, sample); break;
+                    case 2: sample = diamond.processPre(ch, sample); break;
+                    case 3: sample = zircon.processPre(ch, sample); break;
                 }
 
                 sample = getCleanSample(sample); // transfer function  
 
-                for (int f = 0; f < numToneStackStates; ++f) { sample = toneStackStates[ch][f].process(sample); } // tone stack
+                //for (int f = 0; f < numToneStackStates; ++f) { sample = toneStackStates[ch][f].process(sample); } // tone stack
+                sample = toneStack.processPre(ch, sample);
 
                 switch (cleanToneStackMode)
-                {
-                    case 0: for (int f = 0; f < numGlassPostSculptStates; ++f) { sample = glassPostSculptStates[ch][f].process(sample); } break;
-                    case 1: for (int f = 0; f < numPearlPostSculptStates; ++f) { sample = pearlPostSculptStates[ch][f].process(sample); } break;
-                    case 2: for (int f = 0; f < numDiamondPostSculptStates; ++f) { sample = diamondPostSculptStates[ch][f].process(sample); } break;
-                    case 3: for (int f = 0; f < numZirconPostSculptStates; ++f) { sample = zirconPostSculptStates[ch][f].process(sample); } break;                    
+                {                    
+                    case 0: sample = glass.processPost(ch, sample); break;
+                    case 1: sample = pearl.processPost(ch, sample); break;
+                    case 2: sample = diamond.processPost(ch, sample); break;
+                    case 3: sample = zircon.processPost(ch, sample); break;
                 }
                 
                 sample *= Decibels::decibelsToGain(outputGain); // output gain
@@ -444,16 +443,17 @@ private:
 
                 // pre sculpt
                 switch (dirtyToneStackMode)
-                {                    
-                    case 0: for (int f = 0; f < numSlatePreSculptStates; ++f) { sample = slatePreSculptStates[ch][f].process(sample); } break;
-                    case 1: for (int f = 0; f < numObsidianPreSculptStates; ++f) { sample = obsidianPreSculptStates[ch][f].process(sample); } break;
-                    case 2: for (int f = 0; f < numAmethystPreSculptStates; ++f) { sample = amethystPreSculptStates[ch][f].process(sample); } break;
-                    case 3: for (int f = 0; f < numOpalPreSculptStates; ++f) { sample = opalPreSculptStates[ch][f].process(sample); } break;
-                    case 4: for (int f = 0; f < numSapphirePreSculptStates; ++f) { sample = sapphirePreSculptStates[ch][f].process(sample); } break;
-                    case 5: for (int f = 0; f < numGarnetPreSculptStates; ++f) { sample = garnetPreSculptStates[ch][f].process(sample); } break;
+                {                         
+                    case 0: sample = slate.processPre(ch, sample); break;
+                    case 1: sample = obsidian.processPre(ch, sample); break;
+                    case 2: sample = amethyst.processPre(ch, sample); break;
+                    case 3: sample = opal.processPre(ch, sample); break;
+                    case 4: sample = sapphire.processPre(ch, sample); break;
+                    case 5: sample = garnet.processPre(ch, sample); break;
                 }
-
-                for (int f = 0; f < numDCOffsetStates; ++f) { sample = dcOffset[ch][f].process(sample); } // dc blocker filter
+                
+                // dc block
+                sample = dcBlocker.processPre(ch, sample);
 
                 switch (distortionMode) // waveshaper algos go here
                 {
@@ -461,18 +461,18 @@ private:
                     case 1: sample = getFacelessSample(sample, biasMemLeft); break;
                 }                                           
 
-                // tone stack
-                for (int f = 0; f < numToneStackStates; ++f) { sample = toneStackStates[ch][f].process(sample); } // tone stack
+                // tone stack                
+                sample = toneStack.processPre(ch, sample);
 
                 // post sculpt
                 switch (dirtyToneStackMode)
                 {
-                    case 0: for (int f = 0; f < numSlatePostSculptStates; ++f) { sample = slatePostSculptStates[ch][f].process(sample); } break;
-                    case 1: for (int f = 0; f < numObsidianPostSculptStates; ++f) { sample = obsidianPostSculptStates[ch][f].process(sample); } break;
-                    case 2: for (int f = 0; f < numAmethystPostSculptStates; ++f) { sample = amethystPostSculptStates[ch][f].process(sample); } break;
-                    case 3: for (int f = 0; f < numOpalPostSculptStates; ++f) { sample = opalPostSculptStates[ch][f].process(sample); } break;
-                    case 4: for (int f = 0; f < numSapphirePostSculptStates; ++f) { sample = sapphirePostSculptStates[ch][f].process(sample); } break;
-                    case 5: for (int f = 0; f < numGarnetPostSculptStates; ++f) { sample = garnetPostSculptStates[ch][f].process(sample); } break;                                       
+                    case 0: sample = slate.processPost(ch, sample); break;
+                    case 1: sample = obsidian.processPost(ch, sample); break;
+                    case 2: sample = amethyst.processPost(ch, sample); break;
+                    case 3: sample = opal.processPost(ch, sample); break;
+                    case 4: sample = sapphire.processPost(ch, sample); break;
+                    case 5: sample = garnet.processPost(ch, sample); break;               
                 }                
 
                 sample *= Decibels::decibelsToGain(outputGain); // output gain
@@ -580,310 +580,14 @@ private:
         return y;
     }    
 
-    // Filter Chains
-
-    // dc offset
-    static const int numDCOffsetStates = 4;
-    BiquadState dcOffset[2][numDCOffsetStates]; // 48db/oct    
-
-    void updateDCOffset()
-    {     
-        // i was going to run a single 12db/oct filter at each stage of distortion
-        // but this sounds fine as it is, might revisit later...
-        for (int i = 0; i<numDCOffsetStates; ++i) { makeHighPassStereo(dcOffset[0][i], dcOffset[1][i], 140.0f, scaledSampleRate); }
-    }
-
-    // tone stack
-    static const int numToneStackStates = 4;    
-    BiquadState toneStackStates[2][numToneStackStates];
-
-    void updateToneStack()
-    {
-        makePeakFilterStereo(toneStackStates[0][0], toneStackStates[1][0], 160.0f, 0.6f, low, scaledSampleRate);
-        makePeakFilterStereo(toneStackStates[0][1], toneStackStates[1][1], 600.0f, 0.8f, mid, scaledSampleRate);
-        makePeakFilterStereo(toneStackStates[0][2], toneStackStates[1][2], 2600.0f, 0.8f, high, scaledSampleRate);
-        makeHighShelfStereo(toneStackStates[0][3], toneStackStates[1][3], 6000.0f, 0.8f, presence, scaledSampleRate);
-    }
-
-    // glass
-    static const int numGlassPreSculptStates = 4;
-    static const int numGlassPostSculptStates = 6;
-    BiquadState glassPreSculptStates[2][numGlassPreSculptStates];
-    BiquadState glassPostSculptStates[2][numGlassPostSculptStates];
-
-    void updateGlass()
-    {
-        // [f, q, gain]
-        // pre 
-        makeHighPassStereo(glassPreSculptStates[0][0], glassPreSculptStates[1][0], 55.0f, scaledSampleRate);
-        makePeakFilterStereo(glassPreSculptStates[0][1], glassPreSculptStates[1][1], 870.0f, 0.4f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(glassPreSculptStates[0][2], glassPreSculptStates[1][2], 3700.0f, 0.32f, 7.0f, scaledSampleRate);
-        makeHighShelfStereo(glassPreSculptStates[0][3], glassPreSculptStates[1][3], 6000.0f, 0.7f, 16.0f, scaledSampleRate);
-
-        // post 
-        makeHighPassStereo(glassPostSculptStates[0][0], glassPostSculptStates[1][0], 60.0f, scaledSampleRate);
-        makePeakFilterStereo(glassPostSculptStates[0][1], glassPostSculptStates[1][1], 140.0f, 2.4f, -3.5f, scaledSampleRate);
-        makePeakFilterStereo(glassPostSculptStates[0][2], glassPostSculptStates[1][2], 2200.0f, 0.3f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(glassPostSculptStates[0][3], glassPostSculptStates[1][3], 2600.0f, 5.8f, -5.1f, scaledSampleRate);
-        makePeakFilterStereo(glassPostSculptStates[0][4], glassPostSculptStates[1][4], 6400.0f, 1.0f, 4.8f, scaledSampleRate);
-        makeLowPassStereo(glassPostSculptStates[0][5], glassPostSculptStates[1][5], 10000.0f, scaledSampleRate);
-    } 
-
-    // pearl
-    static const int numPearlPreSculptStates = 4;
-    static const int numPearlPostSculptStates = 6;
-    BiquadState pearlPreSculptStates[2][numPearlPreSculptStates];
-    BiquadState pearlPostSculptStates[2][numPearlPostSculptStates];
-
-    void updatePearl()
-    {
-        // [f, q, gain]
-        // pre 
-        makeHighPassStereo(pearlPreSculptStates[0][0], pearlPreSculptStates[1][0], 55.0f, scaledSampleRate);
-        makePeakFilterStereo(pearlPreSculptStates[0][1], pearlPreSculptStates[1][1], 870.0f, 0.4f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(pearlPreSculptStates[0][2], pearlPreSculptStates[1][2], 3700.0f, 0.32f, 7.0f, scaledSampleRate);
-        makeHighShelfStereo(pearlPreSculptStates[0][3], pearlPreSculptStates[1][3], 6000.0f, 0.7f, 16.0f, scaledSampleRate);
-
-        // post 
-        makeHighPassStereo(pearlPostSculptStates[0][0], pearlPostSculptStates[1][0], 60.0f, scaledSampleRate);
-        makePeakFilterStereo(pearlPostSculptStates[0][1], pearlPostSculptStates[1][1], 140.0f, 2.4f, -3.5f, scaledSampleRate);
-        makePeakFilterStereo(pearlPostSculptStates[0][2], pearlPostSculptStates[1][2], 2200.0f, 0.3f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(pearlPostSculptStates[0][3], pearlPostSculptStates[1][3], 2600.0f, 5.8f, -5.1f, scaledSampleRate);
-        makePeakFilterStereo(pearlPostSculptStates[0][4], pearlPostSculptStates[1][4], 6400.0f, 1.0f, 4.8f, scaledSampleRate);
-        makeLowPassStereo(pearlPostSculptStates[0][5], pearlPostSculptStates[1][5], 10000.0f, scaledSampleRate);
-    }   
-
-    // diamond
-    static const int numDiamondPreSculptStates = 4;
-    static const int numDiamondPostSculptStates = 6;
-    BiquadState diamondPreSculptStates[2][numDiamondPreSculptStates];
-    BiquadState diamondPostSculptStates[2][numDiamondPostSculptStates];
-
-    void updateDiamond()
-    {
-        // [f, q, gain]
-        // pre 
-        makeHighPassStereo(diamondPreSculptStates[0][0], diamondPreSculptStates[1][0], 55.0f, scaledSampleRate);
-        makePeakFilterStereo(diamondPreSculptStates[0][1], diamondPreSculptStates[1][1], 870.0f, 0.4f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(diamondPreSculptStates[0][2], diamondPreSculptStates[1][2], 3700.0f, 0.32f, 7.0f, scaledSampleRate);
-        makeHighShelfStereo(diamondPreSculptStates[0][3], diamondPreSculptStates[1][3], 6000.0f, 0.7f, 16.0f, scaledSampleRate);
-
-        // post 
-        makeHighPassStereo(diamondPostSculptStates[0][0], diamondPostSculptStates[1][0], 60.0f, scaledSampleRate);
-        makePeakFilterStereo(diamondPostSculptStates[0][1], diamondPostSculptStates[1][1], 140.0f, 2.4f, -3.5f, scaledSampleRate);
-        makePeakFilterStereo(diamondPostSculptStates[0][2], diamondPostSculptStates[1][2], 2200.0f, 0.3f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(diamondPostSculptStates[0][3], diamondPostSculptStates[1][3], 2600.0f, 5.8f, -5.1f, scaledSampleRate);
-        makePeakFilterStereo(diamondPostSculptStates[0][4], diamondPostSculptStates[1][4], 6400.0f, 1.0f, 4.8f, scaledSampleRate);
-        makeLowPassStereo(diamondPostSculptStates[0][5], diamondPostSculptStates[1][5], 10000.0f, scaledSampleRate);
-    }
-
-    // zircon
-    static const int numZirconPreSculptStates = 4;
-    static const int numZirconPostSculptStates = 6;
-    BiquadState zirconPreSculptStates[2][numZirconPreSculptStates];
-    BiquadState zirconPostSculptStates[2][numZirconPostSculptStates];
-
-    void updateZircon()
-    {
-        // [f, q, gain]
-        // pre 
-        makeHighPassStereo(zirconPreSculptStates[0][0], zirconPreSculptStates[1][0], 55.0f, scaledSampleRate);
-        makePeakFilterStereo(zirconPreSculptStates[0][1], zirconPreSculptStates[1][1], 870.0f, 0.4f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(zirconPreSculptStates[0][2], zirconPreSculptStates[1][2], 3700.0f, 0.32f, 7.0f, scaledSampleRate);
-        makeHighShelfStereo(zirconPreSculptStates[0][3], zirconPreSculptStates[1][3], 6000.0f, 0.7f, 16.0f, scaledSampleRate);
-
-        // post 
-        makeHighPassStereo(zirconPostSculptStates[0][0], zirconPostSculptStates[1][0], 60.0f, scaledSampleRate);
-        makePeakFilterStereo(zirconPostSculptStates[0][1], zirconPostSculptStates[1][1], 140.0f, 2.4f, -3.5f, scaledSampleRate);
-        makePeakFilterStereo(zirconPostSculptStates[0][2], zirconPostSculptStates[1][2], 2200.0f, 0.3f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(zirconPostSculptStates[0][3], zirconPostSculptStates[1][3], 2600.0f, 5.8f, -5.1f, scaledSampleRate);
-        makePeakFilterStereo(zirconPostSculptStates[0][4], zirconPostSculptStates[1][4], 6400.0f, 1.0f, 4.8f, scaledSampleRate);
-        makeLowPassStereo(zirconPostSculptStates[0][5], zirconPostSculptStates[1][5], 10000.0f, scaledSampleRate);
-    }
-
-    // slate 
-    static const int numSlatePreSculptStates = 4;
-    static const int numSlatePostSculptStates = 17;
-    BiquadState slatePreSculptStates[2][numSlatePreSculptStates];
-    BiquadState slatePostSculptStates[2][numSlatePostSculptStates];
-
-    void updateSlate()
-    {
-        // [f, q, gain]
-        // pre 
-        makeHighPassStereo(slatePreSculptStates[0][0], slatePreSculptStates[1][0], 82.0f, scaledSampleRate);
-        makePeakFilterStereo(slatePreSculptStates[0][1], slatePreSculptStates[1][1], 650.0f, 1.2f, 2.5f, scaledSampleRate);
-        makePeakFilterStereo(slatePreSculptStates[0][2], slatePreSculptStates[1][2], 2200.0f, 0.8f, 3.2f, scaledSampleRate);
-        makeHighShelfStereo(slatePreSculptStates[0][3], slatePreSculptStates[1][3], 4500.0f, 0.7f, 6.0f, scaledSampleRate);    
-
-        // post
-        makeHighPassStereo(slatePostSculptStates[0][0], slatePostSculptStates[1][0], 40.0f, scaledSampleRate);
-        makeLowShelfStereo(slatePostSculptStates[0][1], slatePostSculptStates[1][1], 45.0f, 0.5f, 6.0f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][2], slatePostSculptStates[1][2], 75.1f, 0.46f, 4.38f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][3], slatePostSculptStates[1][3], 120.0f, 0.5f, 8.0f, scaledSampleRate);
-        makeLowShelfStereo(slatePostSculptStates[0][4], slatePostSculptStates[1][4], 150.0f, 0.7f, -2.0f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][5], slatePostSculptStates[1][5], 160.0f, 0.6f, 2.0f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][6], slatePostSculptStates[1][6], 750.0f, 1.4f, 4.0f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][7], slatePostSculptStates[1][7], 1800.0f, 1.0f, 2.8f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][8], slatePostSculptStates[1][8], 2500.0f, 2.11f, 1.86f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][9], slatePostSculptStates[1][9], 3200.0f, 1.2f, -1.5f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][10], slatePostSculptStates[1][10], 3638.0f, 1.156f, 4.616f, scaledSampleRate);  
-        makePeakFilterStereo(slatePostSculptStates[0][11], slatePostSculptStates[1][11], 3670.0f, 1.14f, 3.48f, scaledSampleRate);      
-        makePeakFilterStereo(slatePostSculptStates[0][12], slatePostSculptStates[1][12], 5000.0f, 0.8f, 2.0f, scaledSampleRate);
-        makeHighShelfStereo(slatePostSculptStates[0][13], slatePostSculptStates[1][13], 6500.0f, 0.7f, -1.8f, scaledSampleRate);
-        makePeakFilterStereo(slatePostSculptStates[0][14], slatePostSculptStates[1][14], 7842.0f, 0.938f, 4.032f, scaledSampleRate);
-        makeHighShelfStereo(slatePostSculptStates[0][15], slatePostSculptStates[1][15], 9000.0f, 0.6f, 3.5f, scaledSampleRate);
-        makeLowPassStereo(slatePostSculptStates[0][16], slatePostSculptStates[1][16], 12000.0f, scaledSampleRate);        
-    }
-
-    // obsidian
-    static const int numObsidianPreSculptStates = 4;
-    static const int numObsidianPostSculptStates = 15;
-    BiquadState obsidianPreSculptStates[2][numObsidianPreSculptStates];
-    BiquadState obsidianPostSculptStates[2][numObsidianPostSculptStates];
-
-    void updateObsidian()
-    {
-        // [f, q, gain]
-        // pre
-        makeHighPassStereo(obsidianPreSculptStates[0][0], obsidianPreSculptStates[1][0], 65.0f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPreSculptStates[0][1], obsidianPreSculptStates[1][1], 520.0f, 0.9f, 2.8f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPreSculptStates[0][2], obsidianPreSculptStates[1][2], 1400.0f, 0.7f, 3.2f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPreSculptStates[0][3], obsidianPreSculptStates[1][3], 3800.0f, 1.1f, 4.5f, scaledSampleRate);
-                
-        // post
-        makeHighPassStereo(obsidianPostSculptStates[0][0], obsidianPostSculptStates[1][0], 32.0f, scaledSampleRate);
-        makeHighPassStereo(obsidianPostSculptStates[0][1], obsidianPostSculptStates[1][1], 32.0f, scaledSampleRate);
-        makeRBJLowShelfStereo(obsidianPostSculptStates[0][2], obsidianPostSculptStates[1][2], 120.0f, 0.5f, 11.712f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPostSculptStates[0][3], obsidianPostSculptStates[1][3], 129.0f, 1.74f, 5.86f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPostSculptStates[0][4], obsidianPostSculptStates[1][4], 180.0f, 0.813f, 3.0f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPostSculptStates[0][5], obsidianPostSculptStates[1][5], 528.0f, 0.71f, -9.0f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPostSculptStates[0][6], obsidianPostSculptStates[1][6], 600.0f, 0.8f, 3.84f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPostSculptStates[0][7], obsidianPostSculptStates[1][7], 1100.0f, 1.374f, -5.872f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPostSculptStates[0][8], obsidianPostSculptStates[1][8], 1787.0f, 0.813, -2.496f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPostSculptStates[0][9], obsidianPostSculptStates[1][9], 2185.0f, 0.437f, 7.686f, scaledSampleRate);
-        makePeakFilterStereo(obsidianPostSculptStates[0][10], obsidianPostSculptStates[1][10], 2900.0f, 2.03f, 3.60f, scaledSampleRate);
-        makeHighShelfStereo(obsidianPostSculptStates[0][11], obsidianPostSculptStates[1][11], 6000.0f, 0.8f, 5.0f, scaledSampleRate);
-        makeHighShelfStereo(obsidianPostSculptStates[0][12], obsidianPostSculptStates[1][12], 7760.0f, 0.813f, 2.5f, scaledSampleRate);   
-        makePeakFilterStereo(obsidianPostSculptStates[0][13], obsidianPostSculptStates[1][13], 8678.0f, 0.688f, 3.532f, scaledSampleRate);
-        makeLowPassStereo(obsidianPostSculptStates[0][14], obsidianPostSculptStates[1][14], 17122.0f, scaledSampleRate);        
-    }    
-
-    // amethyst
-    static const int numAmethystPreSculptStates = 4;
-    static const int numAmethystPostSculptStates = 10;
-    BiquadState amethystPreSculptStates[2][numAmethystPreSculptStates];
-    BiquadState amethystPostSculptStates[2][numAmethystPostSculptStates];
-
-    void updateAmethyst()
-    {
-        // [f, q, gain]
-        // pre
-        makeHighPassStereo(amethystPreSculptStates[0][0], amethystPreSculptStates[1][0], 60.0f, scaledSampleRate);
-        makePeakFilterStereo(amethystPreSculptStates[0][1], amethystPreSculptStates[1][1], 500.0f, 1.1f, 2.8f, scaledSampleRate);
-        makePeakFilterStereo(amethystPreSculptStates[0][2], amethystPreSculptStates[1][2], 1600.0f, 0.9f, 3.5f, scaledSampleRate);
-        makePeakFilterStereo(amethystPreSculptStates[0][3], amethystPreSculptStates[1][3], 4000.0f, 1.3f, 4.0f, scaledSampleRate);
-        
-        // post
-        makeHighPassStereo(amethystPostSculptStates[0][0], amethystPostSculptStates[1][0], 45.0f, scaledSampleRate);
-        makeLowShelfStereo(amethystPostSculptStates[0][1], amethystPostSculptStates[1][1], 45.0f, 0.5f, 6.0f, scaledSampleRate);
-        makePeakFilterStereo(amethystPostSculptStates[0][2], amethystPostSculptStates[1][2], 120.0f, 0.5f, 8.0f, scaledSampleRate);
-        makePeakFilterStereo(amethystPostSculptStates[0][3], amethystPostSculptStates[1][3], 180.0f, 1.2f, -1.8f, scaledSampleRate);
-        makePeakFilterStereo(amethystPostSculptStates[0][4], amethystPostSculptStates[1][4], 600.0f, 1.0f, 3.2f, scaledSampleRate);
-        makePeakFilterStereo(amethystPostSculptStates[0][5], amethystPostSculptStates[1][5], 1200.0f, 0.8f, 2.5f, scaledSampleRate);
-        makePeakFilterStereo(amethystPostSculptStates[0][6], amethystPostSculptStates[1][6], 2800.0f, 1.4f, -2.0f, scaledSampleRate);
-        makePeakFilterStereo(amethystPostSculptStates[0][7], amethystPostSculptStates[1][7], 4500.0f, 1.1f, 4.5f, scaledSampleRate);
-        makePeakFilterStereo(amethystPostSculptStates[0][8], amethystPostSculptStates[1][8], 6500.0f, 0.9f, 2.8f, scaledSampleRate);
-        makeHighShelfStereo(amethystPostSculptStates[0][9], amethystPostSculptStates[1][9], 8500.0f, 0.7f, 3.5f, scaledSampleRate);
-        makeLowPassStereo(amethystPostSculptStates[0][10], amethystPostSculptStates[1][10], 13000.0f, scaledSampleRate);        
-    }
-
-    // opal
-    static const int numOpalPreSculptStates = 4;
-    static const int numOpalPostSculptStates = 10;
-    BiquadState opalPreSculptStates[2][numOpalPreSculptStates];
-    BiquadState opalPostSculptStates[2][numOpalPostSculptStates];
-      
-    void updateOpal()
-    {
-        // [f, q, gain]
-        // pre
-        makeHighPassStereo(opalPreSculptStates[0][0], opalPreSculptStates[1][0], 90.0f, scaledSampleRate);
-        makePeakFilterStereo(opalPreSculptStates[0][1], opalPreSculptStates[1][1], 720.0f, 1.5f, 3.8f, scaledSampleRate);
-        makePeakFilterStereo(opalPreSculptStates[0][2], opalPreSculptStates[1][2], 2000.0f, 1.0f, 2.5f, scaledSampleRate);
-        makePeakFilterStereo(opalPreSculptStates[0][3], opalPreSculptStates[1][3], 5500.0f, 1.8f, 5.2f, scaledSampleRate);
-        
-        // post
-        makeHighPassStereo(opalPostSculptStates[0][0], opalPostSculptStates[1][0], 40.0f, scaledSampleRate);
-        makeHighPassStereo(opalPostSculptStates[0][1], opalPostSculptStates[1][1], 45.0f, scaledSampleRate);
-        makeLowShelfStereo(opalPostSculptStates[0][2], opalPostSculptStates[1][2], 45.0f, 0.5f, 6.0f, scaledSampleRate);
-        makePeakFilterStereo(opalPostSculptStates[0][3], opalPostSculptStates[1][3], 120.0f, 0.5f, 8.0f, scaledSampleRate);
-        makePeakFilterStereo(opalPostSculptStates[0][4], opalPostSculptStates[1][4], 200.0f, 1.5f, -3.2f, scaledSampleRate);
-        makePeakFilterStereo(opalPostSculptStates[0][5], opalPostSculptStates[1][5], 800.0f, 1.2f, 4.5f, scaledSampleRate);
-        makePeakFilterStereo(opalPostSculptStates[0][6], opalPostSculptStates[1][6], 1600.0f, 0.9f, 2.8f, scaledSampleRate);
-        makePeakFilterStereo(opalPostSculptStates[0][7], opalPostSculptStates[1][7], 3200.0f, 2.0f, -2.8f, scaledSampleRate);
-        makePeakFilterStereo(opalPostSculptStates[0][8], opalPostSculptStates[1][8], 5800.0f, 1.3f, 4.8f, scaledSampleRate);
-        makeHighShelfStereo(opalPostSculptStates[0][9], opalPostSculptStates[1][9], 7500.0f, 0.8f, -2.5f, scaledSampleRate);
-        makeLowPassStereo(opalPostSculptStates[0][10], opalPostSculptStates[1][10], 11500.0f, scaledSampleRate);                
-    }  
-
-    // sapphire
-    static const int numSapphirePreSculptStates = 4;
-    static const int numSapphirePostSculptStates = 10;
-    BiquadState sapphirePreSculptStates[2][numSapphirePreSculptStates];
-    BiquadState sapphirePostSculptStates[2][numSapphirePostSculptStates];
-
-    void updateSapphire()
-    {
-        // [f, q, gain]
-        // pre
-        makeHighPassStereo(garnetPreSculptStates[0][0], garnetPreSculptStates[1][0], 85.0f, scaledSampleRate);
-        makePeakFilterStereo(garnetPreSculptStates[0][1], garnetPreSculptStates[1][1], 680.0f, 1.4f, 4.2f, scaledSampleRate);
-        makePeakFilterStereo(garnetPreSculptStates[0][2], garnetPreSculptStates[1][2], 1800.0f, 0.9f, 3.5f, scaledSampleRate);
-        makePeakFilterStereo(garnetPreSculptStates[0][3], garnetPreSculptStates[1][3], 4800.0f, 1.6f, 5.8f, scaledSampleRate);
-        
-        // post
-        makeHighPassStereo(garnetPostSculptStates[0][0], garnetPostSculptStates[1][0], 45.0f, scaledSampleRate);
-        makeLowShelfStereo(garnetPostSculptStates[0][1], garnetPostSculptStates[1][1], 45.0f, 0.5f, 6.0f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][2], garnetPostSculptStates[1][2], 120.0f, 0.5f, 8.0f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][3], garnetPostSculptStates[1][3], 150.0f, 1.2f, -2.5f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][4], garnetPostSculptStates[1][4], 750.0f, 1.1f, 4.8f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][5], garnetPostSculptStates[1][5], 1500.0f, 0.8f, 2.8f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][6], garnetPostSculptStates[1][6], 2800.0f, 1.8f, -2.2f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][7], garnetPostSculptStates[1][7], 5200.0f, 1.2f, 5.5f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][8], garnetPostSculptStates[1][8], 7200.0f, 0.9f, 3.2f, scaledSampleRate);
-        makeHighShelfStereo(garnetPostSculptStates[0][9], garnetPostSculptStates[1][9], 9000.0f, 0.7f, -1.8f, scaledSampleRate);
-        makeLowPassStereo(garnetPostSculptStates[0][10], garnetPostSculptStates[1][10], 12800.0f, scaledSampleRate);                
-    }
-
-    // garnet
-    static const int numGarnetPreSculptStates = 4;
-    static const int numGarnetPostSculptStates = 10;
-    BiquadState garnetPreSculptStates[2][numGarnetPreSculptStates];
-    BiquadState garnetPostSculptStates[2][numGarnetPostSculptStates];
-
-    void updateGarnet()
-    {
-        // [f, q, gain]
-        // pre
-        makeHighPassStereo(garnetPreSculptStates[0][0], garnetPreSculptStates[1][0], 50.0f, scaledSampleRate);
-        makePeakFilterStereo(garnetPreSculptStates[0][1], garnetPreSculptStates[1][1], 320.0f, 0.8f, 2.2f, scaledSampleRate);
-        makePeakFilterStereo(garnetPreSculptStates[0][2], garnetPreSculptStates[1][2], 1000.0f, 0.7f, 2.8f, scaledSampleRate);
-        makeHighShelfStereo(garnetPreSculptStates[0][3], garnetPreSculptStates[1][3], 2800.0f, 0.6f, 3.8f, scaledSampleRate);
-        
-        // post
-        makeHighPassStereo(garnetPostSculptStates[0][0], garnetPostSculptStates[1][0], 45.0f, scaledSampleRate);
-        makeLowShelfStereo(garnetPostSculptStates[0][1], garnetPostSculptStates[1][1], 45.0f, 0.5f, 6.0f, scaledSampleRate);
-        makeLowShelfStereo(garnetPostSculptStates[0][2], garnetPostSculptStates[1][2], 100.0f, 0.7f, 2.0f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][3], garnetPostSculptStates[1][3], 120.0f, 0.5f, 8.0f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][4], garnetPostSculptStates[1][4], 360.0f, 0.9f, 2.5f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][5], garnetPostSculptStates[1][5], 850.0f, 0.8f, 2.8f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][6], garnetPostSculptStates[1][6], 1600.0f, 0.9f, 2.2f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][7], garnetPostSculptStates[1][7], 3200.0f, 1.1f, 3.5f, scaledSampleRate);
-        makePeakFilterStereo(garnetPostSculptStates[0][8], garnetPostSculptStates[1][8], 5500.0f, 0.8f, 3.8f, scaledSampleRate);
-        makeHighShelfStereo(garnetPostSculptStates[0][9], garnetPostSculptStates[1][9], 7500.0f, 0.7f, 4.5f, scaledSampleRate);
-        makeLowPassStereo(garnetPostSculptStates[0][10], garnetPostSculptStates[1][10], 16000.0f, scaledSampleRate);        
-    }
+    ToneStack toneStack{
+        {
+            PEAK(160.0f, 0.6f, low),
+            PEAK(600.0f, 0.8f, mid),
+            PEAK(2600.0f, 0.8f, high),
+            PEAK(6000.0f, 0.8f, presence),
+        },{}        
+    };    
 
     void updateOversampling()
     {
@@ -914,20 +618,45 @@ private:
         
         oversampling.swap(newOversampling);        
 
-        updateDCOffset();
-        updateToneStack();
+        // toneStack
+        toneStack.reset();
+        toneStack.update(scaledSampleRate);
 
-        updateGlass();
-        updatePearl();
-        updateDiamond();
-        updateZircon();
+        // dcBlocker
+        dcBlocker.reset();
+        dcBlocker.update(scaledSampleRate);
 
-        updateSlate();
-        updateObsidian();
-        updateAmethyst();
-        updateOpal();
-        updateSapphire();
-        updateGarnet();        
+        // clean
+        glass.reset();
+        glass.update(scaledSampleRate);
+
+        pearl.reset();
+        pearl.update(scaledSampleRate);
+
+        diamond.reset();
+        diamond.update(scaledSampleRate);
+
+        zircon.reset();
+        zircon.update(scaledSampleRate);
+
+        // dirty
+        slate.reset();
+        slate.update(scaledSampleRate); 
+
+        obsidian.reset();
+        obsidian.update(scaledSampleRate);  
+
+        amethyst.reset();
+        amethyst.update(scaledSampleRate);   
+
+        opal.reset();
+        opal.update(scaledSampleRate);    
+
+        sapphire.reset();
+        sapphire.update(scaledSampleRate);    
+
+        garnet.reset();
+        garnet.update(scaledSampleRate);            
     }
 
     // nam
@@ -1241,8 +970,8 @@ private:
                 float sample = channelDataL[s];
 
                 sample *= Decibels::decibelsToGain(inputGain); // input gain
-                sample = m->forward(sample); // nam transfer function                                
-                for (int f = 0; f < numToneStackStates; ++f) { sample = toneStackStates[0][f].process(sample); } // apply tone stack AFTER resampling and transfer
+                sample = m->forward(sample); // nam transfer function                                                
+                sample = toneStack.processPre(0, sample);
                 sample *= Decibels::decibelsToGain(outputGain); // output gain
                     
                 channelDataL[s] = sample;                
@@ -1262,8 +991,8 @@ private:
                 float sample = channelDataL[s];
                 
                 sample *= Decibels::decibelsToGain(inputGain); // input gain
-                sample = m->forward(sample); // nam transfer function                                
-                for (int f = 0; f < numToneStackStates; ++f) { sample = toneStackStates[0][f].process(sample); } // apply tone stack after resampling and transfer func                    
+                sample = m->forward(sample); // nam transfer function                                                
+                sample = toneStack.processPre(0, sample);
                 sample *= Decibels::decibelsToGain(outputGain); // output gain
 
                 channelDataL[s] = sample;
@@ -1304,8 +1033,8 @@ private:
         for (int s = 0; s < numSamples; ++s)
         {
             float y = scratchDown[s];
-            for (int f = 0; f < numToneStackStates; ++f)
-                y = toneStackStates[0][f].process(y); // use host SR for coefficients
+            
+            y = toneStack.processPre(0, y);
 
             y *= Decibels::decibelsToGain(outputGain); // outputGain
             outL[s] = y;

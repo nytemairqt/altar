@@ -247,7 +247,7 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnWitness" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="witness..." text="78Sa_adf_  witness  -&amp;8A(*7dd"
+               parentComponent="pnlMaster" tooltip="witness..." text="gfF7t(8Al  witness  hJgu7gagF"
                height="30.0" saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
@@ -402,7 +402,7 @@
                  text="Output" width="96.0" height="30.0" editable="0" fontStyle="Bold"/>
     </Component>
     <Component type="ScriptComboBox" id="cmbAmpCleanToneStackMode" x="360.0"
-               y="280.0" max="13" parentComponent="pnlAmp" items="Glass&#10;Slate&#10;Obsidian&#10;Marshall&#10;Fender&#10;Vox&#10;Mesa&#10;Orange&#10;Soldano&#10;Bogner&#10;Engl&#10;Peavey&#10;Hiwatt"
+               y="280.0" max="4" parentComponent="pnlAmp" items="Glass&#10;Pearl&#10;Diamond&#10;Zircon"
                width="120.0" tooltip="Select tone stack module." text="CleanToneStackMode"
                visible="0"/>
     <Component type="ScriptPanel" id="pnlAmpNAMLoader" x="275.0" y="274.0" width="300.0"
@@ -422,7 +422,7 @@
                width="140.0" parentComponent="pnlAmp" tooltip="Open Tone3000 in a browser."
                text="Browse NAM Tones" height="30.0" isMomentary="1" visible="0"/>
     <Component type="ScriptComboBox" id="cmbAmpDirtyToneStackMode" x="360.0"
-               y="280.0" max="13" parentComponent="pnlAmp" items="Slate&#10;Obsidian&#10;Glass&#10;Marshall&#10;Fender&#10;Vox&#10;Mesa&#10;Orange&#10;Soldano&#10;Bogner&#10;Engl&#10;Peavey&#10;Hiwatt"
+               y="280.0" max="6" parentComponent="pnlAmp" items="Slate&#10;Obsidian&#10;Amethyst&#10;Opal&#10;Sapphire&#10;Garnet"
                width="120.0" tooltip="Select tone stack module." text="DirtyToneStackMode"/>
     <Component type="ScriptComboBox" id="cmbAmpDirtyDistortionMode" x="80.0"
                y="280.0" max="2" parentComponent="pnlAmp" items="Tyrant&#10;Faceless"
