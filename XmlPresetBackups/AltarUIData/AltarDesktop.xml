@@ -206,7 +206,7 @@
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="ringmod"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="1040.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 3%" width="110.0" fontStyle="Regular" height="30.0"
+               text="CPU Usage: 1%" width="110.0" fontStyle="Regular" height="30.0"
                alignment="left" editable="0" fontSize="14.0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
@@ -247,7 +247,7 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnWitness" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="witness..." text="gt-G8s8Gg  witness  yda-8aeS8"
+               parentComponent="pnlMaster" tooltip="witness..." text="78Sa_adf_  witness  -&amp;8A(*7dd"
                height="30.0" saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
@@ -401,6 +401,10 @@
       <Component type="ScriptLabel" id="lblAmpOutput" x="0.0" y="54.0" parentComponent="knbAmpOutput"
                  text="Output" width="96.0" height="30.0" editable="0" fontStyle="Bold"/>
     </Component>
+    <Component type="ScriptComboBox" id="cmbAmpCleanToneStackMode" x="360.0"
+               y="280.0" max="13" parentComponent="pnlAmp" items="Glass&#10;Slate&#10;Obsidian&#10;Marshall&#10;Fender&#10;Vox&#10;Mesa&#10;Orange&#10;Soldano&#10;Bogner&#10;Engl&#10;Peavey&#10;Hiwatt"
+               width="120.0" tooltip="Select tone stack module." text="CleanToneStackMode"
+               visible="0"/>
     <Component type="ScriptPanel" id="pnlAmpNAMLoader" x="275.0" y="274.0" width="300.0"
                height="100.0" text="Load NAM File." allowCallbacks="All Callbacks"
                parentComponent="pnlAmp" saveInPreset="1" tooltip="Drag NAM model here, right click to browse."
@@ -417,6 +421,12 @@
     <Component type="ScriptButton" id="btnAmpBrowseNAMTones" x="610.0" y="310.0"
                width="140.0" parentComponent="pnlAmp" tooltip="Open Tone3000 in a browser."
                text="Browse NAM Tones" height="30.0" isMomentary="1" visible="0"/>
+    <Component type="ScriptComboBox" id="cmbAmpDirtyToneStackMode" x="360.0"
+               y="280.0" max="13" parentComponent="pnlAmp" items="Slate&#10;Obsidian&#10;Glass&#10;Marshall&#10;Fender&#10;Vox&#10;Mesa&#10;Orange&#10;Soldano&#10;Bogner&#10;Engl&#10;Peavey&#10;Hiwatt"
+               width="120.0" tooltip="Select tone stack module." text="DirtyToneStackMode"/>
+    <Component type="ScriptComboBox" id="cmbAmpDirtyDistortionMode" x="80.0"
+               y="280.0" max="2" parentComponent="pnlAmp" items="Tyrant&#10;Faceless"
+               width="120.0" tooltip="Select distortion module." text="DistortionMode"/>
   </Component>
   <Component type="ScriptPanel" id="pnlCab" x="150.0" y="250.0" width="850.0"
              height="400.0" itemColour2="4278190080" itemColour="4278190080"

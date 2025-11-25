@@ -99,6 +99,50 @@ namespace altarFilters
         setBiquadCoeffsStereo(L, R, b0, b1, b2, a0, a1, a2);
     }
 
+    void makeRBJLowShelfStereo(BiquadState& L, BiquadState& R,
+                        float freq, float shelfSlope, float gainDB, float sr)
+    {
+        float A      = std::pow(10.0f, gainDB / 40.0f);
+        float omega  = 2.0f * juce::MathConstants<float>::pi * freq / sr;
+        float sinO   = std::sin(omega);
+        float cosO   = std::cos(omega);
+
+        // shelfSlope = S (typically 1.0 is gentle; >1 steeper transition)
+        float alpha  = sinO / 2.0f * std::sqrt( (A + 1.0f/A) * (1.0f / shelfSlope - 1.0f) + 2.0f );
+
+        float beta   = 2.0f * std::sqrt(A) * alpha;
+
+        float b0 =    A*( (A+1) - (A-1)*cosO + beta );
+        float b1 =  2*A*( (A-1) - (A+1)*cosO );
+        float b2 =    A*( (A+1) - (A-1)*cosO - beta );
+        float a0 =       (A+1) + (A-1)*cosO + beta;
+        float a1 =  -2*( (A-1) + (A+1)*cosO );
+        float a2 =       (A+1) + (A-1)*cosO - beta;
+
+        setBiquadCoeffsStereo(L, R, b0, b1, b2, a0, a1, a2);
+    }
+
+    void makeRBJHighShelfStereo(BiquadState& L, BiquadState& R,
+                             float freq, float shelfSlope, float gainDB, float sr)
+    {
+        float A      = std::pow(10.0f, gainDB / 40.0f);
+        float omega  = 2.0f * juce::MathConstants<float>::pi * freq / sr;
+        float sinO   = std::sin(omega);
+        float cosO   = std::cos(omega);
+
+        float alpha = sinO / 2.0f * std::sqrt( (A + 1.0f/A) * (1.0f / shelfSlope - 1.0f) + 2.0f );
+        float beta  = 2.0f * std::sqrt(A) * alpha;
+
+        float b0 =    A*( (A+1) + (A-1)*cosO + beta );
+        float b1 = -2*A*( (A-1) + (A+1)*cosO );
+        float b2 =    A*( (A+1) + (A-1)*cosO - beta );
+        float a0 =       (A+1) - (A-1)*cosO + beta;
+        float a1 =  2*( (A-1) - (A+1)*cosO );
+        float a2 =       (A+1) - (A-1)*cosO - beta;
+
+        setBiquadCoeffsStereo(L, R, b0, b1, b2, a0, a1, a2);
+    }
+
     void makeHighPassStereo(BiquadState& L, BiquadState& R, float freq, float sr)
     {
         float omega = 2.0f * juce::MathConstants<float>::pi * freq / sr;

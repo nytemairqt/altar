@@ -27,7 +27,10 @@ namespace Amp
     const btnAmpBrowseNAMTones = Content.getComponent("btnAmpBrowseNAMTones");
     const grm = Engine.getGlobalRoutingManager();  
     const namCable = grm.getCable("nam");
-    const pnlTooltip = Content.getComponent("pnlTooltip"); 
+    const pnlTooltip = Content.getComponent("pnlTooltip");
+    const cmbAmpDirtyDistortionMode = Content.getComponent("cmbAmpDirtyDistortionMode");        
+   	const cmbAmpCleanToneStackMode = Content.getComponent("cmbAmpCleanToneStackMode");
+   	const cmbAmpDirtyToneStackMode = Content.getComponent("cmbAmpDirtyToneStackMode");   	
 
     inline function onControl(component, value)
     {
@@ -38,18 +41,46 @@ namespace Amp
             {
                 local effect = slot.getCurrentEffect();
                 local index = effect.getAttributeIndex(attribute);
-                effect.setAttribute(index, value);                
+                if (component == cmbAmpDirtyDistortionMode || component == cmbAmpCleanToneStackMode || component == cmbAmpDirtyToneStackMode)
+	                effect.setAttribute(index, value-1);                	
+                else
+                	effect.setAttribute(index, value);
             }
             
         // conditional UI changes
         if (attribute == "Mode")
         {
-            if (value == 2) {pnlAmpNAMLoader.set("visible", true); btnAmpBrowseNAMTones.set("visible", true); }
-            else { pnlAmpNAMLoader.set("visible", false); btnAmpBrowseNAMTones.set("visible", false); }         
+			switch (value)
+			{
+				case 0: // clean					
+					cmbAmpDirtyDistortionMode.set("visible", false);
+					cmbAmpCleanToneStackMode.set("visible", true);
+					cmbAmpDirtyToneStackMode.set("visible", false);
+					pnlAmpNAMLoader.set("visible", false);
+					btnAmpBrowseNAMTones.set("visible", false);
+					break;
+				case 1: // dirty					
+					cmbAmpDirtyDistortionMode.set("visible", true);
+					cmbAmpCleanToneStackMode.set("visible", false);
+					cmbAmpDirtyToneStackMode.set("visible", true);
+					pnlAmpNAMLoader.set("visible", false);
+					btnAmpBrowseNAMTones.set("visible", false);
+					break;
+				case 2: // nam					
+					cmbAmpDirtyDistortionMode.set("visible", false);
+					cmbAmpCleanToneStackMode.set("visible", false);
+					cmbAmpDirtyToneStackMode.set("visible", false);
+					pnlAmpNAMLoader.set("visible", true);
+					btnAmpBrowseNAMTones.set("visible", true);
+					break;
+			}
         }
     }   
     
     for (control in controls) { control.setControlCallback(onControl); }
+    cmbAmpDirtyDistortionMode.setControlCallback(onControl);
+    cmbAmpCleanToneStackMode.setControlCallback(onControl);
+    cmbAmpDirtyToneStackMode.setControlCallback(onControl);    
 
     inline function pnlAmpNAMLoaderDrop(f)
     {
@@ -166,5 +197,5 @@ namespace Amp
         g.drawRoundedRectangle(bounds, 0.0, 3.0);                
         g.drawRoundedRectangle([pad, this.getHeight() / 2 - (stripHeight / 2), this.getWidth() - pad * 2, stripHeight], 2.0, 2.0);
     });
-          
+                     
 }

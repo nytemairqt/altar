@@ -71,14 +71,6 @@ template <int NV> struct clipper: public data::base
             
             for (int s = 0; s < numSamples; ++s)
             {
-                /*
-                float sampleData = channel[s];                                                                
-
-                sampleData = processClipper(sampleData);
-                
-                channel[s] = sampleData;
-                */
-
                 channel[s] = processClipper(channel[s]);
             }
 
