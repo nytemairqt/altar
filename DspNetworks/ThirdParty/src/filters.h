@@ -182,7 +182,7 @@ namespace altarFilters
 
     struct ToneStack
     {
-        static constexpr int maxFilters = 20;
+        static constexpr int maxFilters = 30;
 
         enum class FilterType
         {
