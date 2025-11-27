@@ -50,8 +50,9 @@ namespace Preprocess
     });
     
     inline function pnlPreprocessCompGRTimerCallback()
-    {		
-	    gr = 1-preprocessComp.getAttribute(preprocessComp.CompressorReduction);	    	    
+    {
+    	if (!preprocessComp.isBypassed()) { gr = 1-preprocessComp.getAttribute(preprocessComp.CompressorReduction); }
+    	else { gr = 0.0; }   
 	    pnlPreprocessCompGR.repaint();	    	    
     }
     

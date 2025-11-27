@@ -17,7 +17,7 @@
 
 namespace Amp
 {   
-    const controls = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput")];    
+    const controls = [Content.getComponent("knbAmpMode"), Content.getComponent("knbAmpInput"), Content.getComponent("knbAmpLow"), Content.getComponent("knbAmpMid"), Content.getComponent("knbAmpHigh"), Content.getComponent("knbAmpPresence"), Content.getComponent("knbAmpOutput"), Content.getComponent("cmbAmpCleanToneStackMode"), Content.getComponent("cmbAmpDirtyDistortionMode"), Content.getComponent("cmbAmpDirtyToneStackMode")];    
     const fxSlots = [Synth.getSlotFX("modularA"), Synth.getSlotFX("modularB"), Synth.getSlotFX("modularC"), Synth.getSlotFX("modularD"), Synth.getSlotFX("modularE"), Synth.getSlotFX("modularF"), Synth.getSlotFX("modularG")];         
     const pnlAmp = Content.getComponent("pnlAmp");
     const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");   
@@ -28,9 +28,11 @@ namespace Amp
     const grm = Engine.getGlobalRoutingManager();  
     const namCable = grm.getCable("nam");
     const pnlTooltip = Content.getComponent("pnlTooltip");
-    const cmbAmpDirtyDistortionMode = Content.getComponent("cmbAmpDirtyDistortionMode");        
-   	const cmbAmpCleanToneStackMode = Content.getComponent("cmbAmpCleanToneStackMode");
-   	const cmbAmpDirtyToneStackMode = Content.getComponent("cmbAmpDirtyToneStackMode");   	
+        
+    const ampCleanExtras = [Content.getComponent("cmbAmpCleanToneStackMode"), Content.getComponent("lblAmpCleanToneStackMode")];
+    const ampDirtyExtras = [Content.getComponent("cmbAmpDirtyDistortionMode"), Content.getComponent("cmbAmpDirtyToneStackMode"), Content.getComponent("lblAmpDirtyDistortionMode"), Content.getComponent("lblAmpDirtyToneStackMode")];
+    const ampNAMExtras = [Content.getComponent("pnlAmpNAMLoader")];
+ 	
 
     inline function onControl(component, value)
     {
@@ -41,7 +43,7 @@ namespace Amp
             {
                 local effect = slot.getCurrentEffect();
                 local index = effect.getAttributeIndex(attribute);
-                if (component == cmbAmpDirtyDistortionMode || component == cmbAmpCleanToneStackMode || component == cmbAmpDirtyToneStackMode)
+                if (component == Content.getComponent("cmbAmpCleanToneStackMode") || component == Content.getComponent("cmbAmpDirtyDistortionMode") || component == Content.getComponent("cmbAmpDirtyToneStackMode"))
 	                effect.setAttribute(index, value-1);                	
                 else
                 	effect.setAttribute(index, value);
@@ -53,34 +55,25 @@ namespace Amp
 			switch (value)
 			{
 				case 0: // clean					
-					cmbAmpDirtyDistortionMode.set("visible", false);
-					cmbAmpCleanToneStackMode.set("visible", true);
-					cmbAmpDirtyToneStackMode.set("visible", false);
-					pnlAmpNAMLoader.set("visible", false);
-					btnAmpBrowseNAMTones.set("visible", false);
+					for (c in ampCleanExtras) { c.set("visible", true); }
+					for (c in ampDirtyExtras) { c.set("visible", false); }
+					for (c in ampNAMExtras) { c.set("visible", false); }
 					break;
 				case 1: // dirty					
-					cmbAmpDirtyDistortionMode.set("visible", true);
-					cmbAmpCleanToneStackMode.set("visible", false);
-					cmbAmpDirtyToneStackMode.set("visible", true);
-					pnlAmpNAMLoader.set("visible", false);
-					btnAmpBrowseNAMTones.set("visible", false);
+					for (c in ampCleanExtras) { c.set("visible", false); }
+					for (c in ampDirtyExtras) { c.set("visible", true); }
+					for (c in ampNAMExtras) { c.set("visible", false); }
 					break;
 				case 2: // nam					
-					cmbAmpDirtyDistortionMode.set("visible", false);
-					cmbAmpCleanToneStackMode.set("visible", false);
-					cmbAmpDirtyToneStackMode.set("visible", false);
-					pnlAmpNAMLoader.set("visible", true);
-					btnAmpBrowseNAMTones.set("visible", true);
+					for (c in ampCleanExtras) { c.set("visible", false); }
+					for (c in ampDirtyExtras) { c.set("visible", false); }
+					for (c in ampNAMExtras) { c.set("visible", true); }
 					break;
 			}
         }
     }   
     
-    for (control in controls) { control.setControlCallback(onControl); }
-    cmbAmpDirtyDistortionMode.setControlCallback(onControl);
-    cmbAmpCleanToneStackMode.setControlCallback(onControl);
-    cmbAmpDirtyToneStackMode.setControlCallback(onControl);    
+    for (control in controls) { control.setControlCallback(onControl); }    
 
     inline function pnlAmpNAMLoaderDrop(f)
     {
@@ -147,12 +140,13 @@ namespace Amp
     btnAmpBrowseNAMTones.setControlCallback(onbtnAmpBrowseNAMTonesControl);
 
     inline function sendNAMCableData()
-    {        
-        local path = lblAmpNAMLoader.get("text");
-        if (path == "Load NAM File." || path == "Load NAM Model.") { return; }
+    {            	
+        local path = lblAmpNAMLoader.get("text");        
+        if (path == "Load NAM File." || path == "Load NAM Model." || path == "") { lblAmpNAMLoader.set("text", "Load NAM File."); pnlAmpNAMLoader.repaint(); return; }
         local file = FileSystem.fromAbsolutePath(path);        
         local json = file.loadAsObject();
         namCable.sendData(json);
+        pnlAmpNAMLoader.repaint();
     }
     
     inline function onpnlAmpNAMLoaderCallback(component, value)

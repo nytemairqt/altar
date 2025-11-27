@@ -42,6 +42,8 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerPolyNode<project::cabDesignerNetwork<1>, wrap::illegal_poly<project::cabDesignerNetwork<1>>>();
 		registerPolyNode<project::chug<1>, wrap::illegal_poly<project::chug<1>>>();
 		registerPolyNode<project::click<1>, wrap::illegal_poly<project::click<1>>>();
+		registerPolyNode<project::DCFilterOutput<1>, wrap::illegal_poly<project::DCFilterOutput<1>>>();
+		registerPolyNode<project::InterSamplePeakBlocker<1>, wrap::illegal_poly<project::InterSamplePeakBlocker<1>>>();
 		registerPolyNode<project::octave<1>, wrap::illegal_poly<project::octave<1>>>();
 		registerPolyNode<project::pick<1>, wrap::illegal_poly<project::pick<1>>>();
 		registerDataNode<project::cabDesignerInput_networkdata>();

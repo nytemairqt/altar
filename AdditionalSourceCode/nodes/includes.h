@@ -31,6 +31,8 @@
 #include "cabDesignerNetwork.h"
 #include "chug.h"
 #include "click.h"
+#include "DCFilterOutput.h"
+#include "InterSamplePeakBlocker.h"
 #include "octave.h"
 #include "pick.h"
 #include "tuner_networkdata.h"

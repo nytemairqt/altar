@@ -26,6 +26,7 @@ namespace LookAndFeel
 	const btnPrevLAF = [Content.getComponent("btnPresetPrev"), Content.getComponent("btnCabALoadPrev"), Content.getComponent("btnCabBLoadPrev"), Content.getComponent("btnAmpNAMLoaderPrev")];	
 	const btnNextLAF = [Content.getComponent("btnPresetNext"), Content.getComponent("btnCabALoadNext"), Content.getComponent("btnCabBLoadNext"), Content.getComponent("btnAmpNAMLoaderNext")];	
 	const fltVuMeterLAF = [Content.getComponent("fltVuMeterInput"), Content.getComponent("fltVuMeterOutput")];
+	const comboBoxes = [Content.getComponent("cmbOversampling"), Content.getComponent("cmbAmpDirtyDistortionMode"), Content.getComponent("cmbAmpCleanToneStackMode"), Content.getComponent("cmbAmpDirtyToneStackMode")];
 	
 	const btnLockLAF = [Content.getComponent("btnTransposeSnap"), Content.getComponent("btnDelayTempoSync"), Content.getComponent("btnRingmodTempoSync")];
 	const btnInvertPhaseLAF = [Content.getComponent("btnCabAPhase"), Content.getComponent("btnCabBPhase")];
@@ -40,6 +41,7 @@ namespace LookAndFeel
 
 	const LAFKnob = Content.createLocalLookAndFeel();
 	const LAFKnobProcess = Content.createLocalLookAndFeel();
+	const LAFComboBox = Content.createLocalLookAndFeel();
 	const LAFButtonToggle = Content.createLocalLookAndFeel();
 	const LAFButtonBypass = Content.createLocalLookAndFeel();
 	const LAFButtonStereo = Content.createLocalLookAndFeel();
@@ -136,6 +138,25 @@ namespace LookAndFeel
 				default: return basicSlider(g, obj, [""]); break;
 			}
 	});		
+
+	// ComboBox
+
+	LAFComboBox.registerFunction("drawComboBox", function(g, obj)
+    {	        	
+	    g.setColour(obj.hover ? ColourData.clrMidgrey : ColourData.clrDarkgrey);
+	    g.fillRoundedRectangle(obj.area, 4.0);	    
+	    g.setColour(ColourData.clrWhite);
+	    g.drawAlignedText(obj.text, [8, 0, obj.area[2] - 16, obj.area[3]], "left");	    
+	    
+	    var tXPad = 24;
+       	var tYPad = 12;
+   		var tX = obj.area[2] - tXPad;
+   		var tY = 8;
+   		var tW = 16;
+   		var tH = tY;	    
+	    var tA = [tX, tYPad, tW, tH];
+	    g.fillTriangle(tA, Math.toRadians(180));
+    });
 	
 	// Main Toggle Button	
 	LAFButtonToggle.registerFunction("drawToggleButton", function(g, obj)
@@ -311,10 +332,10 @@ namespace LookAndFeel
 	
 	// Look And Feel Assignment		
 	
-
 	for (k in knbMainLAF) { k.setLocalLookAndFeel(LAFKnob); }	  
 	for (k in knbPreprocessLAF) { k.setLocalLookAndFeel(LAFKnob); }  
 	for (k in knbPostprocessLAF) { k.setLocalLookAndFeel(LAFKnob); }  
+	for (c in comboBoxes) { c.setLocalLookAndFeel(LAFComboBox); }
 	for (b in btnToggleLAF) { b.setLocalLookAndFeel(LAFButtonToggle); }
 	for (b in btnMenuLAF) { b.setLocalLookAndFeel(LAFButtonMenu); }
 	for (b in btnBypassLAF) { b.setLocalLookAndFeel(LAFButtonBypass); }

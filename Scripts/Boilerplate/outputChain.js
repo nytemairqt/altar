@@ -24,6 +24,10 @@ namespace OutputChain
     const pnlPostprocess = Content.getComponent("pnlPostprocess");
     Engine.addModuleStateToUserPreset("postprocessEQ");
         
+    const btnLimiter = Content.getComponent("btnLimiter");
+    const limiterDCBlocker = Synth.getEffect("limiterDCBlocker");
+    const limiter = Synth.getEffect("limiter");           
+        
     inline function onbtnShowPostprocessControl(component, value)
     {
         pnlPostprocess.set("visible", value);
@@ -80,6 +84,14 @@ namespace OutputChain
     }
     
     knbLofi.setControlCallback(onknbLofiControl);
+    
+    inline function onbtnLimiterControl(component, value)
+    {
+	    limiter.setBypassed(1-value);
+	    limiterDCBlocker.setBypassed(1-value);
+    }
+    
+    btnLimiter.setControlCallback(onbtnLimiterControl);
 
     // Look and feel
     

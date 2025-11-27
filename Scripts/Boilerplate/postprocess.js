@@ -51,7 +51,8 @@ namespace Postprocess
 
     inline function pnlPostprocessCompGRTimerCallback()
     {        
-        gr = 1-postprocessComp.getAttribute(postprocessComp.CompressorReduction);             
+        if (!postprocessComp.isBypassed()) { gr = 1-postprocessComp.getAttribute(postprocessComp.CompressorReduction); }
+        else { gr = 0.0; }
         pnlPostprocessCompGR.repaint();              
     }
     

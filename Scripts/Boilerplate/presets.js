@@ -23,7 +23,7 @@ namespace Presets
     const pnlPresetBrowser = Content.getComponent("pnlPresetBrowser");
     const fltPresetBrowser = Content.getComponent("fltPresetBrowser");
     
-    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");
+    const pnlAmpNAMLoader = Content.getComponent("pnlAmpNAMLoader");    
     const pnlCabALoader = Content.getComponent("pnlCabALoader");
     const pnlCabBLoader = Content.getComponent("pnlCabBLoader");
     const presetHandler = Engine.createUserPresetHandler();    
@@ -104,7 +104,7 @@ namespace Presets
                 pnlCabBLoader.set("text", cabBText); pnlCabBLoader.repaint();                
             }
         }
-        
+                
         Amp.sendNAMCableData();
         ModularChain.repaintAllSlots();        
     });

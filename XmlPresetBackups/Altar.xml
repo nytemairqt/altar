@@ -16,20 +16,20 @@
             <Control type="ScriptSlider" id="knbGateRelease" value="40.0"/>
             <Control type="ScriptSlider" id="knbTranspose" value="0.0"/>
             <Control type="ScriptButton" id="btnTranspose" value="0.0"/>
-            <Control type="ScriptButton" id="btnTransposeSnap" value="1.0"/>
+            <Control type="ScriptButton" id="btnTransposeSnap" value="0.0"/>
             <Control type="ScriptSlider" id="knbOctave" value="0.0"/>
             <Control type="ScriptButton" id="btnOctave" value="0.0"/>
             <Control type="ScriptSlider" id="knbChugStrength" value="0.0"/>
             <Control type="ScriptButton" id="btnChug" value="0.0"/>
             <Control type="ScriptSlider" id="knbPickStrength" value="0.0"/>
             <Control type="ScriptButton" id="btnPick" value="0.0"/>
-            <Control type="ScriptSlider" id="knbWhistle" value="0.0"/>
+            <Control type="ScriptSlider" id="knbWhistle" value="0.2000000029802322"/>
             <Control type="ScriptButton" id="btnWhistle" value="0.0"/>
             <Control type="ScriptSlider" id="knbLofi" value="1.0"/>
             <Control type="ScriptButton" id="btnLofi" value="0.0"/>
             <Control type="ScriptComboBox" id="cmbOversampling" value="3.0"/>
             <Control type="ScriptSlider" id="knbOutputGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnLimiter" value="0.0"/>
+            <Control type="ScriptButton" id="btnLimiter" value="1.0"/>
             <Control type="ScriptButton" id="btnShowPreprocess" value="0.0"/>
             <Control type="ScriptButton" id="btnShowPostprocess" value="0.0"/>
             <Control type="ScriptButton" id="btnModularABypass" value="0.0"/>
@@ -51,7 +51,7 @@
             <Control type="ScriptSlider" id="knbOverdriveCircuitBendFreqHidden" value="400.0"/>
             <Control type="ScriptSlider" id="knbOverdriveTone" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMode" value="1.0"/>
-            <Control type="ScriptSlider" id="knbAmpInput" value="55.20000076293945"/>
+            <Control type="ScriptSlider" id="knbAmpInput" value="1.490116119384766e-6"/>
             <Control type="ScriptSlider" id="knbAmpLow" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpMid" value="0.0"/>
             <Control type="ScriptSlider" id="knbAmpHigh" value="0.0"/>
@@ -59,6 +59,7 @@
             <Control type="ScriptSlider" id="knbAmpOutput" value="5.364418029785156e-7"/>
             <Control type="ScriptComboBox" id="cmbAmpCleanToneStackMode" value="1.0"/>
             <Control type="ScriptPanel" id="pnlAmpNAMLoader" value="0.0"/>
+            <Control type="ScriptLabel" id="lblAmpNAMLoader" value="Load NAM File."/>
             <Control type="ScriptButton" id="btnAmpBrowseNAMTones" value="0.0"/>
             <Control type="ScriptComboBox" id="cmbAmpDirtyToneStackMode" value="1.0"/>
             <Control type="ScriptComboBox" id="cmbAmpDirtyDistortionMode" value="1.0"/>
@@ -122,23 +123,22 @@
             <Control type="ScriptSlider" id="knbRingmodLFODepth" value="0.5"/>
             <Control type="ScriptSlider" id="knbRingmodFilterFrequency" value="2600.0"/>
             <Control type="ScriptButton" id="btnRingmodTempoSync" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreprocessEQEnable" value="0.0"/>
-            <Control type="ScriptButton" id="btnPreprocessCompEnable" value="0.0"/>
+            <Control type="ScriptButton" id="btnPreprocessEQEnable" value="1.0"/>
+            <Control type="ScriptButton" id="btnPreprocessCompEnable" value="1.0"/>
             <Control type="ScriptSlider" id="knbPreprocessCompThreshold" value="0.0"/>
             <Control type="ScriptSlider" id="knbPreprocessCompRatio" value="4.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessCompAttack" value="10.0"/>
-            <Control type="ScriptSlider" id="knbPreprocessCompRelease" value="40.0"/>
-            <Control type="ScriptButton" id="btnPreprocessClipperEnable" value="0.0"/>
+            <Control type="ScriptSlider" id="knbPreprocessCompAttack" value="2.0"/>
+            <Control type="ScriptSlider" id="knbPreprocessCompRelease" value="150.0"/>
+            <Control type="ScriptButton" id="btnPreprocessClipperEnable" value="1.0"/>
             <Control type="ScriptSlider" id="knbPreprocessClipperGain" value="0.0"/>
-            <Control type="ScriptButton" id="btnPostprocessEQEnable" value="0.0"/>
+            <Control type="ScriptButton" id="btnPostprocessEQEnable" value="1.0"/>
             <Control type="ScriptButton" id="btnPostprocessCompEnable" value="0.0"/>
             <Control type="ScriptSlider" id="knbPostprocessCompThreshold" value="0.0"/>
             <Control type="ScriptSlider" id="knbPostprocessCompRatio" value="4.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessCompAttack" value="10.0"/>
-            <Control type="ScriptSlider" id="knbPostprocessCompRelease" value="40.0"/>
+            <Control type="ScriptSlider" id="knbPostprocessCompAttack" value="2.0"/>
+            <Control type="ScriptSlider" id="knbPostprocessCompRelease" value="150.0"/>
             <Control type="ScriptButton" id="btnTunerMonitor" value="0.0"/>
             <Control type="ScriptSlider" id="knbClickTempo" value="120.0"/>
-            <Control type="ScriptLabel" id="lblAmpNAMLoader" value="Load NAM File."/>
           </Content>
           <UIData Source="AltarUIData"/>
         </Processor>
@@ -180,21 +180,21 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="CurveEq" ID="preprocessEQ" Bypassed="1" NumFilters="0"
+        <Processor Type="CurveEq" ID="preprocessEQ" Bypassed="0" NumFilters="0"
                    FFTEnabled="0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Dynamics" ID="preprocessComp" Bypassed="1" GateEnabled="0.0"
+        <Processor Type="Dynamics" ID="preprocessComp" Bypassed="0" GateEnabled="0.0"
                    GateThreshold="0.0" GateAttack="1.0" GateRelease="100.0" CompressorEnabled="1.0"
-                   CompressorThreshold="0.0" CompressorRatio="4.0" CompressorAttack="10.0"
-                   CompressorRelease="40.0" LimiterEnabled="0.0" LimiterThreshold="0.0"
+                   CompressorThreshold="0.0" CompressorRatio="4.0" CompressorAttack="2.0"
+                   CompressorRelease="150.0" LimiterEnabled="0.0" LimiterThreshold="0.0"
                    LimiterAttack="1.0" LimiterRelease="10.0" CompressorMakeup="0.0"
                    LimiterMakeup="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Hardcoded Master FX" ID="preprocessClipper" Bypassed="1"
+        <Processor Type="Hardcoded Master FX" ID="preprocessClipper" Bypassed="0"
                    Network="clipper" ClipperGain="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
@@ -222,8 +222,8 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularB" Bypassed="0" Network="amp"
-                   Mode="1.0" Oversampling="2.0" InputGain="55.20000076293945" Low="0.0"
-                   Mid="0.0" High="0.0" Presence="0.0" OutputGain="5.364418029785156e-7"
+                   Mode="1.0" Oversampling="2.0" InputGain="1.490116119384766e-6"
+                   Low="0.0" Mid="0.0" High="0.0" Presence="0.0" OutputGain="5.364418029785156e-7"
                    DistortionMode="0.0" CleanToneStackMode="0.0" DirtyToneStackMode="0.0"
                    LatestFilterFreq="10000.0" LatestFilterQ="1.0" LatestFilterGain="0.0">
           <ChildProcessors/>
@@ -238,7 +238,7 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
           <AudioFiles>
             <AudioFile EmbeddedData="{PROJECT_FOLDER}AL-Subvera.wav" MinValue="0" MaxValue="5513"/>
-            <AudioFile EmbeddedData="{PROJECT_FOLDER}AL-Antera.wav" MinValue="0" MaxValue="1024"/>
+            <AudioFile EmbeddedData="{PROJECT_FOLDER}AL-Crypta.wav" MinValue="0" MaxValue="1024"/>
           </AudioFiles>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularD" Bypassed="1" Network="reverb"
@@ -297,10 +297,10 @@
             <ContentProperties DeviceType="Desktop"/>
           </UIData>
         </Processor>
-        <Processor Type="CurveEq" ID="whistle" Bypassed="1" NumFilters="2" Band0="0.0"
+        <Processor Type="CurveEq" ID="whistle" Bypassed="1" NumFilters="2" Band0="-1.000000357627869"
                    Band1="2600.0" Band2="4.539204120635986" Band3="1.0" Band4="4.0"
-                   Band5="0.0" Band6="4000.0" Band7="4.406803607940674" Band8="1.0"
-                   Band9="4.0" FFTEnabled="0">
+                   Band5="-1.600000262260437" Band6="4000.0" Band7="4.406803607940674"
+                   Band8="1.0" Band9="4.0" FFTEnabled="0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -309,15 +309,15 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="CurveEq" ID="postprocessEQ" Bypassed="1" NumFilters="0"
+        <Processor Type="CurveEq" ID="postprocessEQ" Bypassed="0" NumFilters="0"
                    FFTEnabled="0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Dynamics" ID="postprocessComp" Bypassed="1" GateEnabled="0.0"
                    GateThreshold="0.0" GateAttack="1.0" GateRelease="100.0" CompressorEnabled="1.0"
-                   CompressorThreshold="0.0" CompressorRatio="4.0" CompressorAttack="10.0"
-                   CompressorRelease="40.0" LimiterEnabled="0.0" LimiterThreshold="0.0"
+                   CompressorThreshold="0.0" CompressorRatio="4.0" CompressorAttack="2.0"
+                   CompressorRelease="150.0" LimiterEnabled="0.0" LimiterThreshold="0.0"
                    LimiterAttack="1.0" LimiterRelease="10.0" CompressorMakeup="0.0"
                    LimiterMakeup="0.0">
           <ChildProcessors/>
@@ -366,7 +366,12 @@
           </ChildProcessors>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="Dynamics" ID="limiter" Bypassed="1" GateEnabled="0.0" GateThreshold="0.0"
+        <Processor Type="Hardcoded Master FX" ID="limiterDCBlocker" Bypassed="0"
+                   Network="DCFilterOutput">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Dynamics" ID="limiter" Bypassed="0" GateEnabled="0.0" GateThreshold="0.0"
                    GateAttack="1.0" GateRelease="100.0" CompressorEnabled="0.0"
                    CompressorThreshold="0.0" CompressorRatio="1.0" CompressorAttack="10.0"
                    CompressorRelease="100.0" LimiterEnabled="1.0" LimiterThreshold="0.0"
@@ -377,6 +382,11 @@
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="click" Bypassed="1" Network="click"
                    Gain="0.0">
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+        <Processor Type="Hardcoded Master FX" ID="InterSamplePeakBlocker" Bypassed="0"
+                   Network="InterSamplePeakBlocker">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
