@@ -8,9 +8,9 @@ https://iamlamprey.com/contact
 
 Various #include statements have been modified to use absolute relative paths, because HISE auto-generates the .projucer files for ThirdParty nodes at compile time. If you somehow misplace them, they are:
 
-JSON: https://github.com/nlohmann/json/
-math_approx: https://github.com/Chowdhury-DSP/math_approx
-RTNeural: https://github.com/jatinchowdhury18/RTNeural
-RTNeural-NAM: https://github.com/jatinchowdhury18/RTNeural-NAM
-rubberband: https://github.com/breakfastquay/rubberband
-xsimd: https://github.com/xtensor-stack/xsimd
+JSON: https://github.com/nlohmann/json/  
+math_approx: https://github.com/Chowdhury-DSP/math_approx  
+RTNeural: https://github.com/jatinchowdhury18/RTNeural  
+RTNeural-NAM: https://github.com/jatinchowdhury18/RTNeural-NAM  
+rubberband: https://github.com/breakfastquay/rubberband  
+xsimd: https://github.com/xtensor-stack/xsimd  
