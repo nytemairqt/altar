@@ -32,11 +32,10 @@
 #include <initializer_list>
 #include <array>
 
-#include "src/dependencies/nlohmann/json.hpp"
-#include "src/dependencies/RTNeural/RTNeural.h"
+#include "src/dependencies/json/single_include/nlohmann/json.hpp"
+#include "src/dependencies/RTNeural/RTNeural/RTNeural.h"
 #include "src/dependencies/RTNeural-NAM/wavenet/wavenet_model.hpp"
-#include "src/dependencies/math_approx/math_approx.hpp"
-#include "src/dependencies/xsimd/xsimd.hpp"
+#include "src/dependencies/math_approx/include/math_approx/math_approx.hpp"
 #include "src/filters.h"
 
 enum class GlobalCablesAmp

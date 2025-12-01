@@ -17,7 +17,7 @@
 
 namespace Preferences
 {
-	const version = "0.1b";
+	const version = "0.3b";
 
 	const btnShowPreferences = Content.getComponent("btnShowPreferences");
 	const pnlPreferences = Content.getComponent("pnlPreferences");

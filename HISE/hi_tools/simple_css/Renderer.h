@@ -1,0 +1,475 @@
+﻿/*  ===========================================================================
+*
+*   This file is part of HISE.
+*   Copyright 2016 Christoph Hart
+*
+*   HISE is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   HISE is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copyRectangle of the GNU General Public License
+*   along with HISE.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Commercial licenses for using HISE in an closed source project are
+*   available on request. Please visit the project's website to get more
+*   information about commercial licensing:
+*
+*   http://www.hise.audio/
+*
+*   HISE is based on the JUCE library,
+*   which must be separately licensed for closed source applications:
+*
+*   http://www.juce.com
+*
+*   ===========================================================================
+*/
+
+#pragma once
+
+
+namespace hise {
+namespace simple_css
+{
+using namespace juce;
+
+/** Subclass any component from this class and it will act as a root for all CSS features.
+ *
+ *  Usually this is a top-level component, but you can use multiple instances for advanced use cases.
+ *
+ *	Child components with a StyleSheetLookAndFeel will then use this in order to fetch the StyleSheet object
+ *	and the animator in order to render its graphics. */
+struct CSSRootComponent
+{
+#if HISE_INCLUDE_CSS_DEBUG_TOOLS
+
+	struct InfoOverlay: public Component,
+						public TooltipClientWithCustomPosition
+	{
+		struct Item
+		{
+			operator bool() const { return !selectors.isEmpty() && c.getComponent() != nullptr; }
+
+
+			void draw(Graphics& g);
+
+			Array<Selector> selectors;
+			StyleSheet::Ptr ss;
+			juce::Rectangle<float> globalBounds;
+			juce::Rectangle<float> textBounds;
+			Component::SafePointer<Component> c;
+			juce::Rectangle<float> textPosition;
+		};
+
+		InfoOverlay(CSSRootComponent& parent);
+
+		void rebuild();
+
+		void paint(Graphics& g) override
+		{
+			g.fillAll(Colour(0x99444444));
+
+			for(auto i: items)
+				i->draw(g);
+		}
+
+		String getTooltip() override
+		{
+			auto point = getMouseXYRelative().toFloat();
+
+			currentlyHovered = nullptr;
+
+			for(auto i: items)
+			{
+				if(i->globalBounds.contains(point))
+				{
+					currentlyHovered = i;
+					String tt;
+					tt << "Selectors: ";
+
+					for(auto s: i->selectors)
+						tt << s.toString() << " |";
+
+					return tt;
+				}
+			}
+
+			return {};
+		}
+
+		void applyPosition(const juce::Rectangle<int>& screenBoundsOfTooltipClient, juce::Rectangle<int>& tooltipRectangleAtOrigin) override
+		{
+			if(currentlyHovered != nullptr)
+			{
+				auto delta = currentlyHovered->globalBounds.getBottomRight();
+				tooltipRectangleAtOrigin.translate(delta.x, delta.y);
+			}
+		}
+
+		CSSRootComponent& parent;
+		OwnedArray<Item> items;
+		Item* currentlyHovered = nullptr;
+	};
+
+	struct InspectorData
+	{
+		Component::SafePointer<Component> c;
+		juce::Rectangle<float> first;
+		String second;
+
+		bool operator!=(const InspectorData& other) const
+		{
+			return !(*this == other);
+		}
+
+		bool operator==(const InspectorData& other) const
+		{
+			return c.getComponent() == other.c.getComponent();
+		}
+
+		operator bool() const
+		{
+			return c != nullptr && !first.isEmpty() && second.trim() != "div";
+		}
+
+		void draw(Graphics& g, juce::Rectangle<float> lb, StyleSheet::Collection& css) const;
+	};
+
+	struct CSSDebugger: public Component,
+	                    public Timer,
+	                    public PathFactory
+	{
+		enum class OverlayMode
+		{
+			None,
+			Hovered,
+			Selectors
+		};
+
+	    CSSDebugger(CSSRootComponent& componentToDebug, bool start=true);
+
+		struct SelectListener: public MouseListener
+	    {
+		    SelectListener(CSSDebugger& parent_);;
+
+			~SelectListener() override;
+
+		    void mouseMove(const MouseEvent& e) override;
+
+			void mouseDown(const MouseEvent& e) override;
+
+		    CSSDebugger& parent;
+	    };
+
+		bool keyPressed(const KeyPress& key) override;
+
+		void clear();
+
+		bool editMode = true;
+		InspectorData currentlyEditedData;
+
+		void setEditMode(bool shouldBeEnabled);
+
+		void updateEditorText(const InspectorData& d, bool force=false);
+
+		void setActive(bool shouldBeActive);
+
+	    ScopedPointer<SelectListener> selectListener;
+		InspectorData hoverData;
+	    HiseShapeButton powerButton;
+		HiseShapeButton editButton;
+
+	    
+	    Path createPath(const String& url) const override;
+
+	    ~CSSDebugger()
+	    {
+	        clear();
+	    }
+	    
+	    void paint(Graphics& g) override;
+
+	    Component* getRootComponent()
+	    {
+		    return dynamic_cast<Component*>(root.get());
+	    }
+
+	    InspectorData createInspectorData(Component* c);
+
+		void check();
+
+		void timerCallback() override
+	    {
+	        //check();
+	    }
+
+	    Array<InspectorData> parentData;
+
+	    void updateWithInspectorData(const InspectorData& id);
+
+		Component::SafePointer<Component> currentTarget = nullptr;
+	    
+	    void resized() override;
+
+		juce::CodeDocument doc;
+	    mcl::TextDocument codeDoc;
+	    mcl::TextEditor editor;
+
+		ComboBox overlayMode;
+	    ComboBox hierarchy;
+		ComboBox editSelector;
+
+	    hise::GlobalHiseLookAndFeel laf;
+
+	    WeakReference<CSSRootComponent> root;
+	};
+
+	void setCurrentInspectorData(const InspectorData& newData)
+    {
+        inspectorData = newData;
+        dynamic_cast<Component*>(this)->repaint();
+    }
+    
+    InspectorData inspectorData;
+
+	void toggleInfo()
+	{
+		if(debugger != nullptr)
+			debugger = nullptr;
+		else
+			debugger = new InfoOverlay(*this);
+	}
+
+	void showInfo(bool shouldShow)
+	{
+		if(shouldShow != (debugger != nullptr))
+		{
+			if(shouldShow)
+				debugger = new InfoOverlay(*this);
+			else
+				debugger = nullptr;
+		}
+	}
+#endif
+
+	CSSRootComponent():
+	  stateWatcher(this, animator)
+	{
+		css.setAnimator(&animator);
+	};
+
+	virtual ~CSSRootComponent() {};
+
+	static CSSRootComponent* find(Component& c)
+	{
+		if(auto self = dynamic_cast<CSSRootComponent*>(&c))
+			return self;
+
+		return c.findParentComponentOfClass<CSSRootComponent>();
+	}
+
+	virtual StyleSheet::Collection::DataProvider* createDataProvider() { return nullptr; }
+	
+	Animator animator;
+	StateWatcher stateWatcher;
+	StyleSheet::Collection css;
+
+	ScopedPointer<Component> debugger;
+
+	JUCE_DECLARE_WEAK_REFERENCEABLE(CSSRootComponent);
+};
+
+
+/** This helper class will use a style sheet collection to slice an area in order to calculate the UI layout.
+ *  The syntax of the methods mimic the juce::juce::Rectangle<> class so you can apply the proven slicing workflow
+ *	when defining your component layout.
+ *
+ *	Note: you can also use the FlexboxComponent for UI layout.
+ */
+class Positioner
+{
+	enum class Direction
+	{
+		Left,
+		Right,
+		Top,
+		Bottom
+	};
+
+	struct RemoveHelpers
+	{
+		template <Direction D> static juce::Rectangle<float> slice(juce::Rectangle<float>& area, float amount)
+		{
+			switch(D)
+			{
+			case Direction::Left: return area.removeFromLeft(amount);
+			case Direction::Right: return area.removeFromRight(amount);
+			case Direction::Top: return area.removeFromTop(amount);
+			case Direction::Bottom: return area.removeFromBottom(amount);
+			}
+		}
+
+		template <Direction D> static juce::Rectangle<float> shrink(juce::Rectangle<float> area, float amount)
+		{
+			return slice<D>(area, amount);
+		}
+	};
+
+	template <Direction D> juce::Rectangle<float> slice(const Array<Selector>& s, float defaultValue)
+	{
+		if(auto ss = css.getWithAllStates(nullptr, s.getFirst()))
+		{
+			ss->setFullArea(bodyArea);
+
+			auto key = (D == Direction::Left || D == Direction::Right) ? "width" : "height";
+			auto h = ss->getPixelValue(totalArea, { key, {} }, defaultValue);
+			auto positionType = ss->getPositionType({});
+
+			juce::Rectangle<float> copyRectangle = totalArea;
+
+			auto shouldShrink = positionType == PositionType::absolute || positionType == PositionType::fixed;
+			auto& toUse = shouldShrink ? copyRectangle : totalArea;
+			auto b = RemoveHelpers::slice<D>(toUse, h);
+			b = ss->getBounds(b, {});
+
+			if(applyMargin)
+				return ss->getArea(b, { "margin", 0 });
+			else
+				return b;
+		}
+
+		return RemoveHelpers::slice<D>(totalArea, defaultValue);
+	}
+
+public:
+
+	/** Creates a positioner for the given CSS collection and a given area (usually the component bounds).
+	 *
+	 *  If applyMargin is true, the rectangles returned by the methods will factor in the margin of the component,
+	 *	however in most cases you don't want that to be the case because the margin is also factored in in the
+	 *	Renderer::drawBackground() class (so it can draw box-shadows without resorting to unclipped painting).
+	 */
+	Positioner(StyleSheet::Collection styleSheet, juce::Rectangle<float> totalArea_, bool applyMargin_=false);
+
+	/** Creates a rectangle at origin with the width and sized set to the exact dimension to display the provided text.
+	 *  This factors in font properties and margin / padding / borders so whenever you have a component that displays a text
+	 *  use this to set it to the exact size that you know and love from your favorite web browser. */
+	juce::Rectangle<int> getLocalBoundsFromText(const Array<Selector>& s, const String& text, juce::Rectangle<int> defaultBounds={});
+
+	/** Slices a rectangle from the top of the full area using the style sheet identified by the list of supplied selectors. */
+	juce::Rectangle<float> removeFromTop(const Array<Selector>& s, float defaultValue = 0.0f) { return slice<Direction::Top>(s, defaultValue); }
+
+	/** Slices a rectangle from the bottom of the full area using the style sheet identified by the list of supplied selectors. */
+	juce::Rectangle<float> removeFromBottom(const Array<Selector>& s, float defaultValue = 0.0f) { return slice<Direction::Bottom>(s, defaultValue); }
+
+	/** Slices a rectangle from the left of the full area using the style sheet identified by the list of supplied selectors. */
+	juce::Rectangle<float> removeFromLeft(const Array<Selector>& s, float defaultValue = 0.0f) { return slice<Direction::Left>(s, defaultValue); }
+
+	/** Slices a rectangle from the right of the full area using the style sheet identified by the list of supplied selectors. */
+	juce::Rectangle<float> removeFromRight(const Array<Selector>& s, float defaultValue = 0.0f) { return slice<Direction::Right>(s, defaultValue); } 
+
+private:
+
+	bool applyMargin = false;
+	juce::Rectangle<float> bodyArea;
+	juce::Rectangle<float> totalArea;
+	StyleSheet::Collection css;
+};
+
+
+/** A lightweight object that will render CSS defined appearances on a Graphics context. */
+struct Renderer: public Animator::ScopedComponentSetter
+{
+	/** Creates a renderer that will draw on the component using the state watcher. */
+	Renderer(Component* c, StateWatcher& state_, int subComponentIndex=-1);;
+
+	/** Tries to set the flags based on the component state (visible, enabled, hovered, etc). */
+	static int getPseudoClassFromComponent(Component* c);
+
+	/** Renders the background of the component using the supplied style sheet and pseudo element type.
+	 *
+	 *  Make sure to call StateWatcher::checkState() before rendering this method in order to pick up the correct pseudo class
+	 *	to use.
+	 */
+	void drawBackground(Graphics& g, juce::Rectangle<float> area, StyleSheet::Ptr ss, PseudoElementType type = PseudoElementType::None);
+
+	void drawImage(Graphics& g, const juce::Image& img, juce::Rectangle<float> area, StyleSheet::Ptr ss, bool isContent);
+
+	/** Renders a text using the supplied style sheet. */
+	void renderText(Graphics& g, juce::Rectangle<float> area, const String& text, StyleSheet::Ptr ss, PseudoElementType type=PseudoElementType::None, Justification justificationToUse = Justification(0), bool truncateBeforeAfter=true);
+
+	/** Manually set the state flags for the renderer. this is useful for cases where the style flags can't be easily queried
+	 *  from the component hover states (eg. at popup menu items). */
+	void setPseudoClassState(int state, bool forceOverwrite=false);
+
+	/** Sets the current colour (or gradient) for the renderer based on the supplied style sheet and property key. */
+	void setCurrentBrush(Graphics& g, StyleSheet::Ptr ss, juce::Rectangle<float> area, const PropertyKey& key, Colour defaultColour=Colours::transparentBlack);
+
+	/** returns the pseudo class state to use */
+	int getPseudoClassState() const;
+
+	void setApplyMargin(bool useMargin)
+	{
+		applyMargin = useMargin;
+	}
+
+	void setRenderTextWithBackground(bool shouldRenderText)
+	{
+		renderTextWithBackground = shouldRenderText;
+	}
+
+	void setRenderPseudoElements(bool shouldRenderPseudoElements)
+	{
+		renderPseudoElements = shouldRenderPseudoElements;
+	}
+
+private:
+
+	bool renderPseudoElements = true;
+	bool renderTextWithBackground = true;
+
+	bool applyMargin = true;
+
+	bool forceOverwriteState = false;
+	int pseudoClassState = 0;
+	PseudoElementType currentlyRenderedPseudoElement = PseudoElementType::None;
+	Animator::RenderTarget currentComponent;
+	StateWatcher& state;
+};
+
+/** This class will create a set of C++ instructions that render the style sheet on a juce::Graphics context.
+ *
+ *  This makes it a very convenient tool during development: just use a style sheet to customize the appearance and then
+ *	use this class to create a hardcoded C++ renderer with the same appearance but no performance overhead.
+ *
+ *	The generated code can be used as a dropin-replacement for the simple_css::Renderer class.
+ */
+class CodeGenerator
+{
+public:
+
+	CodeGenerator(StyleSheet::Ptr ss_);
+
+	void appendLine(const String& s)
+	{
+		if(s.isNotEmpty())
+			code << "\t" << s << "\n";
+	}
+
+	String toCode()
+	{
+		return code;
+	}
+
+	String code;
+	
+	StyleSheet::Ptr ss;
+};
+
+} // namespace simple_css
+} // namespace hise

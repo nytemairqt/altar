@@ -246,7 +246,7 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnWitness" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="witness..." text=")_!s_g8gs  w1tness  gggggFg8g"
+               parentComponent="pnlMaster" tooltip="witness..." text=")76=_S&amp;#*  witnes$  sgh818&amp;yK"
                height="30.0" saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"
