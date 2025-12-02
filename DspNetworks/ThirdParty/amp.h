@@ -1177,8 +1177,8 @@ private:
 
         const double hostSR  = lastSpecs.sampleRate > 0 ? lastSpecs.sampleRate : (double)sampleRate;
         const double modelSR = modelSampleRate.load(std::memory_order_acquire);
-
-        StreamingResampler::ResampleAlgo algo = StreamingResampler::ResampleAlgo::Lagrange;
+        
+        auto algo = StreamingResampler::ResampleAlgo::Lagrange;
         
         inputResampler.setup(hostSR, modelSR, algo, resamplerKernelSize);
         outputResampler.setup(modelSR, hostSR, algo, resamplerKernelSize);
