@@ -1,16 +1,16 @@
-### Altar
+# Altar
 
 Altar is a free, open-source guitar amplifier. 
 
 Built with HISE: https://hise.dev/  
 
-## Modifications to HISE Source Code
+### Modifications to HISE Source Code
 
 Altar depends on several small fixes to the HISE source. 
 
 Read [HISE](./HISE/HISE.md) for more information. 
 
-## Building ThirdParty Nodes
+### Building ThirdParty Nodes
 
 Altar uses multiple HISE ThirdParty nodes with their own dependencies. They are included in the /DspNetworks/ThirdParty/src/dependencies folder and are (should be) compatible with GPL-3. 
 
@@ -22,11 +22,11 @@ You must also compile HISE with the following preprocessor:
 HI_ENABLE_CUSTOM_NODES=1
 ```
 
-## Compiling (Windows)
+### Compiling (Windows)
 
 TBA
 
-## Compiling (Linux)
+### Compiling (Linux)
 
 These are the modified instructions from David Healey's Bootcamp Cheat Sheet. I highly recommend signing up for the bootcamp:
 
@@ -34,7 +34,7 @@ https://audiodevschool.com/courses/hise-bootcamp/
 
 Assuming a fresh install (I used Linux Mint):
 
-# Install prerequisites
+##### Install prerequisites
 
 ```
 sudo apt update
@@ -45,7 +45,7 @@ libasound2-dev freeglut3-dev libxcomposite-dev libcurl4-gnutls-dev libgtk-3-dev
 libjack-jackd2-dev libwebkit2gtk-4.1-dev
 ```
 
-# Install & Alias Mold Linker
+##### Install & Alias Mold Linker
 
 Install mold:
 
@@ -67,13 +67,13 @@ source ~/.bashrc
 gold --version
 ```
 
-# Install Source Code Pro Font
+##### Install Source Code Pro Font
 
 Download: https://fonts.google.com/specimen/Source+Code+Pro
 Extract to: `~/.fonts/SourceCodePro`
 Move fonts from `static/` subfolder to the top-level folder.
 
-# Install FFTW (GPL Compatible)
+##### Install FFTW (GPL Compatible)
 
 `sudo apt install libfftw3-dev`
 
@@ -91,7 +91,7 @@ Apply changes:
 
 `source ~/.bashrc`
 
-# Clone & Setup HISE
+##### Clone & Setup HISE
 
 Merge the HISE subfolder of Altar:
 
@@ -108,13 +108,13 @@ HISE/tools/SDK/ASIOSDK2.3
 HISE/tools/SD/VST3 SDK
 ```
 
-# Modify Projucer File
+##### Modify Projucer File
 
 Now open the Projucer `HISE/tools/projucer/projucer` and drag the HISE Jucer file:
 
 `HISE/projects/standalone/HISE Standalone.jucer` inside the Projucer.
 
-# Enable FFTW3: 
+##### Enable FFTW3: 
 
 Add to Extra Preprocessor Definitions:
 
@@ -128,7 +128,7 @@ Enable in modules -> juce_dsp:
 
 `JUCE_DSP_USE_STATIC_FFTW`
 
-# Save & Build HISE
+##### Save & Build HISE
 
 Save Projucer project (File -> Save)
 
@@ -138,7 +138,7 @@ make clean
 make CONFIG=Release -j 4
 ```
 
-# Open Altar Project for Compiling ThirdParty Nodes
+##### Open Altar Project for Compiling ThirdParty Nodes
 
 Start HISE, `File -> Load Project -> Altar Root Folder`
 
@@ -156,7 +156,7 @@ Scroll down and set the C++ Language Standard to C++ 20. Save & close Projucer f
 
 Now run `./batchCompileLinux.sh` to compile the ThirdParty Nodes.
 
-# Open Altar Project for Exporting Plugin
+##### Open Altar Project for Exporting Plugin
 
 Open HISE again, this time you can open the Altar.xml.
 
