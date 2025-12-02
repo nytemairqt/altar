@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../RTNeural/RTNeural/RTneural.h"
+#include "../../RTNeural/RTNeural/RTNeural.h"
 
 namespace wavenet
 {
