@@ -148,6 +148,18 @@ make clean
 make CONFIG=Release -j 4
 ```
 
+#### Fix Compiler Settings
+
+Ctrl + H to view Hidden Files.
+
+`~/.config/HISE/compilerSettings.xml`
+
+Add the HISE Root folder to the HisePath variable.
+
+Then copy the entire file to:
+
+`~/.hise/compilerSettings.xml`
+
 #### Open Altar Project for Compiling ThirdParty Nodes
 
 Start HISE, `File -> Load Project -> Altar Root Folder`
