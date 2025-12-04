@@ -6,11 +6,13 @@ Altar is a free, open-source guitar amplifier.
 
 Built with HISE: https://hise.dev/  
 
+https://github.com/christophhart/HISE
+
 ### Modifications to HISE Source Code
 
-Altar depends on several small fixes to the HISE source. They are included in the /HISE/ subfolder of this repository.
+Altar depends on several small fixes to the HISE source. I recommend using my fork:
 
-Read [HISE](./HISE/HISE.md) for more information. 
+https://github.com/nytemairqt/HISE
 
 ### Dependencies
 
@@ -51,6 +53,7 @@ sudo apt-get -y install \
   build-essential \
   git \
   make \
+  mold \
   binutils-gold \
   libfreetype6-dev \
   libx11-dev \
@@ -64,30 +67,33 @@ sudo apt-get -y install \
   libcurl4-gnutls-dev \
   libgtk-3-dev \
   libjack-jackd2-dev \
-  libwebkit2gtk-4.1-dev
+  libwebkit2gtk-4.1-dev \
+  libfftw3-dev
 ```
 
-#### Install & Alias Mold Linker
+#### Alias Mold Linker & Setup FFTW
 
-Install mold:
-
-`sudo apt install mold`
-
-Alias:
+Edit bashrc:
+`nano ~/.bashrc`
 
 ```
-nano ~/.bashrc
+# Add these lines at the end:
 
-# add this line:
+# mold linker alias
 alias gold="mold"
+
+# fftw3
+export FFTWROOT=/usr/lib/x86_64-linux-gnu
+export CPATH=$FFTWROOT/include:$CPATH
+export LIBRARY_PATH=$FFTWROOT/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=$FFTWROOT/lib:$LD_LIBRARY_PATH
 ```
 
-Apply changes & test:
+Apply & verify changes:
 
-```
-source ~/.bashrc
-gold --version
-```
+`source ~/.bashrc`
+
+`gold --version` (should say mold)
 
 #### Install Source Code Pro Font
 
@@ -95,35 +101,17 @@ Download: https://fonts.google.com/specimen/Source+Code+Pro
 Extract to: `~/.fonts/SourceCodePro`
 Move fonts from `static/` subfolder to the top-level folder.
 
-#### Install FFTW (GPL Compatible)
-
-`sudo apt install libfftw3-dev`
-
-```
-nano ~/.bashrc
-
-# add these lines:
-export FFTWROOT=/usr/lib/x86_64-linux-gnu
-export CPATH=$FFTWROOT/include:$CPATH
-export LIBRARY_PATH=$FFTWROOT/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=$FFTWROOT/lib:$LD_LIBRARY_PATH
-```
-
-Apply changes:
-
-`source ~/.bashrc`
-
 #### Clone & Setup HISE
 
-Merge the HISE subfolder of Altar:
+Use my fork, which includes several minor fixes to resolve annoying gcc errors.
 
-`Altar/HISE/`
+`git clone https://github.com/nytemairqt/HISE.git`
 
-into the HISE repo, check "Replace" to overwrite existing files. Then extract the SDK:
+Extract the SDK:
 
 `HISE/tools/SDK/sdk.zip`
 
-The ASIOSDK2.3 and VST3 SDK folders need to be in the SDK folder, NOT the auto-generated "sdk" folder created by unzipping. EG:
+The ASIOSDK2.3 and VST3 SDK folders need to be in the SDK folder, NOT the auto-generated "sdk" folder created by unzipping:
 
 ```
 HISE/tools/SDK/ASIOSDK2.3
