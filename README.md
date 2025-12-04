@@ -42,14 +42,29 @@ https://audiodevschool.com/courses/hise-bootcamp/
 Assuming a fresh install (I used Linux Mint):
 
 #### Install prerequisites
-
-```
+```bash
 sudo apt update
+```
 
-sudo apt-get -y install build-essential git make binutils-gold libfreetype6-dev
-libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev mesa-common-dev
-libasound2-dev freeglut3-dev libxcomposite-dev libcurl4-gnutls-dev libgtk-3-dev
-libjack-jackd2-dev libwebkit2gtk-4.1-dev
+```bash
+sudo apt-get -y install \
+  build-essential \
+  git \
+  make \
+  binutils-gold \
+  libfreetype6-dev \
+  libx11-dev \
+  libxinerama-dev \
+  libxrandr-dev \
+  libxcursor-dev \
+  mesa-common-dev \
+  libasound2-dev \
+  freeglut3-dev \
+  libxcomposite-dev \
+  libcurl4-gnutls-dev \
+  libgtk-3-dev \
+  libjack-jackd2-dev \
+  libwebkit2gtk-4.1-dev
 ```
 
 #### Install & Alias Mold Linker
