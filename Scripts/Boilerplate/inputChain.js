@@ -23,10 +23,10 @@ namespace InputChain
     const transpose = Synth.getEffect("transpose");    
     const btnTranspose = Content.getComponent("btnTranspose");
     const knbTranspose = Content.getComponent("knbTranspose");    
-    const btnTransposeSnap = Content.getComponent("btnTransposeSnap");         
+    const btnTransposeSnap = Content.getComponent("btnTransposeSnap");            
     
     inline function onbtnTransposeControl(component, value)
-    {
+    {		
 		local latency = Engine.getSamplesForMilliSeconds(1); // 1-2 ms general latency in tests		
 		
 		if (value)
@@ -36,7 +36,8 @@ namespace InputChain
 		}
 		
 		transpose.setBypassed(1-value);
-		Engine.setLatencySamples(latency);
+		
+        Engine.setLatencySamples(latency); // FIX ME: get actual samples from stretcher
     }           
     
     btnTranspose.setControlCallback(onbtnTransposeControl);
@@ -44,7 +45,7 @@ namespace InputChain
     inline function onknbTransposeControl(component, value)
     {                    
         local newPitch = Math.pow(2.0, value / 12.0);               
-        transpose.setAttribute(transpose.FreqRatio, newPitch);
+        transpose.setAttribute(transpose.FreqRatio, newPitch);        
     }
 
     inline function onbtnTransposeSnapControl(component, value)
@@ -57,6 +58,5 @@ namespace InputChain
 
     const octave = Synth.getEffect("octave");
     const btnOctave = Content.getComponent("btnOctave");
-    const knbOctave = Content.getComponent("knbOctave");    
-    
+    const knbOctave = Content.getComponent("knbOctave");        
 }

@@ -12,5 +12,5 @@ JSON: https://github.com/nlohmann/json/
 math_approx: https://github.com/Chowdhury-DSP/math_approx  
 RTNeural: https://github.com/jatinchowdhury18/RTNeural  
 RTNeural-NAM: https://github.com/jatinchowdhury18/RTNeural-NAM  
-rubberband: https://github.com/breakfastquay/rubberband  
+signalsmith-stretch: https://github.com/Signalsmith-Audio/signalsmith-stretch
 xsimd: https://github.com/xtensor-stack/xsimd  

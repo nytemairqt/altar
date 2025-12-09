@@ -15,23 +15,10 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
-
-you have to replace every instance of "Rectangle" in HISE/hi_tools/simple_css/Renderer.h to juce::Rectangle
-
-And replace both "copy" variables in that same file with copyRectangle
-
-Then build HISE with HI_ENABLE_CUSTOM_NODES=1 preprocessor!
-
-Don't forget to extract SDK
-
-*/
-
 #pragma once
 #include <JuceHeader.h>
 
-#include "src/dependencies/rubberband/single/RubberBandSingle.cpp"
-#include "src/dependencies/rubberband/rubberband/RubberBandStretcher.h"
+#include "src/dependencies/signalsmith-stretch/signalsmith-stretch.h"
 
 namespace project
 {
@@ -54,7 +41,6 @@ template <int NV> struct transpose: public data::base
 	static constexpr bool hasTail() { return false; };
 	static constexpr bool isSuspendedOnSilence() { return false; };
 	static constexpr int getFixChannelAmount() { return 2; };
-
 	
 	static constexpr int NumTables = 0;
 	static constexpr int NumSliderPacks = 0;
@@ -66,145 +52,71 @@ template <int NV> struct transpose: public data::base
 	int handleModulation(double& value) { return 0; }	
 	void setExternalData(const ExternalData& data, int index) {}	
 
-	std::unique_ptr<RubberBand::RubberBandStretcher> rb;
-	const int numChannels = 1; // stretcher is mono
+	signalsmith::stretch::SignalsmithStretch<float> stretch;
+		
+	// still using a ratio because we already have the conversion in the interface logic
+	double ratio = 1.0; 
 	
-	size_t startPad = 0;              
-	size_t startDelay = 0;            
-	size_t remainingPad = 0;          
-	size_t remainingDrop = 0;         
-	
-	double pitchScale = 1.0;
-	
-	juce::HeapBlock<float> padBuffer;       
-	juce::HeapBlock<float> retrieveBuffer;  
-	int maxBlockSize = 0;
+	int maxBlockSize = 0; 
+
+	// stretcher needs unique in & out, so we need 
+	// a temp buffer to hold our intermediate samples:	
+	juce::AudioBuffer<float> tmp; // probably better to use a span here
+
+	const int numChannels = 2;
+	int blockSamples = 4096;
+    int intervalSamples = 512;
+    int numInput = 512;    
 	
 	void prepare(PrepareSpecs specs)
 	{
 		maxBlockSize = (int)specs.blockSize; 
 		
-		rb = std::make_unique<RubberBand::RubberBandStretcher>(
-			specs.sampleRate,
-			numChannels,
-			RubberBand::RubberBandStretcher::Option::OptionProcessRealTime
-			| RubberBand::RubberBandStretcher::Option::OptionEngineFaster
-			| RubberBand::RubberBandStretcher::Option::OptionPitchHighConsistency	
-			| RubberBand::RubberBandStretcher::Option::OptionTransientsCrisp		
-			| RubberBand::RubberBandStretcher::Option::OptionWindowStandard			
-		);
-		
-		rb->reset();		
-		rb->setPitchScale(pitchScale);
-		
-		startPad = rb->getPreferredStartPad();
-		startDelay = rb->getStartDelay();
-		remainingPad = startPad;
-		remainingDrop = startDelay;
-		
-		const int padCapacity = jmax((int)startPad, maxBlockSize);
-		const int retrieveCapacity = jmax((int)startDelay, maxBlockSize);
-		
-		padBuffer.allocate((size_t)padCapacity, true);
-		retrieveBuffer.allocate((size_t)retrieveCapacity, false);
+		stretch.presetDefault(specs.numChannels, specs.sampleRate);
+		stretch.setTransposeFactor(ratio);
+
+		tmp.setSize(numChannels, maxBlockSize, false, false, true);
 	}
 	
 	void reset()
-	{
-		if (!rb) return;
-		rb->reset();
-		rb->setPitchScale(pitchScale);
-		
-		startPad = rb->getPreferredStartPad();
-		startDelay = rb->getStartDelay();
-		remainingPad = startPad;
-		remainingDrop = startDelay;
-
-		const int padCapacity = jmax((int)startPad, maxBlockSize);
-		const int retrieveCapacity = jmax((int)startDelay, maxBlockSize);
-		padBuffer.allocate((size_t)padCapacity, true);
-		retrieveBuffer.allocate((size_t)retrieveCapacity, false);
+	{		
+		stretch.reset();
 	}
 	
 	void handleHiseEvent(HiseEvent& e){}	
 	
 	template <typename T> void process(T& data)
 	{
-		if (!rb) return;
-		
+		auto ptrs = data.getRawDataPointers();
 		const int numSamples = data.getNumSamples();
-		auto ptrs = data.getRawDataPointers(); // ptrs[0], ptrs[1]
-				
-		float* rbInPtrs[1] = { nullptr };
 		
-		if (remainingPad > 0)
-		{
-			const int padNow = (int)remainingPad;
-			rbInPtrs[0] = padBuffer.getData();
-			rb->process(rbInPtrs, padNow, false);
-			remainingPad = 0; // pad fully supplied
-		}
+		if (tmp.getNumSamples() < numSamples)
+			tmp.setSize(numChannels, numSamples, false, false, true);
 		
-		rbInPtrs[0] = ptrs[0];
-		rb->process(rbInPtrs, numSamples, false);
+		float* in[2]  = { ptrs[0], ptrs[1] };
+		float* out[2] = { tmp.getWritePointer(0), tmp.getWritePointer(1) };
 		
-		int written = 0;
-		while (written < numSamples)
-		{
-			int avail = rb->available();
-			if (avail <= 0) break; // nothing available yet
-			
-			const int toGet = jmin(avail, numSamples - written);
-			
-			float* rbOutPtrs[1] = { retrieveBuffer.getData() };
-			rb->retrieve(rbOutPtrs, toGet);
-			
-			if (remainingDrop > 0)
-			{
-				if ((size_t)toGet <= remainingDrop)
-				{
-					remainingDrop -= (size_t)toGet;
-					continue; // all retrieved samples were dropped
-				}
-				else
-				{
-					const int keep = toGet - (int)remainingDrop;
-					const int start = (int)remainingDrop;
-					std::memcpy(ptrs[0] + written, retrieveBuffer.getData() + start, sizeof(float) * keep);
-					written += keep;
-					remainingDrop = 0;
-				}
-			}
-			else
-			{
-				// no more to drop, copy to output
-				std::memcpy(ptrs[0] + written, retrieveBuffer.getData(), sizeof(float) * toGet);
-				written += toGet;
-			}
-		}
+		// requires the in and out pointers to be unique
+		stretch.process(in, numSamples, out, numSamples);
 		
-		// if not enough output available, zero-fill the remainder
-		if (written < numSamples)
-		{
-			std::memset(ptrs[0] + written, 0, sizeof(float) * (numSamples - written));
-		}
-		
-		std::memcpy(ptrs[1], ptrs[0], sizeof(float) * numSamples); // back to stereo
+		// now write back to the original pointers
+		std::memcpy(ptrs[0], out[0], sizeof(float) * numSamples);
+		std::memcpy(ptrs[1], out[1], sizeof(float) * numSamples);
 	}
 			
 	template <int P> void setParameter(double v)
 	{
 		if (P == 0)
 		{
-			pitchScale = v;
-			if (rb) { rb->setPitchScale(pitchScale); }
+			ratio = v;			
+			stretch.setTransposeFactor(ratio);
 		}
 	}
 	
 	void createParameters(ParameterDataList& data)
 	{
 		{
-			parameter::data p("FreqRatio", { 0.25, 4.0 });
+			parameter::data p("FreqRatio", { 0.25, 4.0 }); // -24 to 24 semitones
 			registerCallback<0>(p);
 			p.setDefaultValue(1.0);
 			data.add(std::move(p));
