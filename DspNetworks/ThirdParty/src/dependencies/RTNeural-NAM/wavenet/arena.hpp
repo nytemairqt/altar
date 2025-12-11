@@ -99,12 +99,15 @@ public:
    * The returned memory will be un-initialized, so be sure to clear it manually
    * if needed.
    */
+
+    /* REMOVING TO AVOID C++20
     template <typename T, typename IntType>
     auto make_span (IntType count, size_t alignment = default_byte_alignment)
     {
         return std::span { allocate<T> (count, alignment),
                            static_cast<size_t> (count) };
     }
+    */
 
     /** Returns a pointer to the internal buffer with a given offset in bytes */
     template <typename T, typename IntType>
