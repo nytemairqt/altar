@@ -23,22 +23,15 @@ namespace InputChain
     const transpose = Synth.getEffect("transpose");    
     const btnTranspose = Content.getComponent("btnTranspose");
     const knbTranspose = Content.getComponent("knbTranspose");    
-    const btnTransposeSnap = Content.getComponent("btnTransposeSnap");            
-    
+    const btnTransposeSnap = Content.getComponent("btnTransposeSnap");                     
+        
     inline function onbtnTransposeControl(component, value)
     {		
-		local latency = Engine.getSamplesForMilliSeconds(1); // 1-2 ms general latency in tests		
-		
-		if (value)
-		{			
-			local sr = Math.round(Engine.getSampleRate());
-			latency = Engine.getSamplesForMilliSeconds(41); // pitch shifter adds quite a bit
-		}
-		
-		transpose.setBypassed(1-value);
-		
-        Engine.setLatencySamples(latency); // FIX ME: get actual samples from stretcher
-    }           
+		local latency = Engine.getSamplesForMilliSeconds(1); // 1-2 ms general latency in tests										
+		if (value) { latency = 2560; } // (2048 + 512) samples from stretcher										
+		transpose.setBypassed(1-value);			        			
+		Engine.setLatencySamples(latency);									
+    }                          
     
     btnTranspose.setControlCallback(onbtnTransposeControl);
 

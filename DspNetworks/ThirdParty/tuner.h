@@ -22,8 +22,8 @@ enum class GlobalCablesTuner
 {
     tempo = 0,
     pitch = 1,
-    nam = 2
-}; 
+    nam = 2    
+};
 
 namespace project
 {
@@ -109,7 +109,6 @@ template <int NV> struct tuner: public data::base, public cable_manager_t, publi
         pitchConfidence.store(0.0f);
         isNoteDetected.store(false);
         totalSamplesCollected = 0;
-
     }
 
     template <typename T> void process(T& data)

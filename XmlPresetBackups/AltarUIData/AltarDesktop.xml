@@ -205,7 +205,7 @@
                parentComponent="pnlMaster" width="60.0" height="30.0" visible="0"
                text="ringmod"/>
     <Component type="ScriptLabel" id="lblCpuUsage" x="1040.0" y="10.0" parentComponent="pnlMaster"
-               text="CPU Usage: 1%" width="110.0" fontStyle="Regular" height="30.0"
+               text="CPU Usage: 3%" width="110.0" fontStyle="Regular" height="30.0"
                alignment="left" editable="0" fontSize="14.0"/>
     <Component type="ScriptFloatingTile" id="fltVuMeterInput" x="29.0" y="231.0"
                parentComponent="pnlMaster" width="120.0" height="413.0" ContentType="MatrixPeakMeter"
@@ -246,7 +246,7 @@
                text="-24" width="30.0" height="13.0" fontStyle="Bold" editable="0"
                textColour="4289374890"/>
     <Component type="ScriptButton" id="btnWitness" x="785.0" y="10.0" width="230.0"
-               parentComponent="pnlMaster" tooltip="witness..." text=")76=_S&amp;#*  witnes$  sgh818&amp;yK"
+               parentComponent="pnlMaster" tooltip="witness..." text="j*-7()&amp;gd  witness  !&amp;ufJfG*d"
                height="30.0" saveInPreset="0" enableMidiLearn="0" isMomentary="1"/>
     <Component type="ScriptLabel" id="lblVuInputF" x="0.0" y="630.0" parentComponent="pnlMaster"
                text="-60" width="30.0" height="13.0" fontStyle="Bold" editable="0"

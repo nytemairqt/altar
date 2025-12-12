@@ -23,7 +23,7 @@ enum class GlobalCablesRingmod
     tempo = 0,
     pitch = 1,
     nam = 2
-};  
+};   
 
 namespace project
 {

@@ -17,19 +17,30 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include <algorithm>
 
 #include "src/dependencies/signalsmith-stretch/signalsmith-stretch.h"
+
+enum class GlobalCablesTranspose
+{
+	tempo = 0,
+	pitch = 1,
+	nam = 2
+};
 
 namespace project
 {
 using namespace juce;
 using namespace hise;
 using namespace scriptnode;
+using cable_manager_t = routing::global_cable_cpp_manager<SN_GLOBAL_CABLE(110245659),
+                                                          SN_GLOBAL_CABLE(106677056),
+                                                          SN_GLOBAL_CABLE(108826)>;                                                         
 
-template <int NV> struct transpose: public data::base
+template <int NV> struct transpose: public data::base, public cable_manager_t
 {
 	
-	SNEX_NODE(transpose);
+	SNEX_NODE(transpose);	
 	
 	struct MetadataClass
 	{
@@ -52,7 +63,7 @@ template <int NV> struct transpose: public data::base
 	int handleModulation(double& value) { return 0; }	
 	void setExternalData(const ExternalData& data, int index) {}	
 
-	signalsmith::stretch::SignalsmithStretch<float> stretch;
+	signalsmith::stretch::SignalsmithStretch<float> stretch;	
 		
 	// still using a ratio because we already have the conversion in the interface logic
 	double ratio = 1.0; 
@@ -64,19 +75,18 @@ template <int NV> struct transpose: public data::base
 	juce::AudioBuffer<float> tmp; // probably better to use a span here
 
 	const int numChannels = 2;
-	int blockSamples = 4096;
-    int intervalSamples = 512;
-    int numInput = 512;    
-	
+	int blockSamples = 2048;
+    int intervalSamples = 512;        
+
 	void prepare(PrepareSpecs specs)
 	{
 		maxBlockSize = (int)specs.blockSize; 
-		
-		stretch.presetDefault(specs.numChannels, specs.sampleRate);
-		stretch.setTransposeFactor(ratio);
+				
+		stretch.configure(numChannels, blockSamples, intervalSamples);
+		stretch.setTransposeFactor(ratio);		
 
 		tmp.setSize(numChannels, maxBlockSize, false, false, true);
-	}
+	}	
 	
 	void reset()
 	{		
@@ -110,6 +120,16 @@ template <int NV> struct transpose: public data::base
 		{
 			ratio = v;			
 			stretch.setTransposeFactor(ratio);
+		}	
+		if (P == 1)
+		{
+			blockSamples = static_cast<int>(v);
+			stretch.configure(numChannels, blockSamples, intervalSamples);
+		}	
+		if (P == 2)
+		{
+			intervalSamples = static_cast<int>(v);
+			stretch.configure(numChannels, blockSamples, intervalSamples);
 		}
 	}
 	
@@ -119,6 +139,18 @@ template <int NV> struct transpose: public data::base
 			parameter::data p("FreqRatio", { 0.25, 4.0 }); // -24 to 24 semitones
 			registerCallback<0>(p);
 			p.setDefaultValue(1.0);
+			data.add(std::move(p));
+		}		
+		{
+			parameter::data p("BlockSamples", { 64.0, 8192.0 }); // -24 to 24 semitones
+			registerCallback<1>(p);
+			p.setDefaultValue(2048.0);
+			data.add(std::move(p));
+		}
+		{
+			parameter::data p("IntervalSamples", { 64.0, 8192.0 }); // -24 to 24 semitones
+			registerCallback<2>(p);
+			p.setDefaultValue(512.0);
 			data.add(std::move(p));
 		}
 	}
