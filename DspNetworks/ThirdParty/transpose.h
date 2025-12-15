@@ -76,16 +76,23 @@ template <int NV> struct transpose: public data::base, public cable_manager_t
 
 	const int numChannels = 2;
 	int blockSamples = 2048;
-    int intervalSamples = 512;        
+    int intervalSamples = 512; 
+    double sampleRate = 44100.0;        
 
 	void prepare(PrepareSpecs specs)
 	{
 		maxBlockSize = (int)specs.blockSize; 
+		sampleRate = specs.sampleRate;
+		
+		blockSamples = static_cast<int>(std::round(sampleRate * 0.0589));
+		intervalSamples = static_cast<int>(std::round(sampleRate * 0.0116));
 				
 		stretch.configure(numChannels, blockSamples, intervalSamples);
-		stretch.setTransposeFactor(ratio);		
+		reset();
+		stretch.setTransposeFactor(ratio);				
 
 		tmp.setSize(numChannels, maxBlockSize, false, false, true);
+
 	}	
 	
 	void reset()
@@ -116,21 +123,15 @@ template <int NV> struct transpose: public data::base, public cable_manager_t
 			
 	template <int P> void setParameter(double v)
 	{
-		if (P == 0)
+		switch (P)
 		{
-			ratio = v;			
+		case 0:
+			ratio = v;
 			stretch.setTransposeFactor(ratio);
-		}	
-		if (P == 1)
-		{
-			blockSamples = static_cast<int>(v);
-			stretch.configure(numChannels, blockSamples, intervalSamples);
-		}	
-		if (P == 2)
-		{
-			intervalSamples = static_cast<int>(v);
-			stretch.configure(numChannels, blockSamples, intervalSamples);
-		}
+			break;		
+		default:
+			return;
+		}		
 	}
 	
 	void createParameters(ParameterDataList& data)
@@ -140,19 +141,7 @@ template <int NV> struct transpose: public data::base, public cable_manager_t
 			registerCallback<0>(p);
 			p.setDefaultValue(1.0);
 			data.add(std::move(p));
-		}		
-		{
-			parameter::data p("BlockSamples", { 64.0, 8192.0 }); // -24 to 24 semitones
-			registerCallback<1>(p);
-			p.setDefaultValue(2048.0);
-			data.add(std::move(p));
-		}
-		{
-			parameter::data p("IntervalSamples", { 64.0, 8192.0 }); // -24 to 24 semitones
-			registerCallback<2>(p);
-			p.setDefaultValue(512.0);
-			data.add(std::move(p));
-		}
+		}				
 	}
 };
 }

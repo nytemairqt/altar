@@ -29,9 +29,9 @@
             <Nodes>
               <Node ID="fix_delay" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay">
                 <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="DelayTime" Value="10.70000015944242"
-                             DefaultValue="100.0"/>
+                  <Parameter MinValue="9.000000134110449" MaxValue="1000.0" StepSize="0.1000000014901161"
+                             SkewFactor="0.3010300099849701" ID="DelayTime" TextToValueConverter="Time"
+                             DefaultValue="100.0000014901161" Automated="1"/>
                   <Parameter MinValue="0.0" MaxValue="1024.0" StepSize="1.0" ID="FadeTime"
                              Value="512.0"/>
                 </Parameters>
@@ -44,10 +44,10 @@
               <Node ID="transpose" FactoryPath="project.transpose" Bypassed="0" Name="transpose">
                 <Parameters>
                   <Parameter MinValue="0.25" MaxValue="4.0" ID="FreqRatio" Value="0.5" DefaultValue="1.0"/>
-                  <Parameter MinValue="64.0" MaxValue="8192.0" ID="BlockSamples" DefaultValue="2048.0"
-                             Automated="1"/>
+                  <Parameter MinValue="64.0" MaxValue="8192.0" ID="BlockSamples" Value="2048.0"/>
                   <Parameter MinValue="64.0" MaxValue="8192.0" ID="IntervalSamples" DefaultValue="512.0"
-                             Automated="1"/>
+                             Value="256.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="IsOctave" Value="0.0"/>
                 </Parameters>
               </Node>
               <Node ID="svf_eq" FactoryPath="filters.svf_eq" Bypassed="0" Name="svf_eq">
@@ -93,16 +93,12 @@
           <Connection NodeId="xfader" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter ID="BlockSamples" MinValue="64.0" MaxValue="8192.0" ModColour="0"
-                 ExternalModulation="Disabled" Value="512.0">
+      <Parameter ID="DelayTime" MinValue="9.000000134110449" MaxValue="1000.0"
+                 StepSize="0.1000000014901161" SkewFactor="0.3010300099849701"
+                 ModColour="0" ExternalModulation="Disabled" TextToValueConverter="Time"
+                 Value="9.000000134110449">
         <Connections>
-          <Connection NodeId="transpose" ParameterId="BlockSamples"/>
-        </Connections>
-      </Parameter>
-      <Parameter ID="IntervalSamples" MinValue="64.0" MaxValue="8192.0" ModColour="0"
-                 ExternalModulation="Disabled" Value="512.0">
-        <Connections>
-          <Connection NodeId="transpose" ParameterId="IntervalSamples"/>
+          <Connection NodeId="fix_delay" ParameterId="DelayTime"/>
         </Connections>
       </Parameter>
     </Parameters>

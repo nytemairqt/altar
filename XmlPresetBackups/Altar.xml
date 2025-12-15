@@ -200,7 +200,7 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="transpose" Bypassed="1" Network="transpose"
-                   FreqRatio="1.0" BlockSamples="2048.0" IntervalSamples="512.0">
+                   FreqRatio="1.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
@@ -210,7 +210,7 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="octave" Bypassed="1" Network="octave"
-                   Octave="0.0" BlockSamples="2048.0" IntervalSamples="512.0">
+                   Octave="0.0" DelayTime="9.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
