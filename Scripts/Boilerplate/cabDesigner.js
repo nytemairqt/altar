@@ -15,22 +15,6 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
-    These source adjustments ensure we return an empty file object if user cancels the FileSystem.browse() call
-
-    hi_scripting/scripting/api/ScriptingApi.cpp
-
-    -- if (a.isObject())
-    ++ if (!a.isObject())
-    {
-        -- wc.call(&a, 1);
-        ++ File emptyFile;
-        ++ a = var(new ScriptingObjects::ScriptFile(p_, emptyFile));
-    }
-
-    ++ wc.call(&a, 1);
-*/
-
 namespace CabDesigner
 {
     const cabDesigner = Synth.getEffect("cabDesigner");

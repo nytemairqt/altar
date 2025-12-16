@@ -15,25 +15,6 @@
     along with This file. If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
-
-    source fix for EQ band not deleting:
-    https://github.com/christophhart/HISE/pull/793/commits/3c812642c718925c2d79ee3114239a69a17945c5
-
-    hi_core/hi_components/audio_components/EqComponent.cpp
-
-    void FilterDragOverlay::updateFilters()
-    {
-        ...
-        if (numFilters == 0)
-        {
-            --filterGraph.repaint();
-            ++filterGraph.refreshAsync();
-        }
-        ...
-    }    
-*/
-
 #pragma once
 #include <JuceHeader.h>
 
@@ -455,7 +436,7 @@ private:
         FS(Peak,        1500.0f,   -10.0f,   8.0f),
         FS(Peak,        2200.0f,    6.8f,    8.0f),
         FS(Peak,        2400.0f,    3.5f,    4.2f),        
-        FS(LowPass,     5000.0f,    0.0f,    0.707f),            
+        FS(LowPass,     6000.0f,    0.0f,    0.707f),            
     };
 
     // ALK100
@@ -467,7 +448,7 @@ private:
         FS(Peak,        1400.0f,   -3.6f,    2.2f),
         FS(Peak,        2300.0f,    5.0f,    2.4f),
         FS(Peak,        3500.0f,    3.5f,    3.4f),        
-        FS(LowPass,     5000.0f,    0.0f,    0.707f),        
+        FS(LowPass,     6000.0f,    0.0f,    0.707f),        
     };
 
     // AL65
@@ -478,7 +459,7 @@ private:
         FS(Peak,        2300.0f,    7.6f,    6.2f),
         FS(Peak,        3300.0f,    4.9f,    6.3f),
         FS(Peak,        5300.0f,    2.8f,    8.0f),
-        FS(LowPass,     5000.0f,    0.0f,    0.707f),
+        FS(LowPass,     6000.0f,    0.0f,    0.707f),
     };
 
     // AL77
@@ -491,7 +472,7 @@ private:
         FS(Peak,        1400.0f,   -3.6f,    4.2f),    
         FS(Peak,        2200.0f,    5.5f,    4.9f),    
         FS(Peak,        3000.0f,    4.4f,    5.2f),    
-        FS(LowPass,     5000.0f,    0.0f,    0.707f),
+        FS(LowPass,     6000.0f,    0.0f,    0.707f),
     };
 
     // AL12M
@@ -503,7 +484,7 @@ private:
         FS(Peak,        1600.0f,   -3.8f,    2.2f),
         FS(Peak,        2300.0f,    5.5f,    4.0f),
         FS(Peak,        3300.0f,    4.2f,    3.9f),
-        FS(LowPass,     5000.0f,    0.0f,    0.707f),
+        FS(LowPass,     6000.0f,    0.0f,    0.707f),
     };
 
     // mics
@@ -567,9 +548,9 @@ private:
         FS(Peak,        2400.0f,   -3.6f,   2.9f),  
         FS(Peak,        3900.0f,    2.9f,   0.6f), 
         FS(Peak,        4500.0f,    7.7f,   0.7f),          
-        FS(LowPass,     5000.0f,    0.0f,   0.7f),        
-        FS(LowPass,     5000.0f,    0.0f,   0.7f),        
-        FS(LowPass,     5000.0f,    0.0f,   0.7f),        
+        FS(LowPass,     5500.0f,    0.0f,   0.7f),        
+        FS(LowPass,     5500.0f,    0.0f,   0.7f),        
+        FS(LowPass,     5500.0f,    0.0f,   0.7f),        
     };
 };
 }
