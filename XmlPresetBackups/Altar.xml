@@ -104,7 +104,7 @@
             <Control type="ScriptSlider" id="knbDelayModulation" value="0.300000011920929"/>
             <Control type="ScriptSlider" id="knbDelayStereoWidth" value="0.5"/>
             <Control type="ScriptSlider" id="knbDelayDelayTimeSynced" value="5.0"/>
-            <Control type="ScriptButton" id="btnDelayTempoSync" value="1.0"/>
+            <Control type="ScriptButton" id="btnDelayTempoSync" value="0.0"/>
             <Control type="ScriptSlider" id="knbDelayGlitchMode" value="0.0"/>
             <Control type="ScriptSlider" id="knbChorusMix" value="0.5"/>
             <Control type="ScriptSlider" id="knbChorusRate" value="2.0"/>
@@ -249,7 +249,7 @@
         </Processor>
         <Processor Type="Hardcoded Master FX" ID="modularE" Bypassed="1" Network="delay"
                    Mix="0.5" DelayTime="1.0" Feedback="0.5" Damping="2600.0" Modulation="0.300000011920929"
-                   StereoWidth="0.5" TempoSync="1.0" DelayMode="0.0" DelayTimeSynced="5.0"
+                   StereoWidth="0.5" TempoSync="0.0" DelayMode="0.0" DelayTimeSynced="5.0"
                    GlitchMode="0.0">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>

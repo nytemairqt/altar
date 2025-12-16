@@ -260,9 +260,24 @@ namespace LookAndFeel
 		if (obj.value) { g.setColour(obj.over ? ColourData.clrWhite : ColourData.clrLightgrey); }
 		else { g.setColour(obj.over ? ColourData.clrLightgrey : ColourData.clrBypassedGrey); }
 		
-		var p = Content.createPath();
-		p.loadFromData(PathData.pathChain);
-		g.fillPath(p, [obj.area[0] + 2, obj.area[1] + 2, obj.area[2] - 4, obj.area[3] - 4]);						
+		var p = Content.createPath();		
+
+		var pad = 1;
+		var x = obj.area[0] + pad;
+		var y = obj.area[1];
+		var w = obj.area[2] - (2 * pad);
+		var h = obj.area[3];				
+		
+		if (obj.value)
+		{
+			p.loadFromData(PathData.pathLocked);
+			g.fillPath(p, [x, y + 2, w, h - 2]);
+		}
+		else 
+		{
+			p.loadFromData(PathData.pathUnlocked);
+			g.fillPath(p, [x, y, w, h]);
+		}
 		
 	});
 
