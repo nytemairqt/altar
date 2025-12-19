@@ -62,6 +62,7 @@ template <int NV> struct transpose: public data::base, public cable_manager_t
 	template <typename T> void processFrame(T& data){}	
 	int handleModulation(double& value) { return 0; }	
 	void setExternalData(const ExternalData& data, int index) {}	
+	void handleHiseEvent(HiseEvent& e){}	
 
 	signalsmith::stretch::SignalsmithStretch<float> stretch;	
 		
@@ -79,28 +80,28 @@ template <int NV> struct transpose: public data::base, public cable_manager_t
     int intervalSamples = 512; 
     double sampleRate = 44100.0;        
 
+    double blockScale = 0.075;    
+    double intervalScale = blockScale / 4;
+
 	void prepare(PrepareSpecs specs)
 	{
 		maxBlockSize = (int)specs.blockSize; 
-		sampleRate = specs.sampleRate;
+		sampleRate = specs.sampleRate;		
 		
-		blockSamples = static_cast<int>(std::round(sampleRate * 0.0589));
-		intervalSamples = static_cast<int>(std::round(sampleRate * 0.0116));
+		blockSamples = static_cast<int>(std::round(sampleRate * blockScale));
+		intervalSamples = static_cast<int>(std::round(sampleRate * intervalScale));
 				
 		stretch.configure(numChannels, blockSamples, intervalSamples);
 		reset();
 		stretch.setTransposeFactor(ratio);				
 
 		tmp.setSize(numChannels, maxBlockSize, false, false, true);
-
 	}	
 	
 	void reset()
 	{		
 		stretch.reset();
 	}
-	
-	void handleHiseEvent(HiseEvent& e){}	
 	
 	template <typename T> void process(T& data)
 	{
@@ -123,15 +124,11 @@ template <int NV> struct transpose: public data::base, public cable_manager_t
 			
 	template <int P> void setParameter(double v)
 	{
-		switch (P)
+		if (P == 0)
 		{
-		case 0:
 			ratio = v;
 			stretch.setTransposeFactor(ratio);
-			break;		
-		default:
-			return;
-		}		
+		}
 	}
 	
 	void createParameters(ParameterDataList& data)
