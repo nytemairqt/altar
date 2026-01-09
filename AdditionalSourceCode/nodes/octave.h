@@ -14,7 +14,7 @@ using namespace snex::Types;
 
 namespace octave_impl
 {
-// =========================| Node & Parameter type declarations |=========================
+// ======================| Node & Parameter type declarations |======================
 
 DECLARE_PARAMETER_RANGE_SKEW(xfader_c1Range, 
                              -100., 
@@ -48,12 +48,12 @@ using split_t = container::split<parameter::empty,
 
 namespace octave_t_parameters
 {
-// Parameter list for octave_impl::octave_t -----------------------------------------------
+// Parameter list for octave_impl::octave_t -----------------------------------------
 
 template <int NV>
 using Octave = parameter::plain<octave_impl::xfader_t<NV>, 
                                 0>;
-using DelayTime = parameter::plain<core::fix_delay, 0>;
+using DelayTime = parameter::empty;
 template <int NV>
 using octave_t_plist = parameter::list<Octave<NV>, DelayTime>;
 }
@@ -63,7 +63,7 @@ using octave_t_ = container::chain<octave_t_parameters::octave_t_plist<NV>,
                                    wrap::fix<2, xfader_t<NV>>, 
                                    split_t<NV>>;
 
-// =============================| Root node initialiser class |=============================
+// ==========================| Root node initialiser class |==========================
 
 template <int NV> struct instance: public octave_impl::octave_t_<NV>
 {
@@ -97,7 +97,7 @@ template <int NV> struct instance: public octave_impl::octave_t_<NV>
 	
 	instance()
 	{
-		// Node References ----------------------------------------------------------------
+		// Node References ----------------------------------------------------------
 		
 		auto& xfader = this->getT(0);                    // octave_impl::xfader_t<NV>
 		auto& split = this->getT(1);                     // octave_impl::split_t<NV>
@@ -108,22 +108,20 @@ template <int NV> struct instance: public octave_impl::octave_t_<NV>
 		auto& svf_eq = this->getT(1).getT(1).getT(1);    // filters::svf_eq<NV>
 		auto& gain = this->getT(1).getT(1).getT(2);      // core::gain<NV>
 		
-		// Parameter Connections ----------------------------------------------------------
+		// Parameter Connections ----------------------------------------------------
 		
 		this->getParameterT(0).connectT(0, xfader); // Octave -> xfader::Value
 		
-		this->getParameterT(1).connectT(0, fix_delay); // DelayTime -> fix_delay::DelayTime
-		
-		// Modulation Connections ---------------------------------------------------------
+		// Modulation Connections ---------------------------------------------------
 		
 		auto& xfader_p = xfader.getWrappedObject().getParameter();
 		xfader_p.getParameterT(1).connectT(0, gain); // xfader -> gain::Gain
 		
-		// Default Values -----------------------------------------------------------------
+		// Default Values -----------------------------------------------------------
 		
 		; // xfader::Value is automated
 		
-		;                                 // fix_delay::DelayTime is automated
+		fix_delay.setParameterT(0, 90.);  // core::fix_delay::DelayTime
 		fix_delay.setParameterT(1, 512.); // core::fix_delay::FadeTime
 		
 		transpose.setParameterT(0, 0.5);   // project::transpose::FreqRatio
@@ -159,7 +157,7 @@ template <int NV> struct instance: public octave_impl::octave_t_<NV>
 #undef setParameterT
 #undef setParameterWT
 #undef getParameterT
-// ==================================| Public Definition |==================================
+// ===============================| Public Definition |===============================
 
 namespace project
 {

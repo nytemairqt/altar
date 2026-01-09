@@ -80,7 +80,7 @@ template <int NV> struct transpose: public data::base, public cable_manager_t
     int intervalSamples = 512; 
     double sampleRate = 44100.0;        
 
-    double blockScale = 0.075;    
+    double blockScale = 0.085;    
     double intervalScale = blockScale / 4;
 
 	void prepare(PrepareSpecs specs)

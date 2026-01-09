@@ -29,9 +29,9 @@
             <Nodes>
               <Node ID="fix_delay" FactoryPath="core.fix_delay" Bypassed="0" Name="fix_delay">
                 <Parameters>
-                  <Parameter MinValue="9.000000134110449" MaxValue="1000.0" StepSize="0.1000000014901161"
+                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
                              SkewFactor="0.3010300099849701" ID="DelayTime" TextToValueConverter="Time"
-                             DefaultValue="100.0000014901161" Automated="1"/>
+                             Value="90.00000134110451" DefaultValue="100.0000014901161"/>
                   <Parameter MinValue="0.0" MaxValue="1024.0" StepSize="1.0" ID="FadeTime"
                              Value="512.0"/>
                 </Parameters>
@@ -97,9 +97,7 @@
                  StepSize="0.1000000014901161" SkewFactor="0.3010300099849701"
                  ModColour="0" ExternalModulation="Disabled" TextToValueConverter="Time"
                  Value="9.000000134110449">
-        <Connections>
-          <Connection NodeId="fix_delay" ParameterId="DelayTime"/>
-        </Connections>
+        <Connections/>
       </Parameter>
     </Parameters>
   </Node>
