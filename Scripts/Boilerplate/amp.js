@@ -89,7 +89,7 @@ namespace Amp
     {
         if (event.clicked && event.rightClick)
         {
-            FileSystem.browse(FileSystem.Documents, false, "*.nam, *.json", function(result)
+            FileSystem.browse(undefined, false, "*.nam, *.json", function(result)
             {
                 if (!result || result.toString(0) == "") { return; }                
                 lblAmpNAMLoader.set("text", result.toString(0));
